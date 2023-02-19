@@ -1,2 +1,1 @@
-# The-Preservation-Project
-Game Design Project
+# Team 6 - Name Pending Group
