@@ -3,7 +3,7 @@
 cmake_minimum_required(VERSION 3.10)
 
 # set the project name and version
-project(Geometry VERSION 1.0)
+project(Tilemap VERSION 1.0)
 
 # specify the C++ standard
 set(CMAKE_CXX_STANDARD 17)
@@ -28,6 +28,7 @@ list(APPEND EXTRA_INCLUDES "${SDL2_DIR}/include")
 list(APPEND EXTRA_INCLUDES "${CUGL_DIR}/include")
 list(APPEND EXTRA_INCLUDES "${BOX2_DIR}/include")
 list(APPEND EXTRA_INCLUDES "${GEOM_DIR}/include")
+list(APPEND EXTRA_INCLUDES "../../../source")
 
 
 # Visual Studio is such a mess
@@ -70,19 +71,33 @@ endif()
 # Add the source code
 file(GLOB SOURCE_FILES
     ../../../source/*.cpp
-    ../../../source/*.h)
+    ../../../source/*.h
+    ../../../source/CMV/Tile/*.cpp
+    ../../../source/CMV/Tile/*.h
+    ../../../source/CMV/Tilemap/*.cpp
+    ../../../source/CMV/Tilemap/*.h
+    ../../../source/MVC/Tile/*.cpp
+    ../../../source/MVC/Tile/*.h
+    ../../../source/MVC/Tilemap/*.cpp
+    ../../../source/MVC/Tilemap/*.h
+    ../../../source/Game/*.cpp
+    ../../../source/Game/*.h
+    ../../../source/Input/*.cpp
+    ../../../source/Input/*.h
+    ../../../source/Generator/*.cpp
+    ../../../source/Generator/*.h)
 
 # Build and link
-add_executable(Geometry ${SOURCE_FILES})
+add_executable(Tilemap ${SOURCE_FILES})
 set_target_properties(
-    Geometry
+    Tilemap
     PROPERTIES
-        OUTPUT_NAME "Geometry Lab"
+        OUTPUT_NAME "Tilemap Viewer"
         SUFFIX ".exe"
 )
 
-target_link_libraries(Geometry PUBLIC ${EXTRA_LIBS})
-target_include_directories(Geometry PUBLIC
+target_link_libraries(Tilemap PUBLIC ${EXTRA_LIBS})
+target_include_directories(Tilemap PUBLIC
                            "${PROJECT_BINARY_DIR}"
                             ${EXTRA_INCLUDES}
                            )

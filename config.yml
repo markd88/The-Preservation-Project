@@ -1,22 +1,39 @@
 ---
-name:   Geometry Lab                # The application display name
-short:  Geometry                    # A shortened name for reference
-appid:  edu.cornell.gdiac.code2     # Application identifier for Mac, iOS, Android
-suffix: GA6C2D2B
+name:   Tilemap Viewer              # The application display name
+short:  Tilemap                     # A shortened name for reference
+appid:  edu.cornell.gdiac.code3     # Application identifier for Mac, iOS, Android
+suffix: G78B13A9
 
 build:  build                       # The build directory (targets are each a subdirectory)
 assets: assets                      # The folder with the game assets (do not list asset)
-icon:   icon.png
+icon:   icon.png                    # The application icon
 
 orientation: landscape              # The orientation for mobile devices
 
+includes:                           # Root directory for angle brackets
+    - source
+    
 sources:                            # The list of the source code files
     - source/*.cpp
     - source/*.h
+    - source/CMV/Tile/*.cpp
+    - source/CMV/Tile/*.h
+    - source/CMV/Tilemap/*.cpp
+    - source/CMV/Tilemap/*.h
+    - source/MVC/Tile/*.cpp
+    - source/MVC/Tile/*.h
+    - source/MVC/Tilemap/*.cpp
+    - source/MVC/Tilemap/*.h
+    - source/Game/*.cpp
+    - source/Game/*.h
+    - source/Input/*.cpp
+    - source/Input/*.h
+    - source/Generator/*.cpp
+    - source/Generator/*.h
 
 # This must be one of portrait, landscape, portrait-flipped, landscape-flipped,
 targets:                        # The target platforms to build for
     - android                   # Android Studio
     - apple                     # XCode (note macOS and iOS use one project)
     - windows                   # Windows Sisual Studio
-    - cmake                     # This supports all Desktop platform GA6C2D2B
+    - cmake                     # This supports all Desktop platform GBA5AF6 GBA5AF6 GA5CAA5 G13C6F4 GE0F210 G78B13A9

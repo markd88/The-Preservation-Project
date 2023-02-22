@@ -1,36 +1,23 @@
 //
 //  main.cpp
-//  Geometry Lab
+//  Cornell University Game Library (CUGL)
 //
 //  This is the main entry class for your application.  You may need to modify
 //  it slightly for your application class or platform.
 //
-//  CUGL zlib License:
-//      This software is provided 'as-is', without any express or implied
-//      warranty.  In no event will the authors be held liable for any damages
-//      arising from the use of this software.
+//  Authors: Walker White and Gonzalo Gonzalez
+//  Version: 2/8/23
 //
-//      Permission is granted to anyone to use this software for any purpose,
-//      including commercial applications, and to alter it and redistribute it
-//      freely, subject to the following restrictions:
-//
-//      1. The origin of this software must not be misrepresented; you must not
-//      claim that you wrote the original software. If you use this software
-//      in a product, an acknowledgment in the product documentation would be
-//      appreciated but is not required.
-//
-//      2. Altered source versions must be plainly marked as such, and must not
-//      be misrepresented as being the original software.
-//
-//      3. This notice may not be removed or altered from any source distribution.
-//
-//  Author: Walker White
-//  Version: 1/20/22
 
 // Include your application class
-#include "GLApp.h"
+#include "TMApp.h"
 
+// This keeps us from having to write cugl:: all the time
 using namespace cugl;
+
+// These really only apply if the game is windowed (not on mobile device)
+#define GAME_WIDTH 1024
+#define GAME_HEIGHT 576
 
 /**
  * The main entry point of any CUGL application.
@@ -43,26 +30,31 @@ using namespace cugl;
  */
 int main(int argc, char * argv[]) {
     // Change this to your application class
-    GeometryApp app;
+    TileApp app;
     
-    // Set the properties of your application
-    app.setName("Geometry Lab");
+    /// SET YOUR APPLICATION PROPERTIES
+    
+    // The unique application name
+    app.setName("Procedural Content");
+    
+    // The name of your studio (for organizing save files)
     app.setOrganization("GDIAC");
+
+    // Set the window properties (Only applies to OS X/Windows Desktop)
+    app.setDisplaySize(GAME_WIDTH, GAME_HEIGHT);
+    app.setFPS(60.0f);
     app.setHighDPI(true);
-    //app.setFPS(60.0f);
-
-    // VARY THIS TO TRY OUT YOUR SCENE GRAPH
-    app.setDisplaySize(1280, 720); // 16x9,  Android phones, PC Gaming
-
+    
     /// DO NOT MODIFY ANYTHING BELOW THIS LINE
     if (!app.init()) {
         return 1;
     }
     
+    // Run the application until completion
     app.onStartup();
     while (app.step());
     app.onShutdown();
-
+    
     exit(0);    // Necessary to quit on mobile devices
     return 0;   // This line is never reached
 }
