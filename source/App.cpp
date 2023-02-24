@@ -10,7 +10,7 @@
 //  Version: 2/8/23
 //
 // Include the class header, which includes all of the CUGL classes
-#include "TMApp.h"
+#include "App.h"
 
 // This keeps us from having to write cugl:: all the time
 using namespace cugl;
@@ -30,24 +30,22 @@ using namespace cugl;
  * very last line.  This ensures that the state will transition to FOREGROUND,
  * causing the application to run.
  */
-void TileApp::onStartup() {
+void App::onStartup() {
+    // Init the asset manager
+    _assets = AssetManager::alloc();
+    
     // Create a sprite batch (and background color) to render the scene
     _batch = SpriteBatch::alloc();
     setClearColor(Color4(229,229,229,255));
     
-    // Activate the mouse and keyboard for interacting with the tilemap
-    Input::activate<Mouse>();
-    Input::activate<Keyboard>();
-    
-    // Seed the RNG to avoid psuedo-randomness
-    unsigned seed = 42;
-    _randoms = std::make_shared<std::mt19937>(seed);
-    CULog("Seed = %d", seed);
+    // Activate the touchscreen for interacting with the tilemap
+
+    Input::activate<Touchscreen>();
     
     // Initialize GameController, passing it the random number generator
     Size size = getDisplaySize();
     size *= GAME_WIDTH/size.width;
-    _gameController = std::make_unique<GameController>(size,_randoms);
+//    _gameController = std::make_unique<GameController>(size);
     Application::onStartup();
 
 }
@@ -63,13 +61,12 @@ void TileApp::onStartup() {
  * very last line.  This ensures that the state will transition to NONE,
  * causing the application to be deleted.
  */
-void TileApp::onShutdown() {
+void App::onShutdown() {
     // Delete all smart pointers
     _batch = nullptr;
     
     // Deactivate input
-    Input::deactivate<Mouse>();
-    Input::deactivate<Keyboard>();
+    Input::deactivate<Touchscreen>();
     
     Application::onShutdown();
 }
@@ -85,8 +82,10 @@ void TileApp::onShutdown() {
  *
  * @param timestep  The amount of time (in seconds) since the last frame
  */
-void TileApp::update(float timestep) {
-    _gameController->update(timestep);
+void App::update(float timestep) {
+    if(*active_scene == "GamePlay"){
+        //_gameController->update(timestep);
+    }
 }
 
 /**
@@ -98,6 +97,6 @@ void TileApp::update(float timestep) {
  * When overriding this method, you do not need to call the parent method
  * at all. The default implmentation does nothing.
  */
-void TileApp::draw() {
-    _gameController->render(_batch);
+void App::draw() {
+    //_gameController->render(_batch);
 }

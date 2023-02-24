@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		092BB6AC29A9410E00F68480 /* PathController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 092BB6A929A9410E00F68480 /* PathController.cpp */; };
+		092BB6B229A9413700F68480 /* CharacterController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 092BB6B029A9413700F68480 /* CharacterController.cpp */; };
 		098F840D29A820A70016C55D /* Algorithms in Frameworks */ = {isa = PBXBuildFile; productRef = 098F840C29A820A70016C55D /* Algorithms */; };
 		BB3A3ECFF617108DABBB117D /* InputController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BAC5E8EF7048E5BE34AC4A6A /* InputController.cpp */; };
 		BBAEDE6930CE67D19758DBFA /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BACD06FACAC591B8BB025B8C /* main.cpp */; };
@@ -73,16 +75,16 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		092BB6A829A9410E00F68480 /* PathView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PathView.h; sourceTree = "<group>"; };
+		092BB6A929A9410E00F68480 /* PathController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PathController.cpp; sourceTree = "<group>"; };
+		092BB6AA29A9410E00F68480 /* PathModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PathModel.h; sourceTree = "<group>"; };
+		092BB6AB29A9410E00F68480 /* PathController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PathController.h; sourceTree = "<group>"; };
+		092BB6AF29A9413700F68480 /* CharacterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CharacterView.h; sourceTree = "<group>"; };
+		092BB6B029A9413700F68480 /* CharacterController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CharacterController.cpp; sourceTree = "<group>"; };
+		092BB6B129A9413700F68480 /* CharacterModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CharacterModel.h; sourceTree = "<group>"; };
+		092BB6B329A9415E00F68480 /* CharacterController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CharacterController.h; sourceTree = "<group>"; };
 		098F842029A824920016C55D /* LoadingController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LoadingController.h; sourceTree = "<group>"; };
 		098F842129A824C10016C55D /* LoadingController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = LoadingController.cpp; sourceTree = "<group>"; };
-		098F842229A825320016C55D /* CharacterView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CharacterView.h; sourceTree = "<group>"; };
-		098F842329A826190016C55D /* CharacterModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CharacterModel.h; sourceTree = "<group>"; };
-		098F842429A827570016C55D /* CharacterController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CharacterController.cpp; sourceTree = "<group>"; };
-		098F842529A827570016C55D /* CharacterController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = CharacterController.hpp; sourceTree = "<group>"; };
-		098F842629A827D00016C55D /* PathModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PathModel.h; sourceTree = "<group>"; };
-		098F842729A827DD0016C55D /* PathView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PathView.h; sourceTree = "<group>"; };
-		098F842829A827FF0016C55D /* PathController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PathController.cpp; sourceTree = "<group>"; };
-		098F842929A827FF0016C55D /* PathController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = PathController.hpp; sourceTree = "<group>"; };
 		BA1FD2C1F1CA3FCF57CEB6D1 /* TileView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TileView.h; sourceTree = "<group>"; };
 		BA38AB856DD4B8A2AEF3B5A2 /* TilemapView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TilemapView.h; sourceTree = "<group>"; };
 		BA461A0D77C63E18BE155ED4 /* App.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = App.cpp; sourceTree = "<group>"; };
@@ -188,26 +190,26 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		098F841E29A824360016C55D /* Character */ = {
+		092BB6A729A9410E00F68480 /* Path */ = {
 			isa = PBXGroup;
 			children = (
-				098F842229A825320016C55D /* CharacterView.h */,
-				098F842329A826190016C55D /* CharacterModel.h */,
-				098F842429A827570016C55D /* CharacterController.cpp */,
-				098F842529A827570016C55D /* CharacterController.hpp */,
+				092BB6A829A9410E00F68480 /* PathView.h */,
+				092BB6A929A9410E00F68480 /* PathController.cpp */,
+				092BB6AA29A9410E00F68480 /* PathModel.h */,
+				092BB6AB29A9410E00F68480 /* PathController.h */,
 			);
-			path = Character;
+			path = Path;
 			sourceTree = "<group>";
 		};
-		098F841F29A8243F0016C55D /* Path */ = {
+		092BB6AD29A9413700F68480 /* Character */ = {
 			isa = PBXGroup;
 			children = (
-				098F842629A827D00016C55D /* PathModel.h */,
-				098F842729A827DD0016C55D /* PathView.h */,
-				098F842829A827FF0016C55D /* PathController.cpp */,
-				098F842929A827FF0016C55D /* PathController.hpp */,
+				092BB6B329A9415E00F68480 /* CharacterController.h */,
+				092BB6AF29A9413700F68480 /* CharacterView.h */,
+				092BB6B029A9413700F68480 /* CharacterController.cpp */,
+				092BB6B129A9413700F68480 /* CharacterModel.h */,
 			);
-			name = Path;
+			path = Character;
 			sourceTree = "<group>";
 		};
 		CD1E1DDD354077E6308DC87B /* Scene */ = {
@@ -276,11 +278,11 @@
 		EB0F3C9827FB9DCB0037CC66 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				092BB6A729A9410E00F68480 /* Path */,
 				BA461A0D77C63E18BE155ED4 /* App.cpp */,
 				BACD06FACAC591B8BB025B8C /* main.cpp */,
 				BA8E96BDCECCCB0E8F39FDF5 /* App.h */,
-				098F841F29A8243F0016C55D /* Path */,
-				098F841E29A824360016C55D /* Character */,
+				092BB6AD29A9413700F68480 /* Character */,
 				CD2B5CBB4F92BCED541D102F /* Tilemap */,
 				CDC0BDE6B79DC3BC3DE0B6AA /* Tile */,
 				CD1E1DDD354077E6308DC87B /* Scene */,
@@ -500,10 +502,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				092BB6AC29A9410E00F68480 /* PathController.cpp in Sources */,
 				BBC4BF61771DA79FF4A1D9EE /* App.cpp in Sources */,
 				BBAEDE6930CE67D19758DBFA /* main.cpp in Sources */,
 				BBDACB057A3058AEEC3A9701 /* TilemapController.cpp in Sources */,
 				BBC66221ECF2B0B6AEFFA5A1 /* GamePlayController.cpp in Sources */,
+				092BB6B229A9413700F68480 /* CharacterController.cpp in Sources */,
 				BB3A3ECFF617108DABBB117D /* InputController.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
