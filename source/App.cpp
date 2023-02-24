@@ -31,11 +31,14 @@ using namespace cugl;
  * causing the application to run.
  */
 void App::onStartup() {
+    // Init the asset manager
+    _assets = AssetManager::alloc();
+    
     // Create a sprite batch (and background color) to render the scene
     _batch = SpriteBatch::alloc();
     setClearColor(Color4(229,229,229,255));
     
-    // Activate the mouse and keyboard for interacting with the tilemap
+    // Activate the touchscreen for interacting with the tilemap
 
     Input::activate<Touchscreen>();
     
@@ -80,7 +83,9 @@ void App::onShutdown() {
  * @param timestep  The amount of time (in seconds) since the last frame
  */
 void App::update(float timestep) {
-    //_gameController->update(timestep);
+    if(*active_scene == "GamePlay"){
+        //_gameController->update(timestep);
+    }
 }
 
 /**

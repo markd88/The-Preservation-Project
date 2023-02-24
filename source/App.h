@@ -29,6 +29,11 @@ protected:
     // std::unique_ptr<GameController> _gameController;
     /** A 3152 style SpriteBatch to render the scene */
     std::shared_ptr<cugl::SpriteBatch>  _batch;
+    /** The global asset manager */
+    std::shared_ptr<cugl::AssetManager> _assets;
+    
+    /** The variable to determine which scene is being active */
+    std::shared_ptr<std::string> active_scene;
 
     
 public:
