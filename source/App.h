@@ -13,10 +13,9 @@
 #ifndef __PC_APP_H__
 #define __PC_APP_H__
 #include <cugl/cugl.h>
-#include <random>
 
 // This is NOT in the same directory
-#include <Game/GameController.h>
+#include <Scene/GamePlayController.h>
 
 /**
  * Class for a viewing procedurally generated tile-based content
@@ -24,14 +23,13 @@
  * This application is keyboard-controlled, and as a result, only
  * works on the desktop platforms.
  */
-class TileApp : public cugl::Application {
+class App : public cugl::Application {
 protected:
     /** The main controller for our game */
-    std::unique_ptr<GameController> _gameController;
+    // std::unique_ptr<GameController> _gameController;
     /** A 3152 style SpriteBatch to render the scene */
     std::shared_ptr<cugl::SpriteBatch>  _batch;
-    /** The random number generator for content generation */
-    std::shared_ptr<std::mt19937> _randoms;
+
     
 public:
     /**
@@ -43,7 +41,7 @@ public:
      * of initialization from the constructor allows main.cpp to perform
      * advanced configuration of the application before it starts.
      */
-    TileApp() : Application() {}
+    App() : Application() {}
     
     /**
      * Disposes of this application, releasing all resources.
@@ -52,7 +50,7 @@ public:
      * It simply calls the dispose() method in Application.  There is nothing
      * special to do here.
      */
-    ~TileApp() { }
+    ~App() { }
     
     /**
      * The method called after OpenGL is initialized, but before running the application.
