@@ -3,15 +3,15 @@
 using namespace cugl;
 // Uncomment to activate (but comment out MVC)
 #include <Path/PathController.h>
+#include <Character/CharacterController.h>
+#include <Tilemap/TilemapController.h>
+#include <Input/InputController.h>
 
 class GamePlayController {
 #pragma mark Internal References
 private:
     /** The Game scene */
     std::shared_ptr<cugl::Scene2> _scene;
-    /** The random number generator */
-    
-    
     
 #pragma mark External References
 private:
@@ -19,7 +19,7 @@ private:
     // std::unique_ptr<CharacterController> _character;
     // std::unique_ptr<TileMapController> _tilemap;
     // std::unique_ptr<PathController> _path;
-    
+    std::shared_ptr<InputController> _input = InputController::getInstance();
     /**
      * Creates the game controller.
      *

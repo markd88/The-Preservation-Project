@@ -7,6 +7,9 @@
 
 #ifndef CharacterModel_h
 #define CharacterModel_h
+#include <cugl/cugl.h>
+using namespace cugl;
+
 
 
 #endif /* CharacterModel_h */
