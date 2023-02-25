@@ -25,14 +25,9 @@ class InputController {
 private:
     /** Model reference*/
     std::unique_ptr<InputModel> _model;
-    /** Track the keys pressed this animation frame */
-    std::unordered_set<KeyCode> _current;
-    /** Track the keys pressed the previous animation frame */
-    std::unordered_set<KeyCode> _previous;
     
     /** The unique key for the touch listeners */
     Uint32 _listener;
-//    cugl::TouchID _touchId; 
     
 #pragma mark External References
 private:
@@ -99,20 +94,69 @@ private:
 #pragma mark Input State Getters
 public:
     /**
-     * Returns whether `key` is held down.
+     * Returns true if this control is active.
      *
-     * @param key   The keyboard key
+     * An active control is one where all of the listeners are attached
+     * and it is actively monitoring input. An input controller is only
+     * active if {@link #init} is called, and if {@link #dispose} is not.
+     *
+     * @return true if this control is active.
      */
-    bool isKeyPressed(KeyCode key) {
-        // Previous was the result before the start of this frame
-        return _previous.find(key) != _previous.end();
+    bool isActive() const { return _model->_active; }
+    
+    /**
+     * Returns the current mouse/touch position
+     *
+     * @return the current mouse/touch position
+     */
+    const cugl::Vec2& getPosition() const {
+        return _model->_currPos;
     }
     
-    /** Returns whether the finger was held down during this frame. */
-    bool isTouchDown() { return _model->_touchDown; }
+    /**
+     * Returns the previous mouse/touch position
+     *
+     * @return the previous mouse/touch position
+     */
+    const cugl::Vec2& getPrevious() const {
+        return _model->_prevPos;
+    }
     
-    /** Returns the touch's last recorded position. */
-    Vec2 getLastTouchPos() { return _model->_touchPos; }
+    /**
+     * Return true if the user initiated a press this frame.
+     *
+     * A press means that the user is pressing (button/finger) this
+     * animation frame, but was not pressing during the last frame.
+     *
+     * @return true if the user initiated a press this frame.
+     */
+    bool didPress() const {
+        return !_model->_prevDown && _model->_currDown;
+    }
+    
+    /**
+     * Return true if the user initiated a release this frame.
+     *
+     * A release means that the user was pressing (button/finger) last
+     * animation frame, but is not pressing during this frame.
+     *
+     * @return true if the user initiated a release this frame.
+     */
+    bool didRelease() const {
+        return !_model->_currDown && _model->_prevDown;
+    }
+    
+    /**
+     * Return true if the user is actively pressing this frame.
+     *
+     * This method only checks that a press is active or ongoing.
+     * It does not care when the press was initiated.
+     *
+     * @return true if the user is actively pressing this frame.
+     */
+    bool isDown() const {
+        return _model->_currDown;
+    }
     
 };
 

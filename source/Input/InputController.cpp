@@ -48,12 +48,7 @@ std::shared_ptr<InputController> InputController::getInstance() {
  *
  * @param dt  The amount of time (in seconds) since the last frame
  */
-void InputController::update(float dt) {
-    // Swap the keyboard buffers, removing old keys
-    _previous.clear();
-    _previous = _current;
-    _current.clear();
-    
+void InputController::update(float dt) {    
     _model->_prevDown = _model->_currDown;
     _model->_currDown = _model->_touchDown;
     _model->_prevPos = _model->_currPos;
