@@ -7,19 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		092BB6AC29A9410E00F68480 /* PathController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 092BB6A929A9410E00F68480 /* PathController.cpp */; };
-		092BB6B229A9413700F68480 /* CharacterController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 092BB6B029A9413700F68480 /* CharacterController.cpp */; };
-		098F840D29A820A70016C55D /* Algorithms in Frameworks */ = {isa = PBXBuildFile; productRef = 098F840C29A820A70016C55D /* Algorithms */; };
-		BB3A3ECFF617108DABBB117D /* InputController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BAC5E8EF7048E5BE34AC4A6A /* InputController.cpp */; };
-		BBAEDE6930CE67D19758DBFA /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BACD06FACAC591B8BB025B8C /* main.cpp */; };
-		BBC4BF61771DA79FF4A1D9EE /* App.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA461A0D77C63E18BE155ED4 /* App.cpp */; };
-		BBC66221ECF2B0B6AEFFA5A1 /* GamePlayController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BAB01C098C570EEDCFE6AA63 /* GamePlayController.cpp */; };
-		BBDACB057A3058AEEC3A9701 /* TilemapController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BAE40BD8BDDFAFBE1F1BCE6E /* TilemapController.cpp */; };
-		BC5EEBCA83E0AE20ECD9D1FF /* GamePlayController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BAB01C098C570EEDCFE6AA63 /* GamePlayController.cpp */; };
-		BCA1C8BFF8A84806EC66C96D /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BACD06FACAC591B8BB025B8C /* main.cpp */; };
-		BCDAFF0ADB1B3D5CDBCABADD /* TilemapController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BAE40BD8BDDFAFBE1F1BCE6E /* TilemapController.cpp */; };
-		BCEACED99FDFF26F7E4A5BF0 /* App.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA461A0D77C63E18BE155ED4 /* App.cpp */; };
-		BCED7F00DF1EF5AFB3059CE6 /* InputController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BAC5E8EF7048E5BE34AC4A6A /* InputController.cpp */; };
 		EB0F3CB827FB9FD40037CC66 /* Mac.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EB0F3CB327FB9FD40037CC66 /* Mac.xcassets */; };
 		EB0F3CD527FBA2190037CC66 /* ForceFeedback.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB0F3CC727FBA2180037CC66 /* ForceFeedback.framework */; };
 		EB0F3CD627FBA2190037CC66 /* CoreHaptics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB0F3CC827FBA2180037CC66 /* CoreHaptics.framework */; };
@@ -55,6 +42,24 @@
 		EBDD8151293CE9F9000BED3C /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EBDD8144293CE9F9000BED3C /* CoreMotion.framework */; };
 		EBDD8154293CEA45000BED3C /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EBDD8152293CEA45000BED3C /* AudioToolbox.framework */; };
 		EBDD8155293CEA45000BED3C /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EBDD8153293CEA45000BED3C /* AVFoundation.framework */; };
+		ABBBF1BCC27EA60BCFCAF168 /* placeholder.txt in Resources */ = {isa = PBXBuildFile; fileRef = AA3CD5F0F5AAE7BA683B24F0 /* placeholder.txt */; };
+		AC6FEAFD0E0B8F5D0F302A7E /* placeholder.txt in Resources */ = {isa = PBXBuildFile; fileRef = AA3CD5F0F5AAE7BA683B24F0 /* placeholder.txt */; };
+		BBAEDE6930CE67D19758DBFA /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BACD06FACAC591B8BB025B8C /* main.cpp */; };
+		BCA1C8BFF8A84806EC66C96D /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BACD06FACAC591B8BB025B8C /* main.cpp */; };
+		BBBCCD11F3FBEB2BCA3A35B8 /* App.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA0BFCD17AAAA583E8A9E6CA /* App.cpp */; };
+		BC4BA0DBE6E1B83E8233CDE0 /* App.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA0BFCD17AAAA583E8A9E6CA /* App.cpp */; };
+		BBD3DFAE7E04763B516053FE /* TilemapController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BAC0CAB8C8C7FE7916E64403 /* TilemapController.cpp */; };
+		BCB6B06DFEF71E77EBC5ED6E /* TilemapController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BAC0CAB8C8C7FE7916E64403 /* TilemapController.cpp */; };
+		BB5F080D7B36C9AEAB172EFA /* LoadingController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BAF1BFDC6BECEA6B2E7FADED /* LoadingController.cpp */; };
+		BC065D01240686BECAFB9A8B /* LoadingController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BAF1BFDC6BECEA6B2E7FADED /* LoadingController.cpp */; };
+		BB9D46AB7E4A525A6DE21515 /* GamePlayController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA50C0F1F52D09A8D77773E3 /* GamePlayController.cpp */; };
+		BCAAEFB8B1C7DA1DBA71500D /* GamePlayController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA50C0F1F52D09A8D77773E3 /* GamePlayController.cpp */; };
+		BB3A3ECFF617108DABBB117D /* InputController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BAC5E8EF7048E5BE34AC4A6A /* InputController.cpp */; };
+		BCED7F00DF1EF5AFB3059CE6 /* InputController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BAC5E8EF7048E5BE34AC4A6A /* InputController.cpp */; };
+		BB369F588ABD8E9A4390AAEA /* CharacterController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA9A17CC8BE5C6F657A4BD3D /* CharacterController.cpp */; };
+		BC0CEA64DD1EE4894C504F3B /* CharacterController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA9A17CC8BE5C6F657A4BD3D /* CharacterController.cpp */; };
+		BB040D0FA8EA86E34BFEF0AF /* PathController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA9E28E9BBCFB79C7DFDF7ED /* PathController.cpp */; };
+		BCF2DAE3A98AA27EDB7DEB7D /* PathController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA9E28E9BBCFB79C7DFDF7ED /* PathController.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -75,31 +80,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		092BB6A829A9410E00F68480 /* PathView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PathView.h; sourceTree = "<group>"; };
-		092BB6A929A9410E00F68480 /* PathController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PathController.cpp; sourceTree = "<group>"; };
-		092BB6AA29A9410E00F68480 /* PathModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PathModel.h; sourceTree = "<group>"; };
-		092BB6AB29A9410E00F68480 /* PathController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PathController.h; sourceTree = "<group>"; };
-		092BB6AF29A9413700F68480 /* CharacterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CharacterView.h; sourceTree = "<group>"; };
-		092BB6B029A9413700F68480 /* CharacterController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CharacterController.cpp; sourceTree = "<group>"; };
-		092BB6B129A9413700F68480 /* CharacterModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CharacterModel.h; sourceTree = "<group>"; };
-		092BB6B329A9415E00F68480 /* CharacterController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CharacterController.h; sourceTree = "<group>"; };
-		098F842029A824920016C55D /* LoadingController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LoadingController.h; sourceTree = "<group>"; };
-		098F842129A824C10016C55D /* LoadingController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = LoadingController.cpp; sourceTree = "<group>"; };
-		BA1FD2C1F1CA3FCF57CEB6D1 /* TileView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TileView.h; sourceTree = "<group>"; };
-		BA38AB856DD4B8A2AEF3B5A2 /* TilemapView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TilemapView.h; sourceTree = "<group>"; };
-		BA461A0D77C63E18BE155ED4 /* App.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = App.cpp; sourceTree = "<group>"; };
-		BA8B0BB7C7B7A8C8F602A759 /* TilemapController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TilemapController.h; sourceTree = "<group>"; };
-		BA8E96BDCECCCB0E8F39FDF5 /* App.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = App.h; sourceTree = "<group>"; };
-		BAA437BB978BD1F19FFC3A51 /* InputModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InputModel.h; sourceTree = "<group>"; };
-		BAB01C098C570EEDCFE6AA63 /* GamePlayController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GamePlayController.cpp; sourceTree = "<group>"; };
-		BABCE18D8CF32C3DDD66FEDD /* InputController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InputController.h; sourceTree = "<group>"; };
-		BAC5E8EF7048E5BE34AC4A6A /* InputController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = InputController.cpp; sourceTree = "<group>"; };
-		BACD06FACAC591B8BB025B8C /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
-		BACEDF0CCA8DACA8744CC4AF /* TilemapModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TilemapModel.h; sourceTree = "<group>"; };
-		BAE40BD8BDDFAFBE1F1BCE6E /* TilemapController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TilemapController.cpp; sourceTree = "<group>"; };
-		BAE8072AF85DFCFA1D1A1DCA /* TileController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TileController.h; sourceTree = "<group>"; };
-		BAFC05B6D7A005EC0F0F258C /* TileModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TileModel.h; sourceTree = "<group>"; };
-		BAFEA6AAEE4045E8F3D1D94F /* GamePlayController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GamePlayController.h; sourceTree = "<group>"; };
 		EB0F3C9627FB9DCB0037CC66 /* Tilemap Viewer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Tilemap Viewer.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EB0F3CB027FB9FD40037CC66 /* Landscape.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Landscape.storyboard; sourceTree = "<group>"; };
 		EB0F3CB127FB9FD40037CC66 /* iOS.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = iOS.xcassets; sourceTree = "<group>"; };
@@ -138,6 +118,32 @@
 		EBDD8144293CE9F9000BED3C /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS15.5.sdk/System/Library/Frameworks/CoreMotion.framework; sourceTree = DEVELOPER_DIR; };
 		EBDD8152293CEA45000BED3C /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS15.5.sdk/System/Library/Frameworks/AudioToolbox.framework; sourceTree = DEVELOPER_DIR; };
 		EBDD8153293CEA45000BED3C /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS15.5.sdk/System/Library/Frameworks/AVFoundation.framework; sourceTree = DEVELOPER_DIR; };
+		AA3CD5F0F5AAE7BA683B24F0 /* placeholder.txt */ = {isa = PBXFileReference; path = placeholder.txt; sourceTree = "<group>"; };
+		BACD06FACAC591B8BB025B8C /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; path = main.cpp; sourceTree = "<group>"; };
+		BA0BFCD17AAAA583E8A9E6CA /* App.cpp */ = {isa = PBXFileReference; fileEncoding = 4; path = App.cpp; sourceTree = "<group>"; };
+		BAC10B38E8EB1F99DA07DDF3 /* App.h */ = {isa = PBXFileReference; fileEncoding = 4; path = App.h; sourceTree = "<group>"; };
+		BA5E8DCE3B03CF83AB7DA17A /* TileController.h */ = {isa = PBXFileReference; fileEncoding = 4; path = TileController.h; sourceTree = "<group>"; };
+		BAA1CD78F4D844CEACEFFDD6 /* TileView.h */ = {isa = PBXFileReference; fileEncoding = 4; path = TileView.h; sourceTree = "<group>"; };
+		BA987DAB06C4D9DCBFF98ABE /* TileModel.h */ = {isa = PBXFileReference; fileEncoding = 4; path = TileModel.h; sourceTree = "<group>"; };
+		BAC0CAB8C8C7FE7916E64403 /* TilemapController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; path = TilemapController.cpp; sourceTree = "<group>"; };
+		BAE2ECE2DFF1BC426FBAD1FD /* TilemapView.h */ = {isa = PBXFileReference; fileEncoding = 4; path = TilemapView.h; sourceTree = "<group>"; };
+		BAD8FBEA1EA3A187E13C2AD3 /* TilemapController.h */ = {isa = PBXFileReference; fileEncoding = 4; path = TilemapController.h; sourceTree = "<group>"; };
+		BAFC2BBAA92C8CE7CD7E78ED /* TilemapModel.h */ = {isa = PBXFileReference; fileEncoding = 4; path = TilemapModel.h; sourceTree = "<group>"; };
+		BAF1BFDC6BECEA6B2E7FADED /* LoadingController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; path = LoadingController.cpp; sourceTree = "<group>"; };
+		BA50C0F1F52D09A8D77773E3 /* GamePlayController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; path = GamePlayController.cpp; sourceTree = "<group>"; };
+		BA6892123484A7158CC7BDE9 /* GamePlayController.h */ = {isa = PBXFileReference; fileEncoding = 4; path = GamePlayController.h; sourceTree = "<group>"; };
+		BA497EA9473BC1A07169ECF9 /* LoadingController.h */ = {isa = PBXFileReference; fileEncoding = 4; path = LoadingController.h; sourceTree = "<group>"; };
+		BAC5E8EF7048E5BE34AC4A6A /* InputController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; path = InputController.cpp; sourceTree = "<group>"; };
+		BABCE18D8CF32C3DDD66FEDD /* InputController.h */ = {isa = PBXFileReference; fileEncoding = 4; path = InputController.h; sourceTree = "<group>"; };
+		BAA437BB978BD1F19FFC3A51 /* InputModel.h */ = {isa = PBXFileReference; fileEncoding = 4; path = InputModel.h; sourceTree = "<group>"; };
+		BA9A17CC8BE5C6F657A4BD3D /* CharacterController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; path = CharacterController.cpp; sourceTree = "<group>"; };
+		BAEADA9F5B942DD7F8EDEBCC /* CharacterController.h */ = {isa = PBXFileReference; fileEncoding = 4; path = CharacterController.h; sourceTree = "<group>"; };
+		BA5985487EFF4E5DFCC496ED /* CharacterView.h */ = {isa = PBXFileReference; fileEncoding = 4; path = CharacterView.h; sourceTree = "<group>"; };
+		BAA6613A22B92625FC3387EE /* CharacterModel.h */ = {isa = PBXFileReference; fileEncoding = 4; path = CharacterModel.h; sourceTree = "<group>"; };
+		BA9E28E9BBCFB79C7DFDF7ED /* PathController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; path = PathController.cpp; sourceTree = "<group>"; };
+		BA6327106EE9AC42AFFA55D7 /* PathView.h */ = {isa = PBXFileReference; fileEncoding = 4; path = PathView.h; sourceTree = "<group>"; };
+		BAC3397A7ACD73ACFDD23C41 /* PathModel.h */ = {isa = PBXFileReference; fileEncoding = 4; path = PathModel.h; sourceTree = "<group>"; };
+		BAECA7E71F759869D8E99BD2 /* PathController.h */ = {isa = PBXFileReference; fileEncoding = 4; path = PathController.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -149,7 +155,6 @@
 				EB0F3CD527FBA2190037CC66 /* ForceFeedback.framework in Frameworks */,
 				EB0F3CD627FBA2190037CC66 /* CoreHaptics.framework in Frameworks */,
 				EB0F3CD727FBA2190037CC66 /* CoreFoundation.framework in Frameworks */,
-				098F840D29A820A70016C55D /* Algorithms in Frameworks */,
 				EB0F3CD827FBA2190037CC66 /* Cocoa.framework in Frameworks */,
 				EB0F3CD927FBA2190037CC66 /* AudioToolbox.framework in Frameworks */,
 				EB0F3CDA27FBA2190037CC66 /* CoreGraphics.framework in Frameworks */,
@@ -190,70 +195,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		092BB6A729A9410E00F68480 /* Path */ = {
-			isa = PBXGroup;
-			children = (
-				092BB6A829A9410E00F68480 /* PathView.h */,
-				092BB6A929A9410E00F68480 /* PathController.cpp */,
-				092BB6AA29A9410E00F68480 /* PathModel.h */,
-				092BB6AB29A9410E00F68480 /* PathController.h */,
-			);
-			path = Path;
-			sourceTree = "<group>";
-		};
-		092BB6AD29A9413700F68480 /* Character */ = {
-			isa = PBXGroup;
-			children = (
-				092BB6B329A9415E00F68480 /* CharacterController.h */,
-				092BB6AF29A9413700F68480 /* CharacterView.h */,
-				092BB6B029A9413700F68480 /* CharacterController.cpp */,
-				092BB6B129A9413700F68480 /* CharacterModel.h */,
-			);
-			path = Character;
-			sourceTree = "<group>";
-		};
-		CD1E1DDD354077E6308DC87B /* Scene */ = {
-			isa = PBXGroup;
-			children = (
-				BAB01C098C570EEDCFE6AA63 /* GamePlayController.cpp */,
-				BAFEA6AAEE4045E8F3D1D94F /* GamePlayController.h */,
-				098F842029A824920016C55D /* LoadingController.h */,
-				098F842129A824C10016C55D /* LoadingController.cpp */,
-			);
-			path = Scene;
-			sourceTree = "<group>";
-		};
-		CD2B5CBB4F92BCED541D102F /* Tilemap */ = {
-			isa = PBXGroup;
-			children = (
-				BAE40BD8BDDFAFBE1F1BCE6E /* TilemapController.cpp */,
-				BACEDF0CCA8DACA8744CC4AF /* TilemapModel.h */,
-				BA8B0BB7C7B7A8C8F602A759 /* TilemapController.h */,
-				BA38AB856DD4B8A2AEF3B5A2 /* TilemapView.h */,
-			);
-			path = Tilemap;
-			sourceTree = "<group>";
-		};
-		CDA57BA9AFFB1B103FEA2A43 /* Input */ = {
-			isa = PBXGroup;
-			children = (
-				BAC5E8EF7048E5BE34AC4A6A /* InputController.cpp */,
-				BABCE18D8CF32C3DDD66FEDD /* InputController.h */,
-				BAA437BB978BD1F19FFC3A51 /* InputModel.h */,
-			);
-			path = Input;
-			sourceTree = "<group>";
-		};
-		CDC0BDE6B79DC3BC3DE0B6AA /* Tile */ = {
-			isa = PBXGroup;
-			children = (
-				BAE8072AF85DFCFA1D1A1DCA /* TileController.h */,
-				BA1FD2C1F1CA3FCF57CEB6D1 /* TileView.h */,
-				BAFC05B6D7A005EC0F0F258C /* TileModel.h */,
-			);
-			path = Tile;
-			sourceTree = "<group>";
-		};
 		EB0F3C8D27FB9DCB0037CC66 = {
 			isa = PBXGroup;
 			children = (
@@ -278,18 +219,18 @@
 		EB0F3C9827FB9DCB0037CC66 /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				092BB6A729A9410E00F68480 /* Path */,
-				BA461A0D77C63E18BE155ED4 /* App.cpp */,
 				BACD06FACAC591B8BB025B8C /* main.cpp */,
-				BA8E96BDCECCCB0E8F39FDF5 /* App.h */,
-				092BB6AD29A9413700F68480 /* Character */,
-				CD2B5CBB4F92BCED541D102F /* Tilemap */,
-				CDC0BDE6B79DC3BC3DE0B6AA /* Tile */,
-				CD1E1DDD354077E6308DC87B /* Scene */,
+				BA0BFCD17AAAA583E8A9E6CA /* App.cpp */,
+				BAC10B38E8EB1F99DA07DDF3 /* App.h */,
+				CDE9BC6F89B3AE2D3D6CCBBB /* Tile */,
+				CD6DCA2A813A5AD6A17F7B95 /* Tilemap */,
+				CD70BC0DCFBE482BC3C897CE /* Scene */,
 				CDA57BA9AFFB1B103FEA2A43 /* Input */,
+				CDCA8B81ED7F33FAAF51BA59 /* Character */,
+				CDB97A5E12D39A8BE70FF9D3 /* Path */,
 			);
 			name = Source;
-			path = ../../source;
+			path = "../../source";
 			sourceTree = "<group>";
 		};
 		EB0F3CAE27FB9F700037CC66 /* Resources */ = {
@@ -347,9 +288,10 @@
 		EB23B0F828BFF70E001EA958 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				AA3CD5F0F5AAE7BA683B24F0 /* placeholder.txt */,
 			);
 			name = Assets;
-			path = ../../assets;
+			path = "../../assets";
 			sourceTree = "<group>";
 		};
 		EBC7AEB927FBB280001F1467 /* ios */ = {
@@ -374,6 +316,70 @@
 			name = ios;
 			sourceTree = "<group>";
 		};
+		CDE9BC6F89B3AE2D3D6CCBBB /* Tile */ = {
+			isa = PBXGroup;
+			children = (
+				BA5E8DCE3B03CF83AB7DA17A /* TileController.h */,
+				BAA1CD78F4D844CEACEFFDD6 /* TileView.h */,
+				BA987DAB06C4D9DCBFF98ABE /* TileModel.h */,
+			);
+			path = Tile;
+			sourceTree = "<group>";
+		};
+		CD6DCA2A813A5AD6A17F7B95 /* Tilemap */ = {
+			isa = PBXGroup;
+			children = (
+				BAC0CAB8C8C7FE7916E64403 /* TilemapController.cpp */,
+				BAE2ECE2DFF1BC426FBAD1FD /* TilemapView.h */,
+				BAD8FBEA1EA3A187E13C2AD3 /* TilemapController.h */,
+				BAFC2BBAA92C8CE7CD7E78ED /* TilemapModel.h */,
+			);
+			path = Tilemap;
+			sourceTree = "<group>";
+		};
+		CD70BC0DCFBE482BC3C897CE /* Scene */ = {
+			isa = PBXGroup;
+			children = (
+				BAF1BFDC6BECEA6B2E7FADED /* LoadingController.cpp */,
+				BA50C0F1F52D09A8D77773E3 /* GamePlayController.cpp */,
+				BA6892123484A7158CC7BDE9 /* GamePlayController.h */,
+				BA497EA9473BC1A07169ECF9 /* LoadingController.h */,
+			);
+			path = Scene;
+			sourceTree = "<group>";
+		};
+		CDA57BA9AFFB1B103FEA2A43 /* Input */ = {
+			isa = PBXGroup;
+			children = (
+				BAC5E8EF7048E5BE34AC4A6A /* InputController.cpp */,
+				BABCE18D8CF32C3DDD66FEDD /* InputController.h */,
+				BAA437BB978BD1F19FFC3A51 /* InputModel.h */,
+			);
+			path = Input;
+			sourceTree = "<group>";
+		};
+		CDCA8B81ED7F33FAAF51BA59 /* Character */ = {
+			isa = PBXGroup;
+			children = (
+				BA9A17CC8BE5C6F657A4BD3D /* CharacterController.cpp */,
+				BAEADA9F5B942DD7F8EDEBCC /* CharacterController.h */,
+				BA5985487EFF4E5DFCC496ED /* CharacterView.h */,
+				BAA6613A22B92625FC3387EE /* CharacterModel.h */,
+			);
+			path = Character;
+			sourceTree = "<group>";
+		};
+		CDB97A5E12D39A8BE70FF9D3 /* Path */ = {
+			isa = PBXGroup;
+			children = (
+				BA9E28E9BBCFB79C7DFDF7ED /* PathController.cpp */,
+				BA6327106EE9AC42AFFA55D7 /* PathView.h */,
+				BAC3397A7ACD73ACFDD23C41 /* PathModel.h */,
+				BAECA7E71F759869D8E99BD2 /* PathController.h */,
+			);
+			path = Path;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -390,9 +396,6 @@
 			dependencies = (
 			);
 			name = "tilemap-mac";
-			packageProductDependencies = (
-				098F840C29A820A70016C55D /* Algorithms */,
-			);
 			productName = app;
 			productReference = EB0F3C9627FB9DCB0037CC66 /* Tilemap Viewer.app */;
 			productType = "com.apple.product-type.application";
@@ -431,7 +434,7 @@
 					};
 				};
 			};
-			buildConfigurationList = EB0F3C9127FB9DCB0037CC66 /* Build configuration list for PBXProject "Tilemap" */;
+			buildConfigurationList = EB0F3C9127FB9DCB0037CC66 /* Build configuration list for PBXProject "app" */;
 			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -440,9 +443,6 @@
 				Base,
 			);
 			mainGroup = EB0F3C8D27FB9DCB0037CC66;
-			packageReferences = (
-				098F840B29A820A70016C55D /* XCRemoteSwiftPackageReference "swift-algorithms" */,
-			);
 			productRefGroup = EB0F3C9727FB9DCB0037CC66 /* Products */;
 			projectDirPath = "";
 			projectReferences = (
@@ -481,6 +481,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ABBBF1BCC27EA60BCFCAF168 /* placeholder.txt in Resources */,
 				EB0F3CB827FB9FD40037CC66 /* Mac.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -489,6 +490,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AC6FEAFD0E0B8F5D0F302A7E /* placeholder.txt in Resources */,
 				EBC7AEDC27FBBD7B001F1467 /* iOS.xcassets in Resources */,
 				EBC7AEDD27FBBD7B001F1467 /* Landscape.storyboard in Resources */,
 				EBC7AEDE27FBBD7B001F1467 /* Portrait.storyboard in Resources */,
@@ -502,13 +504,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				092BB6AC29A9410E00F68480 /* PathController.cpp in Sources */,
-				BBC4BF61771DA79FF4A1D9EE /* App.cpp in Sources */,
 				BBAEDE6930CE67D19758DBFA /* main.cpp in Sources */,
-				BBDACB057A3058AEEC3A9701 /* TilemapController.cpp in Sources */,
-				BBC66221ECF2B0B6AEFFA5A1 /* GamePlayController.cpp in Sources */,
-				092BB6B229A9413700F68480 /* CharacterController.cpp in Sources */,
+				BBBCCD11F3FBEB2BCA3A35B8 /* App.cpp in Sources */,
+				BBD3DFAE7E04763B516053FE /* TilemapController.cpp in Sources */,
+				BB5F080D7B36C9AEAB172EFA /* LoadingController.cpp in Sources */,
+				BB9D46AB7E4A525A6DE21515 /* GamePlayController.cpp in Sources */,
 				BB3A3ECFF617108DABBB117D /* InputController.cpp in Sources */,
+				BB369F588ABD8E9A4390AAEA /* CharacterController.cpp in Sources */,
+				BB040D0FA8EA86E34BFEF0AF /* PathController.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -516,11 +519,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BCEACED99FDFF26F7E4A5BF0 /* App.cpp in Sources */,
 				BCA1C8BFF8A84806EC66C96D /* main.cpp in Sources */,
-				BCDAFF0ADB1B3D5CDBCABADD /* TilemapController.cpp in Sources */,
-				BC5EEBCA83E0AE20ECD9D1FF /* GamePlayController.cpp in Sources */,
+				BC4BA0DBE6E1B83E8233CDE0 /* App.cpp in Sources */,
+				BCB6B06DFEF71E77EBC5ED6E /* TilemapController.cpp in Sources */,
+				BC065D01240686BECAFB9A8B /* LoadingController.cpp in Sources */,
+				BCAAEFB8B1C7DA1DBA71500D /* GamePlayController.cpp in Sources */,
 				BCED7F00DF1EF5AFB3059CE6 /* InputController.cpp in Sources */,
+				BC0CEA64DD1EE4894C504F3B /* CharacterController.cpp in Sources */,
+				BCF2DAE3A98AA27EDB7DEB7D /* PathController.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -758,6 +764,8 @@
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UIStatusBarHidden = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationLandscapeRight;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationLandscapeRight;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationLandscapeRight;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -797,6 +805,8 @@
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UIStatusBarHidden = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationLandscapeRight;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationLandscapeRight;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationLandscapeRight;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -814,7 +824,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		EB0F3C9127FB9DCB0037CC66 /* Build configuration list for PBXProject "Tilemap" */ = {
+		EB0F3C9127FB9DCB0037CC66 /* Build configuration list for PBXProject "app" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				EB0F3CA727FB9DCC0037CC66 /* Debug */,
@@ -843,24 +853,6 @@
 		};
 /* End XCConfigurationList section */
 
-/* Begin XCRemoteSwiftPackageReference section */
-		098F840B29A820A70016C55D /* XCRemoteSwiftPackageReference "swift-algorithms" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/apple/swift-algorithms.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.0;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		098F840C29A820A70016C55D /* Algorithms */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 098F840B29A820A70016C55D /* XCRemoteSwiftPackageReference "swift-algorithms" */;
-			productName = Algorithms;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = EB0F3C8E27FB9DCB0037CC66 /* Project object */;
 }

@@ -72,20 +72,18 @@ endif()
 file(GLOB SOURCE_FILES
     ../../../source/*.cpp
     ../../../source/*.h
-    ../../../source/CMV/Tile/*.cpp
-    ../../../source/CMV/Tile/*.h
-    ../../../source/CMV/Tilemap/*.cpp
-    ../../../source/CMV/Tilemap/*.h
-    ../../../source/MVC/Tile/*.cpp
-    ../../../source/MVC/Tile/*.h
-    ../../../source/MVC/Tilemap/*.cpp
-    ../../../source/MVC/Tilemap/*.h
-    ../../../source/Game/*.cpp
-    ../../../source/Game/*.h
+    ../../../source/Tile/*.cpp
+    ../../../source/Tile/*.h
+    ../../../source/Tilemap/*.cpp
+    ../../../source/Tilemap/*.h
+    ../../../source/Scene/*.cpp
+    ../../../source/Scene/*.h
     ../../../source/Input/*.cpp
     ../../../source/Input/*.h
-    ../../../source/Generator/*.cpp
-    ../../../source/Generator/*.h)
+    ../../../source/Character/*.cpp
+    ../../../source/Character/*.h
+    ../../../source/Path/*.cpp
+    ../../../source/Path/*.h)
 
 # Build and link
 add_executable(Tilemap ${SOURCE_FILES})
