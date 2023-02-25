@@ -1,9 +1,7 @@
 //
 //  InputController.cpp
 //
-//  This module represents the input handlers. Note that this application
-//  does not use the mouse at all.  This code is here to simply show you
-//  how you might want to organize your handler.
+//  This module represents the input handlers.
 //
 //
 // This is in the same folder so it is okay
@@ -17,30 +15,23 @@
  * Note, the constructor should not be called directly. Retrieve a
  * singleton with {@link #getInstance} instead.
  */
-InputController::InputController(): _model(std::make_unique<InputModel>()), _keyboard(Input::get<Keyboard>()),
-    _mouse(Input::get<Mouse>()) {
-    _kkey = _keyboard->acquireKey();
-    bool addedKey = _keyboard->addKeyDownListener(_kkey,
-        [this](const KeyEvent& event, bool focus) {
-            _current.emplace(event.keycode);
-        });
+InputController::InputController(): _model(std::make_unique<InputModel>()),
+    _touch(Input::get<Touchscreen>()) {
+    _listener = _touch->acquireKey();
+    bool addedKey = _touch->addBeginListener(_listener, [=](const cugl::TouchEvent& event, bool focus) {
+        this->touchDownCB(event,focus);
+    });
     CUAssertLog(addedKey, "failed adding key listener");
 
-    _mkey = _mouse->acquireKey();
-    _mouse->setPointerAwareness(Mouse::PointerAwareness::DRAG);
-    bool addedPress = _mouse->addPressListener(_mkey, [this](const MouseEvent &event, Uint8 clicks, bool focus) { buttonDownCB(event, clicks, focus);
-    });
-    CUAssertLog(addedPress, "failed adding press listener");
+    bool addedPress = _touch->addEndListener(_listener, [=](const cugl::TouchEvent& event, bool focus) {
+            this->touchUpCB(event,focus);
+        });
+    CUAssertLog(addedPress, "failed adding end listener");
 
-    bool addedDrag = _mouse->addDragListener(_mkey, [this](const MouseEvent& event, const Vec2 previous, bool focus) {
-        buttonHeldCB(event, previous, focus);
+    bool addedMotion = _touch->addMotionListener(_listener, [=](const cugl::TouchEvent& event, const Vec2 previous, bool focus) {
+        this->motionCBtouch(event,previous,focus);
     });
-    CUAssertLog(addedDrag, "failed adding drag listener");
-
-    bool addedRelease = _mouse->addReleaseListener(_mkey, [this](const MouseEvent &event, Uint8 clicks, bool focus) {
-        buttonUpCB(event, clicks, focus);
-    });
-    CUAssertLog(addedRelease, "failed adding release listener");
+    CUAssertLog(addedMotion, "failed adding motion listener");
 }
 
 /** Returns a singleton instance of InputController. */
@@ -63,14 +54,14 @@ void InputController::update(float dt) {
     _previous = _current;
     _current.clear();
     
-    _model->isMouseClicked = _model->didClickMouse;
-    // Only need to detect the first click
-    _model->didClickMouse = false;
-    _model->isMouseHeld = _model->didHoldMouse;
+    _model->_prevDown = _model->_currDown;
+    _model->_currDown = _model->_touchDown;
+    _model->_prevPos = _model->_currPos;
+    _model->_currPos = _model->_touchPos;
 }
 
 #pragma mark -
-#pragma mark Mouse Callbacks
+#pragma mark Touch Callbacks
 /**
  * Callback for the beginning of a mouse press event.
  *
@@ -80,11 +71,11 @@ void InputController::update(float dt) {
  * @param clicks    The number of clicks (for double clicking)
  * @param focus     Whether this device has focus (UNUSED)
  */
-void InputController::buttonDownCB(const cugl::MouseEvent &event, Uint8 clicks, bool focus) {
-    if (!_model->didHoldMouse && event.buttons.hasLeft()) {
-        _model->didClickMouse = true;
-        _model->didHoldMouse = true;
-        _model->lastMousePos = event.position;
+void InputController::touchDownCB(const cugl::TouchEvent& event, bool focus) {
+    if (!_model->_touchDown && _model->_touchId == -1) {
+        _model->_touchId = event.touch;
+        _model->_touchDown = true;
+        _model->_touchPos = event.position;
     }
 }
 
@@ -97,25 +88,23 @@ void InputController::buttonDownCB(const cugl::MouseEvent &event, Uint8 clicks, 
  * @param previous    The previous position of the mouse
  * @param focus     Whether this device has focus (UNUSED)
  */
-void InputController::buttonHeldCB(const MouseEvent& event, const Vec2 previous, bool focus) {
-    if (_model->didHoldMouse && event.buttons.hasLeft()) {
-        _model->lastMousePos = event.position;
+void InputController::motionCBtouch(const cugl::TouchEvent& event, const Vec2 previous, bool focus) {
+    if (_model->_touchDown && event.touch == _model->_touchId) {
+        _model->_touchPos = event.position;
     }
 }
 
 /**
- * Callback for the end of a mouse press event.
+ * Callback for the end of a touch event.
  *
- * This function will record a release for the left mouse button.
- *
- * @param event     The event with the mouse information
- * @param clicks    The number of clicks (for double clicking)
+ * @param event     The event with the touch information
  * @param focus     Whether this device has focus (UNUSED)
  */
-void InputController::buttonUpCB(const cugl::MouseEvent &event, Uint8 clicks, bool focus) {
-    if (_model->didHoldMouse && event.buttons.hasLeft()) {
-        _model->didHoldMouse = false;
-        _model->lastMousePos = event.position;
+void InputController::touchUpCB(const cugl::TouchEvent& event, bool focus) {
+    // Only recognize the left mouse button
+    if (_model->_touchDown && _model->_touchId != -1) {
+        _model->_touchDown = false;
+        _model->_touchId = -1;
     }
 }
 

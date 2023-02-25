@@ -14,26 +14,26 @@ LOCAL_C_INCLUDES += $(CUGL_PATH)/sdl2/include
 LOCAL_C_INCLUDES += $(CUGL_PATH)/thirdparty/box2d/include
 LOCAL_C_INCLUDES += $(CUGL_PATH)/thirdparty/geomtools/include
 LOCAL_C_INCLUDES += $(PROJ_PATH)/source
+LOCAL_C_INCLUDES += $(PROJ_PATH)/source/Scene
 LOCAL_C_INCLUDES += $(PROJ_PATH)/source
 LOCAL_C_INCLUDES += $(PROJ_PATH)/source/Input
-LOCAL_C_INCLUDES += $(PROJ_PATH)/source/MVC/Tilemap
-LOCAL_C_INCLUDES += $(PROJ_PATH)/source/MVC/Tile
-LOCAL_C_INCLUDES += $(PROJ_PATH)/source/Game
-LOCAL_C_INCLUDES += $(PROJ_PATH)/source/CMV/Tile
-LOCAL_C_INCLUDES += $(PROJ_PATH)/source/Generator
-LOCAL_C_INCLUDES += $(PROJ_PATH)/source/CMV/Tilemap
+LOCAL_C_INCLUDES += $(PROJ_PATH)/source/Path
+LOCAL_C_INCLUDES += $(PROJ_PATH)/source/Character
+LOCAL_C_INCLUDES += $(PROJ_PATH)/source/Tilemap
+LOCAL_C_INCLUDES += $(PROJ_PATH)/source/Tile
 
 
 # Add your application source files here.
 LOCAL_PATH = $(PROJ_PATH)
 LOCAL_SRC_FILES := $(subst $(LOCAL_PATH)/,, \
-	$(LOCAL_PATH)/source/TMApp.cpp \
 	$(LOCAL_PATH)/source/main.cpp \
-	$(LOCAL_PATH)/source/CMV/Tilemap/CMVTilemapController.cpp \
-	$(LOCAL_PATH)/source/MVC/Tilemap/MVCTilemapController.cpp \
-	$(LOCAL_PATH)/source/Game/GameController.cpp \
+	$(LOCAL_PATH)/source/App.cpp \
+	$(LOCAL_PATH)/source/Tilemap/TilemapController.cpp \
+	$(LOCAL_PATH)/source/Scene/LoadingController.cpp \
+	$(LOCAL_PATH)/source/Scene/GamePlayController.cpp \
 	$(LOCAL_PATH)/source/Input/InputController.cpp \
-	$(LOCAL_PATH)/source/Generator/GeneratorController.cpp)
+	$(LOCAL_PATH)/source/Character/CharacterController.cpp \
+	$(LOCAL_PATH)/source/Path/PathController.cpp)
 
 # Link in SDL2
 LOCAL_SHARED_LIBRARIES := SDL2

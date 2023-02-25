@@ -9,73 +9,55 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Source Files\CMV">
-      <UniqueIdentifier>{CDD2902F-0027-56EC-9B0A-4D425BFA914C}</UniqueIdentifier>
+    <Filter Include="Source Files\Tile">
+      <UniqueIdentifier>{CD52E326-5186-57F3-B5AD-4ECC2D1BF8DA}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\CMV\Tile">
-      <UniqueIdentifier>{CDD84BE8-5FE1-5F09-A3B9-003FD3C8BC41}</UniqueIdentifier>
+    <Filter Include="Source Files\Tilemap">
+      <UniqueIdentifier>{CD53699B-301D-5EC9-870C-6914CAB16ED8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\CMV\Tilemap">
-      <UniqueIdentifier>{CD8655E1-E809-553F-9D68-CBFA8BAA1E2C}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\MVC">
-      <UniqueIdentifier>{CDBCC101-AC38-5AA3-994B-0DD3324E4604}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\MVC\Tile">
-      <UniqueIdentifier>{CDF6A2F8-2FE4-55A5-920F-B4134D29A601}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\MVC\Tilemap">
-      <UniqueIdentifier>{CD7334F2-B525-529A-9D6B-518C8DDA0BE7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Game">
-      <UniqueIdentifier>{CD8E68EA-B50A-5802-A440-4C038426B85F}</UniqueIdentifier>
+    <Filter Include="Source Files\Scene">
+      <UniqueIdentifier>{CDF86E77-401F-5FAF-91CD-4CC9D3E69D2C}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\Input">
       <UniqueIdentifier>{CD836A2C-59A9-5ADC-A615-0A2B08DC190D}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Generator">
-      <UniqueIdentifier>{CD1754E6-59AD-5625-8197-4847D5066EB4}</UniqueIdentifier>
+    <Filter Include="Source Files\Character">
+      <UniqueIdentifier>{CD8D8DB5-2519-572C-AE13-8B7FF8E56E8A}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Path">
+      <UniqueIdentifier>{CD5D0687-B83E-57F5-B54A-6369C6AF57D7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
       <Filter>Resource Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\source\TMApp.h">
+    <ClInclude Include="..\..\..\source\App.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\source\CMV\Tile\CMVTileModel.h">
-      <Filter>Source Files\CMV\Tile</Filter>
+    <ClInclude Include="..\..\..\source\Tile\TileController.h">
+      <Filter>Source Files\Tile</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\source\CMV\Tile\CMVTileController.h">
-      <Filter>Source Files\CMV\Tile</Filter>
+    <ClInclude Include="..\..\..\source\Tile\TileView.h">
+      <Filter>Source Files\Tile</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\source\CMV\Tilemap\CMVTilemapModel.h">
-      <Filter>Source Files\CMV\Tilemap</Filter>
+    <ClInclude Include="..\..\..\source\Tile\TileModel.h">
+      <Filter>Source Files\Tile</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\source\CMV\Tilemap\CMVTilemapController.h">
-      <Filter>Source Files\CMV\Tilemap</Filter>
+    <ClInclude Include="..\..\..\source\Tilemap\TilemapView.h">
+      <Filter>Source Files\Tilemap</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\source\MVC\Tile\MVCTileController.h">
-      <Filter>Source Files\MVC\Tile</Filter>
+    <ClInclude Include="..\..\..\source\Tilemap\TilemapController.h">
+      <Filter>Source Files\Tilemap</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\source\MVC\Tile\MVCTileView.h">
-      <Filter>Source Files\MVC\Tile</Filter>
+    <ClInclude Include="..\..\..\source\Tilemap\TilemapModel.h">
+      <Filter>Source Files\Tilemap</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\source\MVC\Tile\MVCTileModel.h">
-      <Filter>Source Files\MVC\Tile</Filter>
+    <ClInclude Include="..\..\..\source\Scene\GamePlayController.h">
+      <Filter>Source Files\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\source\MVC\Tilemap\MVCTilemapModel.h">
-      <Filter>Source Files\MVC\Tilemap</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\source\MVC\Tilemap\MVCTilemapController.h">
-      <Filter>Source Files\MVC\Tilemap</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\source\MVC\Tilemap\MVCTilemapView.h">
-      <Filter>Source Files\MVC\Tilemap</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\source\Game\GameController.h">
-      <Filter>Source Files\Game</Filter>
+    <ClInclude Include="..\..\..\source\Scene\LoadingController.h">
+      <Filter>Source Files\Scene</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\source\Input\InputController.h">
       <Filter>Source Files\Input</Filter>
@@ -83,34 +65,49 @@
     <ClInclude Include="..\..\..\source\Input\InputModel.h">
       <Filter>Source Files\Input</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\source\Generator\GeneratorController.h">
-      <Filter>Source Files\Generator</Filter>
+    <ClInclude Include="..\..\..\source\Character\CharacterController.h">
+      <Filter>Source Files\Character</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\source\Generator\GeneratorModel.h">
-      <Filter>Source Files\Generator</Filter>
+    <ClInclude Include="..\..\..\source\Character\CharacterView.h">
+      <Filter>Source Files\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\source\Character\CharacterModel.h">
+      <Filter>Source Files\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\source\Path\PathView.h">
+      <Filter>Source Files\Path</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\source\Path\PathModel.h">
+      <Filter>Source Files\Path</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\source\Path\PathController.h">
+      <Filter>Source Files\Path</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\source\TMApp.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\source\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\source\CMV\Tilemap\CMVTilemapController.cpp">
-      <Filter>Source Files\CMV\Tilemap</Filter>
+    <ClCompile Include="..\..\..\source\App.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\source\MVC\Tilemap\MVCTilemapController.cpp">
-      <Filter>Source Files\MVC\Tilemap</Filter>
+    <ClCompile Include="..\..\..\source\Tilemap\TilemapController.cpp">
+      <Filter>Source Files\Tilemap</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\source\Game\GameController.cpp">
-      <Filter>Source Files\Game</Filter>
+    <ClCompile Include="..\..\..\source\Scene\LoadingController.cpp">
+      <Filter>Source Files\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\Scene\GamePlayController.cpp">
+      <Filter>Source Files\Scene</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\source\Input\InputController.cpp">
       <Filter>Source Files\Input</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\source\Generator\GeneratorController.cpp">
-      <Filter>Source Files\Generator</Filter>
+    <ClCompile Include="..\..\..\source\Character\CharacterController.cpp">
+      <Filter>Source Files\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\Path\PathController.cpp">
+      <Filter>Source Files\Path</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

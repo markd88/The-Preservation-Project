@@ -31,13 +31,13 @@ private:
     std::unordered_set<KeyCode> _previous;
     
     /** The unique key for the touch listeners */
-    Uint32 _touchKey;
-    cugl::TouchID _touchId; 
+    Uint32 _listener;
+//    cugl::TouchID _touchId; 
     
 #pragma mark External References
 private:
     /** Touchscreen reference */
-    Touchscreen* touch;
+    Touchscreen* _touch;
     
 #pragma mark Main Functions
 public:
