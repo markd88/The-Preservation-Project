@@ -34,7 +34,7 @@ public:
 //    Uint32 _touchKey;
     cugl::Vec2 _touchPos;
     bool _touchDown;
-//    cugl::TouchID _touchId;
+    cugl::TouchID _touchId;
 
 #pragma mark Main Functions
 public:
@@ -42,10 +42,10 @@ public:
     InputModel():
         _active(false),
         _currDown(false),
-        _prevDown(false){}
+        _prevDown(false),
         // touch
 //        _touchKey(0),
-//        _touchId(-1){}
+        _touchId(-1){}
 
 };
 
