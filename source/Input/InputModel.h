@@ -1,10 +1,7 @@
 //
 //  InputModel.h
 //
-//  This module represents the current input state. Note that this application
-//  does not use the mouse at all. This code is here to simply show you
-//  how you might want to organize your state.
-//
+//  This module represents the current input state.
 //
 #ifndef __INPUT_MODEL_H__
 #define __INPUT_MODEL_H__
@@ -35,6 +32,25 @@ public:
     cugl::Vec2 _touchPos;
     bool _touchDown;
     cugl::TouchID _touchId;
+    
+    // pan:
+    float _currAngle;
+    float _prevAngle;
+    float _currSpread;
+    float _prevSpread;
+
+    /** The panning distance from the player input */
+    cugl::Vec2 _pandelta;
+    float _angleDelta;
+    float _pinchDelta;
+    
+    cugl::Vec2 _anchor;
+    
+    /** Whether or not are in an active mouse pan */
+    bool _mousepan; //??
+    
+    cugl::Size _screensize;
+
 
 #pragma mark Main Functions
 public:
@@ -44,9 +60,16 @@ public:
         _currDown(false),
         _prevDown(false),
         // touch
-//        _touchKey(0),
-        _touchId(-1){}
-
+        // _touchKey(0),
+        _touchId(-1),
+        // pan
+        _mousepan(false), // ??
+        _currAngle(0),
+        _prevAngle(0),
+        _currSpread(0),
+        _prevSpread(0),
+        _angleDelta(0),
+        _pinchDelta(0) {}
 };
 
 
