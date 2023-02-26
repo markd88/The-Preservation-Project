@@ -54,10 +54,11 @@ void GamePlayController::update(float dt){
     
     
     // if pinch, switch world
-    if(_input->getPanDelta()!=0){
-        _tilemap1->removeChildFrom(_scene);
-        _tilemap2->addChildTo(_scene);
-    }
+//    Vec2 temp = _input->getPanDelta();
+//    if(_input->getPanDelta()!=0){
+//        _tilemap1->removeChildFrom(_scene);
+//        _tilemap2->addChildTo(_scene);
+//    }
 }
     
     
