@@ -34,8 +34,9 @@ private:
     /** Touchscreen reference */
     Touchscreen* _touch;
     
-#pragma mark Main Functions
 public:
+#pragma mark -
+#pragma mark Constructors
     /**
      * Creates the handler, initializing the input devices.
      *
@@ -47,8 +48,41 @@ public:
      */
     InputController();
     
+    /**
+     * Disposes of this input controller, releasing all listeners.
+     */
+    ~InputController() { dispose(); }
+    
+    /**
+     * Deactivates this input controller, releasing all listeners.
+     *
+     * This method will not dispose of the input controller. It can be reused
+     * once it is reinitialized.
+     */
+    void dispose(){
+        return ;
+    };
+    
     /** Returns a singleton instance of InputController. */
     static std::shared_ptr<InputController> getInstance();
+        
+    // pan
+    bool init(const cugl::Size& size);
+    
+    cugl::Vec2 screenToScene(const cugl::Vec2& position) const;
+    
+#pragma mark -
+#pragma mark Input Detection
+    /**
+     * Returns true if this control is active.
+     *
+     * An active control is one where all of the listeners are attached
+     * and it is actively monitoring input. An input controller is only
+     * active if {@link #init} is called, and if {@link #dispose} is not.
+     *
+     * @return true if this control is active.
+     */
+    bool isActive() const { return _model->_active; }
     
     /**
      * Aligns inputs detected through callbacks with frame updates.
@@ -56,6 +90,32 @@ public:
      * @param dt  The amount of time (in seconds) since the last frame
      */
     void update(float dt);
+
+    /**
+     * Clears any buffered inputs so that we may start fresh.
+     */
+    void clear();
+
+#pragma mark -
+#pragma mark Input Results
+    const cugl::Vec2& getAnchor() const { return _model->_anchor; }
+
+    void setAnchor(const cugl::Vec2& anchor) { _model->_anchor = anchor; }
+    
+    /**
+     * Returns the current pan delta.
+     *
+     * The delta is the amount that the user has moved a two-finger touch
+     * since the last animation frame. This distance is measured according
+     * to the first-finger touch.
+     *
+     * @return The input thrust
+     */
+    const cugl::Vec2& getPanDelta() const { return _model->_pandelta; }
+    
+    float getPinchDelta() const { return _model->_pinchDelta; }
+
+    float getAngleDelta() const { return _model->_angleDelta; }
 
 #pragma mark Touch Callbacks
 private:
@@ -91,19 +151,25 @@ private:
      */
     void motionCBtouch(const cugl::TouchEvent& event, const cugl::Vec2 previous, bool focus);
     
+    // pan callbacks
+    /**
+     * Callback for the end of a pan event
+     *
+     * @param event The associated event
+     * @param focus     Whether the listener currently has focus
+     */
+    void panEndedCB(const cugl::PanEvent& event, bool focus);
+
+    /**
+     * Callback for a pan movement event
+     *
+     * @param event The associated event
+     * @param focus     Whether the listener currently has focus
+     */
+    void panMovedCB(const cugl::PanEvent& event, bool focus);
+
 #pragma mark Input State Getters
 public:
-    /**
-     * Returns true if this control is active.
-     *
-     * An active control is one where all of the listeners are attached
-     * and it is actively monitoring input. An input controller is only
-     * active if {@link #init} is called, and if {@link #dispose} is not.
-     *
-     * @return true if this control is active.
-     */
-    bool isActive() const { return _model->_active; }
-    
     /**
      * Returns the current mouse/touch position
      *
