@@ -6,8 +6,6 @@
 #ifndef __INPUT_CONTROLLER_H__
 #define __INPUT_CONTROLLER_H__
 #include <unordered_set>
-
-// This is in the same folder
 #include "InputModel.h"
 
 /**
@@ -27,7 +25,10 @@ private:
     std::unique_ptr<InputModel> _model;
     
     /** The unique key for the touch listeners */
-    Uint32 _listener;
+    Uint32 _touchListener;
+    
+    /** The unique key for the gensture listeners */
+    Uint32 _gestureListener;
     
 #pragma mark External References
 private:
@@ -63,11 +64,14 @@ public:
     
     /** Returns a singleton instance of InputController. */
     static std::shared_ptr<InputController> getInstance();
-        
-    // pan
-    bool init(const cugl::Size& size);
-    
-    cugl::Vec2 screenToScene(const cugl::Vec2& position) const;
+
+    // touch
+    bool initTouch();
+
+    // gesture
+    bool initPinch(const cugl::Size& size);
+
+    cugl::Vec2 screenToScenePinch(const cugl::Vec2& position) const;
     
 #pragma mark -
 #pragma mark Input Detection
@@ -80,40 +84,21 @@ public:
      *
      * @return true if this control is active.
      */
-    bool isActive() const { return _model->_active; }
+    bool isActiveTouch() const { return _model->_activeTouch; }
+    bool isActivePinch() const { return _model->_activePinch; }
     
     /**
      * Aligns inputs detected through callbacks with frame updates.
      *
      * @param dt  The amount of time (in seconds) since the last frame
      */
-    void update(float dt);
+    void updateTouch();
+    void updatePinch(float dt);
 
     /**
      * Clears any buffered inputs so that we may start fresh.
      */
-    void clear();
-
-#pragma mark -
-#pragma mark Input Results
-    const cugl::Vec2& getAnchor() const { return _model->_anchor; }
-
-    void setAnchor(const cugl::Vec2& anchor) { _model->_anchor = anchor; }
-    
-    /**
-     * Returns the current pan delta.
-     *
-     * The delta is the amount that the user has moved a two-finger touch
-     * since the last animation frame. This distance is measured according
-     * to the first-finger touch.
-     *
-     * @return The input thrust
-     */
-    const cugl::Vec2& getPanDelta() const { return _model->_pandelta; }
-    
-    float getPinchDelta() const { return _model->_pinchDelta; }
-
-    float getAngleDelta() const { return _model->_angleDelta; }
+    void clearPinch();
 
 #pragma mark Touch Callbacks
 private:
@@ -156,7 +141,7 @@ private:
      * @param event The associated event
      * @param focus     Whether the listener currently has focus
      */
-    void panEndedCB(const cugl::PanEvent& event, bool focus);
+    void pinchEndedCB(const cugl::CoreGestureEvent& event, bool focus);
 
     /**
      * Callback for a pan movement event
@@ -164,23 +149,24 @@ private:
      * @param event The associated event
      * @param focus     Whether the listener currently has focus
      */
-    void panMovedCB(const cugl::PanEvent& event, bool focus);
+    void pinchMovedCB(const cugl::CoreGestureEvent& event, bool focus);
 
 #pragma mark Input State Getters
 public:
+    // touch
     /**
-     * Returns the current mouse/touch position
+     * Returns the current touch position
      *
-     * @return the current mouse/touch position
+     * @return the current touch position
      */
     const cugl::Vec2& getPosition() const {
         return _model->_currPos;
     }
     
     /**
-     * Returns the previous mouse/touch position
+     * Returns the previous touch position
      *
-     * @return the previous mouse/touch position
+     * @return the previous touch position
      */
     const cugl::Vec2& getPrevious() const {
         return _model->_prevPos;
@@ -222,6 +208,25 @@ public:
         return _model->_currDown;
     }
     
+    // gesture
+    const cugl::Vec2& getAnchor() const { return _model->_anchor; }
+
+    void setAnchor(const cugl::Vec2& anchor) { _model->_anchor = anchor; }
+    
+    /**
+     * Returns the current pan delta.
+     *
+     * The delta is the amount that the user has moved a two-finger touch
+     * since the last animation frame. This distance is measured according
+     * to the first-finger touch.
+     *
+     * @return The input thrust
+     */
+    const cugl::Vec2& getPanDelta() const { return _model->_pandelta; }
+    
+    float getPinchDelta() const { return _model->_pinchDelta; }
+
+    float getAngleDelta() const { return _model->_angleDelta; }
 };
 
 #endif /* __INPUT_CONTROLLER_H__ */
