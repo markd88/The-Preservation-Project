@@ -87,9 +87,8 @@ void App::onShutdown() {
  * @param timestep  The amount of time (in seconds) since the last frame
  */
 void App::update(float timestep) {
-    if(active_scene == "GamePlay"){
-        _gameplayController->update(timestep);
-    }
+    _gameplayController->update(timestep);
+
 }
 
 /**

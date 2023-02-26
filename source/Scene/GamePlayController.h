@@ -17,7 +17,7 @@ private:
 #pragma mark External References
 public:
     /** The tilemap to procedurally generate */
-    // std::unique_ptr<CharacterController> _character;
+    std::unique_ptr<CharacterController> _character;
     // std::unique_ptr<TileMapController> _tilemap;
     // std::unique_ptr<PathController> _path;
     std::shared_ptr<InputController> _input = InputController::getInstance();
@@ -49,7 +49,8 @@ public:
      *
      * @param batch The SpriteBatch used to render this scene
      */
-    void render(std::shared_ptr<SpriteBatch> batch) { // _scene->render(batch);
+    void render(std::shared_ptr<SpriteBatch> batch) {
+        _scene->render(batch);
         
     }
     
