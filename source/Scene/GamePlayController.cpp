@@ -9,10 +9,21 @@ using namespace cugl;
 GamePlayController::GamePlayController(const Size displaySize):_scene(cugl::Scene2::alloc(displaySize))
 {
     // initialize character, two maps, path
+    
+    
+    _tilemap1 = std::make_unique<TilemapController>();
+    generatePrimaryWorld(_tilemap1);
+    _tilemap1->addChildTo(_scene);
+    
+    _tilemap2 = std::make_unique<TilemapController>();
+    generatePrimaryWorld(_tilemap2);
+    // _tilemap2->addChildTo(_scene);
+    
+    _template = 0;
+    
     _character = make_unique<CharacterController>(_scene->getSize()/2);
 
     _character->addChildTo(_scene);
-    
 }
 
 void GamePlayController::update(float dt){
@@ -37,8 +48,15 @@ void GamePlayController::update(float dt){
         // if path not null, determine if path is valid
         // start moving character
     }
-}
+    
+    
     // if character is moving, move it 
+    
+    
+    // if pinch, switch world
+    
+}
+    
     
 #pragma mark Main Methods
 
@@ -46,8 +64,8 @@ void GamePlayController::update(float dt){
 #pragma mark -
 #pragma mark Generation Helpers
     
-    /** Generates a yellow smiley face with a black smile. */
-    void GamePlayController::generatePrimaryWorld() {
+    /** Generates the first world. */
+    void GamePlayController::generatePrimaryWorld(std::unique_ptr<TilemapController> &_tilemap) {
         _tilemap->updateDimensions(Vec2(65, 35));
         _tilemap->updateColor(Color4::WHITE);
         _tilemap->updateTileSize(Size(15, 15));
@@ -81,11 +99,11 @@ void GamePlayController::update(float dt){
     }
     
     /**
-     * Generates tiles randomly on the tilemap with probability `p`.
+     * Generates the second world.
      *
      * @param p The probability that a tile is generated.
      */
-    void GamePlayController::generateSecondaryWorld() {
+    void GamePlayController::generateSecondaryWorld(std::unique_ptr<TilemapController> & _tilemap) {
         _tilemap->updateDimensions(Vec2(65, 35));
         _tilemap->updateColor(Color4::WHITE);
         _tilemap->updateTileSize(Size(15, 15));
@@ -125,27 +143,27 @@ void GamePlayController::update(float dt){
      *
      * @param template    The template number
      */
-    void GamePlayController::generateTemplate(int choice) {
-        /// Pre-made templates
-        switch (choice) {
-            case 1:
-                _tilemap->clearMap();
-                printExecution("generatePrimaryWorld", [this](){
-                    generatePrimaryWorld();
-                });
-                _template = 1;
-                break;
-            case 2:
-                _tilemap->clearMap();
-                printExecution("generateSecondaryWorld", [this](){
-                    generateSecondaryWorld();
-                });
-                _template = 2;
-                break;
-            default:
-                break;
-        }
-    }
+//    void GamePlayController::generateTemplate(int choice) {
+//        /// Pre-made templates
+//        switch (choice) {
+//            case 1:
+//                // _tilemap->clearMap();
+//                printExecution("generatePrimaryWorld", [this](){
+//                    generatePrimaryWorld();
+//                });
+//                _template = 1;
+//                break;
+//            case 2:
+//                // _tilemap->clearMap();
+//                printExecution("generateSecondaryWorld", [this](){
+//                    generateSecondaryWorld();
+//                });
+//                _template = 2;
+//                break;
+//            default:
+//                break;
+//        }
+//    }
     
     /**
      * Executes a function with debugging information.

@@ -18,8 +18,6 @@ private:
     /** The Game scene */
     std::shared_ptr<cugl::Scene2> _scene;
 
-    /** The random number generator */
-    std::shared_ptr<std::mt19937> _randoms;
     /** The current tile map template (for regeneration) */
     int _template;
     
@@ -28,7 +26,9 @@ public:
     /** The tilemap to procedurally generate */
 
     std::unique_ptr<CharacterController> _character;
-     std::unique_ptr<TilemapController> _tilemap;
+    std::unique_ptr<TilemapController> _tilemap1;
+    std::unique_ptr<TilemapController> _tilemap2;
+
     // std::unique_ptr<PathController> _path;
     std::shared_ptr<InputController> _input = InputController::getInstance();
     vector<float> path_trace;
@@ -67,10 +67,10 @@ public:
 #pragma mark Generation Helpers
 private:
     /** Generates primary world with guards. */
-    void generatePrimaryWorld();
+    void generatePrimaryWorld(std::unique_ptr<TilemapController>& tilemap);
 
     /** Generates secondary world without guards. */
-    void generateSecondaryWorld();
+    void generateSecondaryWorld(std::unique_ptr<TilemapController>& tilemap);
     
 
 #pragma mark Helpers

@@ -2,7 +2,7 @@
 name:   Tilemap Viewer              # The application display name
 short:  Tilemap                     # A shortened name for reference
 appid:  edu.cornell.gdiac.code3     # Application identifier for Mac, iOS, Android
-suffix: G78B13A8
+suffix: G78B13A9
 
 build:  build                       # The build directory (targets are each a subdirectory)
 assets: assets                      # The folder with the game assets (do not list asset)
