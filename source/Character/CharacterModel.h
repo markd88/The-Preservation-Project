@@ -6,6 +6,9 @@
 
 #ifndef CharacterModel_h
 #define CharacterModel_h
+#include <cugl/cugl.h>
+using namespace cugl;
+
 
 #include <cugl/cugl.h>
 using namespace cugl;
@@ -38,6 +41,11 @@ public:
 
 #pragma mark Setters
 public:
+    
+    Vec2 getPosition(){
+        return _position;
+    }
+    
     /**
      *  Sets the position of the bottom left corner of the tile.
      *
@@ -63,6 +71,20 @@ public:
      */
     void setColor(Color4 color) {
         _color = color;
+    }
+    
+#pragma mark Helpers
+public:
+    /**
+     *  See if the touch point is within the character
+     *
+     *  @param point The position of the touchpoint
+     */
+    bool contains(Vec2 point){
+        if(_position.distance(point)<=_size.width){
+            return true;
+        }
+        return false;
     }
     
 };

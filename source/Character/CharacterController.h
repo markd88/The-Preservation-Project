@@ -36,12 +36,17 @@ public:
     }
     
     CharacterController(Vec2 position) {
-        _model = std::make_unique<CharacterModel>(position, Size(5, 5), Color4::BLUE);
-        _view = std::make_unique<CharacterView>(position, Size(5, 5), Color4::BLUE);
+        _model = std::make_unique<CharacterModel>(position, Size(50, 50), Color4::BLUE);
+        _view = std::make_unique<CharacterView>(position, Size(50, 50), Color4::BLUE);
     }
 
 #pragma mark Update Methods
 public:
+    
+    Vec2 getPosition() {
+        return _model->getPosition();
+    }
+    
     /**
      *  Updates the model and view with position of this tile.
      *
@@ -71,6 +76,16 @@ public:
         _model->setColor(color);
         _view->setColor(color);
     }
+
+#pragma mark Helpers
+    /**
+     *  See if the touch point is within the character
+     *
+     *  @param point The position of the touchpoint
+     */
+    bool contains(Vec2 point){
+        return _model->contains(point);
+    }
     
 #pragma mark Scene Methods
 public:
@@ -79,7 +94,7 @@ public:
      *
      * @param node The scenenode to add the view to
      */
-    void addChildTo(std::shared_ptr<scene2::SceneNode> node) {
+    void addChildTo(std::shared_ptr<cugl::Scene2> node) {
         _view->addChildTo(node);
     }
     
@@ -88,7 +103,7 @@ public:
      *
      * @param node The scenenode to remove the view from
      */
-    void removeChildFrom(std::shared_ptr<scene2::SceneNode> node) {
+    void removeChildFrom(std::shared_ptr<cugl::Scene2> node) {
         _view->removeChildFrom(node);
     }
     

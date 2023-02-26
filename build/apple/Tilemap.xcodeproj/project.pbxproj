@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		092BB6D729AAC11A00F68480 /* play.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 092BB6D529AAC11A00F68480 /* play.cpp */; };
 		ABBBF1BCC27EA60BCFCAF168 /* placeholder.txt in Resources */ = {isa = PBXBuildFile; fileRef = AA3CD5F0F5AAE7BA683B24F0 /* placeholder.txt */; };
 		AC6FEAFD0E0B8F5D0F302A7E /* placeholder.txt in Resources */ = {isa = PBXBuildFile; fileRef = AA3CD5F0F5AAE7BA683B24F0 /* placeholder.txt */; };
 		BB040D0FA8EA86E34BFEF0AF /* PathController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA9E28E9BBCFB79C7DFDF7ED /* PathController.cpp */; };
@@ -81,7 +80,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		092BB6D529AAC11A00F68480 /* play.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = play.cpp; sourceTree = "<group>"; };
 		AA3CD5F0F5AAE7BA683B24F0 /* placeholder.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = placeholder.txt; sourceTree = "<group>"; };
 		BA0BFCD17AAAA583E8A9E6CA /* App.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = App.cpp; sourceTree = "<group>"; };
 		BA497EA9473BC1A07169ECF9 /* LoadingController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadingController.h; sourceTree = "<group>"; };
@@ -294,7 +292,6 @@
 				CDA57BA9AFFB1B103FEA2A43 /* Input */,
 				CDCA8B81ED7F33FAAF51BA59 /* Character */,
 				CDB97A5E12D39A8BE70FF9D3 /* Path */,
-				092BB6D529AAC11A00F68480 /* play.cpp */,
 			);
 			name = Source;
 			path = ../../source;
@@ -509,7 +506,6 @@
 			files = (
 				BBAEDE6930CE67D19758DBFA /* main.cpp in Sources */,
 				BBBCCD11F3FBEB2BCA3A35B8 /* App.cpp in Sources */,
-				092BB6D729AAC11A00F68480 /* play.cpp in Sources */,
 				BBD3DFAE7E04763B516053FE /* TilemapController.cpp in Sources */,
 				BB5F080D7B36C9AEAB172EFA /* LoadingController.cpp in Sources */,
 				BB9D46AB7E4A525A6DE21515 /* GamePlayController.cpp in Sources */,
@@ -700,7 +696,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = edu.cornell.gdiac.code3.mac.G78B13A9;
+				PRODUCT_BUNDLE_IDENTIFIER = edu.cornell.gdiac.code3.mac.G78B13A8;
 				PRODUCT_NAME = "Tilemap Viewer";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -735,7 +731,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = edu.cornell.gdiac.code3.mac.G78B13A9;
+				PRODUCT_BUNDLE_IDENTIFIER = edu.cornell.gdiac.code3.mac.G78B13A8;
 				PRODUCT_NAME = "Tilemap Viewer";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -750,7 +746,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 69848UR4YF;
+				DEVELOPMENT_TEAM = F677DVQ33L;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -773,7 +769,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = edu.cornell.gdiac.code3.ios.G78B13A9;
+				PRODUCT_BUNDLE_IDENTIFIER = edu.cornell.gdiac.code3.ios.G78B13A8;
 				PRODUCT_NAME = "Tilemap Viewer";
 				SDKROOT = iphoneos;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -812,7 +808,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = edu.cornell.gdiac.code3.ios.G78B13A9;
+				PRODUCT_BUNDLE_IDENTIFIER = edu.cornell.gdiac.code3.ios.G78B13A8;
 				PRODUCT_NAME = "Tilemap Viewer";
 				SDKROOT = iphoneos;
 				SWIFT_EMIT_LOC_STRINGS = YES;

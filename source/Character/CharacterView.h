@@ -24,7 +24,7 @@ public:
         // initialize view
         _node = scene2::PolygonNode::alloc();
         _node->setRelativeColor(false);
-        _node->setAnchor(Vec2::ANCHOR_BOTTOM_LEFT);
+        _node->setAnchor(Vec2::ANCHOR_CENTER);
         // initialize state
         setSize(size);
         setPosition(position);
@@ -45,8 +45,8 @@ public:
      *
      * @param sceneNode The scenenode to add the view to
      */
-    void addChildTo(const std::shared_ptr<scene2::SceneNode>& sceneNode) {
-        sceneNode->addChild(_node);
+    void addChildTo(const std::shared_ptr<cugl::Scene2>& scene) {
+        scene->addChild(_node);
     }
     
     /**
@@ -54,9 +54,10 @@ public:
      *
      * @param sceneNode The scenenode to remove the view from
      */
-    void removeChildFrom(const std::shared_ptr<scene2::SceneNode>& sceneNode) {
-        sceneNode->removeChild(_node);
+    void removeChildFrom(const std::shared_ptr<cugl::Scene2>& scene) {
+        scene->removeChild(_node);
     }
+    
 
 #pragma mark Setters
 public:
@@ -65,7 +66,8 @@ public:
     }
     
     void setSize(Size size){
-        _node->setPolygon(Rect(Vec2(0,0), size));
+        //_node->setPolygon(Rect(Vec2(0,0), size));
+        _node->setContentSize(size);
     }
     
     void setColor(Color4 color){

@@ -34,6 +34,8 @@ InputController::InputController(): _model(std::make_unique<InputModel>()),
     CUAssertLog(addedMotion, "failed adding motion listener");
 }
 
+
+
 /** Returns a singleton instance of InputController. */
 std::shared_ptr<InputController> InputController::getInstance() {
     static std::shared_ptr<InputController> inputController;

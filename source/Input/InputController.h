@@ -59,7 +59,9 @@ public:
      * This method will not dispose of the input controller. It can be reused
      * once it is reinitialized.
      */
-    void dispose();
+    void dispose(){
+        return ;
+    };
     
     /** Returns a singleton instance of InputController. */
     static std::shared_ptr<InputController> getInstance();

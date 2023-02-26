@@ -15,17 +15,18 @@ LOCAL_C_INCLUDES += $(CUGL_PATH)/thirdparty/box2d/include
 LOCAL_C_INCLUDES += $(CUGL_PATH)/thirdparty/geomtools/include
 LOCAL_C_INCLUDES += $(PROJ_PATH)/source
 LOCAL_C_INCLUDES += $(PROJ_PATH)/source/Scene
-LOCAL_C_INCLUDES += $(PROJ_PATH)/source
-LOCAL_C_INCLUDES += $(PROJ_PATH)/source/Input
-LOCAL_C_INCLUDES += $(PROJ_PATH)/source/Path
-LOCAL_C_INCLUDES += $(PROJ_PATH)/source/Character
 LOCAL_C_INCLUDES += $(PROJ_PATH)/source/Tilemap
+LOCAL_C_INCLUDES += $(PROJ_PATH)/source/Input
+LOCAL_C_INCLUDES += $(PROJ_PATH)/source/Character
+LOCAL_C_INCLUDES += $(PROJ_PATH)/source/Path
+LOCAL_C_INCLUDES += $(PROJ_PATH)/source
 LOCAL_C_INCLUDES += $(PROJ_PATH)/source/Tile
 
 
 # Add your application source files here.
 LOCAL_PATH = $(PROJ_PATH)
 LOCAL_SRC_FILES := $(subst $(LOCAL_PATH)/,, \
+	$(LOCAL_PATH)/source/play.cpp \
 	$(LOCAL_PATH)/source/main.cpp \
 	$(LOCAL_PATH)/source/App.cpp \
 	$(LOCAL_PATH)/source/Tilemap/TilemapController.cpp \

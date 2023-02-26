@@ -9,6 +9,7 @@
 //  Authors: Walker White and Gonzalo Gonzalez
 //  Version: 2/8/23
 //
+using namespace std;
 
 #ifndef __PC_APP_H__
 #define __PC_APP_H__
@@ -33,8 +34,9 @@ protected:
     std::shared_ptr<cugl::AssetManager> _assets;
     
     /** The variable to determine which scene is being active */
-    std::shared_ptr<std::string> active_scene;
-
+    string active_scene;
+    
+    std::shared_ptr<GamePlayController> _gameplayController;
     
 public:
     /**

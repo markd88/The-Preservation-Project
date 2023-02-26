@@ -5,28 +5,33 @@
 
 #include <cugl/cugl.h>
 using namespace cugl;
+using namespace std;
 // Uncomment to activate (but comment out MVC)
 #include <Path/PathController.h>
+#include <Character/CharacterController.h>
 #include <Tilemap/TilemapController.h>
-//using namespace MVC;
-
+#include <Input/InputController.h>
 
 class GamePlayController {
 #pragma mark Internal References
 private:
     /** The Game scene */
     std::shared_ptr<cugl::Scene2> _scene;
-    /** The random number generator */
-    std::shared_ptr<std::mt19937> _randoms;
+
     /** The current tile map template (for regeneration) */
     int _template;
     
 #pragma mark External References
-private:
+public:
     /** The tilemap to procedurally generate */
-    // std::unique_ptr<CharacterController> _character;
-     std::unique_ptr<TilemapController> _tilemap;
+
+    std::unique_ptr<CharacterController> _character;
+    std::unique_ptr<TilemapController> _tilemap1;
+    std::unique_ptr<TilemapController> _tilemap2;
+
     // std::unique_ptr<PathController> _path;
+    std::shared_ptr<InputController> _input = InputController::getInstance();
+    vector<float> path_trace;
     
 #pragma mark Main Methods
 public:
@@ -39,8 +44,8 @@ public:
      * @param displaySize   The display size of the game window
      * @param randoms        Reference to the random number generator
      */
-    GamePlayController(const Size displaySize, const std::shared_ptr<std::mt19937>& randoms);
-    
+    // GamePlayController(const Size displaySize, const std::shared_ptr<std::mt19937>& randoms);
+    GamePlayController(const Size displaySize);
     /**
      * Responds to the keyboard commands.
      *
@@ -56,15 +61,16 @@ public:
      *
      * @param batch The SpriteBatch used to render this scene
      */
+
     void render(std::shared_ptr<SpriteBatch> batch) { _scene->render(batch); }
 
 #pragma mark Generation Helpers
 private:
     /** Generates primary world with guards. */
-    void generatePrimaryWorld();
-    
+    void generatePrimaryWorld(std::unique_ptr<TilemapController>& tilemap);
+
     /** Generates secondary world without guards. */
-    void generateSecondaryWorld();
+    void generateSecondaryWorld(std::unique_ptr<TilemapController>& tilemap);
     
 
 #pragma mark Helpers
