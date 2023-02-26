@@ -17,7 +17,7 @@ class InputModel {
 #pragma mark State
 public:
     /** Whether the input device was successfully initialized */
-    bool _active;
+    bool _activeTouch;
     /** The current touch/mouse position */
     cugl::Vec2 _currPos;
     /** The previous touch/mouse position */
@@ -33,12 +33,18 @@ public:
     bool _touchDown;
     cugl::TouchID _touchId;
     
-    // pan:
+#pragma mark Pinch Gesture
+    // TOUCH SUPPORT
+    bool _activePinch;
+    /** The current touch location for the current gesture */
+    cugl::Vec2 _currTouch;
+    /** The last touch location for the current gesture */
+    cugl::Vec2 _prevTouch;
     float _currAngle;
     float _prevAngle;
     float _currSpread;
     float _prevSpread;
-
+    // INPUT RESULTS
     /** The panning distance from the player input */
     cugl::Vec2 _pandelta;
     float _angleDelta;
@@ -47,7 +53,7 @@ public:
     cugl::Vec2 _anchor;
     
     /** Whether or not are in an active mouse pan */
-    bool _mousepan; //??
+    bool _mousepan;
     
     cugl::Size _screensize;
 
@@ -56,13 +62,14 @@ public:
 public:
     /** Creates the model state */
     InputModel():
-        _active(false),
+        _activeTouch(false),
         _currDown(false),
         _prevDown(false),
         // touch
         // _touchKey(0),
         _touchId(-1),
         // pan
+        _activePinch(false),
         _mousepan(false), // ??
         _currAngle(0),
         _prevAngle(0),
