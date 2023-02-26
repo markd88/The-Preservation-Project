@@ -133,6 +133,11 @@ std::shared_ptr<InputController> InputController::getInstance() {
     return inputController;
 }
 
+void InputController::update(float dt){
+    updateTouch();
+    updatePinch(dt);
+}
+
 /**
  * Aligns inputs detected through callbacks with frame updates.
  *

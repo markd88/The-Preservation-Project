@@ -60,9 +60,7 @@ public:
      * This method will not dispose of the input controller. It can be reused
      * once it is reinitialized.
      */
-    void dispose(){
-        return ;
-    };
+    void dispose();
     
     /** Returns a singleton instance of InputController. */
     static std::shared_ptr<InputController> getInstance();
@@ -94,6 +92,7 @@ public:
      *
      * @param dt  The amount of time (in seconds) since the last frame
      */
+    void update(float dt);
     void updateTouch();
     void updatePinch(float dt);
 
