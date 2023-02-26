@@ -1,6 +1,7 @@
 
 #include <cugl/cugl.h>
 using namespace cugl;
+using namespace std;
 // Uncomment to activate (but comment out MVC)
 #include <Path/PathController.h>
 #include <Character/CharacterController.h>
@@ -14,12 +15,14 @@ private:
     std::shared_ptr<cugl::Scene2> _scene;
     
 #pragma mark External References
-private:
+public:
     /** The tilemap to procedurally generate */
     // std::unique_ptr<CharacterController> _character;
     // std::unique_ptr<TileMapController> _tilemap;
     // std::unique_ptr<PathController> _path;
     std::shared_ptr<InputController> _input = InputController::getInstance();
+    vector<float> path_trace;
+    
     /**
      * Creates the game controller.
      *
@@ -46,7 +49,9 @@ private:
      *
      * @param batch The SpriteBatch used to render this scene
      */
-    void render(std::shared_ptr<SpriteBatch> batch) { _scene->render(batch); }
+    void render(std::shared_ptr<SpriteBatch> batch) { // _scene->render(batch);
+        
+    }
     
     
 };

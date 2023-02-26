@@ -14,7 +14,7 @@
 
 // This keeps us from having to write cugl:: all the time
 using namespace cugl;
-
+using namespace std;
 // The number of frames before moving the logo to a new position
 #define TIME_STEP 60
 // This is adjusted by screen aspect ratio to get the height
@@ -42,10 +42,14 @@ void App::onStartup() {
 
     Input::activate<Touchscreen>();
     
+    active_scene = "GamePlay";
+    
     // Initialize GameController, passing it the random number generator
     Size size = getDisplaySize();
     size *= GAME_WIDTH/size.width;
-//    _gameController = std::make_unique<GameController>(size);
+    
+    _gameplayController = make_unique<GamePlayController>(size);
+    
     Application::onStartup();
 
 }
@@ -83,8 +87,8 @@ void App::onShutdown() {
  * @param timestep  The amount of time (in seconds) since the last frame
  */
 void App::update(float timestep) {
-    if(*active_scene == "GamePlay"){
-        //_gameController->update(timestep);
+    if(active_scene == "GamePlay"){
+        _gameplayController->update(timestep);
     }
 }
 
@@ -98,5 +102,5 @@ void App::update(float timestep) {
  * at all. The default implmentation does nothing.
  */
 void App::draw() {
-    //_gameController->render(_batch);
+    _gameplayController->render(_batch);
 }

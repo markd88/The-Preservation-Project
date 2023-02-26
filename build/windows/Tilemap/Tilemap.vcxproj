@@ -256,6 +256,8 @@ xcopy /y /d /e  "$(AssetDir)*" "$(SolutionDir)output"</Command>
 
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\source\play.cpp"/>
+
     <ClCompile Include="..\..\..\source\main.cpp"/>
 
     <ClCompile Include="..\..\..\source\App.cpp"/>
