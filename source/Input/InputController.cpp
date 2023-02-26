@@ -31,6 +31,22 @@ InputController::InputController(){
     _model = std::make_unique<InputModel>();
 };
 
+/**
+* Deactivates this input controller, releasing all listeners.
+*
+* This method will not dispose of the input controller. It can be reused
+* once it is reinitialized.
+*/
+void InputController::dispose() {
+    if (_model->_activePinch) {
+        CoreGesture* gesture = Input::get<CoreGesture>();
+        gesture->removeBeginListener(_pinchListener);
+        gesture->removeChangeListener(_pinchListener);
+        gesture->removeEndListener(_pinchListener);
+        _model->_activePinch = false;
+    }
+}
+
 bool InputController::initTouch() {
     // touch init
     _touch = Input::get<Touchscreen>();
@@ -61,9 +77,9 @@ bool InputController::initPinch(const Size &size) {
     _model->_screensize = size;
     CoreGesture* gesture = Input::get<CoreGesture>();
     gesture->setSpinActive(true);
-    _gestureListener = gesture->acquireKey();
+    _pinchListener = gesture->acquireKey();
     
-    gesture->addBeginListener(_gestureListener,[=](const CoreGestureEvent& event, bool focus) {
+    gesture->addBeginListener(_pinchListener,[=](const CoreGestureEvent& event, bool focus) {
         _model->_currTouch = screenToScenePinch(event.origPosition);
         _model->_currTouch.y = _model->_screensize.height-_model->_currTouch.y;
         _model->_prevTouch = _model->_currTouch;
@@ -73,7 +89,7 @@ bool InputController::initPinch(const Size &size) {
         _model->_prevSpread = event.origSpread;
         _model->_anchor = _model->_currTouch;
     });
-    gesture->addChangeListener(_gestureListener,[=](const CoreGestureEvent& event, bool focus) {
+    gesture->addChangeListener(_pinchListener,[=](const CoreGestureEvent& event, bool focus) {
         switch (event.type) {
             case CoreGestureType::PAN:
                 _model->_mousepan = true;
@@ -91,7 +107,7 @@ bool InputController::initPinch(const Size &size) {
                 break;
         }
     });
-    gesture->addEndListener(_gestureListener,[=](const CoreGestureEvent& event, bool focus) {
+    gesture->addEndListener(_pinchListener,[=](const CoreGestureEvent& event, bool focus) {
         _model->_mousepan = false;
         _model->_currTouch.setZero();
         _model->_prevTouch.setZero();

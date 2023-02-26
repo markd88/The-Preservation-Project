@@ -28,7 +28,7 @@ private:
     Uint32 _touchListener;
     
     /** The unique key for the gensture listeners */
-    Uint32 _gestureListener;
+    Uint32 _pinchListener;
     
 #pragma mark External References
 private:
