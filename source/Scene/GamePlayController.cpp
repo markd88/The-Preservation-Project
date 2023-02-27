@@ -36,8 +36,9 @@ GamePlayController::GamePlayController(const Size displaySize):_scene(cugl::Scen
 void GamePlayController::update(float dt){
     _input->update(dt);
     // if pinch, switch world
-    if(_input->getPinchDelta()!=0){
+    if(_input->getPinchDelta() < -90 && _input->getPinchDelta() > -130){
         CULog("didPinch +++++++++++++");
+        std::cout<<"pinch delta = "<< _input->getPinchDelta()<<std::endl;
         if (_activeMap == "tileMap1") {
             _tilemap1->removeChildFrom(_scene);
             _tilemap2->addChildTo(_scene);
@@ -49,9 +50,7 @@ void GamePlayController::update(float dt){
             _activeMap = "tileMap1";
         }
 
-    }
-    
-    else if(_input->didPress()){
+    } else if(_input->didPress()){
         CULog("didPress");
         // if press, determine if press on character
         Vec2 input_posi = _input->getPosition();

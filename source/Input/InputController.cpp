@@ -203,10 +203,12 @@ Vec2 InputController::screenToScenePinch(const Vec2& position) const {
  * @param focus     Whether this device has focus (UNUSED)
  */
 void InputController::touchDownCB(const cugl::TouchEvent& event, bool focus) {
-    if (!_model->_touchDown && _model->_touchId == -1) {
-        _model->_touchId = event.touch;
-        _model->_touchDown = true;
-        _model->_touchPos = event.position;
+    if (_model->_pinchDelta >= -90 || _model->_pinchDelta <= -100) {
+        if (!_model->_touchDown && _model->_touchId == -1) {
+            _model->_touchId = event.touch;
+            _model->_touchDown = true;
+            _model->_touchPos = event.position;
+        }
     }
 }
 
@@ -218,8 +220,10 @@ void InputController::touchDownCB(const cugl::TouchEvent& event, bool focus) {
  * @param focus     Whether this device has focus (UNUSED)
  */
 void InputController::motionCBtouch(const cugl::TouchEvent& event, const Vec2 previous, bool focus) {
-    if (_model->_touchDown && event.touch == _model->_touchId) {
-        _model->_touchPos = event.position;
+    if (_model->_pinchDelta >= -90 || _model->_pinchDelta <= -100) {
+        if (_model->_touchDown && event.touch == _model->_touchId) {
+            _model->_touchPos = event.position;
+        }
     }
 }
 
@@ -231,9 +235,11 @@ void InputController::motionCBtouch(const cugl::TouchEvent& event, const Vec2 pr
  */
 void InputController::touchUpCB(const cugl::TouchEvent& event, bool focus) {
     // Only recognize the left mouse button
-    if (_model->_touchDown && _model->_touchId != -1) {
-        _model->_touchDown = false;
-        _model->_touchId = -1;
+    if (_model->_pinchDelta >= -90 || _model->_pinchDelta <= -100) {
+        if (_model->_touchDown && _model->_touchId != -1) {
+            _model->_touchDown = false;
+            _model->_touchId = -1;
+        }
     }
 }
 
