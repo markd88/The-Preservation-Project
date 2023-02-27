@@ -122,7 +122,11 @@ bool InputController::initPinch(const Size &size) {
     return success;
 }
 
-
+bool InputController::init(const Size &size) {
+    bool registerTouch = initTouch();
+    bool registerPinch = initPinch(size);
+    return registerTouch && registerPinch;
+}
 
 /** Returns a singleton instance of InputController. */
 std::shared_ptr<InputController> InputController::getInstance() {
