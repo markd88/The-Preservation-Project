@@ -32,6 +32,9 @@ public:
     // std::unique_ptr<PathController> _path;
     std::shared_ptr<InputController> _input = InputController::getInstance();
     vector<float> path_trace;
+
+
+    string _activeMap;
     
 #pragma mark Main Methods
 public:

@@ -21,11 +21,11 @@ GamePlayController::GamePlayController(const Size displaySize):_scene(cugl::Scen
     _tilemap1 = std::make_unique<TilemapController>();
     generatePrimaryWorld(_tilemap1);
     _tilemap1->addChildTo(_scene);
+    _activeMap = "tileMap1";
     
     _tilemap2 = std::make_unique<TilemapController>();
-    generatePrimaryWorld(_tilemap2);
-    // _tilemap2->addChildTo(_scene);
-    
+    generateSecondaryWorld(_tilemap2);
+
     _template = 0;
     
     _character = make_unique<CharacterController>(_scene->getSize()/2);
@@ -38,13 +38,21 @@ void GamePlayController::update(float dt){
     // if pinch, switch world
     if(_input->getPinchDelta()!=0){
         CULog("didPinch +++++++++++++");
-        
-//        _tilemap1->removeChildFrom(_scene);
-//        _tilemap2->addChildTo(_scene);
+        if (_activeMap == "tileMap1") {
+            _tilemap1->removeChildFrom(_scene);
+            _tilemap2->addChildTo(_scene);
+            _activeMap = "tileMap2";
+        }
+        else {
+            _tilemap2->removeChildFrom(_scene);
+            _tilemap1->addChildTo(_scene);
+            _activeMap = "tileMap1";
+        }
+
     }
     
     else if(_input->didPress()){
-        CULog("didPress +++++++++++++");
+        CULog("didPress");
         // if press, determine if press on character
         Vec2 input_posi = _input->getPosition();
         input_posi = _scene->screenToWorldCoords(input_posi);
@@ -61,7 +69,7 @@ void GamePlayController::update(float dt){
     }
     
     else if(_input->didRelease()){
-        CULog("didRelease +++++++++++++");
+        CULog("didRelease");
         // if path not null, determine if path is valid
         // start moving character
     }
