@@ -67,7 +67,7 @@ void GamePlayController::update(float dt){
     }
     
     
-    // if character is moving, move it 
+    // if character is moving, move it
     
     
 

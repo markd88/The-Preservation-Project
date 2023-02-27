@@ -224,15 +224,15 @@ xcopy /y /d /e  "$(AssetDir)*" "$(SolutionDir)output"</Command>
 
     <ClInclude Include="..\..\..\source\Tile\TileController.h"/>
 
-    <ClInclude Include="..\..\..\source\Tile\TileView.h"/>
-
     <ClInclude Include="..\..\..\source\Tile\TileModel.h"/>
 
-    <ClInclude Include="..\..\..\source\Tilemap\TilemapView.h"/>
+    <ClInclude Include="..\..\..\source\Tile\TileView.h"/>
 
     <ClInclude Include="..\..\..\source\Tilemap\TilemapController.h"/>
 
     <ClInclude Include="..\..\..\source\Tilemap\TilemapModel.h"/>
+
+    <ClInclude Include="..\..\..\source\Tilemap\TilemapView.h"/>
 
     <ClInclude Include="..\..\..\source\Scene\GamePlayController.h"/>
 
@@ -244,33 +244,29 @@ xcopy /y /d /e  "$(AssetDir)*" "$(SolutionDir)output"</Command>
 
     <ClInclude Include="..\..\..\source\Character\CharacterController.h"/>
 
-    <ClInclude Include="..\..\..\source\Character\CharacterView.h"/>
-
     <ClInclude Include="..\..\..\source\Character\CharacterModel.h"/>
 
-    <ClInclude Include="..\..\..\source\Path\PathView.h"/>
-
-    <ClInclude Include="..\..\..\source\Path\PathModel.h"/>
+    <ClInclude Include="..\..\..\source\Character\CharacterView.h"/>
 
     <ClInclude Include="..\..\..\source\Path\PathController.h"/>
 
+    <ClInclude Include="..\..\..\source\Path\PathModel.h"/>
+
+    <ClInclude Include="..\..\..\source\Path\PathView.h"/>
+
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\source\play.cpp"/>
+    <ClCompile Include="..\..\..\source\App.cpp"/>
 
     <ClCompile Include="..\..\..\source\main.cpp"/>
 
-    <ClCompile Include="..\..\..\source\App.cpp"/>
-
     <ClCompile Include="..\..\..\source\Tilemap\TilemapController.cpp"/>
-
-    <ClCompile Include="..\..\..\source\Scene\LoadingController.cpp"/>
 
     <ClCompile Include="..\..\..\source\Scene\GamePlayController.cpp"/>
 
-    <ClCompile Include="..\..\..\source\Input\InputController.cpp"/>
+    <ClCompile Include="..\..\..\source\Scene\LoadingController.cpp"/>
 
-    <ClCompile Include="..\..\..\source\Character\CharacterController.cpp"/>
+    <ClCompile Include="..\..\..\source\Input\InputController.cpp"/>
 
     <ClCompile Include="..\..\..\source\Path\PathController.cpp"/>
 
