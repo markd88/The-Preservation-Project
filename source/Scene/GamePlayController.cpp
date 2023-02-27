@@ -4,10 +4,17 @@
 using namespace std;
 using namespace cugl;
 #define PHYSICS_SCALE 50
-
+/** This is adjusted by screen aspect ratio to get the height */
+#define SCENE_WIDTH 1024
 
 GamePlayController::GamePlayController(const Size displaySize):_scene(cugl::Scene2::alloc(displaySize))
 {
+    // Initialize the scene to a locked width
+    Size dimen = Application::get()->getDisplaySize();
+    dimen *= SCENE_WIDTH/dimen.width; // Lock the game to a reasonable resolution
+
+    _input->init(dimen);
+    
     // initialize character, two maps, path
     
     
@@ -28,7 +35,16 @@ GamePlayController::GamePlayController(const Size displaySize):_scene(cugl::Scen
 
 void GamePlayController::update(float dt){
     _input->update(dt);
-    if(_input->didPress()){
+    // if pinch, switch world
+    if(_input->getPinchDelta()!=0){
+        CULog("didPinch +++++++++++++");
+        
+//        _tilemap1->removeChildFrom(_scene);
+//        _tilemap2->addChildTo(_scene);
+    }
+    
+    else if(_input->didPress()){
+        CULog("didPress +++++++++++++");
         // if press, determine if press on character
         Vec2 input_posi = _input->getPosition();
         input_posi = _scene->screenToWorldCoords(input_posi);
@@ -45,6 +61,7 @@ void GamePlayController::update(float dt){
     }
     
     else if(_input->didRelease()){
+        CULog("didRelease +++++++++++++");
         // if path not null, determine if path is valid
         // start moving character
     }
@@ -53,12 +70,7 @@ void GamePlayController::update(float dt){
     // if character is moving, move it 
     
     
-    // if pinch, switch world
-//    Vec2 temp = _input->getPanDelta();
-//    if(_input->getPanDelta()!=0){
-//        _tilemap1->removeChildFrom(_scene);
-//        _tilemap2->addChildTo(_scene);
-//    }
+
 }
     
     

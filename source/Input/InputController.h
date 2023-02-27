@@ -65,6 +65,8 @@ public:
     /** Returns a singleton instance of InputController. */
     static std::shared_ptr<InputController> getInstance();
 
+    bool init(const cugl::Size& size);
+    
     // touch
     bool initTouch();
 
