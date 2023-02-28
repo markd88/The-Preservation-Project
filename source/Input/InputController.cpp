@@ -3,8 +3,6 @@
 //
 //  This module represents the input handlers.
 //
-//
-// This is in the same folder so it is okay
 #include "InputController.h"
 
 #pragma mark Input Constants
@@ -203,12 +201,10 @@ Vec2 InputController::screenToScenePinch(const Vec2& position) const {
  * @param focus     Whether this device has focus (UNUSED)
  */
 void InputController::touchDownCB(const cugl::TouchEvent& event, bool focus) {
-    if (_model->_pinchDelta >= -90 || _model->_pinchDelta <= -100) {
-        if (!_model->_touchDown && _model->_touchId == -1) {
-            _model->_touchId = event.touch;
-            _model->_touchDown = true;
-            _model->_touchPos = event.position;
-        }
+    if (!_model->_touchDown && _model->_touchId == -1) {
+        _model->_touchId = event.touch;
+        _model->_touchDown = true;
+        _model->_touchPos = event.position;
     }
 }
 
@@ -220,10 +216,8 @@ void InputController::touchDownCB(const cugl::TouchEvent& event, bool focus) {
  * @param focus     Whether this device has focus (UNUSED)
  */
 void InputController::motionCBtouch(const cugl::TouchEvent& event, const Vec2 previous, bool focus) {
-    if (_model->_pinchDelta >= -90 || _model->_pinchDelta <= -100) {
-        if (_model->_touchDown && event.touch == _model->_touchId) {
-            _model->_touchPos = event.position;
-        }
+    if (_model->_touchDown && event.touch == _model->_touchId) {
+        _model->_touchPos = event.position;
     }
 }
 
@@ -235,42 +229,8 @@ void InputController::motionCBtouch(const cugl::TouchEvent& event, const Vec2 pr
  */
 void InputController::touchUpCB(const cugl::TouchEvent& event, bool focus) {
     // Only recognize the left mouse button
-    if (_model->_pinchDelta >= -90 || _model->_pinchDelta <= -100) {
-        if (_model->_touchDown && _model->_touchId != -1) {
-            _model->_touchDown = false;
-            _model->_touchId = -1;
-        }
+    if (_model->_touchDown && _model->_touchId != -1) {
+        _model->_touchDown = false;
+        _model->_touchId = -1;
     }
 }
-
-#pragma mark -
-#pragma mark Pinch Callbacks
-
-/**
- * Callback for the end of a pan event
- *
- * @param event The associated event
- * @param focus     Whether the listener currently has focus
- */
-void InputController::pinchEndedCB(const CoreGestureEvent& event, bool focus) {
-    // TODO:
-    float h = _model->_screensize.height;
-    _model->_currTouch = screenToScenePinch(event.currPosition);
-    _model->_currTouch.y = h-_model->_currTouch.y;
-    _model->_anchor = _model->_currTouch;
-    _model->_mousepan = false;
-};
-
-/**
- * Callback for a pan movement event
- *
- * @param event The associated event
- * @param focus     Whether the listener currently has focus
- */
-void InputController::pinchMovedCB(const CoreGestureEvent& event, bool focus) {
-    // TODO:
-    float h = _model->_screensize.height;
-    _model->_currTouch = screenToScenePinch(event.currPosition);
-    _model->_currTouch.y = h-_model->_currTouch.y;
-    _model->_anchor = _model->_currTouch;
-};

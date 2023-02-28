@@ -1,5 +1,7 @@
 #include <chrono>
 #include "GamePlayController.h"
+#include <chrono>
+#include <thread>
 // This is NOT in the same directory
 using namespace std;
 using namespace cugl;
@@ -34,9 +36,15 @@ GamePlayController::GamePlayController(const Size displaySize):_scene(cugl::Scen
 }
 
 void GamePlayController::update(float dt){
+    static auto last_time = std::chrono::steady_clock::now();
+    // Calculate the time elapsed since the last call to pinch
+    auto now = std::chrono::steady_clock::now();
+    auto elapsed = std::chrono::duration_cast<std::chrono::seconds>(now - last_time);
+
     _input->update(dt);
     // if pinch, switch world
-    if(_input->getPinchDelta() < -90 && _input->getPinchDelta() > -130){
+    if(elapsed.count() >= 0.5 && _input->getPinchDelta() != 0){
+        last_time = now;
         CULog("didPinch +++++++++++++");
         std::cout<<"pinch delta = "<< _input->getPinchDelta()<<std::endl;
         if (_activeMap == "tileMap1") {
