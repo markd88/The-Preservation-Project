@@ -40,6 +40,7 @@ void App::onStartup() {
     
     // Create a sprite batch (and background color) to render the scene
     _batch = SpriteBatch::alloc();
+    auto cam = OrthographicCamera::alloc(getDisplaySize());
     setClearColor(Color4(229,229,229,255));
     
     // Activate the touchscreen for interacting with the tilemap

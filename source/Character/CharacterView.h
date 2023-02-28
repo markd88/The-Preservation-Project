@@ -16,15 +16,21 @@ private:
     /** The node is attached to the root-scene*/
     std::shared_ptr<scene2::PolygonNode> _node;
     
+    /** Manager to process the animation actions */
+    std::shared_ptr<cugl::scene2::ActionManager> _actions;
+    
+    
 #pragma mark Main Functions
 public:
     /** contructor */
-    CharacterView(Vec2 position, Size size, Color4 color){
+    CharacterView(Vec2 position, Size size, Color4 color, std::shared_ptr<cugl::scene2::ActionManager> actions){
         // TODO: Implement me
         // initialize view
         _node = scene2::PolygonNode::alloc();
         _node->setRelativeColor(false);
         _node->setAnchor(Vec2::ANCHOR_CENTER);
+        _actions = actions;
+
         // initialize state
         setSize(size);
         setPosition(position);
@@ -57,7 +63,6 @@ public:
     void removeChildFrom(const std::shared_ptr<cugl::Scene2>& scene) {
         scene->removeChild(_node);
     }
-    
 
 #pragma mark Setters
 public:
@@ -72,6 +77,10 @@ public:
     
     void setColor(Color4 color){
         _node->setColor(color);
+    }
+    
+    void moveTo(const std::shared_ptr<cugl::scene2::MoveTo>& action){
+        _actions->activate("moving", action, _node);
     }
 };
 
