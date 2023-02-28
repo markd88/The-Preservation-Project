@@ -21,6 +21,8 @@ private:
     /** View reference */
     std::unique_ptr<CharacterView> _view;
     
+    
+    
 #pragma mark Main Methods
 public:
     /**
@@ -30,14 +32,14 @@ public:
      * @param size      The width and height of a tile
      * @param color     The tile color
      */
-    CharacterController(Vec2 position, Size size, Color4 color) {
+    CharacterController(Vec2 position, Size size, Color4 color, std::shared_ptr<cugl::scene2::ActionManager> actions) {
         _model = std::make_unique<CharacterModel>(position, size, color);
-        _view = std::make_unique<CharacterView>(position, size, color);
+        _view = std::make_unique<CharacterView>(position, size, color, actions);
     }
     
-    CharacterController(Vec2 position) {
+    CharacterController(Vec2 position, std::shared_ptr<cugl::scene2::ActionManager> actions) {
         _model = std::make_unique<CharacterModel>(position, Size(50, 50), Color4::BLUE);
-        _view = std::make_unique<CharacterView>(position, Size(50, 50), Color4::BLUE);
+        _view = std::make_unique<CharacterView>(position, Size(50, 50), Color4::BLUE, actions);
     }
 
 #pragma mark Update Methods
@@ -75,6 +77,17 @@ public:
     void updateColor(Color4 color) {
         _model->setColor(color);
         _view->setColor(color);
+    }
+    
+    /**
+     *  Animates the character with a moveTo action
+     *
+     *  @param action The action to perfrom
+     */
+    void moveTo(const std::shared_ptr<cugl::scene2::MoveTo>& action) {
+        _view->moveTo(action);
+        _model->setPosition(action->getTarget());
+        
     }
 
 #pragma mark Helpers

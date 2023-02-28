@@ -6,3 +6,7 @@
 //
 
 #include "PathController.h"
+#include "PathModel.h"
+#include "PathView.h"
+
+

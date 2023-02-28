@@ -29,10 +29,13 @@ public:
     std::unique_ptr<TilemapController> _tilemap1;
     std::unique_ptr<TilemapController> _tilemap2;
 
-    // std::unique_ptr<PathController> _path;
+    std::unique_ptr<PathController> _path;
     std::shared_ptr<InputController> _input = InputController::getInstance();
-    vector<float> path_trace;
-
+    vector<Vec2> path_trace;
+    
+    /** Manager to process the animation actions */
+    std::shared_ptr<cugl::scene2::ActionManager> _actions;
+    std::shared_ptr<cugl::scene2::MoveTo> _moveTo;
 
     string _activeMap;
     
@@ -65,7 +68,7 @@ public:
      * @param batch The SpriteBatch used to render this scene
      */
 
-    void render(std::shared_ptr<SpriteBatch> batch) { _scene->render(batch); }
+    void render(std::shared_ptr<SpriteBatch> &batch) ;
 
 #pragma mark Generation Helpers
 private:

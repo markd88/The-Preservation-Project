@@ -15,6 +15,11 @@ GamePlayController::GamePlayController(const Size displaySize):_scene(cugl::Scen
 
     _input->init(dimen);
     
+    _path = make_unique<PathController>();
+    
+    // Allocate the manager and the actions
+    _actions = cugl::scene2::ActionManager::alloc();
+    
     // initialize character, two maps, path
     
     
@@ -28,7 +33,7 @@ GamePlayController::GamePlayController(const Size displaySize):_scene(cugl::Scen
 
     _template = 0;
     
-    _character = make_unique<CharacterController>(_scene->getSize()/2);
+    _character = make_unique<CharacterController>(_scene->getSize()/2, _actions);
 
     _character->addChildTo(_scene);
 }
@@ -59,24 +64,46 @@ void GamePlayController::update(float dt){
         
         if(_character->contains(input_posi)){
             // create path
+            CULog("here");
+            _path->setIsDrawing(true);
+            _path->updateLastPos(input_posi);
+            
         }
         
     }
     
-    else if (_input->isDown()){
-        // if path not null, then update path
+    else if (_input->isDown() && _path->_isDrawing){
+        Vec2 input_posi = _input->getPosition();
+        input_posi = _scene->screenToWorldCoords(input_posi);
+        if (_path->farEnough(input_posi)){
+            _path->addSegment(input_posi, _scene);
+            _path->updateLastPos(input_posi);
+        }
     }
     
     else if(_input->didRelease()){
         CULog("didRelease");
-        // if path not null, determine if path is valid
-        // start moving character
+        Vec2 input_posi = _input->getPosition();
+        input_posi = _scene->screenToWorldCoords(input_posi);
+        _path->setIsDrawing(false);
+        path_trace = _path->_model->Path;
+
+        _moveTo = cugl::scene2::MoveTo::alloc();
+        _moveTo->setDuration(.25);
+        _path->clearPath(_scene);
+        
+    }
+    
+    else if (path_trace.size() != 0 && !_actions->isActive("moving")){
+        _moveTo->setTarget(path_trace[0]);
+       
+        _character->moveTo(_moveTo);
+        path_trace.erase(path_trace.begin());
     }
     
     
-    // if character is moving, move it
-    
-    
+    // Animate
+    _actions->update(dt);
 
 }
     
@@ -208,4 +235,10 @@ void GamePlayController::update(float dt){
         auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(after - before).count();
         CULog("Generated after %lld milliseconds", duration);
     }
+
+
+void GamePlayController::render(std::shared_ptr<SpriteBatch>& batch){
+    _scene->render(batch);
+}
+
 
