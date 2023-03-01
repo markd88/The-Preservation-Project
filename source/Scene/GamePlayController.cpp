@@ -50,18 +50,23 @@ void GamePlayController::update(float dt){
     // if pinch, switch world
     if(elapsed.count() >= 0.5 && _input->getPinchDelta() != 0){
         last_time = now;
-        CULog("didPinch +++++++++++++");
-        std::cout<<"pinch delta = "<< _input->getPinchDelta()<<std::endl;
+        // CULog("didPinch +++++++++++++");
+        // std::cout<<"pinch delta = "<< _input->getPinchDelta()<<std::endl;
+        
+        // remove and add the child back so that the child is always on the top layer
+        _character->removeChildFrom(_scene);
         if (_activeMap == "tileMap1") {
             _tilemap1->removeChildFrom(_scene);
             _tilemap2->addChildTo(_scene);
             _activeMap = "tileMap2";
+            
         }
         else {
             _tilemap2->removeChildFrom(_scene);
             _tilemap1->addChildTo(_scene);
             _activeMap = "tileMap1";
         }
+        _character->addChildTo(_scene);
 
     } else if(_input->didPress()){
         CULog("didPress");

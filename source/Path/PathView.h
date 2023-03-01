@@ -54,6 +54,7 @@ public:
         }
         _pathLines.clear();
     }
+    
 };
 
 #endif /* PathView_h */
