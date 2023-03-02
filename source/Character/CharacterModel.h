@@ -81,7 +81,7 @@ public:
      *  @param point The position of the touchpoint
      */
     bool contains(Vec2 point){
-        if(_position.distance(point)<=_size.width){
+        if(_position.distance(point)<=_size.width/2){
             return true;
         }
         return false;
