@@ -199,6 +199,7 @@ public:
     bool inObstacle(Vec2 point){
         for(auto& tile_vec : _tilemap){
             for(auto& tile : tile_vec){
+                
                 if(tile != nullptr && tile->is_obs() && tile->contains(point)){
                     return true;
                 }

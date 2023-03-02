@@ -82,14 +82,5 @@ public:
         return _is_obs;
     }
     
-    /**
-     *  Detect if this file contains a point
-     *
-     *  @param point, the position of the point
-     */
-    bool contains(Vec2 point){
-        bool hor = (point.x >= _position.x && point.x <= _position.x + _size.width);
-        bool ver = (point.y <= _position.y && point.y >= _position.y - _size.height);
-        return hor && ver;
-    }
+    
 };
