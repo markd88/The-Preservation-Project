@@ -94,6 +94,15 @@ public:
         return (_model->lastPos.distance(pos) > _model->size);
     }
     
+    void addSegments(Vec2 pos, const std::shared_ptr<cugl::Scene2>& scene){
+        // a loop to handle more than one segments in one frame
+        while(farEnough(pos)){
+            Vec2 checkpoint = _model->lastPos + (pos - _model->lastPos) / _model->lastPos.distance(pos) * _model->size;
+            addSegment(checkpoint, scene);
+        }
+    }
+    
+    
     
 };
 

@@ -18,10 +18,11 @@ public:
      * @param position  The bottom left corner of the tile
      * @param size      The width and height of a tile
      * @param color     The tile color
+     * @param is_obs     if the tile is an obstacle
      */
-    TileController(Vec2 position, Size size, Color4 color) {
+    TileController(Vec2 position, Size size, Color4 color, bool is_obs = false) {
         // TODO: Implement me
-        this->_model = std::make_unique<TileModel>(position, size, color);
+        this->_model = std::make_unique<TileModel>(position, size, color, is_obs);
         _view = std::make_unique<TileView>(position, size, color);
     }
     
@@ -81,5 +82,24 @@ public:
         // TODO: Implement me
         _view->removeChildFrom(node);
     }
-
+    
+#pragma mark Getters
+public:
+    /**
+     *  Get if the tile is obstacle
+     *
+     *  @param is_obs
+     */
+    bool is_obs(){
+        return _model->is_obs();
+    }
+    
+    /**
+     *  Detect if this file contains a point
+     *
+     *  @param point, the position of the point
+     */
+    bool contains(Vec2 point){
+        return _model->contains(point);
+    }
 };

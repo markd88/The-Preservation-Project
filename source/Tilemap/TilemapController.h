@@ -105,9 +105,10 @@ public:
      *
      * @param col   The column to place the tile starting from left to right
      * @param row   The row to place the tile starting from bottom to top
-     * @param color The color of the tile.
+     * @param color   The color of the tile.
+     * @param is_obs if the tile is obstacle
      */
-    void addTile(int col, int row, Color4 color);
+    void addTile(int col, int row, Color4 color, bool is_obs);
     
     /**
      * Inverts the color of the tilemap and it's tiles.
@@ -190,6 +191,21 @@ public:
      */
     void initializeTilemap();
 
+#pragma mark Helpers
+    /**
+     * Check if the point is located in some obstacle tile
+     * @Param Point    position of the point
+     */
+    bool inObstacle(Vec2 point){
+        for(auto& tile_vec : _tilemap){
+            for(auto& tile : tile_vec){
+                if(tile != nullptr && tile->is_obs() && tile->contains(point)){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 };
 
 //}
