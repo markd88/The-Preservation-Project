@@ -70,13 +70,14 @@ void TilemapController::updateColor(Color4 color) {
  * @param col   The column to place the tile starting from left to right
  * @param row   The row to place the tile starting from bottom to top
  * @param color The color of the tile.
+ * @param is_obs If the tile is obstacle
  */
-void TilemapController::addTile(int col, int row, Color4 color) {
+void TilemapController::addTile(int col, int row, Color4 color, bool is_obs) {
     // TODO: Implement me
     if(col < 0 || row < 0 || col >= _model->dimensions.x || row >= _model->dimensions.y){
         return ;
     }
-    Tile temp = std::make_unique<TileController>(Vec2(col * _model->tileSize.width, row * _model->tileSize.height), _model->tileSize, color);
+    Tile temp = std::make_unique<TileController>(Vec2(col * _model->tileSize.width, row * _model->tileSize.height), _model->tileSize, color, is_obs);
     
     _tilemap[row][col] = std::move(temp);
     

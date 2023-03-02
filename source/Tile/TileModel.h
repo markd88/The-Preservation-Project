@@ -11,6 +11,8 @@ private:
     Size _size;
     /** Tile color */
     Color4 _color;
+    /** If the tile is a obstacle*/
+    bool _is_obs;
     
 public:
     /** A public accessible, read-only version of the color */
@@ -24,10 +26,11 @@ public:
      * @param position  The bottom left corner of the tile
      * @param size      The width and height of a tile
      * @param color     The tile color
+     * @param is_obs     if the tile is an obstacle
      */
-    TileModel(Vec2 position, Size size, Color4 color): color(_color) {
+    TileModel(Vec2 position, Size size, Color4 color, bool is_obs): color(_color) {
         // TODO: Implement me
-
+        _is_obs = is_obs;
         setColor(color);
         setPosition(position);
         setSize(size);
@@ -68,5 +71,25 @@ public:
         _color = color;
         
     }
+#pragma mark Getters
+public:
+    /**
+     *  Get if the tile is obstacle
+     *
+     *  @param is_obs
+     */
+    bool is_obs(){
+        return _is_obs;
+    }
     
+    /**
+     *  Detect if this file contains a point
+     *
+     *  @param point, the position of the point
+     */
+    bool contains(Vec2 point){
+        bool hor = (point.x >= _position.x && point.x <= _position.x + _size.width);
+        bool ver = (point.y <= _position.y && point.y >= _position.y - _size.height);
+        return hor && ver;
+    }
 };

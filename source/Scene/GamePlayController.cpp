@@ -48,10 +48,22 @@ void GamePlayController::update(float dt){
 
     _input->update(dt);
     // if pinch, switch world
-    if(elapsed.count() >= 0.5 && _input->getPinchDelta() != 0){
+    bool can_switch = ((_activeMap == "tileMap1" && _tilemap2->inObstacle(_character->getPosition())) || (_activeMap == "tileMap2" && _tilemap1->inObstacle(_character->getPosition())));
+    
+    if(!can_switch){
+        _character->updateColor(Color4::GREEN);
+    }
+    else{
+        _character->updateColor(Color4::BLUE);
+    }
+    if(elapsed.count() >= 0.5 && _input->getPinchDelta() != 0 && !can_switch){
+        // if the character's position on the other world is obstacle, disable the switch
+        
+        
         last_time = now;
         // CULog("didPinch +++++++++++++");
         // std::cout<<"pinch delta = "<< _input->getPinchDelta()<<std::endl;
+
         
         // remove and add the child back so that the child is always on the top layer
         _character->removeChildFrom(_scene);
@@ -88,10 +100,15 @@ void GamePlayController::update(float dt){
     else if (_input->isDown() && _path->_isDrawing){
         Vec2 input_posi = _input->getPosition();
         input_posi = _scene->screenToWorldCoords(input_posi);
-        if (_path->farEnough(input_posi)){
-            _path->addSegment(input_posi, _scene);
-            _path->updateLastPos(input_posi);
+        
+        // if the path move across the wall, stop drawing and adding checkpoints to the path
+        if((_activeMap == "tileMap1" && _tilemap1->inObstacle(input_posi)) || (_activeMap == "tileMap2" && _tilemap2->inObstacle(input_posi))){
+            _path->setIsDrawing(false);
+            return;
         }
+        // an updated version to iteratively add segments until the input_posi is too close to last point in the model
+        _path->addSegments(input_posi, _scene);
+
     }
     
     else if(_input->didRelease()){
@@ -135,27 +152,28 @@ void GamePlayController::update(float dt){
         _tilemap->updatePosition(_scene->getSize()/2);
         
         Color4 tileColor = Color4::BLACK;
+        bool is_obs = true;
         // lower-right line
         for(int i = 65; i >= 10; i--) {
-            _tilemap->addTile(i, 12, tileColor);
+            _tilemap->addTile(i, 12, tileColor, is_obs);
         }
         // upper-left line
         for(int i = 0; i <= 50; i++) {
-            _tilemap->addTile(i, 23, tileColor);
+            _tilemap->addTile(i, 23, tileColor, is_obs);
         }
         
         // lower guard
         tileColor = Color4::RED;
         for (int i = 2; i <= 7; i++) {
             for(int j = 7; j <= 17; j++) {
-                _tilemap->addTile(i, j, tileColor);
+                _tilemap->addTile(i, j, tileColor, false);
             }
         }
         
         // upper guard
         for (int i = 50; i <= 60; i++) {
             for(int j = 15; j <= 20; j++) {
-                _tilemap->addTile(i, j, tileColor);
+                _tilemap->addTile(i, j, tileColor, false);
             }
         }
         
@@ -173,25 +191,25 @@ void GamePlayController::update(float dt){
         _tilemap->updatePosition(_scene->getSize()/2);
         
         Color4 tileColor = Color4::BLACK;
-        
+        bool is_obs = true;
         // lower block
         for (int i = 65; i >= 10; i--) {
             for(int j = 0; j <= 12; j++) {
-                _tilemap->addTile(i, j, tileColor);
+                _tilemap->addTile(i, j, tileColor, is_obs);
             }
         }
         
         // middle block
         for (int i = 22; i <= 27; i++) {
             for(int j = 12; j <= 23; j++) {
-                _tilemap->addTile(i, j, tileColor);
+                _tilemap->addTile(i, j, tileColor, is_obs);
             }
         }
         
         // upper block
         for (int i = 0; i <= 50; i++) {
             for(int j = 35; j >= 23; j--) {
-                _tilemap->addTile(i, j, tileColor);
+                _tilemap->addTile(i, j, tileColor, is_obs);
             }
         }
         
