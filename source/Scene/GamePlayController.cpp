@@ -81,10 +81,12 @@ void GamePlayController::update(float dt){
         _character->addChildTo(_scene);
 
     } else if(_input->didPress()){
+        
         CULog("didPress");
         // if press, determine if press on character
         Vec2 input_posi = _input->getPosition();
         input_posi = _scene->screenToWorldCoords(input_posi);
+        cout<<input_posi.toString()<<endl;
         
         
         if(_character->contains(input_posi)){

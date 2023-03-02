@@ -100,6 +100,6 @@ public:
      *  @param point, the position of the point
      */
     bool contains(Vec2 point){
-        return _model->contains(point);
+        return _view->contains(point);
     }
 };
