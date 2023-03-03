@@ -181,6 +181,15 @@ void GamePlayController::update(float dt){
             }
         }
         
+        // exit
+        tileColor = Color4::GREEN;
+        for (int i = 3; i <= 6; i++) {
+            _tilemap->addTile(i, 31, tileColor, is_obs);
+            _tilemap->addTile(i, 26, tileColor, is_obs);
+        }
+        for(int j = 31; j >= 26; j--) {
+            _tilemap->addTile(3, j, tileColor, is_obs);
+        }
     }
     
     /**
@@ -220,6 +229,15 @@ void GamePlayController::update(float dt){
             _tilemap->addTile(50, j, tileColor, is_obs);
         }
         
+        // exit
+        tileColor = Color4::GREEN;
+        for (int i = 3; i <= 6; i++) {
+            _tilemap->addTile(i, 31, tileColor, is_obs);
+            _tilemap->addTile(i, 26, tileColor, is_obs);
+        }
+        for(int j = 31; j >= 26; j--) {
+            _tilemap->addTile(3, j, tileColor, is_obs);
+        }
     }
     
     
