@@ -9,8 +9,7 @@ using namespace cugl;
 /** This is adjusted by screen aspect ratio to get the height */
 #define SCENE_WIDTH 1024
 
-GamePlayController::GamePlayController(const Size displaySize):_scene(cugl::Scene2::alloc(displaySize))
-{
+GamePlayController::GamePlayController(const Size displaySize):_scene(cugl::Scene2::alloc(displaySize)) {
     // Initialize the scene to a locked width
     Size dimen = Application::get()->getDisplaySize();
     dimen *= SCENE_WIDTH/dimen.width; // Lock the game to a reasonable resolution
@@ -35,9 +34,12 @@ GamePlayController::GamePlayController(const Size displaySize):_scene(cugl::Scen
 
     _template = 0;
     
-    _character = make_unique<CharacterController>(_scene->getSize()/2, _actions);
-
+    Vec2 start = Vec2(_scene->getSize().width * 0.85, _scene->getSize().height * 0.15);
+    _character = make_unique<CharacterController>(start, _actions);
     _character->addChildTo(_scene);
+    
+//    _label = std::make_shared<scene2::Label>();
+//    _label->setText("Exit");
 }
 
 void GamePlayController::update(float dt){
@@ -166,16 +168,16 @@ void GamePlayController::update(float dt){
         
         // lower guard
         tileColor = Color4::RED;
-        for (int i = 2; i <= 7; i++) {
+        for (int i = 0; i <= 9; i++) {
             for(int j = 7; j <= 17; j++) {
-                _tilemap->addTile(i, j, tileColor, false);
+                _tilemap->addTile(i, j, tileColor, is_obs);
             }
         }
         
         // upper guard
-        for (int i = 50; i <= 60; i++) {
-            for(int j = 15; j <= 20; j++) {
-                _tilemap->addTile(i, j, tileColor, false);
+        for (int i = 50; i <= 65; i++) {
+            for(int j = 20; j <= 25; j++) {
+                _tilemap->addTile(i, j, tileColor, is_obs);
             }
         }
         
@@ -196,23 +198,26 @@ void GamePlayController::update(float dt){
         bool is_obs = true;
         // lower block
         for (int i = 65; i >= 10; i--) {
-            for(int j = 0; j <= 12; j++) {
-                _tilemap->addTile(i, j, tileColor, is_obs);
-            }
+            _tilemap->addTile(i, 12, tileColor, is_obs);
+        }
+        
+        for(int j = 0; j <= 11; j++) {
+            _tilemap->addTile(10, j, tileColor, is_obs);
+            _tilemap->addTile(64, j, tileColor, is_obs);
         }
         
         // middle block
-        for (int i = 22; i <= 27; i++) {
-            for(int j = 12; j <= 23; j++) {
-                _tilemap->addTile(i, j, tileColor, is_obs);
-            }
+        for(int j = 12; j <= 23; j++) {
+            _tilemap->addTile(25, j, tileColor, is_obs);
         }
         
         // upper block
         for (int i = 0; i <= 50; i++) {
-            for(int j = 35; j >= 23; j--) {
-                _tilemap->addTile(i, j, tileColor, is_obs);
-            }
+            _tilemap->addTile(i, 23, tileColor, is_obs);
+        }
+        for(int j = 35; j >= 23; j--) {
+            _tilemap->addTile(0, j, tileColor, is_obs);
+            _tilemap->addTile(50, j, tileColor, is_obs);
         }
         
     }

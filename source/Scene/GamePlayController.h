@@ -38,6 +38,8 @@ public:
     std::shared_ptr<cugl::scene2::MoveTo> _moveTo;
 
     string _activeMap;
+
+//    std::shared_ptr<cugl::scene2::Label> _label;
     
 #pragma mark Main Methods
 public:
