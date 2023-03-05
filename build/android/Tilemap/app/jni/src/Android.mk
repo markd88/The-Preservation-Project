@@ -14,13 +14,13 @@ LOCAL_C_INCLUDES += $(CUGL_PATH)/sdl2/include
 LOCAL_C_INCLUDES += $(CUGL_PATH)/thirdparty/box2d/include
 LOCAL_C_INCLUDES += $(CUGL_PATH)/thirdparty/geomtools/include
 LOCAL_C_INCLUDES += $(PROJ_PATH)/source
-LOCAL_C_INCLUDES += $(PROJ_PATH)/source/Path
-LOCAL_C_INCLUDES += $(PROJ_PATH)/source/Input
-LOCAL_C_INCLUDES += $(PROJ_PATH)/source/Tile
+LOCAL_C_INCLUDES += $(PROJ_PATH)/source/Tilemap
 LOCAL_C_INCLUDES += $(PROJ_PATH)/source/Character
+LOCAL_C_INCLUDES += $(PROJ_PATH)/source/Path
 LOCAL_C_INCLUDES += $(PROJ_PATH)/source
 LOCAL_C_INCLUDES += $(PROJ_PATH)/source/Scene
-LOCAL_C_INCLUDES += $(PROJ_PATH)/source/Tilemap
+LOCAL_C_INCLUDES += $(PROJ_PATH)/source/Tile
+LOCAL_C_INCLUDES += $(PROJ_PATH)/source/Input
 
 
 # Add your application source files here.
