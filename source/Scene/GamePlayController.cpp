@@ -88,31 +88,33 @@ void GamePlayController::update(float dt){
         // if press, determine if press on character
         Vec2 input_posi = _input->getPosition();
         input_posi = _scene->screenToWorldCoords(input_posi);
-        cout<<input_posi.toString()<<endl;
-        
         
         if(_character->contains(input_posi)){
             // create path
             CULog("here");
             _path->setIsDrawing(true);
-            _path->updateLastPos(input_posi);
+            _path->updateLastPos(input_posi); //change to a fixed location on the character
             
         }
         
     }
     
-    else if (_input->isDown() && _path->_isDrawing){
+    else if (_input->isDown() && _path->isDrawing){
         Vec2 input_posi = _input->getPosition();
         input_posi = _scene->screenToWorldCoords(input_posi);
-        
-        // if the path move across the wall, stop drawing and adding checkpoints to the path
-        if((_activeMap == "tileMap1" && _tilemap1->inObstacle(input_posi)) || (_activeMap == "tileMap2" && _tilemap2->inObstacle(input_posi))){
-            _path->setIsDrawing(false);
-            return;
-        }
         // an updated version to iteratively add segments until the input_posi is too close to last point in the model
-        _path->addSegments(input_posi, _scene);
-
+        while(_path->farEnough(input_posi)){
+            Vec2 checkpoint = _path->getLastPos() + (input_posi - _path->getLastPos()) / _path->getLastPos().distance(input_posi) * _path->getSize();
+            if((_activeMap == "tileMap1" && _tilemap1->inObstacle(checkpoint)) || (_activeMap == "tileMap2" && _tilemap2->inObstacle(checkpoint))){
+                _path->setIsDrawing(false);
+                path_trace.clear();
+                return;
+            }
+            else{
+                _path->addSegment(checkpoint, _scene);
+            }
+            
+        }
     }
     
     else if(_input->didRelease()){
@@ -120,21 +122,18 @@ void GamePlayController::update(float dt){
         Vec2 input_posi = _input->getPosition();
         input_posi = _scene->screenToWorldCoords(input_posi);
         _path->setIsDrawing(false);
-        path_trace = _path->_model->Path;
-
+        path_trace = _path->getPath();
         _moveTo = cugl::scene2::MoveTo::alloc();
-        _moveTo->setDuration(.25);
+        _moveTo->setDuration(.15);
         _path->clearPath(_scene);
         
     }
     
-    else if (path_trace.size() != 0 && !_actions->isActive("moving")){
+    else if (path_trace.size() != 0){
         _moveTo->setTarget(path_trace[0]);
-       
         _character->moveTo(_moveTo);
         path_trace.erase(path_trace.begin());
     }
-    
     
     // Animate
     _actions->update(dt);
