@@ -15,29 +15,35 @@
 class PathController{
     
 #pragma mark Internal References
-public:
+private:
     /** Model reference */
     std::unique_ptr<PathModel> _model;
     /** View reference */
     std::unique_ptr<PathView> _view;
-    
     /** Whether or not path should be drawing*/
     bool _isDrawing;
     
+public:
+    /** A public accessible, read-only version of the color */
+    const bool& isDrawing;
+    
 #pragma mark Main Methods
 public:
+    
     /**
      * Creates a standard PathController with color set to black and line segments of length 15
      *
      * @param batch   The spritebatch used for drawing segments
      */
     
-    PathController(){
+    PathController():
+    isDrawing(_isDrawing)
+    {
         std::vector<cugl::Vec2> Path;
         std::vector<std::shared_ptr<scene2::PolygonNode>> pathLines;
         _isDrawing = false;
         _model = std::make_unique<PathModel>(Color4::BLACK, 15, Vec2::ZERO, Path);
-        _view = std::make_unique<PathView>(pathLines);
+        _view = std::make_unique<PathView>(pathLines, Color4::BLACK, 15);
     }
     
 #pragma mark Update Methods
@@ -49,10 +55,12 @@ public:
      */
     void updateColor(Color4 color) {
         _model->setColor(color);
+        _view->setColor(color);
     }
     
     void updateSize(int size){
         _model->setSize(size);
+        _view->setSize(size);
     }
     
     /**
@@ -73,6 +81,19 @@ public:
         _isDrawing = isDrawing;
     }
     
+    std::vector<Vec2> getPath(){
+        return _model->Path;
+    }
+    
+    int getSize(){
+        return _model->size;
+    }
+    
+    Vec2 getLastPos(){
+        return _model->lastPos;
+    }
+    
+    
 #pragma mark Path Creation Methods
     
     /**
@@ -85,12 +106,14 @@ public:
         Spline2 spline = Spline2(_model->lastPos, pos);
         Vec2 point = _model->lastPos.getMidpoint(pos);
         _model->addToPath(point);
-        _view->addToPathLines(spline, point, scene);
+        if (_model->Path.size() % 2 == 0){
+            _view->addToPathLines(spline, point, scene);
+        }
         updateLastPos(pos);
     }
     
         
-    bool farEnough(Vec2 pos){
+    bool farEnough(Vec2 pos) {
         return (_model->lastPos.distance(pos) > _model->size);
     }
     
@@ -101,8 +124,6 @@ public:
             addSegment(checkpoint, scene);
         }
     }
-    
-    
     
 };
 
