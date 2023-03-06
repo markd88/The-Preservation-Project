@@ -11,7 +11,7 @@
 using namespace cugl;
 
 class PathModel {
-public:
+private:
     /** Vector of splines for splinepather to extrude and add to _pathlines */
     std::vector<Vec2> _Path;
             
@@ -85,6 +85,9 @@ public:
         _Path.clear();
     }
     
+    void removeAfterIndex(int index){
+        _Path.erase(_Path.begin() + index + 1, _Path.end());
+    }
     
 };
 

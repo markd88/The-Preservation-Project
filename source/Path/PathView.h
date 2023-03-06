@@ -16,16 +16,20 @@ class PathView{
 private:
     
     std::vector<std::shared_ptr<scene2::PolygonNode>> _pathLines;
+    Color4 _color;
+    int _size;
     
 public:
-    PathView(std::vector<std::shared_ptr<scene2::PolygonNode>> pathLines){
+    PathView(std::vector<std::shared_ptr<scene2::PolygonNode>> pathLines, Color4 color, int size){
         _pathLines = pathLines;
+        _color = color;
+        _size = size;
     }
-    
     
     void addToPathLines(Spline2 spline, Vec2 pos, const std::shared_ptr<cugl::Scene2>& scene){
         SplinePather splinePather = SplinePather();
         SimpleExtruder extruder = SimpleExtruder();
+
         
         splinePather.set(&spline);
         splinePather.calculate();
@@ -37,12 +41,19 @@ public:
         std::shared_ptr<scene2::PolygonNode> polyNode= scene2::PolygonNode::alloc();
         polyNode->setPolygon(line);
         polyNode->setPosition(pos);
-        polyNode->setColor(Color4::BLACK);
+        polyNode->setColor(_color);
         _pathLines.push_back(polyNode);
         scene->addChild(polyNode);
         
     }
     
+    void setColor(Color4 color){
+        _color = color;
+    }
+    
+    void setSize(int size){
+        _size = size;
+    }
     
     void clearPathLines(){
         _pathLines.clear();
@@ -54,6 +65,7 @@ public:
         }
         _pathLines.clear();
     }
+    
     
 };
 
