@@ -20,6 +20,9 @@ private:
     Size _size;
     Color4 _color;
     
+    /** The radius of the character in which a touch will initiate the path creation*/
+    int radius;
+    
 public:
     /** A public accessible, read-only version of the color */
     const Color4& color;
@@ -37,6 +40,7 @@ public:
         setPosition(position);
         setSize(size);
         setColor(color);
+        radius = 15 * 3;
     }
 
 #pragma mark Setters
@@ -81,11 +85,13 @@ public:
      *  @param point The position of the touchpoint
      */
     bool contains(Vec2 point){
-        if(_position.distance(point)<=_size.width/2){
+        if(_position.distance(point) <= radius){
             return true;
         }
         return false;
     }
+    
+    
     
 };
 #endif /* CharacterModel_h */

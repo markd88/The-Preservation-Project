@@ -93,7 +93,8 @@ void GamePlayController::update(float dt){
             // create path
             CULog("here");
             _path->setIsDrawing(true);
-            _path->updateLastPos(input_posi); //change to a fixed location on the character
+            _path->setIsInitiating(true);
+            _path->updateLastPos(_character->getPosition()); //change to a fixed location on the character
             
         }
         
@@ -102,18 +103,26 @@ void GamePlayController::update(float dt){
     else if (_input->isDown() && _path->isDrawing){
         Vec2 input_posi = _input->getPosition();
         input_posi = _scene->screenToWorldCoords(input_posi);
+        // if input still within the character
+        if(_path->isInitiating){
+            // if input leaves out of the character's radius, draw the initial segments
+            if (!_character->contains(input_posi)){
+                _path->setIsInitiating(false);
+            }
+        }
         // an updated version to iteratively add segments until the input_posi is too close to last point in the model
-        while(_path->farEnough(input_posi)){
-            Vec2 checkpoint = _path->getLastPos() + (input_posi - _path->getLastPos()) / _path->getLastPos().distance(input_posi) * _path->getSize();
-            if((_activeMap == "tileMap1" && _tilemap1->inObstacle(checkpoint)) || (_activeMap == "tileMap2" && _tilemap2->inObstacle(checkpoint))){
-                _path->setIsDrawing(false);
-                path_trace.clear();
-                return;
+        if(_path->isInitiating == false){
+            while(_path->farEnough(input_posi)){
+                Vec2 checkpoint = _path->getLastPos() + (input_posi - _path->getLastPos()) / _path->getLastPos().distance(input_posi) * _path->getSize();
+                if((_activeMap == "tileMap1" && _tilemap1->inObstacle(checkpoint)) || (_activeMap == "tileMap2" && _tilemap2->inObstacle(checkpoint))){
+                    _path->setIsDrawing(false);
+                    path_trace.clear();
+                    return;
+                }
+                else{
+                    _path->addSegment(checkpoint, _scene);
+                }
             }
-            else{
-                _path->addSegment(checkpoint, _scene);
-            }
-            
         }
     }
     

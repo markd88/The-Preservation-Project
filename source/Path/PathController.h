@@ -23,9 +23,15 @@ private:
     /** Whether or not path should be drawing*/
     bool _isDrawing;
     
+    /** Whether a path is initiating: player starts to draw the path but the touch still too close to character
+     *  This is an appoach to address the issue that the character will flash to the initial touchpoint
+     */
+    bool _isInitiating;
+    
 public:
-    /** A public accessible, read-only version of the color */
+    /** A public accessible, read-only version of the fields*/
     const bool& isDrawing;
+    const bool& isInitiating;
     
 #pragma mark Main Methods
 public:
@@ -37,11 +43,13 @@ public:
      */
     
     PathController():
-    isDrawing(_isDrawing)
+    isDrawing(_isDrawing),
+    isInitiating(_isInitiating)
     {
         std::vector<cugl::Vec2> Path;
         std::vector<std::shared_ptr<scene2::PolygonNode>> pathLines;
         _isDrawing = false;
+        _isInitiating = false;
         _model = std::make_unique<PathModel>(Color4::BLACK, 15, Vec2::ZERO, Path);
         _view = std::make_unique<PathView>(pathLines, Color4::BLACK, 15);
     }
@@ -79,6 +87,10 @@ public:
     
     void setIsDrawing(bool isDrawing){
         _isDrawing = isDrawing;
+    }
+    
+    void setIsInitiating(bool isInitiating){
+        _isInitiating = isInitiating;
     }
     
     std::vector<Vec2> getPath(){
