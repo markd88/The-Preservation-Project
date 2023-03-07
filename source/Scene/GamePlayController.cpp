@@ -14,6 +14,8 @@ GamePlayController::GamePlayController(const Size displaySize):_scene(cugl::Scen
     Size dimen = Application::get()->getDisplaySize();
     dimen *= SCENE_WIDTH/dimen.width; // Lock the game to a reasonable resolution
 
+    _cam = _scene->getCamera();
+    
     _input->init(dimen);
     
     _path = make_unique<PathController>();
@@ -37,6 +39,11 @@ GamePlayController::GamePlayController(const Size displaySize):_scene(cugl::Scen
     Vec2 start = Vec2(_scene->getSize().width * 0.85, _scene->getSize().height * 0.15);
     _character = make_unique<CharacterController>(start, _actions);
     _character->addChildTo(_scene);
+    
+    _scene->setSize(displaySize/1.5);
+    Vec2 cPos = _character->getPosition();
+    _cam->setPosition(Vec3(cPos.x,cPos.y,0));
+    _cam->update();
     
 //    _label = std::make_shared<scene2::Label>();
 //    _label->setText("Exit");
@@ -143,6 +150,10 @@ void GamePlayController::update(float dt){
         _character->moveTo(_moveTo);
         path_trace.erase(path_trace.begin());
     }
+    
+    Vec2 cPos = _character->getNodePosition();
+    _cam->setPosition(Vec3(cPos.x,cPos.y,0));
+    _cam->update();
     
     // Animate
     _actions->update(dt);

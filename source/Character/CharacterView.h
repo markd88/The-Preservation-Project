@@ -83,6 +83,10 @@ public:
         auto fcn = EasingFunction::alloc(EasingFunction::Type::ELASTIC_IN_OUT);
         _actions->activate("moving", action, _node, fcn);
     }
+    
+    Vec2 nodePos(){
+        return _node->getPosition();
+    }
 };
 
 

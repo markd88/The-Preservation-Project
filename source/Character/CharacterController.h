@@ -89,6 +89,10 @@ public:
         _model->setPosition(action->getTarget());
         
     }
+    
+    Vec2 getNodePosition(){
+        return _view->nodePos();
+    }
 
 #pragma mark Helpers
     /**
