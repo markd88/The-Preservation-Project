@@ -14,6 +14,8 @@ GamePlayController::GamePlayController(const Size displaySize):_scene(cugl::Scen
     Size dimen = Application::get()->getDisplaySize();
     dimen *= SCENE_WIDTH/dimen.width; // Lock the game to a reasonable resolution
 
+    _cam = _scene->getCamera();
+    
     _input->init(dimen);
     
     _path = make_unique<PathController>();
@@ -26,7 +28,7 @@ GamePlayController::GamePlayController(const Size displaySize):_scene(cugl::Scen
     
     _tilemap1 = std::make_unique<TilemapController>();
     generatePrimaryWorld(_tilemap1);
-    _tilemap1->addChildTo(_scene);
+    //_tilemap1->addChildTo(_scene);
     _activeMap = "tileMap1";
     
     _tilemap2 = std::make_unique<TilemapController>();
@@ -37,6 +39,11 @@ GamePlayController::GamePlayController(const Size displaySize):_scene(cugl::Scen
     Vec2 start = Vec2(_scene->getSize().width * 0.85, _scene->getSize().height * 0.15);
     _character = make_unique<CharacterController>(start, _actions);
     _character->addChildTo(_scene);
+    
+    //_scene->setSize(displaySize/1.5);
+    Vec2 cPos = _character->getPosition();
+    //_cam->setPosition(Vec3(cPos.x,cPos.y,0));
+    //_cam->update();
     
 //    _label = std::make_shared<scene2::Label>();
 //    _label->setText("Exit");
@@ -83,7 +90,7 @@ void GamePlayController::update(float dt){
         _character->addChildTo(_scene);
 
     } else if(_input->didPress()){
-        
+        std::cout<<dt<<"\n";
         CULog("didPress");
         // if press, determine if press on character
         Vec2 input_posi = _input->getPosition();
@@ -95,9 +102,7 @@ void GamePlayController::update(float dt){
             _path->setIsDrawing(true);
             _path->setIsInitiating(true);
             _path->updateLastPos(_character->getPosition()); //change to a fixed location on the character
-            
         }
-        
     }
     
     else if (_input->isDown() && _path->isDrawing){
@@ -133,16 +138,23 @@ void GamePlayController::update(float dt){
         _path->setIsDrawing(false);
         path_trace = _path->getPath();
         _moveTo = cugl::scene2::MoveTo::alloc();
-        _moveTo->setDuration(.15);
+        _moveTo->setDuration(.1);
         _path->clearPath(_scene);
         
     }
     
-    else if (path_trace.size() != 0){
+    else if (path_trace.size() != 0 && _actions->isActive("moving") == false){
         _moveTo->setTarget(path_trace[0]);
+        Vec2 cPos = _character->getNodePosition();
+        cout<<"current pos: "<<cPos.x<<","<<cPos.y<<"\n";
+        cout<<"target: "<<path_trace[0].x<<","<<path_trace[0].y<<"\n";
         _character->moveTo(_moveTo);
         path_trace.erase(path_trace.begin());
     }
+    
+    Vec2 cPos = _character->getNodePosition();
+    _cam->setPosition(Vec3(cPos.x,cPos.y,0));
+    //_cam->update();
     
     // Animate
     _actions->update(dt);
