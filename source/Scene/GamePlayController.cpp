@@ -28,7 +28,7 @@ GamePlayController::GamePlayController(const Size displaySize):_scene(cugl::Scen
     
     _tilemap1 = std::make_unique<TilemapController>();
     generatePrimaryWorld(_tilemap1);
-    _tilemap1->addChildTo(_scene);
+    //_tilemap1->addChildTo(_scene);
     _activeMap = "tileMap1";
     
     _tilemap2 = std::make_unique<TilemapController>();
@@ -40,10 +40,10 @@ GamePlayController::GamePlayController(const Size displaySize):_scene(cugl::Scen
     _character = make_unique<CharacterController>(start, _actions);
     _character->addChildTo(_scene);
     
-    _scene->setSize(displaySize/1.5);
+    //_scene->setSize(displaySize/1.5);
     Vec2 cPos = _character->getPosition();
-    _cam->setPosition(Vec3(cPos.x,cPos.y,0));
-    _cam->update();
+    //_cam->setPosition(Vec3(cPos.x,cPos.y,0));
+    //_cam->update();
     
 //    _label = std::make_shared<scene2::Label>();
 //    _label->setText("Exit");
@@ -90,7 +90,7 @@ void GamePlayController::update(float dt){
         _character->addChildTo(_scene);
 
     } else if(_input->didPress()){
-        
+        std::cout<<dt<<"\n";
         CULog("didPress");
         // if press, determine if press on character
         Vec2 input_posi = _input->getPosition();
@@ -140,7 +140,7 @@ void GamePlayController::update(float dt){
         _path->setIsDrawing(false);
         path_trace = _path->getPath();
         _moveTo = cugl::scene2::MoveTo::alloc();
-        _moveTo->setDuration(.15);
+        _moveTo->setDuration(.5);
         _path->clearPath(_scene);
         
     }
@@ -153,7 +153,7 @@ void GamePlayController::update(float dt){
     
     Vec2 cPos = _character->getNodePosition();
     _cam->setPosition(Vec3(cPos.x,cPos.y,0));
-    _cam->update();
+    //_cam->update();
     
     // Animate
     _actions->update(dt);
