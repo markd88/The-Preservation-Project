@@ -85,8 +85,8 @@ public:
      *  @param action The action to perfrom
      */
     void moveTo(const std::shared_ptr<cugl::scene2::MoveTo>& action) {
-        _view->moveTo(action);
         _model->setPosition(action->getTarget());
+        _view->moveTo(action);
         
     }
     

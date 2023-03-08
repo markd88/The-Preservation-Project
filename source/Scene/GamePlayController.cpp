@@ -102,9 +102,7 @@ void GamePlayController::update(float dt){
             _path->setIsDrawing(true);
             _path->setIsInitiating(true);
             _path->updateLastPos(_character->getPosition()); //change to a fixed location on the character
-            
         }
-        
     }
     
     else if (_input->isDown() && _path->isDrawing){
@@ -140,13 +138,16 @@ void GamePlayController::update(float dt){
         _path->setIsDrawing(false);
         path_trace = _path->getPath();
         _moveTo = cugl::scene2::MoveTo::alloc();
-        _moveTo->setDuration(.5);
+        _moveTo->setDuration(.1);
         _path->clearPath(_scene);
         
     }
     
-    else if (path_trace.size() != 0){
+    else if (path_trace.size() != 0 && _actions->isActive("moving") == false){
         _moveTo->setTarget(path_trace[0]);
+        Vec2 cPos = _character->getNodePosition();
+        cout<<"current pos: "<<cPos.x<<","<<cPos.y<<"\n";
+        cout<<"target: "<<path_trace[0].x<<","<<path_trace[0].y<<"\n";
         _character->moveTo(_moveTo);
         path_trace.erase(path_trace.begin());
     }
