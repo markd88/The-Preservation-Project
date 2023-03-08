@@ -53,7 +53,7 @@ void App::onStartup() {
     Size size = getDisplaySize();
     size *= GAME_WIDTH/size.width;
     
-    _gameplayController = make_unique<GamePlayController>(size);
+    _gameplayController = make_unique<GamePlayController>(size, _batch);
     
     Application::onStartup();
 
@@ -93,7 +93,6 @@ void App::onShutdown() {
  */
 void App::update(float timestep) {
     _gameplayController->update(timestep);
-
 }
 
 /**

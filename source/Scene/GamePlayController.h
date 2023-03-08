@@ -24,6 +24,8 @@ private:
 #pragma mark External References
 public:
     /** The tilemap to procedurally generate */
+    
+    std::shared_ptr<Camera> _cam;
 
     std::unique_ptr<CharacterController> _character;
     std::unique_ptr<TilemapController> _tilemap1;
@@ -36,9 +38,16 @@ public:
     /** Manager to process the animation actions */
     std::shared_ptr<cugl::scene2::ActionManager> _actions;
     std::shared_ptr<cugl::scene2::MoveTo> _moveTo;
+<<<<<<< HEAD
     
     std::shared_ptr<Camera> _cam;
     
+=======
+    std::shared_ptr<cugl::scene2::MoveBy> _moveBy;
+
+    std::shared_ptr<cugl::scene2::Animate> _forward;
+
+>>>>>>> TP-jonathan
     string _activeMap;
 
 //    std::shared_ptr<cugl::scene2::Label> _label;
@@ -55,7 +64,7 @@ public:
      * @param randoms        Reference to the random number generator
      */
     // GamePlayController(const Size displaySize, const std::shared_ptr<std::mt19937>& randoms);
-    GamePlayController(const Size displaySize);
+    GamePlayController(const Size displaySize, std::shared_ptr<SpriteBatch>& batch);
     /**
      * Responds to the keyboard commands.
      *

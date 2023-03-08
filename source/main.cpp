@@ -30,6 +30,7 @@ using namespace cugl;
  */
 int main(int argc, char * argv[]) {
     // Change this to your application class
+
     App app;
     
     /// SET YOUR APPLICATION PROPERTIES
@@ -39,7 +40,6 @@ int main(int argc, char * argv[]) {
     
     // The name of your studio (for organizing save files)
     app.setOrganization("GDIAC");
-
     // Set the window properties (Only applies to OS X/Windows Desktop)
     app.setDisplaySize(GAME_WIDTH, GAME_HEIGHT);
     app.setFPS(60.0f);

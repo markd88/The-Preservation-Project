@@ -9,7 +9,7 @@ using namespace cugl;
 /** This is adjusted by screen aspect ratio to get the height */
 #define SCENE_WIDTH 1024
 
-GamePlayController::GamePlayController(const Size displaySize):_scene(cugl::Scene2::alloc(displaySize)) {
+GamePlayController::GamePlayController(const Size displaySize,std::shared_ptr<SpriteBatch>& _batch):_scene(cugl::Scene2::alloc(displaySize)) {
     // Initialize the scene to a locked width
     Size dimen = Application::get()->getDisplaySize();
     dimen *= SCENE_WIDTH/dimen.width; // Lock the game to a reasonable resolution
@@ -25,11 +25,12 @@ GamePlayController::GamePlayController(const Size displaySize):_scene(cugl::Scen
     
     // initialize character, two maps, path
     
-    
     _tilemap1 = std::make_unique<TilemapController>();
     generatePrimaryWorld(_tilemap1);
     //_tilemap1->addChildTo(_scene);
+
     _activeMap = "tileMap1";
+    
     
     _tilemap2 = std::make_unique<TilemapController>();
     generateSecondaryWorld(_tilemap2);
@@ -39,9 +40,13 @@ GamePlayController::GamePlayController(const Size displaySize):_scene(cugl::Scen
     Vec2 start = Vec2(_scene->getSize().width * 0.85, _scene->getSize().height * 0.15);
     _character = make_unique<CharacterController>(start, _actions);
     _character->addChildTo(_scene);
+    //_scene->setSize(displaySize/1.5);
+    
+    Vec2 cPos = _character->getPosition();
+    //_cam->setPosition(Vec3(cPos.x,cPos.y,0));
+    //_cam->update();
     
     //_scene->setSize(displaySize/1.5);
-    Vec2 cPos = _character->getPosition();
     //_cam->setPosition(Vec3(cPos.x,cPos.y,0));
     //_cam->update();
     
@@ -50,6 +55,7 @@ GamePlayController::GamePlayController(const Size displaySize):_scene(cugl::Scen
 }
 
 void GamePlayController::update(float dt){
+    
     static auto last_time = std::chrono::steady_clock::now();
     // Calculate the time elapsed since the last call to pinch
     auto now = std::chrono::steady_clock::now();
@@ -65,14 +71,13 @@ void GamePlayController::update(float dt){
     else{
         _character->updateColor(Color4::BLUE);
     }
+    
     if(elapsed.count() >= 0.5 && _input->getPinchDelta() != 0 && !can_switch){
         // if the character's position on the other world is obstacle, disable the switch
-        
         
         last_time = now;
         // CULog("didPinch +++++++++++++");
         // std::cout<<"pinch delta = "<< _input->getPinchDelta()<<std::endl;
-
         
         // remove and add the child back so that the child is always on the top layer
         _character->removeChildFrom(_scene);
@@ -91,7 +96,9 @@ void GamePlayController::update(float dt){
 
     } else if(_input->didPress()){
         std::cout<<dt<<"\n";
+
         CULog("didPress");
+        cout<<dt<<"\n";
         // if press, determine if press on character
         Vec2 input_posi = _input->getPosition();
         input_posi = _scene->screenToWorldCoords(input_posi);
@@ -102,6 +109,7 @@ void GamePlayController::update(float dt){
             _path->setIsDrawing(true);
             _path->setIsInitiating(true);
             _path->updateLastPos(_character->getPosition()); //change to a fixed location on the character
+            _path->updateLastPos(input_posi); //change to a fixed location on the character
         }
     }
     
@@ -140,10 +148,10 @@ void GamePlayController::update(float dt){
         _moveTo = cugl::scene2::MoveTo::alloc();
         _moveTo->setDuration(.1);
         _path->clearPath(_scene);
-        
     }
     
     else if (path_trace.size() != 0 && _actions->isActive("moving") == false){
+        //player animation
         _moveTo->setTarget(path_trace[0]);
         Vec2 cPos = _character->getNodePosition();
         cout<<"current pos: "<<cPos.x<<","<<cPos.y<<"\n";
@@ -152,6 +160,8 @@ void GamePlayController::update(float dt){
         path_trace.erase(path_trace.begin());
     }
     
+
+    //camera movement
     Vec2 cPos = _character->getNodePosition();
     _cam->setPosition(Vec3(cPos.x,cPos.y,0));
     //_cam->update();
@@ -315,6 +325,7 @@ void GamePlayController::update(float dt){
 
 void GamePlayController::render(std::shared_ptr<SpriteBatch>& batch){
     _scene->render(batch);
+
 }
 
 

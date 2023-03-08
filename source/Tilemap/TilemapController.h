@@ -12,7 +12,7 @@
 class TilemapController {
     
 #pragma mark Internal References
-private:
+public:
     /** Model reference */
     std::unique_ptr<TilemapModel> _model;
     /** View reference */

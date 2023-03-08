@@ -4,9 +4,11 @@ using namespace cugl;
 class TilemapView {
     
 #pragma mark Internal References
-private:
+public:
     /** Main tilemap view */
     std::shared_ptr<scene2::PolygonNode> _node;
+    Vec2 position;
+    Color4 color;
     
 #pragma mark Main Functions
 public:
@@ -28,6 +30,12 @@ public:
         setPosition(position);
         setColor(color);
         setSize(dimensions * tileSize);
+    }
+    TilemapView(){
+        _node = scene2::PolygonNode::alloc();
+        _node->setAnchor(Vec2::ANCHOR_BOTTOM_LEFT);
+        setPosition(Vec2::ZERO);
+        setColor(Color4::BLACK);
     }
     
 #pragma mark Scene Methods
@@ -60,7 +68,6 @@ public:
 
 #pragma mark Setters
 public:
-    
     /**
      * Sets the bottom left corner of the tilemap
      *
@@ -68,6 +75,7 @@ public:
      */
     void setPosition(Vec2 position) {
         // TODO: Implement me
+        this->position = position;
         _node->setPosition(position);
     }
     
@@ -94,6 +102,7 @@ public:
      */
     void setColor(Color4 color) {
         // TODO: Implement me
+        this->color = color;
         _node->setColor(color);
     }
     

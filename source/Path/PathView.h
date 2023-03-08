@@ -45,6 +45,7 @@ public:
         _pathLines.push_back(polyNode);
         scene->addChild(polyNode);
         
+        
     }
     
     void setColor(Color4 color){

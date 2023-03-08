@@ -22,7 +22,6 @@ private:
     std::unique_ptr<CharacterView> _view;
     
     
-    
 #pragma mark Main Methods
 public:
     /**
@@ -47,6 +46,10 @@ public:
     
     Vec2 getPosition() {
         return _model->getPosition();
+    }
+    
+    Vec2 getNodePosition(){
+        return _view->_node->getPosition();
     }
     
     /**
@@ -87,7 +90,6 @@ public:
     void moveTo(const std::shared_ptr<cugl::scene2::MoveTo>& action) {
         _model->setPosition(action->getTarget());
         _view->moveTo(action);
-        
     }
     
     Vec2 getNodePosition(){
