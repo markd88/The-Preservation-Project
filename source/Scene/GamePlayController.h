@@ -6,11 +6,13 @@
 #include <cugl/cugl.h>
 using namespace cugl;
 using namespace std;
-// Uncomment to activate (but comment out MVC)
 #include <Path/PathController.h>
 #include <Character/CharacterController.h>
 #include <Tilemap/TilemapController.h>
 #include <Input/InputController.h>
+#include <Camera/CameraManager.h>
+#include <Camera/CameraMove.h>
+
 
 class GamePlayController {
 #pragma mark Internal References
@@ -28,16 +30,18 @@ public:
     std::unique_ptr<CharacterController> _character;
     std::unique_ptr<TilemapController> _tilemap1;
     std::unique_ptr<TilemapController> _tilemap2;
-
+    
     std::unique_ptr<PathController> _path;
     std::shared_ptr<InputController> _input = InputController::getInstance();
     vector<Vec2> path_trace;
-    
+    std::shared_ptr<Camera> _cam;
     /** Manager to process the animation actions */
     std::shared_ptr<cugl::scene2::ActionManager> _actions;
     std::shared_ptr<cugl::scene2::MoveTo> _moveTo;
     
-    std::shared_ptr<Camera> _cam;
+    /**manager to process camera actions**/
+    std::shared_ptr<CameraManager> _camManager;
+    std::shared_ptr<CameraMoveTo> _moveCam;
     
     string _activeMap;
 
