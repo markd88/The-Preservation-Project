@@ -38,6 +38,17 @@ void App::onStartup() {
     Input::activate<Touchscreen>();
     Input::activate<CoreGesture>();
     
+    // init the assetManager
+    _assets->attach<Font>(FontLoader::alloc()->getHook());
+     _assets->attach<Texture>(TextureLoader::alloc()->getHook());
+    //_assets->attach<Sound>(SoundLoader::alloc()->getHook());
+    _assets->attach<WidgetValue>(WidgetLoader::alloc()->getHook());
+    _assets->attach<scene2::SceneNode>(Scene2Loader::alloc()->getHook());
+    
+    // for now, just loading synchronous
+    _assets->loadDirectory("json/assets.json");
+    
+    
     // Create a sprite batch (and background color) to render the scene
     _batch = SpriteBatch::alloc();
     auto cam = OrthographicCamera::alloc(getDisplaySize());
@@ -53,7 +64,7 @@ void App::onStartup() {
     Size size = getDisplaySize();
     size *= GAME_WIDTH/size.width;
     
-    _gameplayController = make_unique<GamePlayController>(size);
+    _gameplayController = make_unique<GamePlayController>(size, _assets);
     
     Application::onStartup();
 

@@ -23,8 +23,12 @@ private:
     
 #pragma mark External References
 public:
+    
+    /** The asset manager for this game mode. */
+    std::shared_ptr<cugl::AssetManager> _assets;
+    std::shared_ptr<cugl::scene2::Button> _button;
+    
     /** The tilemap to procedurally generate */
-
     std::unique_ptr<CharacterController> _character;
     std::unique_ptr<TilemapController> _tilemap1;
     std::unique_ptr<TilemapController> _tilemap2;
@@ -53,7 +57,8 @@ public:
      * @param randoms        Reference to the random number generator
      */
     // GamePlayController(const Size displaySize, const std::shared_ptr<std::mt19937>& randoms);
-    GamePlayController(const Size displaySize);
+    GamePlayController(const Size displaySize, /** The asset manager for this game mode. */
+                       std::shared_ptr<cugl::AssetManager>& assets);
     /**
      * Responds to the keyboard commands.
      *

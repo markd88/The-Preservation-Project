@@ -9,12 +9,34 @@ using namespace cugl;
 /** This is adjusted by screen aspect ratio to get the height */
 #define SCENE_WIDTH 1024
 
-GamePlayController::GamePlayController(const Size displaySize):_scene(cugl::Scene2::alloc(displaySize)) {
+GamePlayController::GamePlayController(const Size displaySize, std::shared_ptr<cugl::AssetManager>& assets ):_scene(cugl::Scene2::alloc(displaySize)) {
+    // Initialize the assetManager
+    _assets = assets;
+    
     // Initialize the scene to a locked width
     Size dimen = Application::get()->getDisplaySize();
     dimen *= SCENE_WIDTH/dimen.width; // Lock the game to a reasonable resolution
 
     _input->init(dimen);
+    
+    
+    
+    
+    // init the button
+    auto layer = assets->get<scene2::SceneNode>("button");
+    layer->setContentSize(dimen);
+    layer->doLayout(); // This rearranges the children to fit the screen
+    _scene->addChild(layer);
+    
+    _button = std::dynamic_pointer_cast<scene2::Button>(assets->get<scene2::SceneNode>("button_action"));
+    _button->addListener([this](const std::string& name, bool down) {
+        if (down) {
+            cout<<"pressed the button"<<endl;
+        }
+    });
+    _button->activate();
+    //if(_button->isVisible()) cout<<_button-><<endl;
+        
     
     _path = make_unique<PathController>();
     
