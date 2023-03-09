@@ -47,13 +47,16 @@ GamePlayController::GamePlayController(const Size displaySize):_scene(cugl::Scen
     Vec2 cPos = _character->getPosition();
     _cam->setPosition(Vec3(cPos.x,cPos.y,0));
     _cam->update();
+    //_scene->setSize(displaySize/1.5);
+    Vec2 cPos = _character->getPosition();
+    //_cam->setPosition(Vec3(cPos.x,cPos.y,0));
+    //_cam->update();
     
 //    _label = std::make_shared<scene2::Label>();
 //    _label->setText("Exit");
 }
 
 void GamePlayController::update(float dt){
-    std::cout<<dt<<"\n";
     static auto last_time = std::chrono::steady_clock::now();
     // Calculate the time elapsed since the last call to pinch
     auto now = std::chrono::steady_clock::now();
@@ -146,6 +149,7 @@ void GamePlayController::update(float dt){
         _moveCam->setDuration(.1);
         _moveTo->setDuration(.1);
         _path->clearPath(_scene);
+        
     }
     
     else if (path_trace.size() != 0 && _actions->isActive("moving") == false){
