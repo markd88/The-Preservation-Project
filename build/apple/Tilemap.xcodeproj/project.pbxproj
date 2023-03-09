@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		628A05B829B97024003F3AD6 /* CameraManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 628A05B629B97024003F3AD6 /* CameraManager.cpp */; };
+		628A05B929B97024003F3AD6 /* CameraManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 628A05B629B97024003F3AD6 /* CameraManager.cpp */; };
+		628A05BD29B97353003F3AD6 /* CameraAction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 628A05BC29B97353003F3AD6 /* CameraAction.cpp */; };
+		628A05BE29B97353003F3AD6 /* CameraAction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 628A05BC29B97353003F3AD6 /* CameraAction.cpp */; };
+		628A05C129B97A9E003F3AD6 /* CameraMove.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 628A05C029B97A9E003F3AD6 /* CameraMove.cpp */; };
+		628A05C229B97A9E003F3AD6 /* CameraMove.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 628A05C029B97A9E003F3AD6 /* CameraMove.cpp */; };
 		ABBBF1BCC27EA60BCFCAF168 /* placeholder.txt in Resources */ = {isa = PBXBuildFile; fileRef = AA3CD5F0F5AAE7BA683B24F0 /* placeholder.txt */; };
 		AC6FEAFD0E0B8F5D0F302A7E /* placeholder.txt in Resources */ = {isa = PBXBuildFile; fileRef = AA3CD5F0F5AAE7BA683B24F0 /* placeholder.txt */; };
 		BB040D0FA8EA86E34BFEF0AF /* PathController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA9E28E9BBCFB79C7DFDF7ED /* PathController.cpp */; };
@@ -78,6 +84,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		628A05B629B97024003F3AD6 /* CameraManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CameraManager.cpp; sourceTree = "<group>"; };
+		628A05BA29B970B9003F3AD6 /* CameraManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CameraManager.h; sourceTree = "<group>"; };
+		628A05BB29B97343003F3AD6 /* CameraAction.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CameraAction.h; sourceTree = "<group>"; };
+		628A05BC29B97353003F3AD6 /* CameraAction.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CameraAction.cpp; sourceTree = "<group>"; };
+		628A05BF29B97868003F3AD6 /* CameraMove.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CameraMove.h; sourceTree = "<group>"; };
+		628A05C029B97A9E003F3AD6 /* CameraMove.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CameraMove.cpp; sourceTree = "<group>"; };
 		AA3CD5F0F5AAE7BA683B24F0 /* placeholder.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = placeholder.txt; sourceTree = "<group>"; };
 		BA0BFCD17AAAA583E8A9E6CA /* App.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = App.cpp; sourceTree = "<group>"; };
 		BA497EA9473BC1A07169ECF9 /* LoadingController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadingController.h; sourceTree = "<group>"; };
@@ -192,6 +204,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		628A05A029B96DD6003F3AD6 /* Camera */ = {
+			isa = PBXGroup;
+			children = (
+				628A05B629B97024003F3AD6 /* CameraManager.cpp */,
+				628A05BA29B970B9003F3AD6 /* CameraManager.h */,
+				628A05BC29B97353003F3AD6 /* CameraAction.cpp */,
+				628A05BB29B97343003F3AD6 /* CameraAction.h */,
+				628A05C029B97A9E003F3AD6 /* CameraMove.cpp */,
+				628A05BF29B97868003F3AD6 /* CameraMove.h */,
+			);
+			path = Camera;
+			sourceTree = "<group>";
+		};
 		CD6DCA2A813A5AD6A17F7B95 /* Tilemap */ = {
 			isa = PBXGroup;
 			children = (
@@ -288,6 +313,7 @@
 				CDA57BA9AFFB1B103FEA2A43 /* Input */,
 				CDCA8B81ED7F33FAAF51BA59 /* Character */,
 				CDB97A5E12D39A8BE70FF9D3 /* Path */,
+				628A05A029B96DD6003F3AD6 /* Camera */,
 			);
 			name = Source;
 			path = ../../source;
@@ -500,12 +526,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				628A05BD29B97353003F3AD6 /* CameraAction.cpp in Sources */,
+				628A05C129B97A9E003F3AD6 /* CameraMove.cpp in Sources */,
 				BBBCCD11F3FBEB2BCA3A35B8 /* App.cpp in Sources */,
 				BBAEDE6930CE67D19758DBFA /* main.cpp in Sources */,
 				BBD3DFAE7E04763B516053FE /* TilemapController.cpp in Sources */,
 				BB9D46AB7E4A525A6DE21515 /* GamePlayController.cpp in Sources */,
 				BB5F080D7B36C9AEAB172EFA /* LoadingController.cpp in Sources */,
 				BB3A3ECFF617108DABBB117D /* InputController.cpp in Sources */,
+				628A05B829B97024003F3AD6 /* CameraManager.cpp in Sources */,
 				BB040D0FA8EA86E34BFEF0AF /* PathController.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -514,12 +543,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				628A05BE29B97353003F3AD6 /* CameraAction.cpp in Sources */,
+				628A05C229B97A9E003F3AD6 /* CameraMove.cpp in Sources */,
 				BC4BA0DBE6E1B83E8233CDE0 /* App.cpp in Sources */,
 				BCA1C8BFF8A84806EC66C96D /* main.cpp in Sources */,
 				BCB6B06DFEF71E77EBC5ED6E /* TilemapController.cpp in Sources */,
 				BCAAEFB8B1C7DA1DBA71500D /* GamePlayController.cpp in Sources */,
 				BC065D01240686BECAFB9A8B /* LoadingController.cpp in Sources */,
 				BCED7F00DF1EF5AFB3059CE6 /* InputController.cpp in Sources */,
+				628A05B929B97024003F3AD6 /* CameraManager.cpp in Sources */,
 				BCF2DAE3A98AA27EDB7DEB7D /* PathController.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -740,7 +772,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = Y63X5F9DBG;
+				DEVELOPMENT_TEAM = 8J4B97K947;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GENERATE_INFOPLIST_FILE = YES;

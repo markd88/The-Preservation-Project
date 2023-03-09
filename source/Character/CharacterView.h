@@ -11,7 +11,7 @@
 using namespace cugl;
 
 class CharacterView{
-public:
+private:
     /** Main character view */
     /** The node is attached to the root-scene*/
     std::shared_ptr<scene2::PolygonNode> _node;
@@ -82,13 +82,10 @@ public:
     void moveTo(const std::shared_ptr<cugl::scene2::MoveTo>& action){
         //auto fcn = EasingFunction::alloc(EasingFunction::Type::ELASTIC_IN_OUT);
         _actions->activate("moving", action, _node);
-<<<<<<< HEAD
     }
     
     Vec2 nodePos(){
         return _node->getPosition();
-=======
->>>>>>> TP-jonathan
     }
 };
 

@@ -6,11 +6,13 @@
 #include <cugl/cugl.h>
 using namespace cugl;
 using namespace std;
-// Uncomment to activate (but comment out MVC)
 #include <Path/PathController.h>
 #include <Character/CharacterController.h>
 #include <Tilemap/TilemapController.h>
 #include <Input/InputController.h>
+#include <Camera/CameraManager.h>
+#include <Camera/CameraMove.h>
+
 
 class GamePlayController {
 #pragma mark Internal References
@@ -24,30 +26,23 @@ private:
 #pragma mark External References
 public:
     /** The tilemap to procedurally generate */
-    
-    std::shared_ptr<Camera> _cam;
 
     std::unique_ptr<CharacterController> _character;
     std::unique_ptr<TilemapController> _tilemap1;
     std::unique_ptr<TilemapController> _tilemap2;
-
+    
     std::unique_ptr<PathController> _path;
     std::shared_ptr<InputController> _input = InputController::getInstance();
     vector<Vec2> path_trace;
-    
+    std::shared_ptr<Camera> _cam;
     /** Manager to process the animation actions */
     std::shared_ptr<cugl::scene2::ActionManager> _actions;
     std::shared_ptr<cugl::scene2::MoveTo> _moveTo;
-<<<<<<< HEAD
     
-    std::shared_ptr<Camera> _cam;
+    /**manager to process camera actions**/
+    std::shared_ptr<CameraManager> _camManager;
+    std::shared_ptr<CameraMoveTo> _moveCam;
     
-=======
-    std::shared_ptr<cugl::scene2::MoveBy> _moveBy;
-
-    std::shared_ptr<cugl::scene2::Animate> _forward;
-
->>>>>>> TP-jonathan
     string _activeMap;
 
 //    std::shared_ptr<cugl::scene2::Label> _label;
@@ -64,7 +59,7 @@ public:
      * @param randoms        Reference to the random number generator
      */
     // GamePlayController(const Size displaySize, const std::shared_ptr<std::mt19937>& randoms);
-    GamePlayController(const Size displaySize, std::shared_ptr<SpriteBatch>& batch);
+    GamePlayController(const Size displaySize);
     /**
      * Responds to the keyboard commands.
      *
