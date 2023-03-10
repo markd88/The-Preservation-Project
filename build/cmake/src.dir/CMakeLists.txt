@@ -83,7 +83,9 @@ file(GLOB SOURCE_FILES
     ../../../source/Character/*.cpp
     ../../../source/Character/*.h
     ../../../source/Path/*.cpp
-    ../../../source/Path/*.h)
+    ../../../source/Path/*.h
+    ../../../source/Camera/*.cpp
+    ../../../source/Camera/*.h)
 
 # Build and link
 add_executable(Tilemap ${SOURCE_FILES})

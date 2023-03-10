@@ -9,15 +9,32 @@ using namespace cugl;
 /** This is adjusted by screen aspect ratio to get the height */
 #define SCENE_WIDTH 1024
 
-GamePlayController::GamePlayController(const Size displaySize):_scene(cugl::Scene2::alloc(displaySize)) {
+GamePlayController::GamePlayController(const Size displaySize, const std::shared_ptr<AssetManager>& assets):_scene(cugl::Scene2::alloc(displaySize)) {
     // Initialize the scene to a locked width
     Size dimen = Application::get()->getDisplaySize();
     dimen *= SCENE_WIDTH/dimen.width; // Lock the game to a reasonable resolution
 
     _cam = _scene->getCamera();
     
+    // Start up the input handler
+    _assets = assets;
+
     _input->init(dimen);
     
+    // Acquire the scene built by the asset loader and resize it the scene
+    std::cout<<_assets->progress()<<std::endl;
+    std::shared_ptr<scene2::SceneNode> test = _assets->get<scene2::SceneNode>("world");
+    _worldnode = std::dynamic_pointer_cast<scene2::ScrollPane>(_assets->get<scene2::SceneNode>("world"));
+    _worldnode->setContentSize(dimen);
+    CULog("Content: %.3fx%.3f",_worldnode->getContentWidth(),_worldnode->getContentHeight());
+    CULog("Interior: %s",_worldnode->getInterior().toString().c_str());
+    CULog("Constrain: %d",_worldnode->isConstrained());
+    CULog("Transform: %s",_worldnode->getPaneTransform().toString().c_str());
+//    addChild(_worldnode);
+    _scene->addChild(_worldnode);
+
+    _input->setAnchor(_worldnode->getPosition());
+
     _path = make_unique<PathController>();
     
     // Allocate the manager and the actions
@@ -48,7 +65,7 @@ GamePlayController::GamePlayController(const Size displaySize):_scene(cugl::Scen
     _cam->setPosition(Vec3(cPos.x,cPos.y,0));
     _cam->update();
     //_scene->setSize(displaySize/1.5);
-    Vec2 cPos = _character->getPosition();
+//    Vec2 cPos = _character->getPosition();
     //_cam->setPosition(Vec3(cPos.x,cPos.y,0));
     //_cam->update();
     
@@ -74,13 +91,7 @@ void GamePlayController::update(float dt){
     }
     if(elapsed.count() >= 0.5 && _input->getPinchDelta() != 0 && !can_switch){
         // if the character's position on the other world is obstacle, disable the switch
-        
-        
         last_time = now;
-        // CULog("didPinch +++++++++++++");
-        // std::cout<<"pinch delta = "<< _input->getPinchDelta()<<std::endl;
-
-        
         // remove and add the child back so that the child is always on the top layer
         _character->removeChildFrom(_scene);
         if (_activeMap == "tileMap1") {
@@ -96,10 +107,16 @@ void GamePlayController::update(float dt){
         }
         _character->addChildTo(_scene);
 
-    } else if(_input->didPress()){
-        std::cout<<dt<<"\n";
-        CULog("didPress");
-        // if press, determine if press on character
+    }
+    
+    else if (!_input->getPanDelta().isZero()) {
+        CULog("didPan++++++");
+        
+        Vec2 delta = _input->getPanDelta();
+        _worldnode->applyPan(delta);
+    }
+    
+    else if(_input->didPress()){        // if press, determine if press on character
         Vec2 input_posi = _input->getPosition();
         input_posi = _scene->screenToWorldCoords(input_posi);
         
@@ -329,3 +346,29 @@ void GamePlayController::render(std::shared_ptr<SpriteBatch>& batch){
 }
 
 
+
+/**
+ * Disposes of all (non-static) resources allocated to this mode.
+ */
+//void GamePlayController::dispose() {
+//    if (_active) {
+//        removeAllChildren();
+//        _input->dispose();
+//        _worldnode = nullptr;
+//        _active = false;
+//    }
+//}
+
+#pragma mark -
+#pragma mark Level Layout
+
+/**
+ * Resets the status of the game so that we can play again.
+ *
+ * This method disposes of the world and creates a new one.
+ */
+void GamePlayController::reset() {
+    CULog("Reseting");
+    _input->clear();
+    _worldnode->resetPane();
+}

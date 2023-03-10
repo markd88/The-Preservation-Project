@@ -27,6 +27,9 @@
     <Filter Include="Source Files\Path">
       <UniqueIdentifier>{CD5D0687-B83E-57F5-B54A-6369C6AF57D7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Camera">
+      <UniqueIdentifier>{CD347CA7-F96F-5D4D-B80E-5329F26840CE}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
@@ -38,19 +41,19 @@
     <ClInclude Include="..\..\..\source\Tile\TileController.h">
       <Filter>Source Files\Tile</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\source\Tile\TileView.h">
+      <Filter>Source Files\Tile</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\..\source\Tile\TileModel.h">
       <Filter>Source Files\Tile</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\source\Tile\TileView.h">
-      <Filter>Source Files\Tile</Filter>
+    <ClInclude Include="..\..\..\source\Tilemap\TilemapView.h">
+      <Filter>Source Files\Tilemap</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\source\Tilemap\TilemapController.h">
       <Filter>Source Files\Tilemap</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\source\Tilemap\TilemapModel.h">
-      <Filter>Source Files\Tilemap</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\source\Tilemap\TilemapView.h">
       <Filter>Source Files\Tilemap</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\source\Scene\GamePlayController.h">
@@ -68,36 +71,45 @@
     <ClInclude Include="..\..\..\source\Character\CharacterController.h">
       <Filter>Source Files\Character</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\source\Character\CharacterModel.h">
-      <Filter>Source Files\Character</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\source\Character\CharacterView.h">
       <Filter>Source Files\Character</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\source\Path\PathController.h">
+    <ClInclude Include="..\..\..\source\Character\CharacterModel.h">
+      <Filter>Source Files\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\source\Path\PathView.h">
       <Filter>Source Files\Path</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\source\Path\PathModel.h">
       <Filter>Source Files\Path</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\source\Path\PathView.h">
+    <ClInclude Include="..\..\..\source\Path\PathController.h">
       <Filter>Source Files\Path</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\source\Camera\CameraMove.h">
+      <Filter>Source Files\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\source\Camera\CameraAction.h">
+      <Filter>Source Files\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\source\Camera\CameraManager.h">
+      <Filter>Source Files\Camera</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\source\App.cpp">
+    <ClCompile Include="..\..\..\source\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\source\main.cpp">
+    <ClCompile Include="..\..\..\source\App.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\source\Tilemap\TilemapController.cpp">
       <Filter>Source Files\Tilemap</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\source\Scene\GamePlayController.cpp">
+    <ClCompile Include="..\..\..\source\Scene\LoadingController.cpp">
       <Filter>Source Files\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\source\Scene\LoadingController.cpp">
+    <ClCompile Include="..\..\..\source\Scene\GamePlayController.cpp">
       <Filter>Source Files\Scene</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\source\Input\InputController.cpp">
@@ -105,6 +117,15 @@
     </ClCompile>
     <ClCompile Include="..\..\..\source\Path\PathController.cpp">
       <Filter>Source Files\Path</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\Camera\CameraManager.cpp">
+      <Filter>Source Files\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\Camera\CameraMove.cpp">
+      <Filter>Source Files\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\Camera\CameraAction.cpp">
+      <Filter>Source Files\Camera</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
