@@ -49,7 +49,7 @@ void App::onStartup() {
     _loadingController->init(_assets);
     
     // Que up the other assets
-    _assets->loadDirectoryAsync("json/assets.json",nullptr);
+    _assets->loadDirectory("json/assets.json");
     CULog("there");
 
     // Create a sprite batch (and background color) to render the scene
