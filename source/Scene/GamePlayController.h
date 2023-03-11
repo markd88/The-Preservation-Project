@@ -45,6 +45,26 @@ public:
     
     string _activeMap;
 
+    // Below are for Pan gestures
+    /** The asset manager for this game mode. */
+    std::shared_ptr<cugl::AssetManager> _assets;
+
+    // VIEW
+    /** Reference to the root of the scene graph */
+    std::shared_ptr<cugl::scene2::ScrollPane> _worldnode;
+    /** The scroll bounds on the demo */
+    cugl::Rect _bounds;
+    bool _clamp;
+    cugl::Affine2 _transform;
+
+#pragma mark Input Handling
+    /**
+     * Pans the screen by the amount given by the input
+     *
+     * @param delta The pan offset
+     */
+    void panScreen(const cugl::Vec2& delta);
+
 //    std::shared_ptr<cugl::scene2::Label> _label;
     
 #pragma mark Main Methods
@@ -59,7 +79,7 @@ public:
      * @param randoms        Reference to the random number generator
      */
     // GamePlayController(const Size displaySize, const std::shared_ptr<std::mt19937>& randoms);
-    GamePlayController(const Size displaySize);
+    GamePlayController(const Size displaySize, const std::shared_ptr<cugl::AssetManager>& assets);
     /**
      * Responds to the keyboard commands.
      *
@@ -77,6 +97,16 @@ public:
      */
 
     void render(std::shared_ptr<SpriteBatch> &batch) ;
+    
+    /**
+     * Disposes of all (non-static) resources allocated to this mode.
+     */
+    void dispose(); // TODO
+    
+    /**
+     * Resets the status of the scene to the beginning.
+     */
+    void reset();
 
 #pragma mark Generation Helpers
 private:

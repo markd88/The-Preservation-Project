@@ -57,7 +57,6 @@ public:
     
     cugl::Size _screensize;
 
-
 #pragma mark Main Functions
 public:
     /** Creates the model state */

@@ -17,6 +17,7 @@ using namespace std;
 
 // This is NOT in the same directory
 #include <Scene/GamePlayController.h>
+#include <Scene/LoadingController.h>
 
 /**
  * Class for a viewing procedurally generated tile-based content
@@ -37,6 +38,9 @@ protected:
     string active_scene;
     
     std::shared_ptr<GamePlayController> _gameplayController;
+    std::shared_ptr<LoadingController> _loadingController;
+    /** Whether or not we have finished loading all assets */
+    bool _loaded;
     
 public:
     /**
@@ -48,7 +52,7 @@ public:
      * of initialization from the constructor allows main.cpp to perform
      * advanced configuration of the application before it starts.
      */
-    App() : Application() {}
+    App() : Application(), _loaded(false) {}
     
     /**
      * Disposes of this application, releasing all resources.
