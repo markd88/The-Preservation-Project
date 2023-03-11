@@ -179,7 +179,7 @@ void InputController::updatePinch(float dt) {
 /**
 * Clears any buffered inputs so that we may start fresh.
 */
-void InputController::clear() {
+void InputController::clearPinch() {
     _model->_pandelta = Vec2::ZERO;
     _model->_pinchDelta = 0;
     _model->_angleDelta = 0;
