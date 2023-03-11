@@ -29,6 +29,8 @@ public:
     /** The asset manager for this game mode. */
     std::shared_ptr<cugl::AssetManager> _assets;
     std::shared_ptr<cugl::scene2::Button> _button;
+    Vec2 _button_screen_pos;
+    std::shared_ptr<cugl::scene2::SceneNode> _button_layer;
     
     /** The tilemap to procedurally generate */
     std::unique_ptr<CharacterController> _character;
@@ -56,8 +58,7 @@ public:
     /**
      * Creates the game controller.
      *
-     * This constructor will procedurally generate a tilemap immediately
-     * on creation.
+     * This constructor will init all fields in this class and activate necessary components. the attachment of scenenodes to the scene happen in init method.
      *
      * @param displaySize   The display size of the game window
      * @param randoms        Reference to the random number generator
@@ -65,6 +66,12 @@ public:
     // GamePlayController(const Size displaySize, const std::shared_ptr<std::mt19937>& randoms);
     GamePlayController(const Size displaySize, /** The asset manager for this game mode. */
                        std::shared_ptr<cugl::AssetManager>& assets);
+    
+    /**
+     * Init the GameplayScene when start, mostly do scenegraph arrangement
+     */
+    void init();
+    
     /**
      * Responds to the keyboard commands.
      *

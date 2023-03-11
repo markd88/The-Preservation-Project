@@ -47,8 +47,8 @@
                     "data"   : {
                         "key" : "largebutton",
                         "variables" : {
-                            "size"  : [550,300],
-                            "text"  : "Click Count is 0"
+                            "size"  : [250,100],
+                            "text"  : "Reset"
                         }
                     }
                 }
