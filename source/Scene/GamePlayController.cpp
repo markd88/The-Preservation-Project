@@ -9,25 +9,15 @@ using namespace cugl;
 /** This is adjusted by screen aspect ratio to get the height */
 #define SCENE_WIDTH 1024
 
-GamePlayController::GamePlayController(const Size displaySize, const std::shared_ptr<AssetManager>& assets):_scene(cugl::Scene2::alloc(displaySize)) {
+GamePlayController::GamePlayController(const Size displaySize):_scene(cugl::Scene2::alloc(displaySize)) {
     // Initialize the scene to a locked width
     Size dimen = Application::get()->getDisplaySize();
     dimen *= SCENE_WIDTH/dimen.width; // Lock the game to a reasonable resolution
 
     _cam = _scene->getCamera();
     
-    // Start up the input handler
-    _assets = assets;
-
     _input->init(dimen);
     
-    // Example for json assessts: Acquire the scene built by the asset loader and resize it the scene
-//    std::cout<<_assets->progress()<<std::endl;
-//    _worldnode = std::dynamic_pointer_cast<scene2::ScrollPane>(_assets->get<scene2::SceneNode>("world"));
-//    _worldnode->setContentSize(dimen);
-//    _scene->addChild(_worldnode);
-//    _input->setAnchor(_worldnode->getPosition());
-
     _path = make_unique<PathController>();
     
     // Allocate the manager and the actions
@@ -99,7 +89,6 @@ void GamePlayController::update(float dt){
             _activeMap = "tileMap1";
         }
         _character->addChildTo(_scene);
-
     }
     
     else if (!_input->getPanDelta().isZero()) {
@@ -347,29 +336,3 @@ void GamePlayController::render(std::shared_ptr<SpriteBatch>& batch){
 }
 
 
-
-/**
- * Disposes of all (non-static) resources allocated to this mode.
- */
-//void GamePlayController::dispose() {
-//    if (_active) {
-//        removeAllChildren();
-//        _input->dispose();
-//        _worldnode = nullptr;
-//        _active = false;
-//    }
-//}
-
-#pragma mark -
-#pragma mark Level Layout
-
-/**
- * Resets the status of the game so that we can play again.
- *
- * This method disposes of the world and creates a new one.
- */
-void GamePlayController::reset() {
-    CULog("Reseting");
-    _input->clear();
-    _worldnode->resetPane();
-}

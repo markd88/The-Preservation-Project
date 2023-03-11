@@ -101,8 +101,8 @@ public:
     /**
      * Clears any buffered inputs so that we may start fresh.
      */
-    void clear();
-    
+    void clearPinch();
+
 #pragma mark Touch Callbacks
 private:
     /**

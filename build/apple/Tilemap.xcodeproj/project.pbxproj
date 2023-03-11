@@ -7,29 +7,23 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		AB4FAACEAE24C0FFDD3358D5 /* textures in Resources */ = {isa = PBXBuildFile; fileRef = AA259BFAAEFDFD1998A32E0B /* textures */; };
-		AB8733AC6D19D4CADC473D2A /* json in Resources */ = {isa = PBXBuildFile; fileRef = AA9A54AD20F1FDD4B0473EE5 /* json */; };
+		628A05B829B97024003F3AD6 /* CameraManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 628A05B629B97024003F3AD6 /* CameraManager.cpp */; };
+		628A05B929B97024003F3AD6 /* CameraManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 628A05B629B97024003F3AD6 /* CameraManager.cpp */; };
+		628A05BD29B97353003F3AD6 /* CameraAction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 628A05BC29B97353003F3AD6 /* CameraAction.cpp */; };
+		628A05BE29B97353003F3AD6 /* CameraAction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 628A05BC29B97353003F3AD6 /* CameraAction.cpp */; };
+		628A05C129B97A9E003F3AD6 /* CameraMove.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 628A05C029B97A9E003F3AD6 /* CameraMove.cpp */; };
+		628A05C229B97A9E003F3AD6 /* CameraMove.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 628A05C029B97A9E003F3AD6 /* CameraMove.cpp */; };
 		ABBBF1BCC27EA60BCFCAF168 /* placeholder.txt in Resources */ = {isa = PBXBuildFile; fileRef = AA3CD5F0F5AAE7BA683B24F0 /* placeholder.txt */; };
-		ABCEE9218F3D4271D7FB3AFF /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = AAA1D9FC9F3ED19A1DDAAC56 /* fonts */; };
-		AC14EE384E6A1FA5E4A10B9F /* json in Resources */ = {isa = PBXBuildFile; fileRef = AA9A54AD20F1FDD4B0473EE5 /* json */; };
 		AC6FEAFD0E0B8F5D0F302A7E /* placeholder.txt in Resources */ = {isa = PBXBuildFile; fileRef = AA3CD5F0F5AAE7BA683B24F0 /* placeholder.txt */; };
-		ACBA1DE4B2DFC58A39F3E1CD /* textures in Resources */ = {isa = PBXBuildFile; fileRef = AA259BFAAEFDFD1998A32E0B /* textures */; };
-		ACFDF906562C051CAB803FBE /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = AAA1D9FC9F3ED19A1DDAAC56 /* fonts */; };
 		BB040D0FA8EA86E34BFEF0AF /* PathController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA9E28E9BBCFB79C7DFDF7ED /* PathController.cpp */; };
 		BB3A3ECFF617108DABBB117D /* InputController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BAC5E8EF7048E5BE34AC4A6A /* InputController.cpp */; };
 		BB5F080D7B36C9AEAB172EFA /* LoadingController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BAF1BFDC6BECEA6B2E7FADED /* LoadingController.cpp */; };
-		BB631EBBD77FE3B70D6141E6 /* CameraManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA96CFDB2651EDF8E3FA1F9D /* CameraManager.cpp */; };
 		BB9D46AB7E4A525A6DE21515 /* GamePlayController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA50C0F1F52D09A8D77773E3 /* GamePlayController.cpp */; };
 		BBAEDE6930CE67D19758DBFA /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BACD06FACAC591B8BB025B8C /* main.cpp */; };
 		BBBCCD11F3FBEB2BCA3A35B8 /* App.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA0BFCD17AAAA583E8A9E6CA /* App.cpp */; };
-		BBCEEDA737DBBA8AB935B0CE /* CameraMove.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BAEF82AAE6AAA9DA0707B7BE /* CameraMove.cpp */; };
 		BBD3DFAE7E04763B516053FE /* TilemapController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BAC0CAB8C8C7FE7916E64403 /* TilemapController.cpp */; };
-		BBF8EAADDB3EFBE08B0CAC9A /* CameraAction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BAA5C4F4BD60BDF7C4CED8B7 /* CameraAction.cpp */; };
 		BC065D01240686BECAFB9A8B /* LoadingController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BAF1BFDC6BECEA6B2E7FADED /* LoadingController.cpp */; };
-		BC20C318C06DA6FEA2D5FCEA /* CameraManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA96CFDB2651EDF8E3FA1F9D /* CameraManager.cpp */; };
 		BC4BA0DBE6E1B83E8233CDE0 /* App.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA0BFCD17AAAA583E8A9E6CA /* App.cpp */; };
-		BC66B604DAFC0DFBCB0AB750 /* CameraMove.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BAEF82AAE6AAA9DA0707B7BE /* CameraMove.cpp */; };
-		BC6FC9BEBBF960A1CA625C9B /* CameraAction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BAA5C4F4BD60BDF7C4CED8B7 /* CameraAction.cpp */; };
 		BCA1C8BFF8A84806EC66C96D /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BACD06FACAC591B8BB025B8C /* main.cpp */; };
 		BCAAEFB8B1C7DA1DBA71500D /* GamePlayController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA50C0F1F52D09A8D77773E3 /* GamePlayController.cpp */; };
 		BCB6B06DFEF71E77EBC5ED6E /* TilemapController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BAC0CAB8C8C7FE7916E64403 /* TilemapController.cpp */; };
@@ -90,26 +84,24 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		AA259BFAAEFDFD1998A32E0B /* textures */ = {isa = PBXFileReference; lastKnownFileType = folder; path = textures; sourceTree = "<group>"; };
+		628A05B629B97024003F3AD6 /* CameraManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CameraManager.cpp; sourceTree = "<group>"; };
+		628A05BA29B970B9003F3AD6 /* CameraManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CameraManager.h; sourceTree = "<group>"; };
+		628A05BB29B97343003F3AD6 /* CameraAction.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CameraAction.h; sourceTree = "<group>"; };
+		628A05BC29B97353003F3AD6 /* CameraAction.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CameraAction.cpp; sourceTree = "<group>"; };
+		628A05BF29B97868003F3AD6 /* CameraMove.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CameraMove.h; sourceTree = "<group>"; };
+		628A05C029B97A9E003F3AD6 /* CameraMove.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CameraMove.cpp; sourceTree = "<group>"; };
 		AA3CD5F0F5AAE7BA683B24F0 /* placeholder.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = placeholder.txt; sourceTree = "<group>"; };
-		AA9A54AD20F1FDD4B0473EE5 /* json */ = {isa = PBXFileReference; lastKnownFileType = folder; path = json; sourceTree = "<group>"; };
-		AAA1D9FC9F3ED19A1DDAAC56 /* fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = fonts; sourceTree = "<group>"; };
 		BA0BFCD17AAAA583E8A9E6CA /* App.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = App.cpp; sourceTree = "<group>"; };
-		BA22A2738E731DCFF08EC6BF /* CameraMove.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraMove.h; sourceTree = "<group>"; };
-		BA40BAAF51518F8AF8B9E2AE /* CameraAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraAction.h; sourceTree = "<group>"; };
 		BA497EA9473BC1A07169ECF9 /* LoadingController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadingController.h; sourceTree = "<group>"; };
 		BA50C0F1F52D09A8D77773E3 /* GamePlayController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GamePlayController.cpp; sourceTree = "<group>"; };
 		BA5985487EFF4E5DFCC496ED /* CharacterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CharacterView.h; sourceTree = "<group>"; };
 		BA5E8DCE3B03CF83AB7DA17A /* TileController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TileController.h; sourceTree = "<group>"; };
 		BA6327106EE9AC42AFFA55D7 /* PathView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PathView.h; sourceTree = "<group>"; };
 		BA6892123484A7158CC7BDE9 /* GamePlayController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GamePlayController.h; sourceTree = "<group>"; };
-		BA96CFDB2651EDF8E3FA1F9D /* CameraManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CameraManager.cpp; sourceTree = "<group>"; };
 		BA987DAB06C4D9DCBFF98ABE /* TileModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TileModel.h; sourceTree = "<group>"; };
-		BA99003164BEC00BEB6BA21C /* CameraManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraManager.h; sourceTree = "<group>"; };
 		BA9E28E9BBCFB79C7DFDF7ED /* PathController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PathController.cpp; sourceTree = "<group>"; };
 		BAA1CD78F4D844CEACEFFDD6 /* TileView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TileView.h; sourceTree = "<group>"; };
 		BAA437BB978BD1F19FFC3A51 /* InputModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InputModel.h; sourceTree = "<group>"; };
-		BAA5C4F4BD60BDF7C4CED8B7 /* CameraAction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CameraAction.cpp; sourceTree = "<group>"; };
 		BAA6613A22B92625FC3387EE /* CharacterModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CharacterModel.h; sourceTree = "<group>"; };
 		BABCE18D8CF32C3DDD66FEDD /* InputController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InputController.h; sourceTree = "<group>"; };
 		BAC0CAB8C8C7FE7916E64403 /* TilemapController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TilemapController.cpp; sourceTree = "<group>"; };
@@ -121,7 +113,6 @@
 		BAE2ECE2DFF1BC426FBAD1FD /* TilemapView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TilemapView.h; sourceTree = "<group>"; };
 		BAEADA9F5B942DD7F8EDEBCC /* CharacterController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CharacterController.h; sourceTree = "<group>"; };
 		BAECA7E71F759869D8E99BD2 /* PathController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PathController.h; sourceTree = "<group>"; };
-		BAEF82AAE6AAA9DA0707B7BE /* CameraMove.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CameraMove.cpp; sourceTree = "<group>"; };
 		BAF1BFDC6BECEA6B2E7FADED /* LoadingController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LoadingController.cpp; sourceTree = "<group>"; };
 		BAFC2BBAA92C8CE7CD7E78ED /* TilemapModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TilemapModel.h; sourceTree = "<group>"; };
 		EB0F3C9627FB9DCB0037CC66 /* Tilemap Viewer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Tilemap Viewer.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -213,15 +204,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		CD10B6C5AC3FB5E389F77CF5 /* Camera */ = {
+		628A05A029B96DD6003F3AD6 /* Camera */ = {
 			isa = PBXGroup;
 			children = (
-				BA96CFDB2651EDF8E3FA1F9D /* CameraManager.cpp */,
-				BAEF82AAE6AAA9DA0707B7BE /* CameraMove.cpp */,
-				BAA5C4F4BD60BDF7C4CED8B7 /* CameraAction.cpp */,
-				BA22A2738E731DCFF08EC6BF /* CameraMove.h */,
-				BA40BAAF51518F8AF8B9E2AE /* CameraAction.h */,
-				BA99003164BEC00BEB6BA21C /* CameraManager.h */,
+				628A05B629B97024003F3AD6 /* CameraManager.cpp */,
+				628A05BA29B970B9003F3AD6 /* CameraManager.h */,
+				628A05BC29B97353003F3AD6 /* CameraAction.cpp */,
+				628A05BB29B97343003F3AD6 /* CameraAction.h */,
+				628A05C029B97A9E003F3AD6 /* CameraMove.cpp */,
+				628A05BF29B97868003F3AD6 /* CameraMove.h */,
 			);
 			path = Camera;
 			sourceTree = "<group>";
@@ -230,9 +221,9 @@
 			isa = PBXGroup;
 			children = (
 				BAC0CAB8C8C7FE7916E64403 /* TilemapController.cpp */,
-				BAE2ECE2DFF1BC426FBAD1FD /* TilemapView.h */,
 				BAD8FBEA1EA3A187E13C2AD3 /* TilemapController.h */,
 				BAFC2BBAA92C8CE7CD7E78ED /* TilemapModel.h */,
+				BAE2ECE2DFF1BC426FBAD1FD /* TilemapView.h */,
 			);
 			path = Tilemap;
 			sourceTree = "<group>";
@@ -240,8 +231,8 @@
 		CD70BC0DCFBE482BC3C897CE /* Scene */ = {
 			isa = PBXGroup;
 			children = (
-				BAF1BFDC6BECEA6B2E7FADED /* LoadingController.cpp */,
 				BA50C0F1F52D09A8D77773E3 /* GamePlayController.cpp */,
+				BAF1BFDC6BECEA6B2E7FADED /* LoadingController.cpp */,
 				BA6892123484A7158CC7BDE9 /* GamePlayController.h */,
 				BA497EA9473BC1A07169ECF9 /* LoadingController.h */,
 			);
@@ -262,9 +253,9 @@
 			isa = PBXGroup;
 			children = (
 				BA9E28E9BBCFB79C7DFDF7ED /* PathController.cpp */,
-				BA6327106EE9AC42AFFA55D7 /* PathView.h */,
-				BAC3397A7ACD73ACFDD23C41 /* PathModel.h */,
 				BAECA7E71F759869D8E99BD2 /* PathController.h */,
+				BAC3397A7ACD73ACFDD23C41 /* PathModel.h */,
+				BA6327106EE9AC42AFFA55D7 /* PathView.h */,
 			);
 			path = Path;
 			sourceTree = "<group>";
@@ -273,8 +264,8 @@
 			isa = PBXGroup;
 			children = (
 				BAEADA9F5B942DD7F8EDEBCC /* CharacterController.h */,
-				BA5985487EFF4E5DFCC496ED /* CharacterView.h */,
 				BAA6613A22B92625FC3387EE /* CharacterModel.h */,
+				BA5985487EFF4E5DFCC496ED /* CharacterView.h */,
 			);
 			path = Character;
 			sourceTree = "<group>";
@@ -283,8 +274,8 @@
 			isa = PBXGroup;
 			children = (
 				BA5E8DCE3B03CF83AB7DA17A /* TileController.h */,
-				BAA1CD78F4D844CEACEFFDD6 /* TileView.h */,
 				BA987DAB06C4D9DCBFF98ABE /* TileModel.h */,
+				BAA1CD78F4D844CEACEFFDD6 /* TileView.h */,
 			);
 			path = Tile;
 			sourceTree = "<group>";
@@ -313,8 +304,8 @@
 		EB0F3C9827FB9DCB0037CC66 /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				BACD06FACAC591B8BB025B8C /* main.cpp */,
 				BA0BFCD17AAAA583E8A9E6CA /* App.cpp */,
+				BACD06FACAC591B8BB025B8C /* main.cpp */,
 				BAC10B38E8EB1F99DA07DDF3 /* App.h */,
 				CDE9BC6F89B3AE2D3D6CCBBB /* Tile */,
 				CD6DCA2A813A5AD6A17F7B95 /* Tilemap */,
@@ -322,7 +313,7 @@
 				CDA57BA9AFFB1B103FEA2A43 /* Input */,
 				CDCA8B81ED7F33FAAF51BA59 /* Character */,
 				CDB97A5E12D39A8BE70FF9D3 /* Path */,
-				CD10B6C5AC3FB5E389F77CF5 /* Camera */,
+				628A05A029B96DD6003F3AD6 /* Camera */,
 			);
 			name = Source;
 			path = ../../source;
@@ -383,10 +374,7 @@
 		EB23B0F828BFF70E001EA958 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
-				AA259BFAAEFDFD1998A32E0B /* textures */,
-				AA9A54AD20F1FDD4B0473EE5 /* json */,
 				AA3CD5F0F5AAE7BA683B24F0 /* placeholder.txt */,
-				AAA1D9FC9F3ED19A1DDAAC56 /* fonts */,
 			);
 			name = Assets;
 			path = ../../assets;
@@ -515,10 +503,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AB4FAACEAE24C0FFDD3358D5 /* textures in Resources */,
-				AB8733AC6D19D4CADC473D2A /* json in Resources */,
 				ABBBF1BCC27EA60BCFCAF168 /* placeholder.txt in Resources */,
-				ABCEE9218F3D4271D7FB3AFF /* fonts in Resources */,
 				EB0F3CB827FB9FD40037CC66 /* Mac.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -527,10 +512,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				ACBA1DE4B2DFC58A39F3E1CD /* textures in Resources */,
-				AC14EE384E6A1FA5E4A10B9F /* json in Resources */,
 				AC6FEAFD0E0B8F5D0F302A7E /* placeholder.txt in Resources */,
-				ACFDF906562C051CAB803FBE /* fonts in Resources */,
 				EBC7AEDC27FBBD7B001F1467 /* iOS.xcassets in Resources */,
 				EBC7AEDD27FBBD7B001F1467 /* Landscape.storyboard in Resources */,
 				EBC7AEDE27FBBD7B001F1467 /* Portrait.storyboard in Resources */,
@@ -544,16 +526,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BBAEDE6930CE67D19758DBFA /* main.cpp in Sources */,
+				628A05BD29B97353003F3AD6 /* CameraAction.cpp in Sources */,
+				628A05C129B97A9E003F3AD6 /* CameraMove.cpp in Sources */,
 				BBBCCD11F3FBEB2BCA3A35B8 /* App.cpp in Sources */,
+				BBAEDE6930CE67D19758DBFA /* main.cpp in Sources */,
 				BBD3DFAE7E04763B516053FE /* TilemapController.cpp in Sources */,
-				BB5F080D7B36C9AEAB172EFA /* LoadingController.cpp in Sources */,
 				BB9D46AB7E4A525A6DE21515 /* GamePlayController.cpp in Sources */,
+				BB5F080D7B36C9AEAB172EFA /* LoadingController.cpp in Sources */,
 				BB3A3ECFF617108DABBB117D /* InputController.cpp in Sources */,
+				628A05B829B97024003F3AD6 /* CameraManager.cpp in Sources */,
 				BB040D0FA8EA86E34BFEF0AF /* PathController.cpp in Sources */,
-				BB631EBBD77FE3B70D6141E6 /* CameraManager.cpp in Sources */,
-				BBCEEDA737DBBA8AB935B0CE /* CameraMove.cpp in Sources */,
-				BBF8EAADDB3EFBE08B0CAC9A /* CameraAction.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -561,16 +543,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BCA1C8BFF8A84806EC66C96D /* main.cpp in Sources */,
+				628A05BE29B97353003F3AD6 /* CameraAction.cpp in Sources */,
+				628A05C229B97A9E003F3AD6 /* CameraMove.cpp in Sources */,
 				BC4BA0DBE6E1B83E8233CDE0 /* App.cpp in Sources */,
+				BCA1C8BFF8A84806EC66C96D /* main.cpp in Sources */,
 				BCB6B06DFEF71E77EBC5ED6E /* TilemapController.cpp in Sources */,
-				BC065D01240686BECAFB9A8B /* LoadingController.cpp in Sources */,
 				BCAAEFB8B1C7DA1DBA71500D /* GamePlayController.cpp in Sources */,
+				BC065D01240686BECAFB9A8B /* LoadingController.cpp in Sources */,
 				BCED7F00DF1EF5AFB3059CE6 /* InputController.cpp in Sources */,
+				628A05B929B97024003F3AD6 /* CameraManager.cpp in Sources */,
 				BCF2DAE3A98AA27EDB7DEB7D /* PathController.cpp in Sources */,
-				BC20C318C06DA6FEA2D5FCEA /* CameraManager.cpp in Sources */,
-				BC66B604DAFC0DFBCB0AB750 /* CameraMove.cpp in Sources */,
-				BC6FC9BEBBF960A1CA625C9B /* CameraAction.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -790,7 +772,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = B34BJC25C6;
+				DEVELOPMENT_TEAM = 8J4B97K947;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -813,7 +795,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = edu.cornell.gdiac.code3.ios.G78B13A8;
+				PRODUCT_BUNDLE_IDENTIFIER = edu.cornell.gdiac.code3.ios.G78B13A2;
 				PRODUCT_NAME = "Tilemap Viewer";
 				SDKROOT = iphoneos;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -829,7 +811,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = B34BJC25C6;
+				DEVELOPMENT_TEAM = Y63X5F9DBG;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -852,7 +834,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = edu.cornell.gdiac.code3.ios.G78B13A8;
+				PRODUCT_BUNDLE_IDENTIFIER = edu.cornell.gdiac.code3.ios.G78B13A2;
 				PRODUCT_NAME = "Tilemap Viewer";
 				SDKROOT = iphoneos;
 				SWIFT_EMIT_LOC_STRINGS = YES;
