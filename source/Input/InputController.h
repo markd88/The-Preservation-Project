@@ -64,15 +64,15 @@ public:
     
     /** Returns a singleton instance of InputController. */
     static std::shared_ptr<InputController> getInstance();
-
+    
     bool init(const cugl::Size& size);
     
     // touch
     bool initTouch();
-
+    
     // gesture
     bool initPinch(const cugl::Size& size);
-
+    
     cugl::Vec2 screenToScenePinch(const cugl::Vec2& position) const;
     
 #pragma mark -
@@ -97,7 +97,7 @@ public:
     void update(float dt);
     void updateTouch();
     void updatePinch(float dt);
-
+    
     /**
      * Clears any buffered inputs so that we may start fresh.
      */
@@ -145,7 +145,7 @@ private:
      * @param focus     Whether the listener currently has focus
      */
     void pinchEndedCB(const cugl::CoreGestureEvent& event, bool focus);
-
+    
     /**
      * Callback for a pan movement event
      *
@@ -153,7 +153,7 @@ private:
      * @param focus     Whether the listener currently has focus
      */
     void pinchMovedCB(const cugl::CoreGestureEvent& event, bool focus);
-
+    
 #pragma mark Input State Getters
 public:
     // touch
@@ -213,7 +213,7 @@ public:
     
     // gesture
     const cugl::Vec2& getAnchor() const { return _model->_anchor; }
-
+    
     void setAnchor(const cugl::Vec2& anchor) { _model->_anchor = anchor; }
     
     /**
@@ -228,8 +228,9 @@ public:
     const cugl::Vec2& getPanDelta() const { return _model->_pandelta; }
     
     float getPinchDelta() const { return _model->_pinchDelta; }
-
+    
     float getAngleDelta() const { return _model->_angleDelta; }
+    
 };
 
 #endif /* __INPUT_CONTROLLER_H__ */

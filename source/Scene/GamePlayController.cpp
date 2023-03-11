@@ -85,7 +85,7 @@ void GamePlayController::init(){
     
     // to make the button pos fixed relative to screen
     _button_layer->setPosition(_cam->getPosition() - Vec2(900, 70));
-    
+
     
 //    _label = std::make_shared<scene2::Label>();
 //    _label->setText("Exit");
@@ -110,13 +110,7 @@ void GamePlayController::update(float dt){
     }
     if(elapsed.count() >= 0.5 && _input->getPinchDelta() != 0 && !can_switch){
         // if the character's position on the other world is obstacle, disable the switch
-        
-        
         last_time = now;
-        // CULog("didPinch +++++++++++++");
-        // std::cout<<"pinch delta = "<< _input->getPinchDelta()<<std::endl;
-
-        
         // remove and add the child back so that the child is always on the top layer
         _character->removeChildFrom(_scene);
         if (_activeMap == "tileMap1") {
@@ -133,11 +127,24 @@ void GamePlayController::update(float dt){
         _character->addChildTo(_scene);
         _scene->removeChild(_button_layer);
         _scene->addChild(_button_layer);
+    }
+    
+    else if (!_input->getPanDelta().isZero()) {
 
-    } else if(_input->didPress()){
-        std::cout<<dt<<"\n";
-        CULog("didPress");
-        // if press, determine if press on character
+        Vec2 delta = _input->getPanDelta();
+
+        // init camera action
+        _moveTo = cugl::scene2::MoveTo::alloc();
+        _moveCam = CameraMoveTo::alloc();
+        
+        // pan move with the center of the camera view
+        _moveTo->setTarget(_cam->getPosition() - delta);
+        _moveCam->setTarget(_cam->getPosition() - delta);
+        
+        _camManager->activate("movingCam", _moveCam, _cam);
+    }
+    
+    else if(_input->didPress()){        // if press, determine if press on character
         Vec2 input_posi = _input->getPosition();
         input_posi = _scene->screenToWorldCoords(input_posi);
         
