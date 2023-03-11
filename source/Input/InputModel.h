@@ -57,6 +57,8 @@ public:
     
     cugl::Size _screensize;
 
+    // record prev pan
+    bool _prevPan;
 
 #pragma mark Main Functions
 public:
@@ -76,7 +78,8 @@ public:
         _currSpread(0),
         _prevSpread(0),
         _angleDelta(0),
-        _pinchDelta(0) {}
+        _pinchDelta(0),
+        _prevPan(false) {}
 };
 
 

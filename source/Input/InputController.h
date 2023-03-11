@@ -230,6 +230,10 @@ public:
     float getPinchDelta() const { return _model->_pinchDelta; }
 
     float getAngleDelta() const { return _model->_angleDelta; }
+    
+    bool prevPan() const { return _model->_prevPan; }
+    
+    void setPanState() const { _model->_prevPan = !_model->_prevPan; }
 };
 
 #endif /* __INPUT_CONTROLLER_H__ */

@@ -110,10 +110,24 @@ void GamePlayController::update(float dt){
     }
     
     else if (!_input->getPanDelta().isZero()) {
-        CULog("didPan++++++");
         
+//        _input->setPanState();
         Vec2 delta = _input->getPanDelta();
-        _worldnode->applyPan(delta);
+
+        CULog("didPan++++++");
+        std::cout<<"pan delta: "<<delta.toString()<<std::endl;
+
+        // get center position of the current view
+        
+        _moveTo = cugl::scene2::MoveTo::alloc();
+        _moveCam = CameraMoveTo::alloc();
+        
+        
+        _moveTo->setTarget(_cam->getPosition() - delta);
+        _moveCam->setTarget(_cam->getPosition() - delta);
+        
+        _camManager->activate("movingCam", _moveCam, _cam);
+        
     }
     
     else if(_input->didPress()){        // if press, determine if press on character
@@ -154,8 +168,11 @@ void GamePlayController::update(float dt){
             }
         }
     }
+    else if(_input->didRelease() && _input->prevPan()){
+        _input->setPanState();
+    }
     
-    else if(_input->didRelease()){
+    else if(_input->didRelease() && !_input->prevPan()){
         CULog("didRelease");
         Vec2 input_posi = _input->getPosition();
         input_posi = _scene->screenToWorldCoords(input_posi);
