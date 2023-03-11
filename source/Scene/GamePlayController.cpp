@@ -21,19 +21,12 @@ GamePlayController::GamePlayController(const Size displaySize, const std::shared
 
     _input->init(dimen);
     
-    // Acquire the scene built by the asset loader and resize it the scene
-    std::cout<<_assets->progress()<<std::endl;
-    std::shared_ptr<scene2::SceneNode> test = _assets->get<scene2::SceneNode>("world");
-    _worldnode = std::dynamic_pointer_cast<scene2::ScrollPane>(_assets->get<scene2::SceneNode>("world"));
-    _worldnode->setContentSize(dimen);
-    CULog("Content: %.3fx%.3f",_worldnode->getContentWidth(),_worldnode->getContentHeight());
-    CULog("Interior: %s",_worldnode->getInterior().toString().c_str());
-    CULog("Constrain: %d",_worldnode->isConstrained());
-    CULog("Transform: %s",_worldnode->getPaneTransform().toString().c_str());
-//    addChild(_worldnode);
-    _scene->addChild(_worldnode);
-
-    _input->setAnchor(_worldnode->getPosition());
+    // Example for json assessts: Acquire the scene built by the asset loader and resize it the scene
+//    std::cout<<_assets->progress()<<std::endl;
+//    _worldnode = std::dynamic_pointer_cast<scene2::ScrollPane>(_assets->get<scene2::SceneNode>("world"));
+//    _worldnode->setContentSize(dimen);
+//    _scene->addChild(_worldnode);
+//    _input->setAnchor(_worldnode->getPosition());
 
     _path = make_unique<PathController>();
     
@@ -110,24 +103,18 @@ void GamePlayController::update(float dt){
     }
     
     else if (!_input->getPanDelta().isZero()) {
-        
-//        _input->setPanState();
+
         Vec2 delta = _input->getPanDelta();
 
-        CULog("didPan++++++");
-        std::cout<<"pan delta: "<<delta.toString()<<std::endl;
-
-        // get center position of the current view
-        
+        // init camera action
         _moveTo = cugl::scene2::MoveTo::alloc();
         _moveCam = CameraMoveTo::alloc();
         
-        
+        // pan move with the center of the camera view
         _moveTo->setTarget(_cam->getPosition() - delta);
         _moveCam->setTarget(_cam->getPosition() - delta);
         
         _camManager->activate("movingCam", _moveCam, _cam);
-        
     }
     
     else if(_input->didPress()){        // if press, determine if press on character
@@ -168,11 +155,8 @@ void GamePlayController::update(float dt){
             }
         }
     }
-    else if(_input->didRelease() && _input->prevPan()){
-        _input->setPanState();
-    }
     
-    else if(_input->didRelease() && !_input->prevPan()){
+    else if(_input->didRelease()){
         CULog("didRelease");
         Vec2 input_posi = _input->getPosition();
         input_posi = _scene->screenToWorldCoords(input_posi);
