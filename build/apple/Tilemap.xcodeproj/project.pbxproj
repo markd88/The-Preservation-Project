@@ -66,6 +66,12 @@
 		BCED7F00DF1EF5AFB3059CE6 /* InputController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BAC5E8EF7048E5BE34AC4A6A /* InputController.cpp */; };
 		BB040D0FA8EA86E34BFEF0AF /* PathController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA9E28E9BBCFB79C7DFDF7ED /* PathController.cpp */; };
 		BCF2DAE3A98AA27EDB7DEB7D /* PathController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA9E28E9BBCFB79C7DFDF7ED /* PathController.cpp */; };
+		BB631EBBD77FE3B70D6141E6 /* CameraManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA96CFDB2651EDF8E3FA1F9D /* CameraManager.cpp */; };
+		BC20C318C06DA6FEA2D5FCEA /* CameraManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA96CFDB2651EDF8E3FA1F9D /* CameraManager.cpp */; };
+		BBCEEDA737DBBA8AB935B0CE /* CameraMove.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BAEF82AAE6AAA9DA0707B7BE /* CameraMove.cpp */; };
+		BC66B604DAFC0DFBCB0AB750 /* CameraMove.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BAEF82AAE6AAA9DA0707B7BE /* CameraMove.cpp */; };
+		BBF8EAADDB3EFBE08B0CAC9A /* CameraAction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BAA5C4F4BD60BDF7C4CED8B7 /* CameraAction.cpp */; };
+		BC6FC9BEBBF960A1CA625C9B /* CameraAction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BAA5C4F4BD60BDF7C4CED8B7 /* CameraAction.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -153,6 +159,20 @@
 		BA6327106EE9AC42AFFA55D7 /* PathView.h */ = {isa = PBXFileReference; fileEncoding = 4; path = PathView.h; sourceTree = "<group>"; };
 		BAC3397A7ACD73ACFDD23C41 /* PathModel.h */ = {isa = PBXFileReference; fileEncoding = 4; path = PathModel.h; sourceTree = "<group>"; };
 		BAECA7E71F759869D8E99BD2 /* PathController.h */ = {isa = PBXFileReference; fileEncoding = 4; path = PathController.h; sourceTree = "<group>"; };
+		BA96CFDB2651EDF8E3FA1F9D /* CameraManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; path = CameraManager.cpp; sourceTree = "<group>"; };
+		BAEF82AAE6AAA9DA0707B7BE /* CameraMove.cpp */ = {isa = PBXFileReference; fileEncoding = 4; path = CameraMove.cpp; sourceTree = "<group>"; };
+		BAA5C4F4BD60BDF7C4CED8B7 /* CameraAction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; path = CameraAction.cpp; sourceTree = "<group>"; };
+		BA22A2738E731DCFF08EC6BF /* CameraMove.h */ = {isa = PBXFileReference; fileEncoding = 4; path = CameraMove.h; sourceTree = "<group>"; };
+		BA40BAAF51518F8AF8B9E2AE /* CameraAction.h */ = {isa = PBXFileReference; fileEncoding = 4; path = CameraAction.h; sourceTree = "<group>"; };
+		BA99003164BEC00BEB6BA21C /* CameraManager.h */ = {isa = PBXFileReference; fileEncoding = 4; path = CameraManager.h; sourceTree = "<group>"; };
+		BA1B6C7BD7F896CD32DA7CFA /* GuardSetController.h */ = {isa = PBXFileReference; fileEncoding = 4; path = GuardSetController.h; sourceTree = "<group>"; };
+		BACD7C99042AFAFB7CD5EAB1 /* GuardView.h */ = {isa = PBXFileReference; fileEncoding = 4; path = GuardView.h; sourceTree = "<group>"; };
+		BAA7F79FB75DC2CBA65AECF2 /* GuardModel.h */ = {isa = PBXFileReference; fileEncoding = 4; path = GuardModel.h; sourceTree = "<group>"; };
+		BAEA82C685DCBA260FFDBBDF /* GuardController.h */ = {isa = PBXFileReference; fileEncoding = 4; path = GuardController.h; sourceTree = "<group>"; };
+		BA7FE39188E2DBE507BCBD5C /* ArtifactSetController.h */ = {isa = PBXFileReference; fileEncoding = 4; path = ArtifactSetController.h; sourceTree = "<group>"; };
+		BA87EFCF4AAC6F43359B93E9 /* ArtifactController.h */ = {isa = PBXFileReference; fileEncoding = 4; path = ArtifactController.h; sourceTree = "<group>"; };
+		BA68E5F4E5DDB19451A7CCF0 /* ArtifactModel.h */ = {isa = PBXFileReference; fileEncoding = 4; path = ArtifactModel.h; sourceTree = "<group>"; };
+		BAF0DC40D1AA4BBD150F78EF /* ArtifactView.h */ = {isa = PBXFileReference; fileEncoding = 4; path = ArtifactView.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -237,6 +257,9 @@
 				CDA57BA9AFFB1B103FEA2A43 /* Input */,
 				CDCA8B81ED7F33FAAF51BA59 /* Character */,
 				CDB97A5E12D39A8BE70FF9D3 /* Path */,
+				CD10B6C5AC3FB5E389F77CF5 /* Camera */,
+				CD1A5D3DDE3D4BACF9BAA5F0 /* GuardSet */,
+				CDEBDFFEB045895BBBA9E9CB /* ArtifactSet */,
 			);
 			name = Source;
 			path = "../../source";
@@ -392,6 +415,57 @@
 			path = Path;
 			sourceTree = "<group>";
 		};
+		CD10B6C5AC3FB5E389F77CF5 /* Camera */ = {
+			isa = PBXGroup;
+			children = (
+				BA96CFDB2651EDF8E3FA1F9D /* CameraManager.cpp */,
+				BAEF82AAE6AAA9DA0707B7BE /* CameraMove.cpp */,
+				BAA5C4F4BD60BDF7C4CED8B7 /* CameraAction.cpp */,
+				BA22A2738E731DCFF08EC6BF /* CameraMove.h */,
+				BA40BAAF51518F8AF8B9E2AE /* CameraAction.h */,
+				BA99003164BEC00BEB6BA21C /* CameraManager.h */,
+			);
+			path = Camera;
+			sourceTree = "<group>";
+		};
+		CD1A5D3DDE3D4BACF9BAA5F0 /* GuardSet */ = {
+			isa = PBXGroup;
+			children = (
+				BA1B6C7BD7F896CD32DA7CFA /* GuardSetController.h */,
+				CDD6DC23B89F6CFE2EF6BD81 /* Guard */,
+			);
+			path = GuardSet;
+			sourceTree = "<group>";
+		};
+		CDD6DC23B89F6CFE2EF6BD81 /* Guard */ = {
+			isa = PBXGroup;
+			children = (
+				BACD7C99042AFAFB7CD5EAB1 /* GuardView.h */,
+				BAA7F79FB75DC2CBA65AECF2 /* GuardModel.h */,
+				BAEA82C685DCBA260FFDBBDF /* GuardController.h */,
+			);
+			path = Guard;
+			sourceTree = "<group>";
+		};
+		CDEBDFFEB045895BBBA9E9CB /* ArtifactSet */ = {
+			isa = PBXGroup;
+			children = (
+				BA7FE39188E2DBE507BCBD5C /* ArtifactSetController.h */,
+				CDCC1CEBDAEE0AB3CBC8FE8F /* Artifact */,
+			);
+			path = ArtifactSet;
+			sourceTree = "<group>";
+		};
+		CDCC1CEBDAEE0AB3CBC8FE8F /* Artifact */ = {
+			isa = PBXGroup;
+			children = (
+				BA87EFCF4AAC6F43359B93E9 /* ArtifactController.h */,
+				BA68E5F4E5DDB19451A7CCF0 /* ArtifactModel.h */,
+				BAF0DC40D1AA4BBD150F78EF /* ArtifactView.h */,
+			);
+			path = Artifact;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -531,6 +605,9 @@
 				BB9D46AB7E4A525A6DE21515 /* GamePlayController.cpp in Sources */,
 				BB3A3ECFF617108DABBB117D /* InputController.cpp in Sources */,
 				BB040D0FA8EA86E34BFEF0AF /* PathController.cpp in Sources */,
+				BB631EBBD77FE3B70D6141E6 /* CameraManager.cpp in Sources */,
+				BBCEEDA737DBBA8AB935B0CE /* CameraMove.cpp in Sources */,
+				BBF8EAADDB3EFBE08B0CAC9A /* CameraAction.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -545,6 +622,9 @@
 				BCAAEFB8B1C7DA1DBA71500D /* GamePlayController.cpp in Sources */,
 				BCED7F00DF1EF5AFB3059CE6 /* InputController.cpp in Sources */,
 				BCF2DAE3A98AA27EDB7DEB7D /* PathController.cpp in Sources */,
+				BC20C318C06DA6FEA2D5FCEA /* CameraManager.cpp in Sources */,
+				BC66B604DAFC0DFBCB0AB750 /* CameraMove.cpp in Sources */,
+				BC6FC9BEBBF960A1CA625C9B /* CameraAction.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

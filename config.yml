@@ -30,6 +30,10 @@ sources:                            # The list of the source code files
     - source/Path/*.h
     - source/Camera/*.cpp
     - source/Camera/*.h
+    - source/GuardSet/*.h
+    - source/GuardSet/Guard/*.h
+    - source/ArtifactSet/*.h
+    - source/ArtifactSet/Artifact/*.h
 
 # This must be one of portrait, landscape, portrait-flipped, landscape-flipped,
 targets:                        # The target platforms to build for

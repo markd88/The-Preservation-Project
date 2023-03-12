@@ -27,6 +27,21 @@
     <Filter Include="Source Files\Path">
       <UniqueIdentifier>{CD5D0687-B83E-57F5-B54A-6369C6AF57D7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Camera">
+      <UniqueIdentifier>{CD347CA7-F96F-5D4D-B80E-5329F26840CE}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GuardSet">
+      <UniqueIdentifier>{CDE9E65F-3A5E-5066-9AC0-EE7AC3A21D85}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GuardSet\Guard">
+      <UniqueIdentifier>{CD0F6474-4436-550A-AD37-5C17DEED92D5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ArtifactSet">
+      <UniqueIdentifier>{CDC81A00-13FF-5DA8-AA42-C52DC809BE5F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ArtifactSet\Artifact">
+      <UniqueIdentifier>{CD99F15D-7A29-5C20-951F-C532941A44D9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
@@ -83,6 +98,39 @@
     <ClInclude Include="..\..\..\source\Path\PathController.h">
       <Filter>Source Files\Path</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\source\Camera\CameraMove.h">
+      <Filter>Source Files\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\source\Camera\CameraAction.h">
+      <Filter>Source Files\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\source\Camera\CameraManager.h">
+      <Filter>Source Files\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\source\GuardSet\GuardSetController.h">
+      <Filter>Source Files\GuardSet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\source\GuardSet\Guard\GuardView.h">
+      <Filter>Source Files\GuardSet\Guard</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\source\GuardSet\Guard\GuardModel.h">
+      <Filter>Source Files\GuardSet\Guard</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\source\GuardSet\Guard\GuardController.h">
+      <Filter>Source Files\GuardSet\Guard</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\source\ArtifactSet\ArtifactSetController.h">
+      <Filter>Source Files\ArtifactSet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\source\ArtifactSet\Artifact\ArtifactController.h">
+      <Filter>Source Files\ArtifactSet\Artifact</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\source\ArtifactSet\Artifact\ArtifactModel.h">
+      <Filter>Source Files\ArtifactSet\Artifact</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\source\ArtifactSet\Artifact\ArtifactView.h">
+      <Filter>Source Files\ArtifactSet\Artifact</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\source\main.cpp">
@@ -105,6 +153,15 @@
     </ClCompile>
     <ClCompile Include="..\..\..\source\Path\PathController.cpp">
       <Filter>Source Files\Path</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\Camera\CameraManager.cpp">
+      <Filter>Source Files\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\Camera\CameraMove.cpp">
+      <Filter>Source Files\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\Camera\CameraAction.cpp">
+      <Filter>Source Files\Camera</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
