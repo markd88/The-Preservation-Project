@@ -46,7 +46,7 @@ void App::onStartup() {
     _assets->attach<scene2::SceneNode>(Scene2Loader::alloc()->getHook());
     
     // for now, just loading synchronous
-    _assets->loadDirectory("json/assets.json");
+    _assets->loadDirectoryAsync("json/assets.json", nullptr);
     
     
     // Create a sprite batch (and background color) to render the scene
@@ -64,10 +64,14 @@ void App::onStartup() {
     Size size = getDisplaySize();
     size *= GAME_WIDTH/size.width;
     
-    _gameplayController = make_unique<GamePlayController>(size, _assets);
     
+    _loadingController = make_unique<LoadingController>();
+    
+    _loaded = false;
+    _loadingController->init(_assets);
+    
+    // parent call
     Application::onStartup();
-
 }
 
 /**
@@ -103,8 +107,18 @@ void App::onShutdown() {
  * @param timestep  The amount of time (in seconds) since the last frame
  */
 void App::update(float timestep) {
-    _gameplayController->update(timestep);
-
+    if (!_loaded && _loadingController->_scene->isActive()) {
+        _loadingController->update(timestep);
+    } else if (!_loaded) {
+        _loadingController->dispose(); // Disables the input listeners in this mode
+        _loaded = true;
+        Size size = getDisplaySize();
+        size *= GAME_WIDTH/size.width;
+        _gameplayController = make_unique<GamePlayController>(size, _assets);
+    } else {
+        
+        _gameplayController->update(timestep);
+    }
 }
 
 /**
@@ -117,5 +131,10 @@ void App::update(float timestep) {
  * at all. The default implmentation does nothing.
  */
 void App::draw() {
-    _gameplayController->render(_batch);
+    if (!_loaded) {
+        _loadingController->render(_batch);
+    } else {
+        _gameplayController->render(_batch);
+    }
+   
 }

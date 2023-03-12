@@ -41,8 +41,6 @@ GamePlayController::GamePlayController(const Size displaySize, std::shared_ptr<c
     _button_layer = _assets->get<scene2::SceneNode>("button");
     _button_layer->setContentSize(dimen);
     _button_layer->doLayout(); // This rearranges the children to fit the screen
-    // _button_layer->setPosition(Vec2(-300, 150));
-    //cout<<_cam-><<endl;
     
     
     _button = std::dynamic_pointer_cast<scene2::Button>(assets->get<scene2::SceneNode>("button_action"));
@@ -205,8 +203,7 @@ void GamePlayController::update(float dt){
         _character->moveTo(_moveTo);
         _camManager->activate("movingCam", _moveCam, _cam);
         path_trace.erase(path_trace.begin());
-        
-        //_button_layer->setPosition(_button->screenToNodeCoords(Vec2(1000, 600)));
+
     }
     
     //Vec2 cPos = _character->getNodePosition();
