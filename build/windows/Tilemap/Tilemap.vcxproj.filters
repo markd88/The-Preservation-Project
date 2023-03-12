@@ -33,8 +33,8 @@
     <Filter Include="Source Files\GuardSet">
       <UniqueIdentifier>{CDE9E65F-3A5E-5066-9AC0-EE7AC3A21D85}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\GuardSet\Guard">
-      <UniqueIdentifier>{CD0F6474-4436-550A-AD37-5C17DEED92D5}</UniqueIdentifier>
+    <Filter Include="Source Files\Guard">
+      <UniqueIdentifier>{CDB6305F-3349-5745-9E0E-8E112D8B923D}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\ArtifactSet">
       <UniqueIdentifier>{CDC81A00-13FF-5DA8-AA42-C52DC809BE5F}</UniqueIdentifier>
@@ -110,14 +110,14 @@
     <ClInclude Include="..\..\..\source\GuardSet\GuardSetController.h">
       <Filter>Source Files\GuardSet</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\source\GuardSet\Guard\GuardView.h">
-      <Filter>Source Files\GuardSet\Guard</Filter>
+    <ClInclude Include="..\..\..\source\Guard\GuardView.h">
+      <Filter>Source Files\Guard</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\source\GuardSet\Guard\GuardModel.h">
-      <Filter>Source Files\GuardSet\Guard</Filter>
+    <ClInclude Include="..\..\..\source\Guard\GuardModel.h">
+      <Filter>Source Files\Guard</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\source\GuardSet\Guard\GuardController.h">
-      <Filter>Source Files\GuardSet\Guard</Filter>
+    <ClInclude Include="..\..\..\source\Guard\GuardController.h">
+      <Filter>Source Files\Guard</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\source\ArtifactSet\ArtifactSetController.h">
       <Filter>Source Files\ArtifactSet</Filter>

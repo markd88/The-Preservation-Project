@@ -262,11 +262,11 @@ xcopy /y /d /e  "$(AssetDir)*" "$(SolutionDir)output"</Command>
 
     <ClInclude Include="..\..\..\source\GuardSet\GuardSetController.h"/>
 
-    <ClInclude Include="..\..\..\source\GuardSet\Guard\GuardView.h"/>
+    <ClInclude Include="..\..\..\source\Guard\GuardView.h"/>
 
-    <ClInclude Include="..\..\..\source\GuardSet\Guard\GuardModel.h"/>
+    <ClInclude Include="..\..\..\source\Guard\GuardModel.h"/>
 
-    <ClInclude Include="..\..\..\source\GuardSet\Guard\GuardController.h"/>
+    <ClInclude Include="..\..\..\source\Guard\GuardController.h"/>
 
     <ClInclude Include="..\..\..\source\ArtifactSet\ArtifactSetController.h"/>
 

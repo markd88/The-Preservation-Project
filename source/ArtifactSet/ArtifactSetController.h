@@ -32,7 +32,7 @@ public:
     void add_one(Artifact a) {
         _artifactSet.push_back(a);
     }
-}
+};
 
 
 #endif /* __ARTIFACTSET_CONTROLLER_H__ */

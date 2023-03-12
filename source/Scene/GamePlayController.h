@@ -12,9 +12,10 @@ using namespace std;
 #include <Input/InputController.h>
 #include <Camera/CameraManager.h>
 #include <Camera/CameraMove.h>
+
 //#include <GuardSet/GuardSetController.h>
-//#include <GuardSet/Guard/GuardController.h>
-//#include <ArtifactSet/ArtifactSetController.h>
+#include <GuardSet/Guard/GuardController.h>
+#include <ArtifactSet/Artifact/ArtifactController.h>
 
 
 class GamePlayController {
@@ -39,7 +40,8 @@ public:
     std::unique_ptr<CharacterController> _character;
     std::unique_ptr<TilemapController> _tilemap1;
     std::unique_ptr<TilemapController> _tilemap2;
-//    std::unique_ptr<GuardController> _guard;
+    std::unique_ptr<GuardController> _guard;
+    std::unique_ptr<ArtifactController> _artifact;
     
     std::unique_ptr<PathController> _path;
     std::shared_ptr<InputController> _input = InputController::getInstance();
@@ -102,8 +104,8 @@ private:
     /** Generates secondary world without guards. */
     void generateSecondaryWorld(std::unique_ptr<TilemapController>& tilemap);
     
-//    /** Generates guards in the primary world. */
-//    void generateGuard(std::unique_ptr<GuardController> &_guard);
+    /** Generates guards in the primary world. */
+    void generateGuard(std::unique_ptr<GuardController> &_guard);
     
 
 #pragma mark Helpers

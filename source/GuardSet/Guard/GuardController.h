@@ -39,9 +39,9 @@ public:
         _view = std::make_unique<GuardView>(position, size, color);
     }
     
-    GuardController(Vec2 position, bool isStatic = true) {
-        _model = std::make_unique<GuardModel>(position, Size(50, 50), Color4::RED);
-        _view = std::make_unique<GuardView>(position, Size(50, 50), Color4::RED);
+    GuardController(Vec2 position) {
+        _model = std::make_unique<GuardModel>(position, Size(150, 100), Color4::RED);
+        _view = std::make_unique<GuardView>(position, Size(150, 100), Color4::RED);
     }
 
 #pragma mark Update Methods
@@ -81,15 +81,15 @@ public:
         return _view->nodePos();
     }
 
-#pragma mark Helpers
-    /**
-     *  See if the touch point is within the character
-     *
-     *  @param point The position of the touchpoint
-     */
-    bool contains(Vec2 point){
-        return _model->contains(point);
-    }
+//#pragma mark Helpers
+//    /**
+//     *  See if the touch point is within the character
+//     *
+//     *  @param point The position of the touchpoint
+//     */
+//    bool contains(Vec2 point){
+//        return _model->contains(point);
+//    }
     
 #pragma mark Scene Methods
 public:

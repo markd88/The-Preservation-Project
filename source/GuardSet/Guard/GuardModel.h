@@ -24,7 +24,7 @@ private:
 public:
     /** A public accessible, read-only version of the color */
     const Color4& color;
-
+    
 #pragma mark Main Functions
 public:
     /**
@@ -39,7 +39,7 @@ public:
         setSize(size);
         setColor(color);
     }
-
+    
 #pragma mark Setters
 public:
     
@@ -73,19 +73,19 @@ public:
     void setColor(Color4 color) {
         _color = color;
     }
-
-#pragma mark Helpers
-public:
-    /**
-     *  See if the touch point is within the character
-     *
-     *  @param point The position of the touchpoint
-     */
-    bool contains(Vec2 point){
-        if(_position.distance(point) <= radius){
-            return true;
-        }
-        return false;
-    }
+};
+//#pragma mark Helpers
+//public:
+//    /**
+//     *  See if the touch point is within the character
+//     *
+//     *  @param point The position of the touchpoint
+//     */
+//    bool contains(Vec2 point){
+//        if(_position.distance(point) <= radius){
+//            return true;
+//        }
+//        return false;
+//    }
 
 #endif /* GuardModel_h */

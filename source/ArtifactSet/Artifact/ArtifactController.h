@@ -34,14 +34,14 @@ public:
      * @param size      The width and height of a tile
      * @param color     The tile color
      */
-    artifactController(Vec2 position, Size size, Color4 color, bool isResource = false) {
+    ArtifactController(Vec2 position, Size size, Color4 color, bool isResource = false) {
         _model = std::make_unique<ArtifactModel>(position, size, color);
         _view = std::make_unique<ArtifactView>(position, size, color);
     }
     
-    artifactController(Vec2 position, bool isResource = false) {
-        _model = std::make_unique<ArtifactModel>(position, Size(50, 50), Color4::RED);
-        _view = std::make_unique<ArtifactView>(position, Size(50, 50), Color4::RED);
+    ArtifactController(Vec2 position) {
+        _model = std::make_unique<ArtifactModel>(position, Size(50, 50), Color4::GRAY);
+        _view = std::make_unique<ArtifactView>(position, Size(50, 50), Color4::GRAY);
     }
 
 #pragma mark Update Methods
