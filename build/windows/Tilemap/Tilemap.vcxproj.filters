@@ -27,6 +27,15 @@
     <Filter Include="Source Files\Path">
       <UniqueIdentifier>{CD5D0687-B83E-57F5-B54A-6369C6AF57D7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Camera">
+      <UniqueIdentifier>{CD347CA7-F96F-5D4D-B80E-5329F26840CE}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GuardSet">
+      <UniqueIdentifier>{CDE9E65F-3A5E-5066-9AC0-EE7AC3A21D85}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GuardSet\Guard">
+      <UniqueIdentifier>{CD0F6474-4436-550A-AD37-5C17DEED92D5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
@@ -83,6 +92,27 @@
     <ClInclude Include="..\..\..\source\Path\PathController.h">
       <Filter>Source Files\Path</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\source\Camera\CameraMove.h">
+      <Filter>Source Files\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\source\Camera\CameraAction.h">
+      <Filter>Source Files\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\source\Camera\CameraManager.h">
+      <Filter>Source Files\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\source\GuardSet\GuardSetController.h">
+      <Filter>Source Files\GuardSet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\source\GuardSet\Guard\GuardView.h">
+      <Filter>Source Files\GuardSet\Guard</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\source\GuardSet\Guard\GuardModel.h">
+      <Filter>Source Files\GuardSet\Guard</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\source\GuardSet\Guard\GuardController.h">
+      <Filter>Source Files\GuardSet\Guard</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\source\main.cpp">
@@ -105,6 +135,15 @@
     </ClCompile>
     <ClCompile Include="..\..\..\source\Path\PathController.cpp">
       <Filter>Source Files\Path</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\Camera\CameraManager.cpp">
+      <Filter>Source Files\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\Camera\CameraMove.cpp">
+      <Filter>Source Files\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\Camera\CameraAction.cpp">
+      <Filter>Source Files\Camera</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

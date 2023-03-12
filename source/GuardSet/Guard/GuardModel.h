@@ -19,6 +19,8 @@ private:
     Color4 _color;
     bool _isStatic;
     
+    int radius;
+    
 public:
     /** A public accessible, read-only version of the color */
     const Color4& color;
@@ -72,17 +74,18 @@ public:
         _color = color;
     }
 
-#pragma mark Getters
+#pragma mark Helpers
 public:
     /**
-     *  Get if the guard is static
+     *  See if the touch point is within the character
      *
-     *  @param is_obs
+     *  @param point The position of the touchpoint
      */
-    bool isStatic(){
-        return _isStatic;
+    bool contains(Vec2 point){
+        if(_position.distance(point) <= radius){
+            return true;
+        }
+        return false;
     }
-    
-};
 
 #endif /* GuardModel_h */

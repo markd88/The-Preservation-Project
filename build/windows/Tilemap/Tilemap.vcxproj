@@ -254,6 +254,20 @@ xcopy /y /d /e  "$(AssetDir)*" "$(SolutionDir)output"</Command>
 
     <ClInclude Include="..\..\..\source\Path\PathController.h"/>
 
+    <ClInclude Include="..\..\..\source\Camera\CameraMove.h"/>
+
+    <ClInclude Include="..\..\..\source\Camera\CameraAction.h"/>
+
+    <ClInclude Include="..\..\..\source\Camera\CameraManager.h"/>
+
+    <ClInclude Include="..\..\..\source\GuardSet\GuardSetController.h"/>
+
+    <ClInclude Include="..\..\..\source\GuardSet\Guard\GuardView.h"/>
+
+    <ClInclude Include="..\..\..\source\GuardSet\Guard\GuardModel.h"/>
+
+    <ClInclude Include="..\..\..\source\GuardSet\Guard\GuardController.h"/>
+
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\source\main.cpp"/>
@@ -269,6 +283,12 @@ xcopy /y /d /e  "$(AssetDir)*" "$(SolutionDir)output"</Command>
     <ClCompile Include="..\..\..\source\Input\InputController.cpp"/>
 
     <ClCompile Include="..\..\..\source\Path\PathController.cpp"/>
+
+    <ClCompile Include="..\..\..\source\Camera\CameraManager.cpp"/>
+
+    <ClCompile Include="..\..\..\source\Camera\CameraMove.cpp"/>
+
+    <ClCompile Include="..\..\..\source\Camera\CameraAction.cpp"/>
 
   </ItemGroup>
   <ItemGroup>

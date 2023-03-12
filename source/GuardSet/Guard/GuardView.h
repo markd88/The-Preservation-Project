@@ -9,7 +9,7 @@
 #define GuardView_h
 
 #include <cugl/cugl.h>
-using namespace cugl;
+//using namespace cugl;
 
 class GuardView{
 private:
@@ -70,6 +70,10 @@ public:
     
     void setColor(Color4 color){
         _node->setColor(color);
+    }
+    
+    Vec2 nodePos(){
+        return _node->getPosition();
     }
     
 };
