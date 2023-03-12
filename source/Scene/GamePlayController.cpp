@@ -9,59 +9,93 @@ using namespace cugl;
 /** This is adjusted by screen aspect ratio to get the height */
 #define SCENE_WIDTH 1024
 
-GamePlayController::GamePlayController(const Size displaySize):_scene(cugl::Scene2::alloc(displaySize)) {
+GamePlayController::GamePlayController(const Size displaySize, std::shared_ptr<cugl::AssetManager>& assets ):_scene(cugl::Scene2::alloc(displaySize)) {
+    // Initialize the assetManager
+    _assets = assets;
+    
     // Initialize the scene to a locked width
     Size dimen = Application::get()->getDisplaySize();
     dimen *= SCENE_WIDTH/dimen.width; // Lock the game to a reasonable resolution
-
-    _cam = _scene->getCamera();
-    
     _input->init(dimen);
-    
-    _path = make_unique<PathController>();
-    
+    _cam = _scene->getCamera();
     // Allocate the manager and the actions
     _actions = cugl::scene2::ActionManager::alloc();
     
-    // Allocate the camaera manager
+    // Allocate the camera manager
     _camManager = CameraManager::alloc();
     
+    _scene->setSize(displaySize/1);
+    
+    _path = make_unique<PathController>();
     // initialize character, two maps, path
     
-    
     _tilemap1 = std::make_unique<TilemapController>();
+    _tilemap2 = std::make_unique<TilemapController>();
     generatePrimaryWorld(_tilemap1);
+    generateSecondaryWorld(_tilemap2);
+    
+    Vec2 start = Vec2(_scene->getSize().width * 0.85, _scene->getSize().height * 0.15);
+    _character = make_unique<CharacterController>(start, _actions);
+    
+    // init the button
+    _button_layer = _assets->get<scene2::SceneNode>("button");
+    _button_layer->setContentSize(dimen);
+    _button_layer->doLayout(); // This rearranges the children to fit the screen
+    
+    
+    _button = std::dynamic_pointer_cast<scene2::Button>(assets->get<scene2::SceneNode>("button_action"));
+    _button->addListener([this](const std::string& name, bool down) {
+        if (down) {
+            this->init();
+        }
+    });
+    
+    _button->activate();
+    
+    init();
+}
+
+
+// init some assets when restart
+void GamePlayController::init(){
+    // remove everything first
+    _scene->removeAllChildren();
+    
+    
+    
     _tilemap1->addChildTo(_scene);
     _activeMap = "tileMap1";
-    
-    _tilemap2 = std::make_unique<TilemapController>();
-    generateSecondaryWorld(_tilemap2);
-
     _template = 0;
     
     Vec2 start = Vec2(_scene->getSize().width * 0.85, _scene->getSize().height * 0.15);
     _character = make_unique<CharacterController>(start, _actions);
     _character->addChildTo(_scene);
     
-    _scene->setSize(displaySize/1.5);
+    _path = make_unique<PathController>();
+    path_trace = {};
+    
+    _scene->addChild(_button_layer);
+    
     Vec2 cPos = _character->getPosition();
     _cam->setPosition(Vec3(cPos.x,cPos.y,0));
+
     _cam->update();
-    //_scene->setSize(displaySize/1.5);
-//    Vec2 cPos = _character->getPosition();
-    //_cam->setPosition(Vec3(cPos.x,cPos.y,0));
-    //_cam->update();
+    
+    // to make the button pos fixed relative to screen
+    _button_layer->setPosition(_cam->getPosition() - Vec2(900, 70));
+
     
 //    _label = std::make_shared<scene2::Label>();
 //    _label->setText("Exit");
 }
+
 
 void GamePlayController::update(float dt){
     static auto last_time = std::chrono::steady_clock::now();
     // Calculate the time elapsed since the last call to pinch
     auto now = std::chrono::steady_clock::now();
     auto elapsed = std::chrono::duration_cast<std::chrono::seconds>(now - last_time);
-
+    
     _input->update(dt);
     // if pinch, switch world
     bool can_switch = ((_activeMap == "tileMap1" && _tilemap2->inObstacle(_character->getPosition())) || (_activeMap == "tileMap2" && _tilemap1->inObstacle(_character->getPosition())));
@@ -89,6 +123,8 @@ void GamePlayController::update(float dt){
             _activeMap = "tileMap1";
         }
         _character->addChildTo(_scene);
+        _scene->removeChild(_button_layer);
+        _scene->addChild(_button_layer);
     }
     
     else if (!_input->getPanDelta().isZero()) {
@@ -167,6 +203,7 @@ void GamePlayController::update(float dt){
         _character->moveTo(_moveTo);
         _camManager->activate("movingCam", _moveCam, _cam);
         path_trace.erase(path_trace.begin());
+
     }
     
     //Vec2 cPos = _character->getNodePosition();
@@ -174,9 +211,12 @@ void GamePlayController::update(float dt){
     //_cam->update();
     
     // Animate
+    
     _actions->update(dt);
     _camManager->update(dt);
-
+    
+    // the camera is moving smoothly, but the UI only set its movement per frame
+    _button_layer->setPosition(_cam->getPosition() - Vec2(900, 70));
 }
     
     
