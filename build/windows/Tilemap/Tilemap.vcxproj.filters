@@ -36,6 +36,12 @@
     <Filter Include="Source Files\GuardSet\Guard">
       <UniqueIdentifier>{CD0F6474-4436-550A-AD37-5C17DEED92D5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\ArtifactSet">
+      <UniqueIdentifier>{CDC81A00-13FF-5DA8-AA42-C52DC809BE5F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ArtifactSet\Artifact">
+      <UniqueIdentifier>{CD99F15D-7A29-5C20-951F-C532941A44D9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
@@ -112,6 +118,18 @@
     </ClInclude>
     <ClInclude Include="..\..\..\source\GuardSet\Guard\GuardController.h">
       <Filter>Source Files\GuardSet\Guard</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\source\ArtifactSet\ArtifactSetController.h">
+      <Filter>Source Files\ArtifactSet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\source\ArtifactSet\Artifact\ArtifactController.h">
+      <Filter>Source Files\ArtifactSet\Artifact</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\source\ArtifactSet\Artifact\ArtifactModel.h">
+      <Filter>Source Files\ArtifactSet\Artifact</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\source\ArtifactSet\Artifact\ArtifactView.h">
+      <Filter>Source Files\ArtifactSet\Artifact</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

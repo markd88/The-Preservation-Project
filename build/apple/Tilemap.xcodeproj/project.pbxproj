@@ -169,6 +169,10 @@
 		BACD7C99042AFAFB7CD5EAB1 /* GuardView.h */ = {isa = PBXFileReference; fileEncoding = 4; path = GuardView.h; sourceTree = "<group>"; };
 		BAA7F79FB75DC2CBA65AECF2 /* GuardModel.h */ = {isa = PBXFileReference; fileEncoding = 4; path = GuardModel.h; sourceTree = "<group>"; };
 		BAEA82C685DCBA260FFDBBDF /* GuardController.h */ = {isa = PBXFileReference; fileEncoding = 4; path = GuardController.h; sourceTree = "<group>"; };
+		BA7FE39188E2DBE507BCBD5C /* ArtifactSetController.h */ = {isa = PBXFileReference; fileEncoding = 4; path = ArtifactSetController.h; sourceTree = "<group>"; };
+		BA87EFCF4AAC6F43359B93E9 /* ArtifactController.h */ = {isa = PBXFileReference; fileEncoding = 4; path = ArtifactController.h; sourceTree = "<group>"; };
+		BA68E5F4E5DDB19451A7CCF0 /* ArtifactModel.h */ = {isa = PBXFileReference; fileEncoding = 4; path = ArtifactModel.h; sourceTree = "<group>"; };
+		BAF0DC40D1AA4BBD150F78EF /* ArtifactView.h */ = {isa = PBXFileReference; fileEncoding = 4; path = ArtifactView.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -255,6 +259,7 @@
 				CDB97A5E12D39A8BE70FF9D3 /* Path */,
 				CD10B6C5AC3FB5E389F77CF5 /* Camera */,
 				CD1A5D3DDE3D4BACF9BAA5F0 /* GuardSet */,
+				CDEBDFFEB045895BBBA9E9CB /* ArtifactSet */,
 			);
 			name = Source;
 			path = "../../source";
@@ -440,6 +445,25 @@
 				BAEA82C685DCBA260FFDBBDF /* GuardController.h */,
 			);
 			path = Guard;
+			sourceTree = "<group>";
+		};
+		CDEBDFFEB045895BBBA9E9CB /* ArtifactSet */ = {
+			isa = PBXGroup;
+			children = (
+				BA7FE39188E2DBE507BCBD5C /* ArtifactSetController.h */,
+				CDCC1CEBDAEE0AB3CBC8FE8F /* Artifact */,
+			);
+			path = ArtifactSet;
+			sourceTree = "<group>";
+		};
+		CDCC1CEBDAEE0AB3CBC8FE8F /* Artifact */ = {
+			isa = PBXGroup;
+			children = (
+				BA87EFCF4AAC6F43359B93E9 /* ArtifactController.h */,
+				BA68E5F4E5DDB19451A7CCF0 /* ArtifactModel.h */,
+				BAF0DC40D1AA4BBD150F78EF /* ArtifactView.h */,
+			);
+			path = Artifact;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

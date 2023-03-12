@@ -34,8 +34,8 @@ GamePlayController::GamePlayController(const Size displaySize, std::shared_ptr<c
     generatePrimaryWorld(_tilemap1);
     generateSecondaryWorld(_tilemap2);
     
-    _guard = make_unique<GuardController>();
-    generateGuard(_guard);
+//    _guard = make_unique<GuardController>();
+//    generateGuard(_guard);
     
     Vec2 start = Vec2(_scene->getSize().width * 0.85, _scene->getSize().height * 0.15);
     _character = make_unique<CharacterController>(start, _actions);
@@ -69,7 +69,7 @@ void GamePlayController::init(){
     _tilemap1->addChildTo(_scene);
     _activeMap = "tileMap1";
     _template = 0;
-    _guard->addChildTo(_scene);
+//    _guard->addChildTo(_scene);
     
     Vec2 start = Vec2(_scene->getSize().width * 0.85, _scene->getSize().height * 0.15);
     _character = make_unique<CharacterController>(start, _actions);
@@ -122,7 +122,7 @@ void GamePlayController::update(float dt){
             _tilemap2->removeChildFrom(_scene);
             _tilemap1->addChildTo(_scene);
             _activeMap = "tileMap1";
-            _guard->addChildTo(_scene);
+//            _guard->addChildTo(_scene);
         }
         _character->addChildTo(_scene);
         _scene->removeChild(_button_layer);
@@ -305,23 +305,25 @@ void GamePlayController::update(float dt){
         }
     }
 
-    /** Generates guard in the first world. */
-    void GamePlayController::generateGuard(std::unique_ptr<GuardController> &_guard) {
-        _guard->updateColor(Color4::RED);
-        _guard->updatePosition(_scene->getSize()/2);
-        
-        // lower guard
-//        Color4 guardColor = Color4::RED;
-//        _guard->addTile(5, 12, guardColor, true);
- 
-    }
-
-        // upper guard
-//        for (int i = 50; i <= 65; i++) {
-//            for(int j = 20; j <= 25; j++) {
-//                _tilemap->addTile(i, j, tileColor, is_obs);
-//            }
-//        }
+//    /** Generates guard in the first world. */
+//    void GamePlayController::generateGuard(std::unique_ptr<GuardController> &_guard) {
+//        _guard->updateColor(Color4::RED);
+//        _guard->updatePosition(_scene->getSize()/2);
+//    }
+//
+    
+    // lower guard
+    //        Color4 guardColor = Color4::RED;
+    //        _guard->addTile(5, 12, guardColor, true);
+    
+    //    }
+    
+    // upper guard
+    //        for (int i = 50; i <= 65; i++) {
+    //            for(int j = 20; j <= 25; j++) {
+    //                _tilemap->addTile(i, j, tileColor, is_obs);
+    //            }
+    //        }
     
     
 #pragma mark -
@@ -331,27 +333,27 @@ void GamePlayController::update(float dt){
      *
      * @param template    The template number
      */
-//    void GamePlayController::generateTemplate(int choice) {
-//        /// Pre-made templates
-//        switch (choice) {
-//            case 1:
-//                // _tilemap->clearMap();
-//                printExecution("generatePrimaryWorld", [this](){
-//                    generatePrimaryWorld();
-//                });
-//                _template = 1;
-//                break;
-//            case 2:
-//                // _tilemap->clearMap();
-//                printExecution("generateSecondaryWorld", [this](){
-//                    generateSecondaryWorld();
-//                });
-//                _template = 2;
-//                break;
-//            default:
-//                break;
-//        }
-//    }
+    //    void GamePlayController::generateTemplate(int choice) {
+    //        /// Pre-made templates
+    //        switch (choice) {
+    //            case 1:
+    //                // _tilemap->clearMap();
+    //                printExecution("generatePrimaryWorld", [this](){
+    //                    generatePrimaryWorld();
+    //                });
+    //                _template = 1;
+    //                break;
+    //            case 2:
+    //                // _tilemap->clearMap();
+    //                printExecution("generateSecondaryWorld", [this](){
+    //                    generateSecondaryWorld();
+    //                });
+    //                _template = 2;
+    //                break;
+    //            default:
+    //                break;
+    //        }
+    //    }
     
     /**
      * Executes a function with debugging information.
@@ -373,10 +375,9 @@ void GamePlayController::update(float dt){
         auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(after - before).count();
         CULog("Generated after %lld milliseconds", duration);
     }
-
-
+    
+    
     void GamePlayController::render(std::shared_ptr<SpriteBatch>& batch){
         _scene->render(batch);
     }
-
-
+    

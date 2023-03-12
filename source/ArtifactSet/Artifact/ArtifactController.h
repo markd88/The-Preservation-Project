@@ -1,28 +1,28 @@
 //
-//  GuardController.h
+//  artifactController.h
 //  Tilemap
 //
 //  Created by Hao Chen on 3/12/23.
 //
 
-#ifndef __GUARD_CONTROLLER_H__
-#define __GUARD_CONTROLLER_H__
+#ifndef __ARTIFACT_CONTROLLER_H__
+#define __ARTIFACT_CONTROLLER_H__
 
-#include "GuardModel.h"
-#include "GuardView.h"
+#include "ArtifactModel.h"
+#include "ArtifactView.h"
 
 /**
  * A class communicating between the model and the view. It only
  * controls a single tile.
  */
-class GuardController {
+class ArtifactController {
     
 #pragma mark Internal References
 private:
     /** Model reference */
-    std::unique_ptr<GuardModel> _model;
+    std::unique_ptr<ArtifactModel> _model;
     /** View reference */
-    std::unique_ptr<GuardView> _view;
+    std::unique_ptr<ArtifactView> _view;
 
     
 #pragma mark Main Methods
@@ -34,14 +34,14 @@ public:
      * @param size      The width and height of a tile
      * @param color     The tile color
      */
-    GuardController(Vec2 position, Size size, Color4 color, bool isStatic = true) {
-        _model = std::make_unique<GuardModel>(position, size, color);
-        _view = std::make_unique<GuardView>(position, size, color);
+    artifactController(Vec2 position, Size size, Color4 color, bool isResource = false) {
+        _model = std::make_unique<ArtifactModel>(position, size, color);
+        _view = std::make_unique<ArtifactView>(position, size, color);
     }
     
-    GuardController(Vec2 position, bool isStatic = true) {
-        _model = std::make_unique<GuardModel>(position, Size(50, 50), Color4::RED);
-        _view = std::make_unique<GuardView>(position, Size(50, 50), Color4::RED);
+    artifactController(Vec2 position, bool isResource = false) {
+        _model = std::make_unique<ArtifactModel>(position, Size(50, 50), Color4::RED);
+        _view = std::make_unique<ArtifactView>(position, Size(50, 50), Color4::RED);
     }
 
 #pragma mark Update Methods
@@ -81,15 +81,6 @@ public:
         return _view->nodePos();
     }
 
-#pragma mark Helpers
-    /**
-     *  See if the touch point is within the character
-     *
-     *  @param point The position of the touchpoint
-     */
-    bool contains(Vec2 point){
-        return _model->contains(point);
-    }
     
 #pragma mark Scene Methods
 public:
@@ -113,9 +104,7 @@ public:
     
 #pragma mark Controller Methods
 public:
-    
-    
 
 };
 
-#endif /* __GUARD_CONTROLLER_H__ */
+#endif /* __ARTIFACT_CONTROLLER_H__ */
