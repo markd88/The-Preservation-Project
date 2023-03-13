@@ -22,16 +22,17 @@ class GuardSetController {
 private:
     /** Tilemape is a 2D vector list of tiles */
     typedef std::unique_ptr<GuardController> Guard;
-    typedef std::vector<Guard> GuardSet;
-    GuardSet _guardSet;
+    std::vector<Guard> _guardSet;
     
 #pragma mark Methods
 public:
     GuardSetController();
     
     // add one guard
-    void add_guard(Guard g){
-        _guardSet.push_back(g);
+    Guard add_this(Vec2 gPos){
+        Guard _guard = std::make_unique<GuardController>(gPos);
+        _guardSet.push_back(std::move(_guard));
+        return _guard;
     }
     
     

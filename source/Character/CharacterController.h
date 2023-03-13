@@ -38,8 +38,8 @@ public:
     }
     
     CharacterController(Vec2 position, std::shared_ptr<cugl::scene2::ActionManager> actions) {
-        _model = std::make_unique<CharacterModel>(position, Size(50, 50), Color4::BLUE);
-        _view = std::make_unique<CharacterView>(position, Size(50, 50), Color4::BLUE, actions);
+        _model = std::make_unique<CharacterModel>(position, Size(30, 30), Color4::BLUE);
+        _view = std::make_unique<CharacterView>(position, Size(30, 30), Color4::BLUE, actions);
     }
 
 #pragma mark Update Methods

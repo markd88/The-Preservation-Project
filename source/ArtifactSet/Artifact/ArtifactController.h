@@ -40,8 +40,8 @@ public:
     }
     
     ArtifactController(Vec2 position) {
-        _model = std::make_unique<ArtifactModel>(position, Size(50, 50), Color4::GRAY);
-        _view = std::make_unique<ArtifactView>(position, Size(50, 50), Color4::GRAY);
+        _model = std::make_unique<ArtifactModel>(position, Size(50, 50), Color4::ORANGE);
+        _view = std::make_unique<ArtifactView>(position, Size(50, 50), Color4::ORANGE);
     }
 
 #pragma mark Update Methods
