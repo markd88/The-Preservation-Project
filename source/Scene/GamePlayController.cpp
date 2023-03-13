@@ -127,6 +127,8 @@ void GamePlayController::update(float dt){
         else {
             _tilemap2->removeChildFrom(_scene);
             _tilemap1->addChildTo(_scene);
+            generateArtifact(30, 400);
+            generateGuard(40, 490);
             _activeMap = "tileMap1";
         }
         _character->addChildTo(_scene);
@@ -306,7 +308,7 @@ void GamePlayController::update(float dt){
     void GamePlayController::generateGuard(float w, float h) {
         Vec2 gPos = Vec2(w,h);
 //        _guard = _guardSet->add_this(gPos);
-        typedef std::unique_ptr<GuardController> Guard;
+//        typedef std::unique_ptr<GuardController> Guard;
         _guard = make_unique<GuardController>(Vec2(0,0));
         _guard->updatePosition(gPos);
         _guard->addChildTo(_scene);
