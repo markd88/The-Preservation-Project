@@ -12,9 +12,9 @@ using namespace std;
 #include <Input/InputController.h>
 #include <Camera/CameraManager.h>
 #include <Camera/CameraMove.h>
-//#include <GuardSet/GuardSetController.h>
-//#include <GuardSet/Guard/GuardController.h>
-//#include <ArtifactSet/ArtifactSetController.h>
+#include <GuardSet/GuardSetController.h>
+#include <GuardSet/Guard/GuardController.h>
+#include <ArtifactSet/ArtifactSetController.h>
 
 
 class GamePlayController {
@@ -39,7 +39,7 @@ public:
     std::unique_ptr<CharacterController> _character;
     std::unique_ptr<TilemapController> _tilemap1;
     std::unique_ptr<TilemapController> _tilemap2;
-//    std::unique_ptr<GuardController> _guard;
+    std::unique_ptr<GuardSetController> _guard;
     
     std::unique_ptr<PathController> _path;
     std::shared_ptr<InputController> _input = InputController::getInstance();

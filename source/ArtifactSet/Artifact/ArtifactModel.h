@@ -11,16 +11,16 @@
 #include <cugl/cugl.h>
 using namespace cugl;
 
-class ArtifactModel{
+class ArtifactModel {
 private:
     /** Center of the character */
     Vec2 _position;
     Size _size;
     Color4 _color;
     bool _isResource;
-    
+
     int radius;
-    
+
 public:
     /** A public accessible, read-only version of the color */
     const Color4& color;
@@ -34,7 +34,7 @@ public:
      * @param size      The width and height of a Artifact
      * @param color     The Artifact color
      */
-    ArtifactModel(Vec2 position, Size size, Color4 color): color(_color) {
+    ArtifactModel(Vec2 position, Size size, Color4 color) : color(_color) {
         setPosition(position);
         setSize(size);
         setColor(color);
@@ -42,11 +42,11 @@ public:
 
 #pragma mark Setters
 public:
-    
-    Vec2 getPosition(){
+
+    Vec2 getPosition() {
         return _position;
     }
-    
+
     /**
      *  Sets the position of the bottom left corner of the Artifact.
      *
@@ -55,7 +55,7 @@ public:
     void setPosition(Vec2 position) {
         _position = position;
     }
-    
+
     /**
      *  Sets the size of the Artifact.
      *
@@ -64,7 +64,7 @@ public:
     void setSize(Size size) {
         _size = size;
     }
-    
+
     /**
      *  Sets the color of the Artifact.
      *
@@ -73,6 +73,6 @@ public:
     void setColor(Color4 color) {
         _color = color;
     }
-
+}
 
 #endif /* artifactModel_h */
