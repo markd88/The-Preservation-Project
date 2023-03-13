@@ -10,11 +10,14 @@
 #include <cugl/cugl.h>
 using namespace cugl;
 
+// This is adjusted by screen aspect ratio to get the height
+#define GAME_WIDTH 1024
+
 class CharacterView{
 private:
     /** Main character view */
     /** The node is attached to the root-scene*/
-    std::shared_ptr<scene2::PolygonNode> _node;
+    std::shared_ptr<cugl::scene2::SceneNode>  _node;
     
     /** Manager to process the animation actions */
     std::shared_ptr<cugl::scene2::ActionManager> _actions;
@@ -23,18 +26,28 @@ private:
 #pragma mark Main Functions
 public:
     /** contructor */
-    CharacterView(Vec2 position, Size size, Color4 color, std::shared_ptr<cugl::scene2::ActionManager> actions){
-        // TODO: Implement me
+    CharacterView(Vec2 position, Size size, Color4 color, std::shared_ptr<cugl::scene2::ActionManager> actions, const std::shared_ptr<cugl::AssetManager>& assets){
         // initialize view
-        _node = scene2::PolygonNode::alloc();
+
+        // Get the image and add it to the node.
+        float scale = GAME_WIDTH/size.width;
+        size *= scale;
+        
+        _node = scene2::SceneNode::alloc();
+        
+        std::shared_ptr<Texture> texture  = assets->get<Texture>("character");
+        _node = scene2::SpriteNode::allocWithSheet(texture, 1, 1, 1); // SpriteNode for animation
+        _node->setScale(0.2f); // Magic number to rescale asset
+
         _node->setRelativeColor(false);
+        _node->setVisible(true);
         _node->setAnchor(Vec2::ANCHOR_CENTER);
         _actions = actions;
 
         // initialize state
         setSize(size);
         setPosition(position);
-        setColor(color);
+//        setColor(Color4::BLACK);
     }
     
     ~CharacterView(){

@@ -38,7 +38,7 @@ GamePlayController::GamePlayController(const Size displaySize, std::shared_ptr<c
 //    generateGuard(_guard);
     
     Vec2 start = Vec2(_scene->getSize().width * 0.85, _scene->getSize().height * 0.15);
-    _character = make_unique<CharacterController>(start, _actions);
+    _character = make_unique<CharacterController>(start, _actions, _assets);
     
     // init the button
     _button_layer = _assets->get<scene2::SceneNode>("button");
@@ -72,7 +72,7 @@ void GamePlayController::init(){
 //    _guard->addChildTo(_scene);
     
     Vec2 start = Vec2(_scene->getSize().width * 0.85, _scene->getSize().height * 0.15);
-    _character = make_unique<CharacterController>(start, _actions);
+    _character = make_unique<CharacterController>(start, _actions, _assets);
     _character->addChildTo(_scene);
     
     _path = make_unique<PathController>();
