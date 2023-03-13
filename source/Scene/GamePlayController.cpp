@@ -33,14 +33,11 @@ GamePlayController::GamePlayController(const Size displaySize, std::shared_ptr<c
     _tilemap2 = std::make_unique<TilemapController>();
     generatePrimaryWorld(_tilemap1);
     generateSecondaryWorld(_tilemap2);
-
-    generateArtifact();
-    generateGuard();
     
-//    Vec2 gPos = Vec2(_scene->getSize().width * 0.02, _scene->getSize().height * 0.2);
-//    std::unique_ptr<GuardController> _guard;
-//    _guard = make_unique<GuardController>(gPos);
-//    _guard->addChildTo(_scene);
+    _artifactSet = std::make_unique<ArtifactSetController>();
+    generateArtifact();
+    _guardSet = std::make_unique<GuardSetController>();
+    generateGuard();
     
     Vec2 start = Vec2(1,1);
     _character = make_unique<CharacterController>(start, _actions);
@@ -79,7 +76,9 @@ void GamePlayController::init(){
     _character = make_unique<CharacterController>(start, _actions);
     _character->addChildTo(_scene);
     
+    _artifactSet = make_unique<ArtifactSetController>();
     generateArtifact();
+    _guardSet = make_unique<GuardSetController>();
     generateGuard();
     
     _path = make_unique<PathController>();
@@ -291,10 +290,49 @@ void GamePlayController::update(float dt){
      * @param p The probability that a tile is generated.
      */
     void GamePlayController::generateSecondaryWorld(std::unique_ptr<TilemapController> & _tilemap) {
-        _tilemap->updateDimensions(Vec2(160, 88));
+        _tilemap->updateDimensions(Vec2(144, 84));
         _tilemap->updateColor(Color4::WHITE);
         _tilemap->updateTileSize(Size(8, 8));
         _tilemap->updatePosition(_scene->getSize()/2);
+        // walls
+        Color4 tileColor = Color4::BLACK;
+        bool is_obs = true;
+        // left block
+        for(int i = 0; i <= 28; i++) {
+            _tilemap->addTile(i, 44, tileColor, is_obs);
+        }
+        for(int j = 16; j <= 44; j++) {
+            _tilemap->addTile(28, j, tileColor, is_obs);
+        }
+        for(int i = 28; i <= 50; i++) {
+            _tilemap->addTile(i, 16, tileColor, is_obs);
+        }
+        for(int j = 0; j <= 62; j++) {
+            _tilemap->addTile(50, j, tileColor, is_obs);
+        }
+        for(int i = 16; i <= 50; i++) {
+            _tilemap->addTile(i, 62, tileColor, is_obs);
+        }
+        for(int j = 44; j <= 62; j++) {
+            _tilemap->addTile(16, j, tileColor, is_obs);
+        }
+        // upper middle block
+        for(int j = 42; j <= 84; j++) {
+            _tilemap->addTile(64, j, tileColor, is_obs);
+        }
+        for(int i = 64; i <= 122; i++) {
+            _tilemap->addTile(i, 42, tileColor, is_obs);
+        }
+        for(int j = 42; j <= 84; j++) {
+            _tilemap->addTile(92, j, tileColor, is_obs);
+        }
+        for(int i = 64; i <= 122; i++) {
+            _tilemap->addTile(i, 42, tileColor, is_obs);
+        }
+        for(int j = 26; j <= 42; j++) {
+            _tilemap->addTile(122, j, tileColor, is_obs);
+        }
+        // lower blocks
     }
 
     void GamePlayController::generateArtifact() {
@@ -303,7 +341,6 @@ void GamePlayController::update(float dt){
     void GamePlayController::generateGuard() {
         addGuard(40, 490);
     }
-
     // upper guard
     //        for (int i = 50; i <= 65; i++) {
     //            for(int j = 20; j <= 25; j++) {

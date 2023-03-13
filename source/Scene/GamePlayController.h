@@ -14,9 +14,9 @@ using namespace std;
 #include <Camera/CameraMove.h>
 
 #include <GuardSet/GuardSetController.h>
-#include <GuardSet/Guard/GuardController.h>
+//#include <GuardSet/Guard/GuardController.h>
 #include <ArtifactSet/ArtifactSetController.h>
-#include <ArtifactSet/Artifact/ArtifactController.h>
+//#include <ArtifactSet/Artifact/ArtifactController.h>
 
 
 class GamePlayController {
@@ -42,10 +42,10 @@ public:
     std::unique_ptr<TilemapController> _tilemap1;
     std::unique_ptr<TilemapController> _tilemap2;
     
-    std::unique_ptr<GuardController> _guard;
+//    std::unique_ptr<GuardController> _guard;
     std::unique_ptr<GuardSetController> _guardSet;
     
-    std::unique_ptr<ArtifactController> _artifact;
+//    std::unique_ptr<ArtifactController> _artifact;
     std::unique_ptr<ArtifactSetController> _artifactSet;
     
     std::unique_ptr<PathController> _path;
@@ -112,19 +112,11 @@ private:
     /** Generates artifacts and guards in the primary world. */
     void addArtifact(float w, float h) {
         Vec2 aPos = Vec2(w,h);
-        typedef std::unique_ptr<ArtifactController> Artifact;
-        _artifact = make_unique<ArtifactController>(aPos);
-        _artifact->updatePosition(aPos);
-        _artifact->addChildTo(_scene);
-//        _artifactSet->add_this(std::move(_artifact));
+        _artifactSet->add_this(aPos, _scene);
     }
     void addGuard(float w, float h) {
         Vec2 gPos = Vec2(w,h);
-//        _guard = _guardSet->add_this(gPos);
-//        typedef std::unique_ptr<GuardController> Guard;
-        _guard = make_unique<GuardController>(Vec2(0,0));
-        _guard->updatePosition(gPos);
-        _guard->addChildTo(_scene);
+        _guardSet->add_this(gPos, _scene);
     }
     void generateArtifact();
     void generateGuard();

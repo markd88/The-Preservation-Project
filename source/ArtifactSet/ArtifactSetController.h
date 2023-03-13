@@ -22,26 +22,24 @@ class ArtifactSetController {
 private:
     /** Tilemape is a 2D vector list of tiles */
     typedef std::unique_ptr<ArtifactController> Artifact;
+    Artifact _artifact;
     typedef std::vector<Artifact> ArtifactSet;
     ArtifactSet _artifactSet;
+    typedef std::shared_ptr<cugl::Scene2> Scene;
     
-#pragma mark Methods
+//#pragma mark Methods
+//public:
+//    ArtifactSetController();
+
+#pragma mark Update Methods
 public:
-    ArtifactSetController();
     
-    void add_this(Artifact a) {
-        _artifactSet.push_back(std::move(a));
+    void add_this(Vec2 aPos, Scene s){
+        Artifact _artifact = std::make_unique<ArtifactController>(aPos);
+        _artifact->updatePosition(aPos);
+        _artifact->addChildTo(s);
+        _artifactSet.push_back(std::move(_artifact));
     }
-    
-//    void addTile(int col, int row, Color4 color, bool is_obs) {
-//        if(col < 0 || row < 0 || col >= _model->dimensions.x || row >= _model->dimensions.y){
-//            return;
-//        }
-//        Artifact temp = std::make_unique<ArtifactController>(Vec2(col * _model->tileSize.width, row * _model->tileSize.height), _model->tileSize, color, is_obs);
-//
-//        _artifactSet[row][col] = std::move(temp);
-//        _artifactSet[row][col]->addChildTo(_view->getNode());
-//    }
 };
 
 

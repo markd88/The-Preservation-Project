@@ -22,21 +22,34 @@ class GuardSetController {
 private:
     /** Tilemape is a 2D vector list of tiles */
     typedef std::unique_ptr<GuardController> Guard;
+//    Guard _guard;
     std::vector<Guard> _guardSet;
+    typedef std::shared_ptr<cugl::Scene2> Scene;
     
-#pragma mark Methods
+
+//#pragma mark Main Methods
+//public:
+//    GuardSetController();
+    
+#pragma mark Update Methods
 public:
-    GuardSetController();
-    
     // add one guard
-    Guard add_this(Vec2 gPos){
+    void add_this(Vec2 gPos, Scene s){
         Guard _guard = std::make_unique<GuardController>(gPos);
+        _guard->updatePosition(gPos);
+        _guard->addChildTo(s);
         _guardSet.push_back(std::move(_guard));
-        return _guard;
     }
     
-    
-//    void clearMap();
+//    void addChildTo(Scene2 s) {
+//        unsigned int vecSize = _guardSet.size();
+//        // run for loop from 0 to vecSize
+//        for(unsigned int i = 0; i < vecSize; i++)
+//        {
+//            _guardSet[i];
+//        }
+//    }
+
 };
 
 
