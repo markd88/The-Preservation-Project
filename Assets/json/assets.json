@@ -18,6 +18,9 @@
             "magfilter": "linear",
             "wrapS":     "clamp",
             "wrapT":     "clamp"
+        },
+        "character": {
+            "file":     "textures/character_v2.png"
         }
 	},
 	"fonts": {

@@ -73,6 +73,6 @@ public:
     void setColor(Color4 color) {
         _color = color;
     }
-}
+};
 
 #endif /* artifactModel_h */

@@ -32,7 +32,7 @@ public:
     
     // add one guard
     void add_guard(Guard g){
-        _guardSet.push_back(g);
+        _guardSet.push_back(std::move(g));
     }
     
     

@@ -87,5 +87,5 @@ public:
         }
         return false;
     }
-}
+};;
 #endif /* GuardModel_h */

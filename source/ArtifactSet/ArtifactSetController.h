@@ -30,9 +30,9 @@ public:
     ArtifactSetController();
     
     void add_one(Artifact a) {
-        _artifactSet.push_back(a);
+        _artifactSet.push_back(std::move(a));
     }
-}
+};
 
 
 #endif /* __ARTIFACTSET_CONTROLLER_H__ */

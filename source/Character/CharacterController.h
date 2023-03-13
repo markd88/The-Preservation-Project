@@ -32,14 +32,14 @@ public:
      * @param size      The width and height of a tile
      * @param color     The tile color
      */
-    CharacterController(Vec2 position, Size size, Color4 color, std::shared_ptr<cugl::scene2::ActionManager> actions) {
+    CharacterController(Vec2 position, Size size, Color4 color, std::shared_ptr<cugl::scene2::ActionManager> actions, const std::shared_ptr<cugl::AssetManager>& assets) {
         _model = std::make_unique<CharacterModel>(position, size, color);
-        _view = std::make_unique<CharacterView>(position, size, color, actions);
+        _view = std::make_unique<CharacterView>(position, size, color, actions, assets);
     }
     
-    CharacterController(Vec2 position, std::shared_ptr<cugl::scene2::ActionManager> actions) {
+    CharacterController(Vec2 position, std::shared_ptr<cugl::scene2::ActionManager> actions, const std::shared_ptr<cugl::AssetManager>& assets) {
         _model = std::make_unique<CharacterModel>(position, Size(50, 50), Color4::BLUE);
-        _view = std::make_unique<CharacterView>(position, Size(50, 50), Color4::BLUE, actions);
+        _view = std::make_unique<CharacterView>(position, Size(50, 50), Color4::BLUE, actions, assets);
     }
 
 #pragma mark Update Methods
