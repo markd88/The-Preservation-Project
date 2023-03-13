@@ -1,5 +1,12 @@
 {
 	"textures": {
+        "reset": {
+            "file":      "textures/reset-button.png",
+            "wrapS":     "clamp",
+            "wrapT":     "clamp",
+            "minfilter": "linear",
+            "magfilter": "linear"
+        },
 		"logo": {
 			"file":      "textures/cugl-logo.png",
             "wrapS":     "clamp",
