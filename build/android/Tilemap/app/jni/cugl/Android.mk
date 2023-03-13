@@ -33,6 +33,7 @@ LOCAL_SRC_FILES := \
 	$(wildcard $(CUGL_PATH)/source/assets/*.cpp) \
 	$(wildcard $(CUGL_PATH)/source/scene2/*.cpp) \
 	$(wildcard $(CUGL_PATH)/source/scene2/graph/*.cpp) \
+	$(wildcard $(CUGL_PATH)/source/scene2/actions/*.cpp) \
 	$(wildcard $(CUGL_PATH)/source/scene2/ui/*.cpp) \
 	$(wildcard $(CUGL_PATH)/source/scene2/layout/*.cpp) \
 	$(wildcard $(CUGL_PATH)/source/physics2/*.cpp) \

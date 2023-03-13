@@ -8,8 +8,7 @@
 #ifndef __GUARDSET_CONTROLLER_H__
 #define __GUARDSET_CONTROLLER_H__
 
-//#include "GuardSetModel.h"
-//#include "GuardSetView.h"
+
 #include "Guard/GuardModel.h"
 #include "Guard/GuardView.h"
 #include "Guard/GuardController.h"
@@ -33,7 +32,7 @@ public:
     
     // add one guard
     void add_guard(Guard g){
-        _guardSet.push_back(g);
+        _guardSet.push_back(std::move(g));
     }
     
     
