@@ -45,8 +45,7 @@ GamePlayController::GamePlayController(const Size displaySize, std::shared_ptr<c
     _button_layer->setContentSize(dimen);
     _button_layer->doLayout(); // This rearranges the children to fit the screen
     
-    
-    _button = std::dynamic_pointer_cast<scene2::Button>(assets->get<scene2::SceneNode>("button_action"));
+    _button = std::dynamic_pointer_cast<scene2::Button>(assets->get<scene2::SceneNode>("button_reset"));
     _button->addListener([this](const std::string& name, bool down) {
         if (down) {
             this->init();
@@ -61,6 +60,11 @@ GamePlayController::GamePlayController(const Size displaySize, std::shared_ptr<c
 
 // init some assets when restart
 void GamePlayController::init(){
+    
+    // dispose all active actions
+    _actions->dispose();
+    _camManager->dispose();
+    
     // remove everything first
     _scene->removeAllChildren();
     
@@ -86,7 +90,7 @@ void GamePlayController::init(){
     _cam->update();
     
     // to make the button pos fixed relative to screen
-    _button_layer->setPosition(_cam->getPosition() - Vec2(900, 70));
+    _button_layer->setPosition(_cam->getPosition());
 
 }
 
