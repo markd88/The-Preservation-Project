@@ -110,8 +110,24 @@ private:
     void generateSecondaryWorld(std::unique_ptr<TilemapController>& tilemap);
     
     /** Generates artifacts and guards in the primary world. */
-    void generateArtifact(float w, float h);
-    void generateGuard(float w, float h);
+    void addArtifact(float w, float h) {
+        Vec2 aPos = Vec2(w,h);
+        typedef std::unique_ptr<ArtifactController> Artifact;
+        _artifact = make_unique<ArtifactController>(aPos);
+        _artifact->updatePosition(aPos);
+        _artifact->addChildTo(_scene);
+//        _artifactSet->add_this(std::move(_artifact));
+    }
+    void addGuard(float w, float h) {
+        Vec2 gPos = Vec2(w,h);
+//        _guard = _guardSet->add_this(gPos);
+//        typedef std::unique_ptr<GuardController> Guard;
+        _guard = make_unique<GuardController>(Vec2(0,0));
+        _guard->updatePosition(gPos);
+        _guard->addChildTo(_scene);
+    }
+    void generateArtifact();
+    void generateGuard();
 
 #pragma mark Helpers
 private:

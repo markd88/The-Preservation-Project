@@ -34,8 +34,8 @@ GamePlayController::GamePlayController(const Size displaySize, std::shared_ptr<c
     generatePrimaryWorld(_tilemap1);
     generateSecondaryWorld(_tilemap2);
 
-    generateArtifact(30, 400);
-//    generateGuard(40, 490);
+    generateArtifact();
+    generateGuard();
     
 //    Vec2 gPos = Vec2(_scene->getSize().width * 0.02, _scene->getSize().height * 0.2);
 //    std::unique_ptr<GuardController> _guard;
@@ -79,8 +79,8 @@ void GamePlayController::init(){
     _character = make_unique<CharacterController>(start, _actions);
     _character->addChildTo(_scene);
     
-    generateArtifact(30, 400);
-    generateGuard(40, 490);
+    generateArtifact();
+    generateGuard();
     
     _path = make_unique<PathController>();
     path_trace = {};
@@ -127,8 +127,8 @@ void GamePlayController::update(float dt){
         else {
             _tilemap2->removeChildFrom(_scene);
             _tilemap1->addChildTo(_scene);
-            generateArtifact(30, 400);
-            generateGuard(40, 490);
+            generateArtifact();
+            generateGuard();
             _activeMap = "tileMap1";
         }
         _character->addChildTo(_scene);
@@ -297,24 +297,13 @@ void GamePlayController::update(float dt){
         _tilemap->updatePosition(_scene->getSize()/2);
     }
 
-    void GamePlayController::generateArtifact(float w, float h) {
-        Vec2 aPos = Vec2(w,h);
-        typedef std::unique_ptr<ArtifactController> Artifact;
-        _artifact = make_unique<ArtifactController>(aPos);
-        _artifact->updatePosition(aPos);
-        _artifact->addChildTo(_scene);
-//        _artifactSet->add_this(std::move(_artifact));
+    void GamePlayController::generateArtifact() {
+        addArtifact(30, 400);
     }
-    void GamePlayController::generateGuard(float w, float h) {
-        Vec2 gPos = Vec2(w,h);
-//        _guard = _guardSet->add_this(gPos);
-//        typedef std::unique_ptr<GuardController> Guard;
-        _guard = make_unique<GuardController>(Vec2(0,0));
-        _guard->updatePosition(gPos);
-        _guard->addChildTo(_scene);
+    void GamePlayController::generateGuard() {
+        addGuard(40, 490);
     }
 
-    
     // upper guard
     //        for (int i = 50; i <= 65; i++) {
     //            for(int j = 20; j <= 25; j++) {
