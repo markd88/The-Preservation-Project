@@ -8,8 +8,7 @@
 #ifndef __GUARDSET_CONTROLLER_H__
 #define __GUARDSET_CONTROLLER_H__
 
-//#include "GuardSetModel.h"
-//#include "GuardSetView.h"
+
 #include "Guard/GuardModel.h"
 #include "Guard/GuardView.h"
 #include "Guard/GuardController.h"

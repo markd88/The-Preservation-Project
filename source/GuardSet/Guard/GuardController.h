@@ -8,8 +8,8 @@
 #ifndef __GUARD_CONTROLLER_H__
 #define __GUARD_CONTROLLER_H__
 
-#include "GuardModel.h"
 #include "GuardView.h"
+#include "GuardModel.h"
 
 /**
  * A class communicating between the model and the view. It only
