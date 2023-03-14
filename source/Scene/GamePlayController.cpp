@@ -39,7 +39,7 @@ GamePlayController::GamePlayController(const Size displaySize, std::shared_ptr<c
     _guardSet = std::make_unique<GuardSetController>();
     generateGuard();
     
-    Vec2 start = Vec2(_scene->getSize().width * 0.85, _scene->getSize().height * 0.15);
+    Vec2 start = Vec2(_scene->getSize().width * 0.5, _scene->getSize().height * 0.15);
     _character = make_unique<CharacterController>(start, _actions, _assets);
     
     // init the button
@@ -53,8 +53,12 @@ GamePlayController::GamePlayController(const Size displaySize, std::shared_ptr<c
             this->init();
         }
     });
-    
     _button->activate();
+    
+    // load label for n_res and n_art
+    _res_label  = std::dynamic_pointer_cast<scene2::Label>(assets->get<scene2::SceneNode>("button_resources"));
+    
+    _art_label  = std::dynamic_pointer_cast<scene2::Label>(assets->get<scene2::SceneNode>("button_progress"));
     
     // add Win/lose panel
     _complete_layer = _assets->get<scene2::SceneNode>("complete");
@@ -108,6 +112,10 @@ void GamePlayController::init(){
     // to make the button pos fixed relative to screen
     _button_layer->setPosition(_cam->getPosition());
 
+    
+    // reload initial label for n_res and n_art
+    _res_label->setText("0");
+    _art_label->setText("0/4");
 }
 
 
@@ -117,10 +125,47 @@ void GamePlayController::update(float dt){
     auto now = std::chrono::steady_clock::now();
     auto elapsed = std::chrono::duration_cast<std::chrono::seconds>(now - last_time);
     
+    // if collect a resource
+    for(int i=0; i<_artifactSet->_artifactSet.size(); i++){
+        // detect collision
+        if(_character->contains(_artifactSet->_artifactSet[i]->getNodePosition())){
+            // if close, should collect it
+            
+            // if resource
+            if(_artifactSet->_artifactSet[i]->isResource()){
+                _character->addRes();
+                // update panel
+                _res_label->setText(cugl::strtool::to_string(_character->getNumRes()));
+                
+            }
+            // if artifact
+            else{
+                _character->addArt();
+                _art_label->setText(cugl::strtool::to_string(_character->getNumArt()) + "/4");
+            }
+
+            // make the artifact disappear and remove from set
+            _artifactSet->remove_this(i, _scene);
+            cout<<_character->getNumRes()<<endl;
+            cout<<_character->getNumArt()<<endl;
+            break;
+        }
+        
+    }
+    
+    
+    
+    // if collide with guard
+    
+    
+    
+    
+    
     _input->update(dt);
     // if pinch, switch world
     bool can_switch = ((_activeMap == "tileMap1" && _tilemap2->inObstacle(_character->getPosition())) || (_activeMap == "tileMap2" && _tilemap1->inObstacle(_character->getPosition())));
     
+    can_switch = can_switch && (_character->getNumRes() > 0);
     if(!can_switch){
         _character->updateColor(Color4::GREEN);
     }
@@ -131,12 +176,16 @@ void GamePlayController::update(float dt){
         // if the character's position on the other world is obstacle, disable the switch
         last_time = now;
         // remove and add the child back so that the child is always on the top layer
+        
         _character->removeChildFrom(_scene);
         if (_activeMap == "tileMap1") {
             _tilemap1->removeChildFrom(_scene);
             _tilemap2->addChildTo(_scene);
             secondaryGuard();
             _activeMap = "tileMap2";
+            
+            // when move to the second world, minus 1 visually
+            _res_label->setText(cugl::strtool::to_string(_character->getNumRes()-1));
         }
         else {
             _tilemap2->removeChildFrom(_scene);
@@ -144,6 +193,9 @@ void GamePlayController::update(float dt){
             generateArtifact();
             generateGuard();
             _activeMap = "tileMap1";
+            
+            // when move to the second world, minus 1 in model
+            _character->useRes();
         }
         _character->addChildTo(_scene);
         _scene->removeChild(_button_layer);
@@ -375,6 +427,8 @@ void GamePlayController::update(float dt){
     }
 
     void GamePlayController::generateArtifact() {
+        //_artifactSet->_artifactSet = {};
+        
         bool isResource = false;
         addArtifact(90, 375, isResource);
         addArtifact(650, 250, isResource);
@@ -389,6 +443,8 @@ void GamePlayController::update(float dt){
         addArtifact(850, 530, isResource);
     }
     void GamePlayController::generateGuard() {
+        //_guardSet->_guardSet = {};
+        
         addGuard(90, 500);
         addGuard(450, 250);
         addGuard(500, 100);

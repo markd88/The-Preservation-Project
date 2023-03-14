@@ -34,6 +34,9 @@ public:
     /** The asset manager for this game mode. */
     std::shared_ptr<cugl::AssetManager> _assets;
     std::shared_ptr<cugl::scene2::Button> _button;
+    std::shared_ptr<cugl::scene2::Label> _res_label;
+    std::shared_ptr<cugl::scene2::Label> _art_label;
+    
     Vec2 _button_screen_pos;
     std::shared_ptr<cugl::scene2::SceneNode> _button_layer;
     std::shared_ptr<cugl::scene2::SceneNode> _complete_layer;

@@ -46,7 +46,7 @@ public:
         setPosition(position);
         setSize(size);
         setColor(color);
-        radius = 15 * 3;
+        radius = 15 * 4;
         _n_art = 0;
         _n_res = 0;
     }

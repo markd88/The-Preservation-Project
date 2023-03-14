@@ -34,10 +34,11 @@ public:
      * @param size      The width and height of a Artifact
      * @param color     The Artifact color
      */
-    ArtifactModel(Vec2 position, Size size, Color4 color) : color(_color) {
+    ArtifactModel(Vec2 position, Size size, Color4 color, bool isResource) : color(_color) {
         setPosition(position);
         setSize(size);
         setColor(color);
+        _isResource = isResource;
     }
     
 #pragma mark Setters
@@ -72,6 +73,11 @@ public:
      */
     void setColor(Color4 color) {
         _color = color;
+    }
+    
+    
+    bool isResource(){
+        return _isResource;
     }
 };
 

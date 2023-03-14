@@ -36,12 +36,12 @@ public:
      */
     
     ArtifactController(Vec2 position, Size size, Color4 color, bool isResource = false) {
-        _model = std::make_unique<ArtifactModel>(position, size, color);
+        _model = std::make_unique<ArtifactModel>(position, size, color, isResource);
         _view = std::make_unique<ArtifactView>(position, size, color);
     }
     
     ArtifactController(Vec2 position, bool isResource = false) {
-        _model = std::make_unique<ArtifactModel>(position, Size(50, 50), Color4::RED);
+        _model = std::make_unique<ArtifactModel>(position, Size(50, 50), Color4::RED, isResource);
         _view = std::make_unique<ArtifactView>(position, Size(50, 50), Color4::RED);
     }
 //    ArtifactController(Vec2 position,  bool isResource = true) {
@@ -84,6 +84,10 @@ public:
     
     Vec2 getNodePosition(){
         return _view->nodePos();
+    }
+    
+    bool isResource(){
+        return _model->isResource();
     }
 
     

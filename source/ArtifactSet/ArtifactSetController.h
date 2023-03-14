@@ -19,7 +19,7 @@
 class ArtifactSetController {
     
 #pragma mark External References
-private:
+public:
     /** Tilemape is a 2D vector list of tiles */
     typedef std::unique_ptr<ArtifactController> Artifact;
     Artifact _artifact;
@@ -38,6 +38,12 @@ public:
         Artifact _artifact = std::make_unique<ArtifactController>(aPos, isResource);
         _artifact->addChildTo(s);
         _artifactSet.push_back(std::move(_artifact));
+    }
+    
+    // idx is the idx of this item in this vec
+    void remove_this(int idx, Scene s){
+        _artifactSet[idx]->removeChildFrom(s);
+        _artifactSet.erase(_artifactSet.begin() + idx);
     }
 };
 

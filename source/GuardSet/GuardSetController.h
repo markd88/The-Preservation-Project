@@ -20,7 +20,7 @@
 class GuardSetController {
     
 #pragma mark External References
-private:
+public:
     /** Tilemape is a 2D vector list of tiles */
     typedef std::unique_ptr<GuardController> Guard;
 //    Guard _guard;
