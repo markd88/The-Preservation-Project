@@ -120,11 +120,11 @@ private:
     }
     void addGuard1(int w, int h) {
         Vec2 gPos = Vec2(w,h);
-        _guardSet1->add_this(gPos, _scene);
+        _guardSet1->add_this(gPos, _scene, _assets);
     }
     void addGuard2(int w, int h) {
         Vec2 gPos = Vec2(w,h);
-        _guardSet2->add_this(gPos, _scene);
+        _guardSet2->add_this(gPos, _scene, _assets);
     }
     void generateArtifact();
     void generateResource();

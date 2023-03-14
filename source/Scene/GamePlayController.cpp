@@ -39,8 +39,8 @@ GamePlayController::GamePlayController(const Size displaySize, std::shared_ptr<c
     generateArtifact();
     generateResource();
     
-    _guardSet1 = std::make_unique<GuardSetController>();
-    _guardSet2 = std::make_unique<GuardSetController>();
+    _guardSet1 = std::make_unique<GuardSetController>(_assets);
+    _guardSet2 = std::make_unique<GuardSetController>(_assets);
     generateGuard();
     secondaryGuard();
     
@@ -100,7 +100,7 @@ void GamePlayController::init(){
     _resourceSet = make_unique<ArtifactSetController>(_assets);
     generateArtifact();
     generateResource();
-    _guardSet1 = make_unique<GuardSetController>();
+    _guardSet1 = make_unique<GuardSetController>(_assets);
     generateGuard();
     
     _path = make_unique<PathController>();

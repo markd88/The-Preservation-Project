@@ -10,6 +10,9 @@
         "character": {
             "file":     "textures/character_v2.png"
         },
+        "guard": {
+            "file":     "textures/guard.png"
+        },
         "artifact": {
             "file":     "textures/artifact.png"
         },
