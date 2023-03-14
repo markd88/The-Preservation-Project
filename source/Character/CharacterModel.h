@@ -20,6 +20,12 @@ private:
     Size _size;
     Color4 _color;
     
+    /** Number of Artifacts collected */
+    int _n_art;
+    
+    /** Number of Resources collected */
+    int _n_res;
+    
     /** The radius of the character in which a touch will initiate the path creation*/
     int radius;
     
@@ -41,9 +47,11 @@ public:
         setSize(size);
         setColor(color);
         radius = 15 * 3;
+        _n_art = 0;
+        _n_res = 0;
     }
 
-#pragma mark Setters
+#pragma mark Setters & Getteres
 public:
     
     Vec2 getPosition(){
@@ -59,6 +67,22 @@ public:
         _position = position;
     }
     
+    
+    int getNumRes(){
+        return _n_res;
+    }
+    
+    void setNumRes(int n){
+        _n_res = n;
+    }
+    
+    int getNumArt(){
+        return _n_art;
+    }
+    
+    void setNumArt(int n){
+        _n_art = n;
+    }
     /**
      *  Sets the size of the tile.
      *

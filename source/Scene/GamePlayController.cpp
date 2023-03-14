@@ -54,7 +54,17 @@ GamePlayController::GamePlayController(const Size displaySize, std::shared_ptr<c
     
     _button->activate();
     
+    // add Win/lose panel
+    _complete_layer = _assets->get<scene2::SceneNode>("complete");
+    
+    _fail_layer = _assets->get<scene2::SceneNode>("fail");
+    
     init();
+    
+//    _scene->addChild(_complete_layer);
+//    _complete_layer->setPosition(_cam->getPosition());
+    _scene->addChild(_fail_layer);
+    _fail_layer->setPosition(_cam->getPosition());
 }
 
 

@@ -94,6 +94,28 @@ public:
         return _view->nodePos();
     }
 
+    int getNumRes(){
+        return _model->getNumRes();
+    }
+    
+    void addRes(){
+        _model->setNumRes(getNumRes() + 1);
+    }
+    
+    bool useRes(){
+        if(getNumRes() == 0) return false;
+        _model->setNumRes(getNumRes() - 1);
+        return true;
+    }
+    
+    int getNumArt(){
+        return _model->getNumArt();
+    }
+    
+    void addArt(){
+        _model->setNumArt(getNumArt() + 1);
+    }
+    
 #pragma mark Helpers
     /**
      *  See if the touch point is within the character
