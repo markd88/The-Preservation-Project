@@ -35,7 +35,10 @@ GamePlayController::GamePlayController(const Size displaySize, std::shared_ptr<c
     generateSecondaryWorld(_tilemap2);
     
     _artifactSet = std::make_unique<ArtifactSetController>(_assets);
+    _resourceSet = std::make_unique<ArtifactSetController>(_assets);
     generateArtifact();
+    generateResource();
+    
     _guardSet1 = std::make_unique<GuardSetController>();
     _guardSet2 = std::make_unique<GuardSetController>();
     generateGuard();
@@ -94,7 +97,9 @@ void GamePlayController::init(){
     _character->addChildTo(_scene);
     
     _artifactSet = make_unique<ArtifactSetController>(_assets);
+    _resourceSet = make_unique<ArtifactSetController>(_assets);
     generateArtifact();
+    generateResource();
     _guardSet1 = make_unique<GuardSetController>();
     generateGuard();
     
@@ -145,6 +150,7 @@ void GamePlayController::update(float dt){
             _tilemap2->removeChildFrom(_scene);
             _tilemap1->addChildTo(_scene);
             generateArtifact();
+            generateResource();
             generateGuard();
             _activeMap = "tileMap1";
         }
@@ -381,14 +387,16 @@ void GamePlayController::update(float dt){
         addArtifact(650, 250, isResource);
         addArtifact(1000, 530, isResource);
         addArtifact(750, 0, isResource);
-        
+    }
+    void GamePlayController::generateResource() {
         // switching hourglass
-        isResource = true;
+        bool isResource = true;
         addArtifact(0, 175, isResource);
         addArtifact(280, 0, isResource);
         addArtifact(550, 0, isResource);
         addArtifact(850, 530, isResource);
     }
+
     void GamePlayController::generateGuard() {
         addGuard1(90, 500);
         addGuard1(450, 250);

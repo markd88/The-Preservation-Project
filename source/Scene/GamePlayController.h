@@ -50,6 +50,7 @@ public:
     
 //    std::unique_ptr<ArtifactController> _artifact;
     std::unique_ptr<ArtifactSetController> _artifactSet;
+    std::unique_ptr<ArtifactSetController> _resourceSet;
     
     std::unique_ptr<PathController> _path;
     std::shared_ptr<InputController> _input = InputController::getInstance();
@@ -126,6 +127,7 @@ private:
         _guardSet2->add_this(gPos, _scene);
     }
     void generateArtifact();
+    void generateResource();
     void generateGuard();
     void secondaryGuard();
 
