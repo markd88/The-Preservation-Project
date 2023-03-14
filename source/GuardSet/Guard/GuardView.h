@@ -9,7 +9,7 @@
 #define GuardView_h
 
 #include <cugl/cugl.h>
-//using namespace cugl;
+using namespace cugl;
 
 class GuardView{
 private:

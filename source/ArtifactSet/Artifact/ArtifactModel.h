@@ -24,7 +24,7 @@ private:
 public:
     /** A public accessible, read-only version of the color */
     const Color4& color;
-
+    
 #pragma mark Main Functions
 public:
     /**
@@ -39,7 +39,7 @@ public:
         setSize(size);
         setColor(color);
     }
-
+    
 #pragma mark Setters
 public:
 
