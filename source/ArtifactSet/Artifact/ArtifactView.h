@@ -15,17 +15,35 @@ class ArtifactView{
 private:
     /** Main character view */
     /** The node is attached to the root-scene*/
-    std::shared_ptr<scene2::PolygonNode> _node;
+    std::shared_ptr<scene2::SceneNode> _node;
     
 #pragma mark Main Functions
 public:
     /** contructor */
-    ArtifactView(Vec2 position, Size size, Color4 color) {
+    ArtifactView(Vec2 position, Size size, Color4 color, const std::shared_ptr<cugl::AssetManager>& assets, bool isResource) {
+        // Get the image and add it to the node.
+        float scale = GAME_WIDTH/size.width;
+        size *= scale;
+        _node = scene2::SceneNode::alloc();
         
-        this->_node = scene2::PolygonNode::alloc();
-        _node->setAnchor(Vec2::ANCHOR_BOTTOM_LEFT);
-        _node->setRelativeColor(false);
-        setColor(color);
+        if (isResource) {
+            std::shared_ptr<Texture> texture  = assets->get<Texture>("resource");
+            _node = scene2::SpriteNode::allocWithSheet(texture, 1, 1, 1); // SpriteNode for animation
+            _node->setScale(0.2f); // Magic number to rescale asset
+            _node->setRelativeColor(false);
+            _node->setVisible(true);
+            _node->setAnchor(Vec2::ANCHOR_CENTER);
+        }
+        else {
+            std::shared_ptr<Texture> texture  = assets->get<Texture>("artifact");
+            _node = scene2::SpriteNode::allocWithSheet(texture, 1, 1, 1); // SpriteNode for animation
+            _node->setScale(0.2f); // Magic number to rescale asset
+            _node->setRelativeColor(false);
+            _node->setVisible(true);
+            _node->setAnchor(Vec2::ANCHOR_CENTER);
+        }
+        
+//        setColor(color);
         setPosition(position);
         setSize(size);
     }

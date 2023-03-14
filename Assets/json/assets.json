@@ -10,6 +10,12 @@
         "character": {
             "file":     "textures/character_v2.png"
         },
+        "artifact": {
+            "file":     "textures/artifact.png"
+        },
+        "resource": {
+            "file":     "textures/resource.png"
+        },
         "panel": {
             "file":      "textures/panel.png",
             "minfilter": "linear",

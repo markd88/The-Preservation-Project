@@ -34,12 +34,15 @@ GamePlayController::GamePlayController(const Size displaySize, std::shared_ptr<c
     generatePrimaryWorld(_tilemap1);
     generateSecondaryWorld(_tilemap2);
     
-    _artifactSet = std::make_unique<ArtifactSetController>();
+    _artifactSet = std::make_unique<ArtifactSetController>(_assets);
     generateArtifact();
-    _guardSet = std::make_unique<GuardSetController>();
+    _guardSet1 = std::make_unique<GuardSetController>();
+    _guardSet2 = std::make_unique<GuardSetController>();
     generateGuard();
+    secondaryGuard();
     
-    Vec2 start = Vec2(_scene->getSize().width * 0.85, _scene->getSize().height * 0.15);
+//    Vec2 start = Vec2(_scene->getSize().width * 0.85, _scene->getSize().height * 0.15);
+    Vec2 start = Vec2(1,1);
     _character = make_unique<CharacterController>(start, _actions, _assets);
     
     // init the button
@@ -86,13 +89,13 @@ void GamePlayController::init(){
     _activeMap = "tileMap1";
     _template = 0;
     
-    Vec2 start = Vec2(_scene->getSize().width * 0.85, _scene->getSize().height * 0.15);
+    Vec2 start = Vec2(1,1);
     _character = make_unique<CharacterController>(start, _actions, _assets);
     _character->addChildTo(_scene);
     
-    _artifactSet = make_unique<ArtifactSetController>();
+    _artifactSet = make_unique<ArtifactSetController>(_assets);
     generateArtifact();
-    _guardSet = make_unique<GuardSetController>();
+    _guardSet1 = make_unique<GuardSetController>();
     generateGuard();
     
     _path = make_unique<PathController>();
@@ -370,8 +373,6 @@ void GamePlayController::update(float dt){
         for(int j = 0; j <= 18; j++) {
             _tilemap->addTile(126, j, tileColor, is_obs);
         }
-        _guardSet = make_unique<GuardSetController>();
-        secondaryGuard();
     }
 
     void GamePlayController::generateArtifact() {
@@ -389,16 +390,16 @@ void GamePlayController::update(float dt){
         addArtifact(850, 530, isResource);
     }
     void GamePlayController::generateGuard() {
-        addGuard(90, 500);
-        addGuard(450, 250);
-        addGuard(500, 100);
-        addGuard(630, 500);
-        addGuard(850, 380);
-        addGuard(970, 75);
+        addGuard1(90, 500);
+        addGuard1(450, 250);
+        addGuard1(500, 100);
+        addGuard1(630, 500);
+        addGuard1(850, 380);
+        addGuard1(970, 75);
     }
     void GamePlayController::secondaryGuard() {
-        addGuard(350, 350);
-        addGuard(720, 320);
+        addGuard2(350, 350);
+        addGuard2(720, 320);
     }
         
     
