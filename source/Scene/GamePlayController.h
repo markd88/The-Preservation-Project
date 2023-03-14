@@ -41,6 +41,7 @@ public:
     std::shared_ptr<cugl::scene2::SceneNode> _button_layer;
     std::shared_ptr<cugl::scene2::SceneNode> _complete_layer;
     std::shared_ptr<cugl::scene2::SceneNode> _fail_layer;
+    std::shared_ptr<cugl::scene2::SceneNode> _switchNode;
     
     /** The tilemap to procedurally generate */
     std::unique_ptr<CharacterController> _character;
