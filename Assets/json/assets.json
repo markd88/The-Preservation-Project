@@ -44,6 +44,20 @@
             "magfilter": "linear",
             "wrapS":     "clamp",
             "wrapT":     "clamp"
+        },
+        "switch": {
+            "file":      "textures/switch.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS":     "clamp",
+            "wrapT":     "clamp"
+        },
+        "switch-not": {
+            "file":      "textures/switch-not.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS":     "clamp",
+            "wrapT":     "clamp"
         }
 	},
 	"fonts": {
@@ -290,7 +304,25 @@
                          "absolute" : true
                      }
                  }
-                 
+                 ,
+                 "switch":{
+                    "type"   : "Image",
+                    "format"    : {
+                        "type" : "Anchored"
+                    },
+                    "data"   : {
+                        "texture"  : "switch",
+                        "anchor"   : [0.5,0.5],
+                        "scale"    : 0.6
+                    },
+                    "layout" : {
+                        "x_anchor" : "center",
+                        "y_anchor" : "middle",
+                        "y_offset" : 0,
+                        "x_offset" : 300,
+                        "absolute" : true
+                    }
+                }
                  
             }
         }

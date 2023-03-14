@@ -61,6 +61,10 @@ GamePlayController::GamePlayController(const Size displaySize, std::shared_ptr<c
     
     _fail_layer = _assets->get<scene2::SceneNode>("fail");
     
+    // add switch indicator
+//    _switchNode = scene2::SceneNode::alloc();
+    _switchNode = _assets->get<scene2::SceneNode>("button_switch");
+
     init();
     
 //    _scene->addChild(_complete_layer);
@@ -121,11 +125,45 @@ void GamePlayController::update(float dt){
     // if pinch, switch world
     bool can_switch = ((_activeMap == "tileMap1" && _tilemap2->inObstacle(_character->getPosition())) || (_activeMap == "tileMap2" && _tilemap1->inObstacle(_character->getPosition())));
     
-    if(!can_switch){
-        _character->updateColor(Color4::GREEN);
+    if(can_switch){
+        
+        CULog("can switch.... camera position is %s", _cam->getPosition().toString().c_str());
+        
+        Size  size  = Size(50, 50);
+        float scale = 1024/size.width;
+        size *= scale;
+
+        std::shared_ptr<Texture> switchTexture = _assets->get<Texture>("switch");
+//        _switchNode->setVisible(false);
+//        _switchNode = scene2::PolygonNode::allocWithTexture(switchTexture);
+//        _switchNode->setScale(0.8f);
+        
+//        _switchNode->setAnchor(Vec2::ANCHOR_CENTER);
+//        _switchNode->setPosition(_cam->getPosition());
+//        _switchNode->setPosition(size.width/2,size.height/2);
+//        _switchNode->setVisible(true);
+//        _scene->addChild(_switchNode);
+        _switchNode->setColor(Color4::GREEN);
     }
     else{
-        _character->updateColor(Color4::BLUE);
+//        _character->updateColor(Color4::BLUE);
+        CULog("can NOT switch.... camera position is %s", _cam->getPosition().toString().c_str());
+        
+        Size  size  = Size(50, 50);
+        float scale = 1024/size.width;
+        size *= scale;
+
+        std::shared_ptr<Texture> switchTexture = _assets->get<Texture>("switch-not");
+//        _switchNode->setVisible(false);
+//        _switchNode = scene2::PolygonNode::allocWithTexture(switchTexture);
+//        _switchNode->setScale(0.8f);
+        
+//        _switchNode->setAnchor(Vec2::ANCHOR_CENTER);
+//        _switchNode->setPosition(_cam->getPosition());
+//        _switchNode->setPosition(size.width/2,size.height/2);
+//        _switchNode->setVisible(true);
+        _switchNode->setColor(Color4::BLACK);
+//        _scene->addChild(_switchNode);
     }
     if(elapsed.count() >= 0.5 && _input->getPinchDelta() != 0 && !can_switch){
         // if the character's position on the other world is obstacle, disable the switch
