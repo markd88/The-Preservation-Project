@@ -41,6 +41,27 @@ public:
         _artifact->addChildTo(s);
         _artifactSet.push_back(std::move(_artifact));
     }
+    
+    
+    void addChildTo (Scene s) {
+        unsigned int vecSize = _artifactSet.size();
+        // run for loop from 0 to vecSize
+        for(unsigned int i = 0; i < vecSize; i++) {
+            _artifactSet[i]->addChildTo(s);
+        }
+    }
+    
+    void removeChildFrom (Scene s) {
+        unsigned int vecSize = _artifactSet.size();
+        // run for loop from 0 to vecSize
+        for(unsigned int i = 0; i < vecSize; i++) {
+            _artifactSet[i]->removeChildFrom(s);
+        }
+    }
+    
+    void clearSet () {
+        _artifactSet.clear();
+    }
 };
 
 

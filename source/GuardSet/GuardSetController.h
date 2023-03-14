@@ -43,6 +43,26 @@ public:
         _guardSet.push_back(std::move(_guard));
     }
     
+    void addChildTo (Scene s) {
+        unsigned int vecSize = _guardSet.size();
+        // run for loop from 0 to vecSize
+        for(unsigned int i = 0; i < vecSize; i++) {
+            _guardSet[i]->addChildTo(s);
+        }
+    }
+    
+    void removeChildFrom (Scene s) {
+        unsigned int vecSize = _guardSet.size();
+        // run for loop from 0 to vecSize
+        for(unsigned int i = 0; i < vecSize; i++) {
+            _guardSet[i]->removeChildFrom(s);
+        }
+    }
+    
+    void clearSet () {
+        _guardSet.clear();
+    }
+    
 //    void addChildTo(Scene2 s) {
 //        unsigned int vecSize = _guardSet.size();
 //        // run for loop from 0 to vecSize

@@ -98,10 +98,17 @@ void GamePlayController::init(){
     
     _artifactSet = make_unique<ArtifactSetController>(_assets);
     _resourceSet = make_unique<ArtifactSetController>(_assets);
+    _artifactSet->clearSet();
+    _resourceSet->clearSet();
     generateArtifact();
     generateResource();
     _guardSet1 = make_unique<GuardSetController>(_assets);
+    _guardSet2 = make_unique<GuardSetController>(_assets);
+    _guardSet1->clearSet();
+    _guardSet2->clearSet();
     generateGuard();
+    secondaryGuard();
+    _guardSet2->removeChildFrom(_scene);
     
     _path = make_unique<PathController>();
     path_trace = {};
@@ -143,15 +150,19 @@ void GamePlayController::update(float dt){
         if (_activeMap == "tileMap1") {
             _tilemap1->removeChildFrom(_scene);
             _tilemap2->addChildTo(_scene);
-            secondaryGuard();
+            _guardSet1->removeChildFrom(_scene);
+            _guardSet2->addChildTo(_scene);
+            _artifactSet->removeChildFrom(_scene);
+            _resourceSet->removeChildFrom(_scene);
             _activeMap = "tileMap2";
         }
         else {
             _tilemap2->removeChildFrom(_scene);
             _tilemap1->addChildTo(_scene);
-            generateArtifact();
-            generateResource();
-            generateGuard();
+            _guardSet2->removeChildFrom(_scene);
+            _guardSet1->addChildTo(_scene);
+            _artifactSet->addChildTo(_scene);
+            _resourceSet->addChildTo(_scene);
             _activeMap = "tileMap1";
         }
         _character->addChildTo(_scene);
