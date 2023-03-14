@@ -63,8 +63,8 @@ GamePlayController::GamePlayController(const Size displaySize, std::shared_ptr<c
     
 //    _scene->addChild(_complete_layer);
 //    _complete_layer->setPosition(_cam->getPosition());
-    _scene->addChild(_fail_layer);
-    _fail_layer->setPosition(_cam->getPosition());
+//    _scene->addChild(_fail_layer);
+//    _fail_layer->setPosition(_cam->getPosition());
 }
 
 
