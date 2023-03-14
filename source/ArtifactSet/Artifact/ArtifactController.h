@@ -34,7 +34,7 @@ public:
      * @param size      The width and height of a tile
      * @param color     The tile color
      */
-    ArtifactController(Vec2 position, Size size, Color4 color, bool isResource = false) {
+    
     ArtifactController(Vec2 position, Size size, Color4 color, bool isResource = false) {
         _model = std::make_unique<ArtifactModel>(position, size, color);
         _view = std::make_unique<ArtifactView>(position, size, color);
