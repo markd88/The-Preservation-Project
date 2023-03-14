@@ -8,19 +8,13 @@
             "magfilter": "linear"
         },
 		"logo": {
-			"file":      "textures/cugl-logo.png",
+			"file":      "textures/header.png",
             "wrapS":     "clamp",
             "wrapT":     "clamp",
             "minfilter": "linear",
             "magfilter": "linear"
 		},
-        "name": {
-            "file":      "textures/cugl-name.png",
-            "wrapS":     "clamp",
-            "wrapT":     "clamp",
-            "minfilter": "linear",
-            "magfilter": "linear"
-        },
+
         "play": {
             "file":      "textures/cugl-play.png",
             "wrapS":     "clamp",
@@ -69,23 +63,7 @@
                         "absolute" : true
                     }
                 },
-                "name"  : {
-                    "type"   : "Image",
-                    "format"    : {
-                        "type" : "Anchored"
-                    },
-                    "data"   : {
-                        "texture"  : "name",
-                        "anchor"   : [0.5,0.5],
-                        "scale"    : 0.75
-                    },
-                    "layout" : {
-                        "x_anchor" : "center",
-                        "y_anchor" : "middle",
-                        "y_offset" : -55,
-                        "absolute" : true
-                    }
-                },
+
                 "play"  : {
                     "type"   : "Button",
                     "data"   : {
