@@ -62,14 +62,34 @@ GamePlayController::GamePlayController(const Size displaySize, std::shared_ptr<c
     
     // add Win/lose panel
     _complete_layer = _assets->get<scene2::SceneNode>("complete");
+    auto complete_again_button = std::dynamic_pointer_cast<scene2::Button>(assets->get<scene2::SceneNode>("complete_again"));
+    
+    complete_again_button->addListener([this](const std::string& name, bool down) {
+        if (down) {
+            this->init();
+        }
+    });
+    
+    complete_again_button->activate();
     
     _fail_layer = _assets->get<scene2::SceneNode>("fail");
+    auto fail_again_button = std::dynamic_pointer_cast<scene2::Button>(assets->get<scene2::SceneNode>("fail_again"));
+    
+    fail_again_button->addListener([this](const std::string& name, bool down) {
+        if (down) {
+            this->init();
+        }
+    });
+    
+    fail_again_button->activate();
+    
+    
     
     // add switch indicator
-//    _switchNode = scene2::SceneNode::alloc();
     _switchNode = _assets->get<scene2::SceneNode>("button_switch");
 
     init();
+    
     
 //    _scene->addChild(_complete_layer);
 //    _complete_layer->setPosition(_cam->getPosition());
@@ -124,6 +144,9 @@ void GamePlayController::init(){
 
 
 void GamePlayController::update(float dt){
+    if(_fail_layer->getScene()!=nullptr || _complete_layer->getScene()!=nullptr){
+        return;
+    }
     static auto last_time = std::chrono::steady_clock::now();
     // Calculate the time elapsed since the last call to pinch
     auto now = std::chrono::steady_clock::now();
@@ -150,28 +173,29 @@ void GamePlayController::update(float dt){
 
             // make the artifact disappear and remove from set
             _artifactSet->remove_this(i, _scene);
-            cout<<_character->getNumRes()<<endl;
-            cout<<_character->getNumArt()<<endl;
             break;
         }
         
     }
     
-    
-    
     // if collide with guard
-    
-    
-    
-    
+    for(int i=0; i<_guardSet->_guardSet.size(); i++){
+        if(_character->contains(_guardSet->_guardSet[i]->getNodePosition())){
+            _scene->addChild(_fail_layer);
+            
+            _fail_layer->setPosition(_cam->getPosition());
+            break;
+        }
+    }
     
     _input->update(dt);
     // if pinch, switch world
-    bool can_switch = ((_activeMap == "tileMap1" && _tilemap2->inObstacle(_character->getPosition())) || (_activeMap == "tileMap2" && _tilemap1->inObstacle(_character->getPosition())));
+    bool cant_switch = ((_activeMap == "tileMap1" && _tilemap2->inObstacle(_character->getPosition())) || (_activeMap == "tileMap2" && _tilemap1->inObstacle(_character->getPosition())));
     
 
-    can_switch = can_switch && (_character->getNumRes() > 0);
-    if(can_switch){
+    cant_switch = cant_switch || (_character->getNumRes() == 0);
+    
+    if(cant_switch){
         
         CULog("can switch.... camera position is %s", _cam->getPosition().toString().c_str());
         
@@ -179,9 +203,7 @@ void GamePlayController::update(float dt){
         float scale = 1024/size.width;
         size *= scale;
 
-        std::shared_ptr<Texture> switchTexture = _assets->get<Texture>("switch");
-
-        _switchNode->setColor(Color4::GREEN);
+        _switchNode->setColor(Color4::RED);
 
     }
     else{
@@ -191,11 +213,9 @@ void GamePlayController::update(float dt){
         Size  size  = Size(50, 50);
         float scale = 1024/size.width;
         size *= scale;
-
-        std::shared_ptr<Texture> switchTexture = _assets->get<Texture>("switch-not");
-        _switchNode->setColor(Color4::BLACK);
+        _switchNode->setColor(Color4::GREEN);
     }
-    if(elapsed.count() >= 0.5 && _input->getPinchDelta() != 0 && !can_switch){
+    if(elapsed.count() >= 0.5 && _input->getPinchDelta() != 0 && !cant_switch){
         // if the character's position on the other world is obstacle, disable the switch
         last_time = now;
         // remove and add the child back so that the child is always on the top layer
