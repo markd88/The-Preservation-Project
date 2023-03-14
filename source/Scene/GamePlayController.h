@@ -36,6 +36,8 @@ public:
     std::shared_ptr<cugl::scene2::Button> _button;
     Vec2 _button_screen_pos;
     std::shared_ptr<cugl::scene2::SceneNode> _button_layer;
+    std::shared_ptr<cugl::scene2::SceneNode> _complete_layer;
+    std::shared_ptr<cugl::scene2::SceneNode> _fail_layer;
     
     /** The tilemap to procedurally generate */
     std::unique_ptr<CharacterController> _character;
