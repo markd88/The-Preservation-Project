@@ -231,6 +231,15 @@ public:
     
     float getAngleDelta() const { return _model->_angleDelta; }
     
+    bool didPan(){
+        if (!_model->_mousepan && _model->_prevPan){
+            _model->_prevPan = false;
+            return true;
+        }else{
+            return false;
+        }
+    }
+    
 };
 
 #endif /* __INPUT_CONTROLLER_H__ */

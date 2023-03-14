@@ -164,6 +164,7 @@ void InputController::updateTouch() {
 */
 void InputController::updatePinch(float dt) {
     if (_model->_mousepan) {
+        _model->_prevPan = true;
         _model->_pandelta = _model->_currTouch - _model->_prevTouch;
     } else {
         _model->_pandelta.setZero();

@@ -54,6 +54,7 @@ public:
     
     /** Whether or not are in an active mouse pan */
     bool _mousepan;
+    bool _prevPan;
     
     cugl::Size _screensize;
 
@@ -74,6 +75,7 @@ public:
         _prevAngle(0),
         _currSpread(0),
         _prevSpread(0),
+        _prevPan(false),
         _angleDelta(0),
         _pinchDelta(0) {}
 };

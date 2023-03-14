@@ -133,21 +133,29 @@ void GamePlayController::update(float dt){
         _scene->addChild(_button_layer);
     }
     
-    else if (!_input->getPanDelta().isZero()) {
-
+    else if (!_input->getPanDelta().isZero() && path_trace.size() == 0) {
         Vec2 delta = _input->getPanDelta();
 
         // init camera action
-        _moveTo = cugl::scene2::MoveTo::alloc();
         _moveCam = CameraMoveTo::alloc();
         
         // pan move with the center of the camera view
-        _moveTo->setTarget(_cam->getPosition() - delta);
-        _moveCam->setTarget(_cam->getPosition() - delta);
-        
-        _camManager->activate("movingCam", _moveCam, _cam);
+        Vec2 pos = _cam->getPosition() - delta;
+        if (pos.distance(_character->getNodePosition()) < 150){
+            _moveCam->setTarget(_cam->getPosition() - delta);
+            _camManager->activate("movingCam", _moveCam, _cam);
+        }
     }
     
+    else if (_input->didPan() && path_trace.size() == 0){
+        _moveCam = CameraMoveTo::alloc();
+        _moveCam->setDuration(1.25);
+        // pan move with the center of the camera view
+        _moveCam->setTarget(_character->getNodePosition());
+        auto fcn = EasingFunction::alloc(EasingFunction::Type::BACK_OUT);
+        _camManager->activate("movingCam", _moveCam, _cam, fcn);
+    }
+        
     else if(_input->didPress()){        // if press, determine if press on character
         Vec2 input_posi = _input->getPosition();
         input_posi = _scene->screenToWorldCoords(input_posi);
@@ -204,7 +212,6 @@ void GamePlayController::update(float dt){
     else if (path_trace.size() != 0 && _actions->isActive("moving") == false){
         _moveTo->setTarget(path_trace[0]);
         _moveCam->setTarget(path_trace[0]);
-        Vec2 cPos = _character->getNodePosition();
         
         _character->moveTo(_moveTo);
         _camManager->activate("movingCam", _moveCam, _cam);
@@ -212,9 +219,6 @@ void GamePlayController::update(float dt){
 
     }
     
-    //Vec2 cPos = _character->getNodePosition();
-    //_cam->setPosition(Vec3(cPos.x,cPos.y,0));
-    //_cam->update();
     
     // Animate
     
