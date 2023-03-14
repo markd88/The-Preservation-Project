@@ -36,7 +36,6 @@ public:
     // add one guard
     void add_this(Vec2 gPos, Scene s){
         Guard _guard = std::make_unique<GuardController>(gPos);
-        _guard->updatePosition(gPos);
         _guard->addChildTo(s);
         _guardSet.push_back(std::move(_guard));
     }

@@ -110,16 +110,17 @@ private:
     void generateSecondaryWorld(std::unique_ptr<TilemapController>& tilemap);
     
     /** Generates artifacts and guards in the primary world. */
-    void addArtifact(float w, float h) {
+    void addArtifact(int w, int h, bool isResource) {
         Vec2 aPos = Vec2(w,h);
-        _artifactSet->add_this(aPos, _scene);
+        _artifactSet->add_this(aPos, _scene, isResource);
     }
-    void addGuard(float w, float h) {
+    void addGuard(int w, int h) {
         Vec2 gPos = Vec2(w,h);
         _guardSet->add_this(gPos, _scene);
     }
     void generateArtifact();
     void generateGuard();
+    void secondaryGuard();
 
 #pragma mark Helpers
 private:

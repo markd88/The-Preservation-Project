@@ -40,8 +40,8 @@ public:
     }
     
     GuardController(Vec2 position) {
-        _model = std::make_unique<GuardModel>(position, Size(150, 100), Color4::RED);
-        _view = std::make_unique<GuardView>(position, Size(150, 100), Color4::RED);
+        _model = std::make_unique<GuardModel>(position, Size(100, 100), Color4::RED);
+        _view = std::make_unique<GuardView>(position, Size(100, 100), Color4::RED);
     }
 
 #pragma mark Update Methods

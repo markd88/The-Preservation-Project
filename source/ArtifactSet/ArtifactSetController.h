@@ -34,9 +34,8 @@ private:
 #pragma mark Update Methods
 public:
     
-    void add_this(Vec2 aPos, Scene s){
-        Artifact _artifact = std::make_unique<ArtifactController>(aPos);
-        _artifact->updatePosition(aPos);
+    void add_this(Vec2 aPos, Scene s, bool isResource){
+        Artifact _artifact = std::make_unique<ArtifactController>(aPos, isResource);
         _artifact->addChildTo(s);
         _artifactSet.push_back(std::move(_artifact));
     }

@@ -121,6 +121,7 @@ void GamePlayController::update(float dt){
         if (_activeMap == "tileMap1") {
             _tilemap1->removeChildFrom(_scene);
             _tilemap2->addChildTo(_scene);
+            secondaryGuard();
             _activeMap = "tileMap2";
         }
         else {
@@ -236,51 +237,51 @@ void GamePlayController::update(float dt){
     
     /** Generates the first world. */
     void GamePlayController::generatePrimaryWorld(std::unique_ptr<TilemapController> &_tilemap) {
-        _tilemap->updateDimensions(Vec2(160, 88));
+        _tilemap->updateDimensions(Vec2(144, 84));
         _tilemap->updateColor(Color4::WHITE);
         _tilemap->updateTileSize(Size(8, 8));
         _tilemap->updatePosition(_scene->getSize()/2);
         // walls
         Color4 tileColor = Color4::BLACK;
         bool is_obs = true;
-        for(int i = 0; i <= 35; i++) {
-            _tilemap->addTile(i, 26, tileColor, is_obs);
+        for(int i = 0; i <= 32; i++) {
+            _tilemap->addTile(i, 24, tileColor, is_obs);
         }
-        for(int j = 0; j <= 13; j++) {
-            _tilemap->addTile(22, j, tileColor, is_obs);
+        for(int j = 0; j <= 12; j++) {
+            _tilemap->addTile(20, j, tileColor, is_obs);
         }
-        for(int j = 0; j <= 37; j++) {
-            _tilemap->addTile(55, j, tileColor, is_obs);
+        for(int j = 0; j <= 34; j++) {
+            _tilemap->addTile(50, j, tileColor, is_obs);
         }
-        for(int i = 0; i <= 35; i++) {
-            _tilemap->addTile(i, 52, tileColor, is_obs);
+        for(int i = 0; i <= 32; i++) {
+            _tilemap->addTile(i, 48, tileColor, is_obs);
         }
-        for(int j = 53; j <= 73; j++) {
-            _tilemap->addTile(35, j, tileColor, is_obs);
+        for(int j = 48; j <= 66; j++) {
+            _tilemap->addTile(32, j, tileColor, is_obs);
         }
-        for(int i = 55; i <= 93; i++) {
-            _tilemap->addTile(i, 37, tileColor, is_obs);
+        for(int i = 50; i <= 84; i++) {
+            _tilemap->addTile(i, 34, tileColor, is_obs);
         }
-        for(int j = 37; j <= 51; j++) {
-            _tilemap->addTile(93, j, tileColor, is_obs);
+        for(int j = 34; j <= 46; j++) {
+            _tilemap->addTile(84, j, tileColor, is_obs);
         }
-        for(int i = 93; i <= 113; i++) {
-            _tilemap->addTile(i, 51, tileColor, is_obs);
+        for(int i = 84; i <= 102; i++) {
+            _tilemap->addTile(i, 46, tileColor, is_obs);
         }
-        for(int i = 93; i <= 126; i++) {
-            _tilemap->addTile(i, 20, tileColor, is_obs);
+        for(int i = 85; i <= 115; i++) {
+            _tilemap->addTile(i, 18, tileColor, is_obs);
         }
-        for(int j = 0; j <= 20; j++) {
-            _tilemap->addTile(126, j, tileColor, is_obs);
+        for(int j = 0; j <= 18; j++) {
+            _tilemap->addTile(115, j, tileColor, is_obs);
         }
-        for(int j = 53; j <= 75; j++) {
-            _tilemap->addTile(132, j, tileColor, is_obs);
+        for(int j = 48; j <= 68; j++) {
+            _tilemap->addTile(110, j, tileColor, is_obs);
         }
-        for(int i = 132; i <= 142; i++) {
-            _tilemap->addTile(i, 75, tileColor, is_obs);
+        for(int i = 110; i <= 128; i++) {
+            _tilemap->addTile(i, 68, tileColor, is_obs);
         }
-        for(int j = 75; j <= 88; j++) {
-            _tilemap->addTile(142, j, tileColor, is_obs);
+        for(int j = 68; j <= 84; j++) {
+            _tilemap->addTile(128, j, tileColor, is_obs);
         }
     }
     
@@ -332,22 +333,56 @@ void GamePlayController::update(float dt){
         for(int j = 26; j <= 42; j++) {
             _tilemap->addTile(122, j, tileColor, is_obs);
         }
+        for(int i = 114; i <= 144; i++) {
+            _tilemap->addTile(i, 68, tileColor, is_obs);
+        }
         // lower blocks
+        for(int j = 0; j <= 28; j++) {
+            _tilemap->addTile(82, j, tileColor, is_obs);
+        }
+        for(int i = 82; i <= 112; i++) {
+            _tilemap->addTile(i, 18, tileColor, is_obs);
+        }
+        for(int j = 0; j <= 18; j++) {
+            _tilemap->addTile(112, j, tileColor, is_obs);
+        }
+        for(int i = 126; i <= 144; i++) {
+            _tilemap->addTile(i, 18, tileColor, is_obs);
+        }
+        for(int j = 0; j <= 18; j++) {
+            _tilemap->addTile(126, j, tileColor, is_obs);
+        }
+        _guardSet = make_unique<GuardSetController>();
+        secondaryGuard();
     }
 
     void GamePlayController::generateArtifact() {
-        addArtifact(30, 400);
+        bool isResource = false;
+        addArtifact(90, 375, isResource);
+        addArtifact(650, 250, isResource);
+        addArtifact(1000, 530, isResource);
+        addArtifact(750, 0, isResource);
+        
+        // switching hourglass
+        isResource = true;
+        addArtifact(0, 175, isResource);
+        addArtifact(280, 0, isResource);
+        addArtifact(550, 0, isResource);
+        addArtifact(850, 530, isResource);
     }
     void GamePlayController::generateGuard() {
-        addGuard(40, 490);
+        addGuard(90, 500);
+        addGuard(450, 250);
+        addGuard(500, 100);
+        addGuard(630, 500);
+        addGuard(850, 380);
+        addGuard(970, 75);
     }
-    // upper guard
-    //        for (int i = 50; i <= 65; i++) {
-    //            for(int j = 20; j <= 25; j++) {
-    //                _tilemap->addTile(i, j, tileColor, is_obs);
-    //            }
-    //        }
-    
+    void GamePlayController::secondaryGuard() {
+        addGuard(350, 350);
+        addGuard(720, 320);
+    }
+        
     
 #pragma mark -
 #pragma mark Helpers
