@@ -34,14 +34,14 @@ public:
      * @param size      The width and height of a tile
      * @param color     The tile color
      */
-    GuardController(Vec2 position, Size size, Color4 color, bool isStatic = true) {
+    GuardController(Vec2 position, Size size, Color4 color, const std::shared_ptr<cugl::AssetManager>& assets) {
         _model = std::make_unique<GuardModel>(position, size, color);
-        _view = std::make_unique<GuardView>(position, size, color);
+        _view = std::make_unique<GuardView>(position, size, color, assets);
     }
     
-    GuardController(Vec2 position) {
+    GuardController(Vec2 position, const std::shared_ptr<cugl::AssetManager>& assets) {
         _model = std::make_unique<GuardModel>(position, Size(100, 100), Color4::RED);
-        _view = std::make_unique<GuardView>(position, Size(100, 100), Color4::RED);
+        _view = std::make_unique<GuardView>(position, Size(100, 100), Color4::RED, assets);
     }
 
 #pragma mark Update Methods

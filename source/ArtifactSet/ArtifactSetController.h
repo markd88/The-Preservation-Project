@@ -22,22 +22,45 @@ class ArtifactSetController {
 private:
     /** Tilemape is a 2D vector list of tiles */
     typedef std::unique_ptr<ArtifactController> Artifact;
-    Artifact _artifact;
+//    Artifact _artifact;
     typedef std::vector<Artifact> ArtifactSet;
     ArtifactSet _artifactSet;
     typedef std::shared_ptr<cugl::Scene2> Scene;
     
-//#pragma mark Methods
-//public:
-//    ArtifactSetController();
+#pragma mark Methods
+public:
+    ArtifactSetController(const std::shared_ptr<cugl::AssetManager>& assets) {
+        ArtifactSet _artifactSet;
+    };
 
 #pragma mark Update Methods
 public:
     
-    void add_this(Vec2 aPos, Scene s, bool isResource){
-        Artifact _artifact = std::make_unique<ArtifactController>(aPos, isResource);
+    void add_this(Vec2 aPos, Scene s, const std::shared_ptr<cugl::AssetManager>& assets, bool isResource){
+        Artifact _artifact = std::make_unique<ArtifactController>(aPos, assets, isResource);
         _artifact->addChildTo(s);
         _artifactSet.push_back(std::move(_artifact));
+    }
+    
+    
+    void addChildTo (Scene s) {
+        unsigned int vecSize = _artifactSet.size();
+        // run for loop from 0 to vecSize
+        for(unsigned int i = 0; i < vecSize; i++) {
+            _artifactSet[i]->addChildTo(s);
+        }
+    }
+    
+    void removeChildFrom (Scene s) {
+        unsigned int vecSize = _artifactSet.size();
+        // run for loop from 0 to vecSize
+        for(unsigned int i = 0; i < vecSize; i++) {
+            _artifactSet[i]->removeChildFrom(s);
+        }
+    }
+    
+    void clearSet () {
+        _artifactSet.clear();
     }
 };
 

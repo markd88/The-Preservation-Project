@@ -28,17 +28,39 @@ private:
     typedef std::shared_ptr<cugl::Scene2> Scene;
     
 
-//#pragma mark Main Methods
-//public:
-//    GuardSetController();
+#pragma mark Main Methods
+public:
+    GuardSetController(const std::shared_ptr<cugl::AssetManager>& assets) {
+        std::vector<Guard> _guardSet;
+    };
     
 #pragma mark Update Methods
 public:
     // add one guard
-    void add_this(Vec2 gPos, Scene s){
-        Guard _guard = std::make_unique<GuardController>(gPos);
+    void add_this(Vec2 gPos, Scene s, const std::shared_ptr<cugl::AssetManager>& assets){
+        Guard _guard = std::make_unique<GuardController>(gPos, assets);
         _guard->addChildTo(s);
         _guardSet.push_back(std::move(_guard));
+    }
+    
+    void addChildTo (Scene s) {
+        unsigned int vecSize = _guardSet.size();
+        // run for loop from 0 to vecSize
+        for(unsigned int i = 0; i < vecSize; i++) {
+            _guardSet[i]->addChildTo(s);
+        }
+    }
+    
+    void removeChildFrom (Scene s) {
+        unsigned int vecSize = _guardSet.size();
+        // run for loop from 0 to vecSize
+        for(unsigned int i = 0; i < vecSize; i++) {
+            _guardSet[i]->removeChildFrom(s);
+        }
+    }
+    
+    void clearSet () {
+        _guardSet.clear();
     }
     
 //    void addChildTo(Scene2 s) {
