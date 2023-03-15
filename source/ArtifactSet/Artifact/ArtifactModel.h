@@ -38,7 +38,7 @@ public:
         setPosition(position);
         setSize(size);
         setColor(color);
-        _isResource = isResource;
+        setType(isResource);
     }
     
 #pragma mark Setters
@@ -75,9 +75,20 @@ public:
         _color = color;
     }
     
+
     
     bool isResource(){
         return _isResource;
+    }
+
+    /**
+     *  Sets the type of this item, artifact or resource.
+     *
+     *  @param isResource The type of the item
+     */
+    void setType(bool isResource) {
+        _isResource = isResource;
+
     }
 };
 

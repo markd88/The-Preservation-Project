@@ -35,19 +35,19 @@ public:
      * @param color     The tile color
      */
     
-    ArtifactController(Vec2 position, Size size, Color4 color, bool isResource = false) {
+
+    ArtifactController(Vec2 position, Size size, Color4 color, const std::shared_ptr<cugl::AssetManager>& assets, bool isResource = false) {
         _model = std::make_unique<ArtifactModel>(position, size, color, isResource);
-        _view = std::make_unique<ArtifactView>(position, size, color);
+        _view = std::make_unique<ArtifactView>(position, size, color, assets, isResource);
     }
     
-    ArtifactController(Vec2 position, bool isResource = false) {
-        _model = std::make_unique<ArtifactModel>(position, Size(50, 50), Color4::RED, isResource);
-        _view = std::make_unique<ArtifactView>(position, Size(50, 50), Color4::RED);
+    ArtifactController(Vec2 position, const std::shared_ptr<cugl::AssetManager>& assets, bool isResource) {
+        Color4 color = Color4::ORANGE;
+        if (isResource) { color = Color4::CYAN; }
+        _model = std::make_unique<ArtifactModel>(position, Size(40, 40), color, isResource);
+        _view = std::make_unique<ArtifactView>(position, Size(40, 40), color, assets, isResource);
+
     }
-//    ArtifactController(Vec2 position,  bool isResource = true) {
-//        _model = std::make_unique<ArtifactModel>(position, Size(15, 15), Color4::CYAN);
-//        _view = std::make_unique<ArtifactView>(position, Size(15, 15), Color4::CYAN);
-//    }
 
 #pragma mark Update Methods
 public:

@@ -34,12 +34,20 @@ GamePlayController::GamePlayController(const Size displaySize, std::shared_ptr<c
     generatePrimaryWorld(_tilemap1);
     generateSecondaryWorld(_tilemap2);
     
-    _artifactSet = std::make_unique<ArtifactSetController>();
+    _artifactSet = std::make_unique<ArtifactSetController>(_assets);
+    _resourceSet = std::make_unique<ArtifactSetController>(_assets);
     generateArtifact();
-    _guardSet = std::make_unique<GuardSetController>();
-    generateGuard();
+    generateResource();
     
-    Vec2 start = Vec2(_scene->getSize().width * 0.5, _scene->getSize().height * 0.15);
+
+    _guardSet1 = std::make_unique<GuardSetController>(_assets);
+    _guardSet2 = std::make_unique<GuardSetController>(_assets);
+    generateGuard();
+    secondaryGuard();
+    
+//    Vec2 start = Vec2(_scene->getSize().width * 0.85, _scene->getSize().height * 0.15);
+    Vec2 start = Vec2(1,1);
+
     _character = make_unique<CharacterController>(start, _actions, _assets);
     
     // init the button
@@ -114,14 +122,23 @@ void GamePlayController::init(){
     _activeMap = "tileMap1";
     _template = 0;
     
-    Vec2 start = Vec2(_scene->getSize().width * 0.85, _scene->getSize().height * 0.15);
+    Vec2 start = Vec2(1,1);
     _character = make_unique<CharacterController>(start, _actions, _assets);
     _character->addChildTo(_scene);
     
-    _artifactSet = make_unique<ArtifactSetController>();
+    _artifactSet = make_unique<ArtifactSetController>(_assets);
+    _resourceSet = make_unique<ArtifactSetController>(_assets);
+    _artifactSet->clearSet();
+    _resourceSet->clearSet();
     generateArtifact();
-    _guardSet = make_unique<GuardSetController>();
+    generateResource();
+    _guardSet1 = make_unique<GuardSetController>(_assets);
+    _guardSet2 = make_unique<GuardSetController>(_assets);
+    _guardSet1->clearSet();
+    _guardSet2->clearSet();
     generateGuard();
+    secondaryGuard();
+    _guardSet2->removeChildFrom(_scene);
     
     _path = make_unique<PathController>();
     path_trace = {};
@@ -179,14 +196,27 @@ void GamePlayController::update(float dt){
     }
     
     // if collide with guard
-    for(int i=0; i<_guardSet->_guardSet.size(); i++){
-        if(_character->contains(_guardSet->_guardSet[i]->getNodePosition())){
-            _scene->addChild(_fail_layer);
-            
-            _fail_layer->setPosition(_cam->getPosition());
-            break;
+    if(_activeMap == "tileMap1"){
+        for(int i=0; i<_guardSet1->_guardSet.size(); i++){
+            if(_character->contains(_guardSet1->_guardSet[i]->getNodePosition())){
+                _scene->addChild(_fail_layer);
+                
+                _fail_layer->setPosition(_cam->getPosition());
+                break;
+            }
         }
     }
+    else{
+        for(int i=0; i<_guardSet2->_guardSet.size(); i++){
+            if(_character->contains(_guardSet2->_guardSet[i]->getNodePosition())){
+                _scene->addChild(_fail_layer);
+                
+                _fail_layer->setPosition(_cam->getPosition());
+                break;
+            }
+        }
+    }
+    
     
     _input->update(dt);
     // if pinch, switch world
@@ -224,7 +254,10 @@ void GamePlayController::update(float dt){
         if (_activeMap == "tileMap1") {
             _tilemap1->removeChildFrom(_scene);
             _tilemap2->addChildTo(_scene);
-            secondaryGuard();
+            _guardSet1->removeChildFrom(_scene);
+            _guardSet2->addChildTo(_scene);
+            _artifactSet->removeChildFrom(_scene);
+            _resourceSet->removeChildFrom(_scene);
             _activeMap = "tileMap2";
             
             // when move to the second world, minus 1 visually
@@ -233,8 +266,10 @@ void GamePlayController::update(float dt){
         else {
             _tilemap2->removeChildFrom(_scene);
             _tilemap1->addChildTo(_scene);
-            generateArtifact();
-            generateGuard();
+            _guardSet2->removeChildFrom(_scene);
+            _guardSet1->addChildTo(_scene);
+            _artifactSet->addChildTo(_scene);
+            _resourceSet->addChildTo(_scene);
             _activeMap = "tileMap1";
             
             // when move to the second world, minus 1 in model
@@ -465,8 +500,6 @@ void GamePlayController::update(float dt){
         for(int j = 0; j <= 18; j++) {
             _tilemap->addTile(126, j, tileColor, is_obs);
         }
-        _guardSet = make_unique<GuardSetController>();
-        secondaryGuard();
     }
 
     void GamePlayController::generateArtifact() {
@@ -477,27 +510,27 @@ void GamePlayController::update(float dt){
         addArtifact(650, 250, isResource);
         addArtifact(1000, 530, isResource);
         addArtifact(750, 0, isResource);
-        
+    }
+    void GamePlayController::generateResource() {
         // switching hourglass
-        isResource = true;
+        bool isResource = true;
         addArtifact(0, 175, isResource);
         addArtifact(280, 0, isResource);
         addArtifact(550, 0, isResource);
         addArtifact(850, 530, isResource);
     }
+
     void GamePlayController::generateGuard() {
-        //_guardSet->_guardSet = {};
-        
-        addGuard(90, 500);
-        addGuard(450, 250);
-        addGuard(500, 100);
-        addGuard(630, 500);
-        addGuard(850, 380);
-        addGuard(970, 75);
+        addGuard1(90, 500);
+        addGuard1(450, 250);
+        addGuard1(500, 100);
+        addGuard1(630, 500);
+        addGuard1(850, 380);
+        addGuard1(970, 75);
     }
     void GamePlayController::secondaryGuard() {
-        addGuard(350, 350);
-        addGuard(720, 320);
+        addGuard2(350, 350);
+        addGuard2(720, 320);
     }
         
     

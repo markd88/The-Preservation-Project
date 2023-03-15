@@ -49,10 +49,12 @@ public:
     std::unique_ptr<TilemapController> _tilemap2;
     
 //    std::unique_ptr<GuardController> _guard;
-    std::unique_ptr<GuardSetController> _guardSet;
+    std::unique_ptr<GuardSetController> _guardSet1;
+    std::unique_ptr<GuardSetController> _guardSet2;
     
 //    std::unique_ptr<ArtifactController> _artifact;
     std::unique_ptr<ArtifactSetController> _artifactSet;
+    std::unique_ptr<ArtifactSetController> _resourceSet;
     
     std::unique_ptr<PathController> _path;
     std::shared_ptr<InputController> _input = InputController::getInstance();
@@ -118,13 +120,18 @@ private:
     /** Generates artifacts and guards in the primary world. */
     void addArtifact(int w, int h, bool isResource) {
         Vec2 aPos = Vec2(w,h);
-        _artifactSet->add_this(aPos, _scene, isResource);
+        _artifactSet->add_this(aPos, _scene, _assets, isResource);
     }
-    void addGuard(int w, int h) {
+    void addGuard1(int w, int h) {
         Vec2 gPos = Vec2(w,h);
-        _guardSet->add_this(gPos, _scene);
+        _guardSet1->add_this(gPos, _scene, _assets);
+    }
+    void addGuard2(int w, int h) {
+        Vec2 gPos = Vec2(w,h);
+        _guardSet2->add_this(gPos, _scene, _assets);
     }
     void generateArtifact();
+    void generateResource();
     void generateGuard();
     void secondaryGuard();
 
