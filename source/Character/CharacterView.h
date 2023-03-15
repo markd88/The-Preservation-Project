@@ -41,7 +41,7 @@ public:
 
         _node->setRelativeColor(false);
         _node->setVisible(true);
-        _node->setAnchor(Vec2::ANCHOR_CENTER);
+        _node->setAnchor(Vec2(0.5, 0.25));
         _actions = actions;
 
         // initialize state
