@@ -39,6 +39,7 @@ GamePlayController::GamePlayController(const Size displaySize, std::shared_ptr<c
     generateArtifact();
     generateResource();
     
+
     _guardSet1 = std::make_unique<GuardSetController>(_assets);
     _guardSet2 = std::make_unique<GuardSetController>(_assets);
     generateGuard();
@@ -46,6 +47,7 @@ GamePlayController::GamePlayController(const Size displaySize, std::shared_ptr<c
     
 //    Vec2 start = Vec2(_scene->getSize().width * 0.85, _scene->getSize().height * 0.15);
     Vec2 start = Vec2(1,1);
+
     _character = make_unique<CharacterController>(start, _actions, _assets);
     
     // init the button
@@ -59,19 +61,43 @@ GamePlayController::GamePlayController(const Size displaySize, std::shared_ptr<c
             this->init();
         }
     });
-    
     _button->activate();
+    
+    // load label for n_res and n_art
+    _res_label  = std::dynamic_pointer_cast<scene2::Label>(assets->get<scene2::SceneNode>("button_resources"));
+    
+    _art_label  = std::dynamic_pointer_cast<scene2::Label>(assets->get<scene2::SceneNode>("button_progress"));
     
     // add Win/lose panel
     _complete_layer = _assets->get<scene2::SceneNode>("complete");
+    auto complete_again_button = std::dynamic_pointer_cast<scene2::Button>(assets->get<scene2::SceneNode>("complete_again"));
+    
+    complete_again_button->addListener([this](const std::string& name, bool down) {
+        if (down) {
+            this->init();
+        }
+    });
+    
+    complete_again_button->activate();
     
     _fail_layer = _assets->get<scene2::SceneNode>("fail");
+    auto fail_again_button = std::dynamic_pointer_cast<scene2::Button>(assets->get<scene2::SceneNode>("fail_again"));
+    
+    fail_again_button->addListener([this](const std::string& name, bool down) {
+        if (down) {
+            this->init();
+        }
+    });
+    
+    fail_again_button->activate();
+    
+    
     
     // add switch indicator
-//    _switchNode = scene2::SceneNode::alloc();
     _switchNode = _assets->get<scene2::SceneNode>("button_switch");
 
     init();
+    
     
 //    _scene->addChild(_complete_layer);
 //    _complete_layer->setPosition(_cam->getPosition());
@@ -127,20 +153,79 @@ void GamePlayController::init(){
     // to make the button pos fixed relative to screen
     _button_layer->setPosition(_cam->getPosition());
 
+    
+    // reload initial label for n_res and n_art
+    _res_label->setText("0");
+    _art_label->setText("0/4");
 }
 
 
 void GamePlayController::update(float dt){
+    if(_fail_layer->getScene()!=nullptr || _complete_layer->getScene()!=nullptr){
+        return;
+    }
     static auto last_time = std::chrono::steady_clock::now();
     // Calculate the time elapsed since the last call to pinch
     auto now = std::chrono::steady_clock::now();
     auto elapsed = std::chrono::duration_cast<std::chrono::seconds>(now - last_time);
     
+    // if collect a resource
+    for(int i=0; i<_artifactSet->_artifactSet.size(); i++){
+        // detect collision
+        if(_character->contains(_artifactSet->_artifactSet[i]->getNodePosition())){
+            // if close, should collect it
+            
+            // if resource
+            if(_artifactSet->_artifactSet[i]->isResource()){
+                _character->addRes();
+                // update panel
+                _res_label->setText(cugl::strtool::to_string(_character->getNumRes()));
+                
+            }
+            // if artifact
+            else{
+                _character->addArt();
+                _art_label->setText(cugl::strtool::to_string(_character->getNumArt()) + "/4");
+            }
+
+            // make the artifact disappear and remove from set
+            _artifactSet->remove_this(i, _scene);
+            break;
+        }
+        
+    }
+    
+    // if collide with guard
+    if(_activeMap == "tileMap1"){
+        for(int i=0; i<_guardSet1->_guardSet.size(); i++){
+            if(_character->contains(_guardSet1->_guardSet[i]->getNodePosition())){
+                _scene->addChild(_fail_layer);
+                
+                _fail_layer->setPosition(_cam->getPosition());
+                break;
+            }
+        }
+    }
+    else{
+        for(int i=0; i<_guardSet2->_guardSet.size(); i++){
+            if(_character->contains(_guardSet2->_guardSet[i]->getNodePosition())){
+                _scene->addChild(_fail_layer);
+                
+                _fail_layer->setPosition(_cam->getPosition());
+                break;
+            }
+        }
+    }
+    
+    
     _input->update(dt);
     // if pinch, switch world
-    bool can_switch = ((_activeMap == "tileMap1" && _tilemap2->inObstacle(_character->getPosition())) || (_activeMap == "tileMap2" && _tilemap1->inObstacle(_character->getPosition())));
+    bool cant_switch = ((_activeMap == "tileMap1" && _tilemap2->inObstacle(_character->getPosition())) || (_activeMap == "tileMap2" && _tilemap1->inObstacle(_character->getPosition())));
     
-    if(can_switch){
+
+    cant_switch = cant_switch || (_character->getNumRes() == 0);
+    
+    if(cant_switch){
         
         CULog("can switch.... camera position is %s", _cam->getPosition().toString().c_str());
         
@@ -148,17 +233,8 @@ void GamePlayController::update(float dt){
         float scale = 1024/size.width;
         size *= scale;
 
-        std::shared_ptr<Texture> switchTexture = _assets->get<Texture>("switch");
-//        _switchNode->setVisible(false);
-//        _switchNode = scene2::PolygonNode::allocWithTexture(switchTexture);
-//        _switchNode->setScale(0.8f);
-        
-//        _switchNode->setAnchor(Vec2::ANCHOR_CENTER);
-//        _switchNode->setPosition(_cam->getPosition());
-//        _switchNode->setPosition(size.width/2,size.height/2);
-//        _switchNode->setVisible(true);
-//        _scene->addChild(_switchNode);
-        _switchNode->setColor(Color4::GREEN);
+        _switchNode->setColor(Color4::RED);
+
     }
     else{
 //        _character->updateColor(Color4::BLUE);
@@ -167,23 +243,13 @@ void GamePlayController::update(float dt){
         Size  size  = Size(50, 50);
         float scale = 1024/size.width;
         size *= scale;
-
-        std::shared_ptr<Texture> switchTexture = _assets->get<Texture>("switch-not");
-//        _switchNode->setVisible(false);
-//        _switchNode = scene2::PolygonNode::allocWithTexture(switchTexture);
-//        _switchNode->setScale(0.8f);
-        
-//        _switchNode->setAnchor(Vec2::ANCHOR_CENTER);
-//        _switchNode->setPosition(_cam->getPosition());
-//        _switchNode->setPosition(size.width/2,size.height/2);
-//        _switchNode->setVisible(true);
-        _switchNode->setColor(Color4::BLACK);
-//        _scene->addChild(_switchNode);
+        _switchNode->setColor(Color4::GREEN);
     }
-    if(elapsed.count() >= 0.5 && _input->getPinchDelta() != 0 && !can_switch){
+    if(elapsed.count() >= 0.5 && _input->getPinchDelta() != 0 && !cant_switch){
         // if the character's position on the other world is obstacle, disable the switch
         last_time = now;
         // remove and add the child back so that the child is always on the top layer
+        
         _character->removeChildFrom(_scene);
         if (_activeMap == "tileMap1") {
             _tilemap1->removeChildFrom(_scene);
@@ -193,6 +259,9 @@ void GamePlayController::update(float dt){
             _artifactSet->removeChildFrom(_scene);
             _resourceSet->removeChildFrom(_scene);
             _activeMap = "tileMap2";
+            
+            // when move to the second world, minus 1 visually
+            _res_label->setText(cugl::strtool::to_string(_character->getNumRes()-1));
         }
         else {
             _tilemap2->removeChildFrom(_scene);
@@ -202,6 +271,9 @@ void GamePlayController::update(float dt){
             _artifactSet->addChildTo(_scene);
             _resourceSet->addChildTo(_scene);
             _activeMap = "tileMap1";
+            
+            // when move to the second world, minus 1 in model
+            _character->useRes();
         }
         _character->addChildTo(_scene);
         _scene->removeChild(_button_layer);
@@ -431,6 +503,8 @@ void GamePlayController::update(float dt){
     }
 
     void GamePlayController::generateArtifact() {
+        //_artifactSet->_artifactSet = {};
+        
         bool isResource = false;
         addArtifact(90, 375, isResource);
         addArtifact(650, 250, isResource);

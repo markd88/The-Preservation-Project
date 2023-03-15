@@ -35,6 +35,7 @@ public:
      * @param color     The tile color
      */
     
+
     ArtifactController(Vec2 position, Size size, Color4 color, const std::shared_ptr<cugl::AssetManager>& assets, bool isResource = false) {
         _model = std::make_unique<ArtifactModel>(position, size, color, isResource);
         _view = std::make_unique<ArtifactView>(position, size, color, assets, isResource);
@@ -45,6 +46,7 @@ public:
         if (isResource) { color = Color4::CYAN; }
         _model = std::make_unique<ArtifactModel>(position, Size(40, 40), color, isResource);
         _view = std::make_unique<ArtifactView>(position, Size(40, 40), color, assets, isResource);
+
     }
 
 #pragma mark Update Methods
@@ -82,6 +84,10 @@ public:
     
     Vec2 getNodePosition(){
         return _view->nodePos();
+    }
+    
+    bool isResource(){
+        return _model->isResource();
     }
 
     

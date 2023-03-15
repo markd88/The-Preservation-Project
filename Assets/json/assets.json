@@ -278,7 +278,7 @@
                      },
                      "data"   : {
                          "font"       : "sans",
-                         "text"       : "0/5",
+                         "text"       : "0/4",
                          "foreground" : [0, 0, 0, 255],
                          "anchor"     : [0.5, 0.5],
                          "halign"     : "center",

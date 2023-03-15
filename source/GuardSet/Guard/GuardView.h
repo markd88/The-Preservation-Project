@@ -35,7 +35,7 @@ public:
         
 //        setColor(color);
         setPosition(position);
-        setSize(size);
+        // setSize(size);
     }
     
     ~GuardView(){

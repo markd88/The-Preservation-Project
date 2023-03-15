@@ -75,6 +75,12 @@ public:
         _color = color;
     }
     
+
+    
+    bool isResource(){
+        return _isResource;
+    }
+
     /**
      *  Sets the type of this item, artifact or resource.
      *
@@ -82,6 +88,7 @@ public:
      */
     void setType(bool isResource) {
         _isResource = isResource;
+
     }
 };
 
