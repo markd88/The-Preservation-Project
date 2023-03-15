@@ -172,7 +172,7 @@ void GamePlayController::update(float dt){
     // if collect a resource
     for(int i=0; i<_artifactSet->_artifactSet.size(); i++){
         // detect collision
-        if(_character->contains(_artifactSet->_artifactSet[i]->getNodePosition())){
+        if(_character->contains(_artifactSet->_artifactSet[i]->getNodePosition()) && _activeMap == "tileMap1"){
             // if close, should collect it
             
             // if resource
