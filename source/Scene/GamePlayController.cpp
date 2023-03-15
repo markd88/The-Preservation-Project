@@ -168,55 +168,7 @@ void GamePlayController::update(float dt){
     // Calculate the time elapsed since the last call to pinch
     auto now = std::chrono::steady_clock::now();
     auto elapsed = std::chrono::duration_cast<std::chrono::seconds>(now - last_time);
-    
-    // if collect a resource
-    for(int i=0; i<_artifactSet->_artifactSet.size(); i++){
-        // detect collision
-        if(_character->contains(_artifactSet->_artifactSet[i]->getNodePosition())){
-            // if close, should collect it
-            
-            // if resource
-            if(_artifactSet->_artifactSet[i]->isResource()){
-                _character->addRes();
-                // update panel
-                _res_label->setText(cugl::strtool::to_string(_character->getNumRes()));
-                
-            }
-            // if artifact
-            else{
-                _character->addArt();
-                _art_label->setText(cugl::strtool::to_string(_character->getNumArt()) + "/4");
-            }
-
-            // make the artifact disappear and remove from set
-            _artifactSet->remove_this(i, _scene);
-            break;
-        }
-        
-    }
-    
-    // if collide with guard
-    if(_activeMap == "tileMap1"){
-        for(int i=0; i<_guardSet1->_guardSet.size(); i++){
-            if(_character->contains(_guardSet1->_guardSet[i]->getNodePosition())){
-                _scene->addChild(_fail_layer);
-                
-                _fail_layer->setPosition(_cam->getPosition());
-                break;
-            }
-        }
-    }
-    else{
-        for(int i=0; i<_guardSet2->_guardSet.size(); i++){
-            if(_character->contains(_guardSet2->_guardSet[i]->getNodePosition())){
-                _scene->addChild(_fail_layer);
-                
-                _fail_layer->setPosition(_cam->getPosition());
-                break;
-            }
-        }
-    }
-    
+       
     
     _input->update(dt);
     // if pinch, switch world
@@ -350,8 +302,8 @@ void GamePlayController::update(float dt){
         path_trace = _path->getPath();
         _moveTo = cugl::scene2::MoveTo::alloc();
         _moveCam = CameraMoveTo::alloc();
-        _moveCam->setDuration(.1);
-        _moveTo->setDuration(.1);
+        _moveCam->setDuration(.08);
+        _moveTo->setDuration(.08);
         _path->clearPath(_scene);
         
     }
@@ -365,6 +317,65 @@ void GamePlayController::update(float dt){
         path_trace.erase(path_trace.begin());
 
     }
+    
+    // if collect a resource
+    if(_activeMap == "tileMap1"){
+        for(int i=0; i<_artifactSet->_artifactSet.size(); i++){
+            // detect collision
+            if(_character->contains(_artifactSet->_artifactSet[i]->getNodePosition())){
+                // if close, should collect it
+                
+                // if resource
+                if(_artifactSet->_artifactSet[i]->isResource()){
+                    _character->addRes();
+                    // update panel
+                    _res_label->setText(cugl::strtool::to_string(_character->getNumRes()));
+                    
+                }
+                // if artifact
+                else{
+                    _character->addArt();
+                    _art_label->setText(cugl::strtool::to_string(_character->getNumArt()) + "/4");
+                    
+                }
+
+                // make the artifact disappear and remove from set
+                _artifactSet->remove_this(i, _scene);
+                if(_character->getNumArt() == 4){
+                    _scene->addChild(_complete_layer);
+                    
+                    _complete_layer->setPosition(_cam->getPosition());
+                }
+                
+                break;
+            }
+            
+        }
+    }
+    
+    
+    // if collide with guard
+    if(_activeMap == "tileMap1"){
+        for(int i=0; i<_guardSet1->_guardSet.size(); i++){
+            if(_character->contains(_guardSet1->_guardSet[i]->getNodePosition())){
+                _scene->addChild(_fail_layer);
+                
+                _fail_layer->setPosition(_cam->getPosition());
+                break;
+            }
+        }
+    }
+    else{
+        for(int i=0; i<_guardSet2->_guardSet.size(); i++){
+            if(_character->contains(_guardSet2->_guardSet[i]->getNodePosition())){
+                _scene->addChild(_fail_layer);
+                
+                _fail_layer->setPosition(_cam->getPosition());
+                break;
+            }
+        }
+    }
+    
     
     
     // Animate
