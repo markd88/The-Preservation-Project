@@ -8,6 +8,8 @@ using namespace cugl;
 #define PHYSICS_SCALE 50
 /** This is adjusted by screen aspect ratio to get the height */
 #define SCENE_WIDTH 1024
+#define DURATION 1.0f
+#define ACT_KEY  "current"
 
 GamePlayController::GamePlayController(const Size displaySize, std::shared_ptr<cugl::AssetManager>& assets ):_scene(cugl::Scene2::alloc(displaySize)) {
     // Initialize the assetManager
@@ -49,7 +51,24 @@ GamePlayController::GamePlayController(const Size displaySize, std::shared_ptr<c
     Vec2 start = Vec2(1,1);
 
     _character = make_unique<CharacterController>(start, _actions, _assets);
-    
+    // Forward character movement
+    const int span = 8;
+    std::vector<int> forward;
+    for(int ii = 1; ii < span; ii++) {
+        forward.push_back(ii);
+    }
+    // Loop back to beginning
+    forward.push_back(0);
+    _characterRight = cugl::scene2::Animate::alloc(forward, DURATION);
+
+    // Reverse charater movement
+    std::vector<int> reverse;
+    for(int ii = 1; ii <= span; ii++) {
+        reverse.push_back(span-ii);
+    }
+
+    _characterLeft = cugl::scene2::Animate::alloc(forward, DURATION);
+
     // init the button
     _button_layer = _assets->get<scene2::SceneNode>("button");
     _button_layer->setContentSize(dimen);
@@ -125,6 +144,23 @@ void GamePlayController::init(){
     Vec2 start = Vec2(1,1);
     _character = make_unique<CharacterController>(start, _actions, _assets);
     _character->addChildTo(_scene);
+    // Forward character movement
+    const int span = 8;
+    std::vector<int> forward;
+    for(int ii = 1; ii < span; ii++) {
+        forward.push_back(ii);
+    }
+    // Loop back to beginning
+    forward.push_back(0);
+    _characterRight = cugl::scene2::Animate::alloc(forward, DURATION);
+
+    // Reverse charater movement
+    std::vector<int> reverse;
+    for(int ii = 1; ii <= span; ii++) {
+        reverse.push_back(span-ii);
+    }
+
+    _characterLeft = cugl::scene2::Animate::alloc(forward, DURATION);
     
     _artifactSet = make_unique<ArtifactSetController>(_assets);
     _resourceSet = make_unique<ArtifactSetController>(_assets);
@@ -317,6 +353,10 @@ void GamePlayController::update(float dt){
         path_trace.erase(path_trace.begin());
 
     }
+
+    if (_actions->isActive("moving") && !_actions->isActive("character_animation")) {
+        _character->updateAnimation(_characterRight);
+    }
     
     // if collect a resource
     if(_activeMap == "tileMap1"){
@@ -393,7 +433,8 @@ void GamePlayController::update(float dt){
     
 #pragma mark -
 #pragma mark Generation Helpers
-    
+
+
     /** Generates the first world. */
     void GamePlayController::generatePrimaryWorld(std::unique_ptr<TilemapController> &_tilemap) {
         _tilemap->updateDimensions(Vec2(144, 84));
@@ -547,54 +588,7 @@ void GamePlayController::update(float dt){
     
 #pragma mark -
 #pragma mark Helpers
-    /**
-     * Creates a new tile map with the given template number
-     *
-     * @param template    The template number
-     */
-    //    void GamePlayController::generateTemplate(int choice) {
-    //        /// Pre-made templates
-    //        switch (choice) {
-    //            case 1:
-    //                // _tilemap->clearMap();
-    //                printExecution("generatePrimaryWorld", [this](){
-    //                    generatePrimaryWorld();
-    //                });
-    //                _template = 1;
-    //                break;
-    //            case 2:
-    //                // _tilemap->clearMap();
-    //                printExecution("generateSecondaryWorld", [this](){
-    //                    generateSecondaryWorld();
-    //                });
-    //                _template = 2;
-    //                break;
-    //            default:
-    //                break;
-    //        }
-    //    }
-    
-    /**
-     * Executes a function with debugging information.
-     *
-     * This function runs function `name` wrapped in `wrapper` and will call
-     * CULog twice. The information from CLog will indicate
-     *
-     * - when the function starts
-     * - how long it took to execute
-     *
-     * @param name      The name of the wrapped function
-     * @param wrapper   The function wrapper to execute
-     */
-    void GamePlayController::printExecution(std::string name, std::function<void()> wrapper) {
-        auto before = std::chrono::high_resolution_clock::now();
-        CULog("Running %s", name.data());
-        wrapper();
-        auto after = std::chrono::high_resolution_clock::now();
-        auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(after - before).count();
-        CULog("Generated after %lld milliseconds", duration);
-    }
-    
+
     
     void GamePlayController::render(std::shared_ptr<SpriteBatch>& batch){
         _scene->render(batch);

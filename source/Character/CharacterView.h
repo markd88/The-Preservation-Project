@@ -17,7 +17,7 @@ class CharacterView{
 private:
     /** Main character view */
     /** The node is attached to the root-scene*/
-    std::shared_ptr<cugl::scene2::SceneNode>  _node;
+    std::shared_ptr<cugl::scene2::SpriteNode>  _node;
     
     /** Manager to process the animation actions */
     std::shared_ptr<cugl::scene2::ActionManager> _actions;
@@ -33,21 +33,18 @@ public:
         float scale = GAME_WIDTH/size.width;
         size *= scale;
         
-        _node = scene2::SceneNode::alloc();
-        
+
         std::shared_ptr<Texture> texture  = assets->get<Texture>("character");
-        _node = scene2::SpriteNode::allocWithSheet(texture, 1, 1, 1); // SpriteNode for animation
-        _node->setScale(0.1f); // Magic number to rescale asset
+        _node = scene2::SpriteNode::allocWithSheet(texture, 2, 4, 8); // SpriteNode for animation
+        _node->setScale(0.3f); // Magic number to rescale asset
 
         _node->setRelativeColor(false);
         _node->setVisible(true);
         _node->setAnchor(Vec2(0.5, 0.25));
         _actions = actions;
 
-        // initialize state
-        setSize(size);
         setPosition(position);
-//        setColor(Color4::BLACK);
+
     }
     
     ~CharacterView(){
@@ -83,19 +80,18 @@ public:
         _node->setPosition(position);
     }
     
-    void setSize(Size size){
-        //_node->setPolygon(Rect(Vec2(0,0), size));
-        _node->setContentSize(size);
-    }
-    
-    void setColor(Color4 color){
-        _node->setColor(color);
-    }
+
     
     void moveTo(const std::shared_ptr<cugl::scene2::MoveTo>& action){
         //auto fcn = EasingFunction::alloc(EasingFunction::Type::ELASTIC_IN_OUT);
         _actions->activate("moving", action, _node);
+
     }
+
+    void updateAnimation(const std::shared_ptr<cugl::scene2::Animate>& animation) {
+        _actions->activate("character_animation", animation, _node);
+    }
+
     
     Vec2 nodePos(){
         return _node->getPosition();

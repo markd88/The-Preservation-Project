@@ -59,26 +59,8 @@ public:
         _view->setPosition(position);
     }
     
-    /**
-     *  Updates the model and view with the size of this tile.
-     *
-     *  @param size  The bottom left corner of the tile
-     */
-    void updateSize(Size size) {
-        _model->setSize(size);
-        _view->setSize(size);
-    }
-    
-    /**
-     *  Updates the model and view with the color of this tile.
-     *
-     *  @param color The tile color
-     */
-    void updateColor(Color4 color) {
-        _model->setColor(color);
-        _view->setColor(color);
-    }
-    
+
+
     /**
      *  Animates the character with a moveTo action
      *
@@ -87,9 +69,12 @@ public:
     void moveTo(const std::shared_ptr<cugl::scene2::MoveTo>& action) {
         _model->setPosition(action->getTarget());
         _view->moveTo(action);
-        
     }
-    
+
+    void updateAnimation(const std::shared_ptr<cugl::scene2::Animate>& animation) {
+        _view->updateAnimation(animation);
+    }
+
     Vec2 getNodePosition(){
         return _view->nodePos();
     }

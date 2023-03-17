@@ -63,6 +63,8 @@ public:
     /** Manager to process the animation actions */
     std::shared_ptr<cugl::scene2::ActionManager> _actions;
     std::shared_ptr<cugl::scene2::MoveTo> _moveTo;
+    std::shared_ptr<cugl::scene2::Animate> _characterRight;
+    std::shared_ptr<cugl::scene2::Animate> _characterLeft;
     
     /**manager to process camera actions**/
     std::shared_ptr<CameraManager> _camManager;
@@ -135,29 +137,8 @@ private:
     void generateGuard();
     void secondaryGuard();
 
-#pragma mark Helpers
-private:
 
-    /**
-     * Creates a new tile map with the given template number
-     *
-     * @param choice    The template number
-     */
-    void generateTemplate(int choice);
-    
-    /**
-     * Executes a function with debugging information.
-     *
-     * This function runs function `name` wrapped in `wrapper` and will call
-     * CULog twice. The information from CLog will indicate
-     *
-     * - when the function starts
-     * - how long it took to execute
-     *
-     * @param name      The name of the wrapped function
-     * @param wrapper   The function wrapper to execute
-     */
-    void printExecution(std::string name, std::function<void()> wrapper);
+
 };
 
 #endif /* __GAME_CONTROLLER_H__ */
