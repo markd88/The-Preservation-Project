@@ -8,7 +8,7 @@
             "wrapT":     "clamp"
         },
         "character": {
-            "file":     "textures/character_v2.png"
+            "file":     "textures/walking.png"
         },
         "guard": {
             "file":     "textures/guard.png"

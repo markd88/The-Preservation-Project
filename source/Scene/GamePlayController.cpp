@@ -179,7 +179,7 @@ void GamePlayController::update(float dt){
     
     if(cant_switch){
         
-        CULog("can switch.... camera position is %s", _cam->getPosition().toString().c_str());
+        // CULog("can switch.... camera position is %s", _cam->getPosition().toString().c_str());
         
         Size  size  = Size(50, 50);
         float scale = 1024/size.width;
@@ -190,7 +190,7 @@ void GamePlayController::update(float dt){
     }
     else{
 //        _character->updateColor(Color4::BLUE);
-        CULog("can NOT switch.... camera position is %s", _cam->getPosition().toString().c_str());
+        // CULog("can NOT switch.... camera position is %s", _cam->getPosition().toString().c_str());
         
         Size  size  = Size(50, 50);
         float scale = 1024/size.width;
