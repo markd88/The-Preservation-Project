@@ -44,8 +44,6 @@ public:
      */
     CharacterModel(Vec2 position, Size size, Color4 color): color(_color) {
         setPosition(position);
-        setSize(size);
-        setColor(color);
         radius = 15 * 4;
         _n_art = 0;
         _n_res = 0;
@@ -83,23 +81,8 @@ public:
     void setNumArt(int n){
         _n_art = n;
     }
-    /**
-     *  Sets the size of the tile.
-     *
-     *  @param size Width and height of a single tile
-     */
-    void setSize(Size size) {
-        _size = size;
-    }
-    
-    /**
-     *  Sets the color of the tile.
-     *
-     *  @param color The color of the tile
-     */
-    void setColor(Color4 color) {
-        _color = color;
-    }
+
+
     
 #pragma mark Helpers
 public:
