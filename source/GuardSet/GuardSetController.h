@@ -25,20 +25,34 @@ public:
     typedef std::unique_ptr<GuardController> Guard;
 //    Guard _guard;
     std::vector<Guard> _guardSet;
+    
     typedef std::shared_ptr<cugl::Scene2> Scene;
     
+    /** Manager to process the animation actions */
+    std::shared_ptr<cugl::scene2::ActionManager> _actions;
+    
+    /**vector of guard IDs**/
+    vector<int> _usedIDs;
 
 #pragma mark Main Methods
 public:
-    GuardSetController(const std::shared_ptr<cugl::AssetManager>& assets) {
+    GuardSetController(const std::shared_ptr<cugl::AssetManager>& assets, std::shared_ptr<cugl::scene2::ActionManager> actions)
+    {
+        _actions = actions;
         std::vector<Guard> _guardSet;
     };
     
 #pragma mark Update Methods
 public:
     // add one guard
+    void add_this_moving(Vec2 gPos, Scene s, const std::shared_ptr<cugl::AssetManager>& assets, vector<Vec2> patrol_stops){
+        Guard _guard = std::make_unique<GuardController>(gPos, assets, patrol_stops, _actions, generateUniqueID());
+        _guard->addChildTo(s);
+        _guardSet.push_back(std::move(_guard));
+    }
+    
     void add_this(Vec2 gPos, Scene s, const std::shared_ptr<cugl::AssetManager>& assets){
-        Guard _guard = std::make_unique<GuardController>(gPos, assets);
+        Guard _guard = std::make_unique<GuardController>(gPos, assets, _actions, generateUniqueID());
         _guard->addChildTo(s);
         _guardSet.push_back(std::move(_guard));
     }
@@ -71,6 +85,37 @@ public:
 //            _guardSet[i];
 //        }
 //    }
+    
+    int generateUniqueID() {
+        int id = 0;
+        bool isUsed = true;
+        while (isUsed){
+            id = rand() % 900 + 100;
+            if (std::find(_usedIDs.begin(), _usedIDs.end(), id) != _usedIDs.end()) {
+                    id = rand() % 900 + 100;
+                }
+                else {
+                    _usedIDs.push_back(id);
+                    isUsed = false;
+                }
+        }
+
+        return id;
+    }
+    
+    void patrol(){
+        for (int i = 0; i < _guardSet.size(); i++){
+            if (_guardSet[i]->doesPatrol){
+                string actionName = "patrol" + std::to_string(_guardSet[i]->id);
+                if (_actions->isActive(actionName)){
+                    //guard is currently on patrol
+                }
+                else{
+                    _guardSet[i]->nextStop(actionName);
+                }
+            }
+        }
+    }
 
 };
 

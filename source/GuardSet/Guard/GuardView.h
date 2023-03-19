@@ -17,11 +17,16 @@ private:
     /** The node is attached to the root-scene*/
     std::shared_ptr<scene2::SceneNode> _node;
     
+    /** Manager to process the animation actions */
+    std::shared_ptr<cugl::scene2::ActionManager> _actions;
+    
+    
 #pragma mark Main Functions
 public:
     /** contructor */
-    GuardView(Vec2 position, Size size, Color4 color, const std::shared_ptr<cugl::AssetManager>& assets) {
+    GuardView(Vec2 position, Size size, Color4 color, const std::shared_ptr<cugl::AssetManager>& assets, std::shared_ptr<cugl::scene2::ActionManager> actions) {
         // Get the image and add it to the node.
+        _actions = actions;
         float scale = GAME_WIDTH/size.width;
         size *= scale;
         _node = scene2::SceneNode::alloc();
@@ -82,6 +87,10 @@ public:
     
     Vec2 nodePos(){
         return _node->getPosition();
+    }
+    
+    void patrol(string actionName, const std::shared_ptr<cugl::scene2::MoveTo>& action){
+        _actions->activate(actionName, action, _node);
     }
     
 };

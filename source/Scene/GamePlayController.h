@@ -124,6 +124,10 @@ private:
         Vec2 aPos = Vec2(w,h);
         _artifactSet->add_this(aPos, _scene, _assets, isResource);
     }
+    void addMovingGuard1(int w, int h, vector<Vec2> patrol_stops) {
+        Vec2 gPos = Vec2(w,h);
+        _guardSet1->add_this_moving(gPos, _scene, _assets, patrol_stops);
+    }
     void addGuard1(int w, int h) {
         Vec2 gPos = Vec2(w,h);
         _guardSet1->add_this(gPos, _scene, _assets);

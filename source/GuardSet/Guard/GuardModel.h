@@ -18,7 +18,6 @@ private:
     Size _size;
     Color4 _color;
     bool _isStatic;
-
     int radius;
 
 public:
