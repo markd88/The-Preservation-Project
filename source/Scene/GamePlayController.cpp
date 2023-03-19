@@ -42,8 +42,8 @@ GamePlayController::GamePlayController(const Size displaySize, std::shared_ptr<c
     generateResource();
     
 
-    _guardSet1 = std::make_unique<GuardSetController>(_assets);
-    _guardSet2 = std::make_unique<GuardSetController>(_assets);
+    _guardSet1 = std::make_unique<GuardSetController>(_assets, _actions);
+    _guardSet2 = std::make_unique<GuardSetController>(_assets, _actions);
     generateGuard();
     secondaryGuard();
     
@@ -168,8 +168,8 @@ void GamePlayController::init(){
     _resourceSet->clearSet();
     generateArtifact();
     generateResource();
-    _guardSet1 = make_unique<GuardSetController>(_assets);
-    _guardSet2 = make_unique<GuardSetController>(_assets);
+    _guardSet1 = make_unique<GuardSetController>(_assets, _actions);
+    _guardSet2 = make_unique<GuardSetController>(_assets, _actions);
     _guardSet1->clearSet();
     _guardSet2->clearSet();
     generateGuard();
@@ -197,6 +197,7 @@ void GamePlayController::init(){
 
 
 void GamePlayController::update(float dt){
+    _guardSet1->patrol();
     if(_fail_layer->getScene()!=nullptr || _complete_layer->getScene()!=nullptr){
         return;
     }
@@ -573,7 +574,8 @@ void GamePlayController::update(float dt){
     }
 
     void GamePlayController::generateGuard() {
-        addGuard1(90, 500);
+        vector<Vec2> patrol_stops = { Vec2(90, 500), Vec2(190, 500) }; //must be at least two stops
+        addMovingGuard1(90, 500, patrol_stops);
         addGuard1(450, 250);
         addGuard1(500, 100);
         addGuard1(630, 500);
