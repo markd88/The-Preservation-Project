@@ -14,7 +14,6 @@ using namespace cugl;
 GamePlayController::GamePlayController(const Size displaySize, std::shared_ptr<cugl::AssetManager>& assets ):_scene(cugl::Scene2::alloc(displaySize)) {
     // Initialize the assetManager
     _assets = assets;
-    
     // Initialize the scene to a locked width
     Size dimen = Application::get()->getDisplaySize();
     dimen *= SCENE_WIDTH/dimen.width; // Lock the game to a reasonable resolution
@@ -141,7 +140,7 @@ void GamePlayController::init(){
     _activeMap = "tileMap1";
     _template = 0;
     
-    Vec2 start = Vec2(1,1);
+    Vec2 start = Vec2(0,0);
     _character = make_unique<CharacterController>(start, _actions, _assets);
     _character->addChildTo(_scene);
     // Forward character movement
@@ -484,6 +483,8 @@ void GamePlayController::update(float dt){
         for(int j = 68; j <= 84; j++) {
             _tilemap->addTile(128, j, tileColor, is_obs);
         }
+
+
     }
     
     /**
@@ -496,6 +497,7 @@ void GamePlayController::update(float dt){
         _tilemap->updateColor(Color4::WHITE);
         _tilemap->updateTileSize(Size(8, 8));
         _tilemap->updatePosition(_scene->getSize()/2);
+        
         // walls
         Color4 tileColor = Color4::BLACK;
         bool is_obs = true;
@@ -553,6 +555,7 @@ void GamePlayController::update(float dt){
         for(int j = 0; j <= 18; j++) {
             _tilemap->addTile(126, j, tileColor, is_obs);
         }
+        
     }
 
     void GamePlayController::generateArtifact() {
@@ -574,7 +577,7 @@ void GamePlayController::update(float dt){
     }
 
     void GamePlayController::generateGuard() {
-        vector<Vec2> patrol_stops = { Vec2(90, 500), Vec2(190, 500) }; //must be at least two stops
+        vector<Vec2> patrol_stops = { Vec2(90, 500), Vec2(190, 500), Vec2(190, 400) }; //must be at least two stops
         addMovingGuard1(90, 500, patrol_stops);
         addGuard1(450, 250);
         addGuard1(500, 100);
@@ -586,6 +589,8 @@ void GamePlayController::update(float dt){
         addGuard2(350, 350);
         addGuard2(720, 320);
     }
+
+    
         
     
 #pragma mark -

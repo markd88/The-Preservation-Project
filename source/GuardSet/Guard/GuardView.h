@@ -59,6 +59,10 @@ public:
      */
     void addChildTo(const std::shared_ptr<cugl::Scene2>& scene) {
         scene->addChild(_node);
+        auto cone = scene2::PolygonNode::alloc();
+        cone->setPolygon(Rect(0, 0, 50, 100));
+        cone->setColor(Color4::RED);
+        _node->addChild(cone);
     }
     
     /**
@@ -91,6 +95,12 @@ public:
     
     void patrol(string actionName, const std::shared_ptr<cugl::scene2::MoveTo>& action){
         _actions->activate(actionName, action, _node);
+    }
+    
+    void addCone(){
+        auto cone = scene2::PolygonNode::alloc();
+        cone->setPolygon(Rect(0, 0, 50, 100));
+        
     }
     
 };

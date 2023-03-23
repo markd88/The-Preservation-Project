@@ -28,6 +28,7 @@ public:
         setPosition(position);
         setColor(color);
         setSize(dimensions * tileSize);
+        
     }
     
 #pragma mark Scene Methods
@@ -40,6 +41,7 @@ public:
     void addChildTo(const std::shared_ptr<cugl::Scene2>& scene) {
         // TODO: Implement me
         scene->addChild(_node);
+        
     }
     
     /**
@@ -69,6 +71,7 @@ public:
     void setPosition(Vec2 position) {
         // TODO: Implement me
         _node->setPosition(position);
+    
     }
     
     /**

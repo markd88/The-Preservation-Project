@@ -102,4 +102,9 @@ public:
     bool contains(Vec2 point){
         return _view->contains(point);
     }
+    
+    bool containsLine(Vec2 a, Vec2 b){
+        return _view->containsLine(a, b);
+    }
+    
 };
