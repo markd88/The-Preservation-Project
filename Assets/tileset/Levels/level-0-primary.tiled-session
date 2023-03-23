@@ -1,0 +1,165 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "untitled.json",
+    "expandedProjectPaths": [
+    ],
+    "file.lastUsedOpenFilter": "All Files (*)",
+    "fileStates": {
+        "": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "#level-0-primary": {
+            "dynamicWrapping": true
+        },
+        "/Users/annzhou/game_design/The-Preservation-Project/Assets/json/level-0-primary.json": {
+            "scale": 0.35,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 448.5714285714285,
+                "y": 1342.8571428571427
+            }
+        },
+        "/Users/annzhou/game_design/The-Preservation-Project/Assets/json/level-0-primary.json#tile_past_floor1": {
+            "scaleInEditor": 1
+        },
+        "/Users/annzhou/game_design/The-Preservation-Project/Assets/tileset/tileset.tsx": {
+            "dynamicWrapping": false,
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "/Users/annzhou/game_design/TiledDemo/assets/json/level.json": {
+            "expandedObjectLayers": [
+                4
+            ],
+            "scale": 0.35,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 672.8571428571429,
+                "y": 1000.0000000000001
+            }
+        },
+        "/Users/annzhou/game_design/TiledDemo/assets/tileset/biglevel.json": {
+            "expandedObjectLayers": [
+                4
+            ],
+            "scale": 0.24,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 895.8333333333333,
+                "y": 1116.6666666666665
+            }
+        },
+        "/Users/annzhou/game_design/TiledDemo/assets/tileset/demo_elements.tsx": {
+            "dynamicWrapping": false,
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "/Users/annzhou/game_design/TiledDemo/assets/tileset/labmap.json": {
+            "expandedObjectLayers": [
+                4
+            ],
+            "scale": 0.49,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 515.3061224489796,
+                "y": 289.7959183673469
+            }
+        },
+        "/Users/annzhou/game_design/TiledDemo/assets/tileset/ragdoll_elements.tsx": {
+            "scaleInDock": 1
+        },
+        "level-0-primary-tileset.tmj": {
+            "scale": 0.5,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 641,
+                "y": 640
+            }
+        },
+        "level-0-primary-tileset.tmj#level-0-primary": {
+            "dynamicWrapping": false,
+            "scaleInDock": 1
+        },
+        "level-0-primary-tileset.tsx": {
+            "dynamicWrapping": true,
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "level-0-primary.json": {
+            "scale": 0.35,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 672.8571428571429,
+                "y": 722.8571428571428
+            }
+        },
+        "level-0-primary.json#level-0-primary": {
+            "scaleInDock": 1
+        },
+        "level-0-primary.json#level-0-primary-tileset": {
+            "dynamicWrapping": true,
+            "scaleInDock": 1
+        },
+        "level-0-primary.tmj": {
+            "scale": 0.5,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 641,
+                "y": 640
+            }
+        },
+        "level-0-primary.tmj#level-0-primary": {
+            "scaleInDock": 1
+        },
+        "untitled.json": {
+            "scale": 0.4196,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 638.7035271687321,
+                "y": 750.7149666348904
+            }
+        }
+    },
+    "last.exportedFilePath": "/Users/annzhou/game_design/The-Preservation-Project/Assets/tileset/Levels",
+    "last.externalTilesetPath": "/Users/annzhou/game_design/The-Preservation-Project/Assets/tileset/Levels",
+    "last.imagePath": "/Users/annzhou/game_design/The-Preservation-Project/Assets/tileset/128 x 128",
+    "map.lastUsedExportFilter": "All Files (*)",
+    "map.lastUsedFormat": "json",
+    "map.tileHeight": 64,
+    "map.tileWidth": 64,
+    "map.width": 20,
+    "openFiles": [
+        "level-0-primary-tileset.tsx",
+        "/Users/annzhou/game_design/The-Preservation-Project/Assets/json/level-0-primary.json",
+        "/Users/annzhou/game_design/TiledDemo/assets/tileset/biglevel.json",
+        "/Users/annzhou/game_design/TiledDemo/assets/tileset/demo_elements.tsx",
+        "untitled.json"
+    ],
+    "project": "level-0-primary.tiled-project",
+    "property.type": "string",
+    "recentFiles": [
+        "/Users/annzhou/game_design/The-Preservation-Project/Assets/json/level-0-primary.json",
+        "/Users/annzhou/game_design/TiledDemo/assets/tileset/biglevel.json",
+        "/Users/annzhou/game_design/TiledDemo/assets/tileset/demo_elements.tsx",
+        "level-0-primary-tileset.tsx",
+        "untitled.json",
+        "level-0-primary.tmj",
+        "level-0-primary-tileset.tmj",
+        "level-0-primary.json",
+        "/Users/annzhou/game_design/TiledDemo/assets/tileset/labmap.json",
+        "/Users/annzhou/game_design/TiledDemo/assets/json/level.json",
+        "/Users/annzhou/game_design/The-Preservation-Project/Assets/tileset/tileset.tsx"
+    ],
+    "tileset.embedInMap": true,
+    "tileset.lastUsedFilter": "Tiled tileset files (*.tsx *.xml)",
+    "tileset.lastUsedFormat": "tsx",
+    "tileset.tileSize": {
+        "height": 64,
+        "width": 64
+    },
+    "tileset.type": 0
+}
