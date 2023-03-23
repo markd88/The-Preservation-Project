@@ -1,3 +1,5 @@
+#ifndef __TILE_CONTROLLER_H__
+#define __TILE_CONTROLLER_H__
 #include "TileModel.h"
 #include "TileView.h"
 
@@ -103,3 +105,4 @@ public:
         return _view->contains(point);
     }
 };
+#endif

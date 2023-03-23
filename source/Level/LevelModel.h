@@ -15,7 +15,7 @@
 #include <cugl/assets/CUAsset.h>
 #include <cugl/io/CUJsonReader.h>
 //#include "TDRocketModel.h"
-//#include <Tilemap/TilemapController.h>
+#include <Tilemap/TilemapController.h>
 
 using namespace cugl;
 
@@ -52,8 +52,8 @@ protected:
     /** Reference to the debug root of the scene graph */
 //    std::shared_ptr<scene2::SceneNode> _debugnode;
 
-//    std::unique_ptr<TilemapController> _tilemap1;
-//    std::unique_ptr<TilemapController> _tilemap2;
+    std::unique_ptr<TilemapController> _primaryWorld;
+    std::unique_ptr<TilemapController> _secondaryWorld;
 
     /** Reference to all the active crates */
 //    std::vector<std::shared_ptr<CrateModel>> _crates;
@@ -267,6 +267,13 @@ public:
      * @param  flag whether to show the debug layer of this game world
      */
     void showDebug(bool flag);
+    
+    /** Generates primary world with guards. */
+//    void generatePrimaryWorld(std::unique_ptr<TilemapController>& tilemap);
+
+    /** Generates secondary world without guards. */
+//    void generateSecondaryWorld(std::unique_ptr<TilemapController>& tilemap);
+
 
 
 #pragma mark -

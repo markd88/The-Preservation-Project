@@ -1,3 +1,5 @@
+#ifndef __TILEMAP_CONTROLLER_H__
+#define __TILEMAP_CONTROLLER_H__
 // These are all in the same directory
 #include "TilemapModel.h"
 #include "TilemapView.h"
@@ -211,3 +213,4 @@ public:
 
 //}
 
+#endif

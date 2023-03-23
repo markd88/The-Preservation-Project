@@ -30,6 +30,9 @@ _worldnode(nullptr),
 _scale(32, 32)
 {
     _bounds.size.set(1.0f, 1.0f);
+    _primaryWorld = std::make_unique<TilemapController>();
+    _secondaryWorld = std::make_unique<TilemapController>();
+
 }
 
 /**
@@ -131,10 +134,7 @@ void LevelModel::setRootNode(const std::shared_ptr<scene2::SceneNode>& node) {
 //                                                            wall->getPolygon() * _scale);
 //        addObstacle(wall,sprite);  // All walls share the same texture
 //    }
-    
-//    _tilemap1 = std::make_unique<TilemapController>();
-//    _tilemap2 = std::make_unique<TilemapController>();
-
+        
 }
 
 /**
@@ -262,39 +262,46 @@ bool LevelModel::loadObject(const std::string type, const std::shared_ptr<JsonVa
 #pragma mark -
 #pragma mark Individual Loaders
 
+/**
+* Loads a single tile object
+*/
+bool LevelModel::loadTilemap(const std::shared_ptr<JsonValue>& json) {
+    bool success = true;
+    
+    std::string textureType = json->get("type")->toString();
+    std::cout<<textureType<<std::endl;
+    int x = json->get("x")->asInt();
+    int y = json->get("y")->asInt();
+    int width = json->get("width")->asInt();
+    int height = json->get("height")->asInt();
+    
+    // TODO: replace below
+    _primaryWorld->updateDimensions(Vec2(144, 84));
+    _primaryWorld->updateColor(Color4::WHITE);
+    _primaryWorld->updateTileSize(Size(8, 8));
+
+    _primaryWorld->addTile(x, y, Color4::BLACK, false);
+    
+    success = success && x >= 0 && y >= 0;
+    return success;
+}
+
 
 /**
 * Loads a single wall object
-*
-* The wall will be retained and stored in the vector _walls.  If the
-* wall fails to load, then it will not be added to _walls.
-*
-* @param  reader   a JSON reader with cursor ready to read the wall
-*
-* @retain the wall
-* @return true if the wall was successfully loaded
 */
 bool LevelModel::loadWall(const std::shared_ptr<JsonValue>& json) {
     bool success = true;
 
-    // data needed: width, height, x, y, gid
-    auto walljson = json->get("properties")->get(0)->get("value");
-    int polysize = (int)json->get(VERTICES_FIELD)->children().size();
-    success = success && polysize > 0;
-
-    std::vector<float> vertices = getVertices(json);
+    std::string textureType = json->get("type")->toString();
+    int x = json->get("x")->asInt();
+    int y = json->get("y")->asInt();
+    int width = json->get("width")->asInt();
+    int height = json->get("height")->asInt();
     
-    return success;
-}
-
-bool LevelModel::loadTilemap(const std::shared_ptr<JsonValue>& json) {
-    bool success = true;
-
-    auto walljson = json->get("properties")->get(0)->get("value");
-    int polysize = (int)json->get(VERTICES_FIELD)->children().size();
-    success = success && polysize > 0;
-
-    std::vector<float> vertices = getVertices(json);
+    // TODO: replace below
+    _primaryWorld->addTile(x, y, Color4::RED, true);
     
+    success = success && x >= 0 && y >= 0;
     return success;
 }
