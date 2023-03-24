@@ -12,6 +12,9 @@
 #define WALLS_FIELD         "wall"
 #define TILEMAP_FILED       "tilemap"
 
+#define WIDTH_FIELD         "width"
+#define HEIGHT_FIELD        "height"
+
 /** The drawing fields for each object */
 #define TEXTURE_FIELD       "texture"
 #define DEBUG_COLOR_FIELD   "debugcolor"
