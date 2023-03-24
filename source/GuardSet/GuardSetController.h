@@ -71,6 +71,21 @@ public:
 //            _guardSet[i];
 //        }
 //    }
+    
+#pragma mark Helpers
+    /**
+     * Check if the point is located in some obstacle tile
+     * @Param Point    position of the point
+     */
+    bool inCone(Vec2 point){
+        unsigned int vecSize = _guardSet.size();
+        for(unsigned int i = 0; i < vecSize; i++) {
+            if(_guardSet[i] != nullptr && _guardSet[i]->contains(point)){
+                return true;
+            }
+        }
+        return false;
+    }
 
 };
 

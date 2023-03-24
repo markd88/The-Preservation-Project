@@ -40,8 +40,7 @@ GamePlayController::GamePlayController(const Size displaySize, std::shared_ptr<c
     _resourceSet = std::make_unique<ArtifactSetController>(_assets);
     generateArtifact();
     generateResource();
-    
-
+//    _coneSet1 = std::make_unique<GuardSetController>(_assets);
     _guardSet1 = std::make_unique<GuardSetController>(_assets);
     _guardSet2 = std::make_unique<GuardSetController>(_assets);
     generateGuard();
@@ -168,8 +167,10 @@ void GamePlayController::init(){
     _resourceSet->clearSet();
     generateArtifact();
     generateResource();
+//    _coneSet1 = make_unique<GuardSetController>(_assets);
     _guardSet1 = make_unique<GuardSetController>(_assets);
     _guardSet2 = make_unique<GuardSetController>(_assets);
+//    _coneSet1->clearSet();
     _guardSet1->clearSet();
     _guardSet2->clearSet();
     generateGuard();
@@ -242,6 +243,7 @@ void GamePlayController::update(float dt){
         if (_activeMap == "tileMap1") {
             _tilemap1->removeChildFrom(_scene);
             _tilemap2->addChildTo(_scene);
+//            _coneSet1->removeChildFrom(_scene);
             _guardSet1->removeChildFrom(_scene);
             _guardSet2->addChildTo(_scene);
             _artifactSet->removeChildFrom(_scene);
@@ -255,6 +257,7 @@ void GamePlayController::update(float dt){
             _tilemap2->removeChildFrom(_scene);
             _tilemap1->addChildTo(_scene);
             _guardSet2->removeChildFrom(_scene);
+//            _coneSet1->addChildTo(_scene);
             _guardSet1->addChildTo(_scene);
             _artifactSet->addChildTo(_scene);
             _resourceSet->addChildTo(_scene);
@@ -397,9 +400,9 @@ void GamePlayController::update(float dt){
     // if collide with guard
     if(_activeMap == "tileMap1"){
         for(int i=0; i<_guardSet1->_guardSet.size(); i++){
-            if(_character->contains(_guardSet1->_guardSet[i]->getNodePosition())){
+//            if(_character->contains(_guardSet1->_guardSet[i]->getNodePosition())){
+            if(_guardSet1->_guardSet[i]->contains(_character->getPosition())){
                 _scene->addChild(_fail_layer);
-                
                 _fail_layer->setPosition(_cam->getPosition());
                 break;
             }
@@ -407,15 +410,24 @@ void GamePlayController::update(float dt){
     }
     else{
         for(int i=0; i<_guardSet2->_guardSet.size(); i++){
-            if(_character->contains(_guardSet2->_guardSet[i]->getNodePosition())){
+//            if(_character->contains(_guardSet2->_guardSet[i]->getNodePosition())){
+            if(_guardSet1->_guardSet[i]->contains(_character->getPosition())){
                 _scene->addChild(_fail_layer);
-                
                 _fail_layer->setPosition(_cam->getPosition());
                 break;
             }
         }
     }
     
+    // if guard cone collide with wall
+    if(_activeMap == "tileMap1"){
+        for(int i=0; i<_guardSet1->_guardSet.size(); i++){
+            if(_tilemap1->inObstacle(_guardSet1->_guardSet[i]->getNodePosition())){
+                _guardSet1->_guardSet[i]->removeChildFrom(_scene);
+                break;
+            }
+        }
+    }
     
     
     // Animate
@@ -581,8 +593,12 @@ void GamePlayController::update(float dt){
         addGuard1(970, 75);
     }
     void GamePlayController::secondaryGuard() {
+//        bool cone = false;
         addGuard2(350, 350);
         addGuard2(720, 320);
+//        cone = true;
+//        addGuard2(350, 350, cone);
+//        addGuard2(720, 320, cone);
     }
         
     

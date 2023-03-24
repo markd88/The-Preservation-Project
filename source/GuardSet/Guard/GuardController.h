@@ -23,7 +23,6 @@ private:
     std::unique_ptr<GuardModel> _model;
     /** View reference */
     std::unique_ptr<GuardView> _view;
-
     
 #pragma mark Main Methods
 public:
@@ -34,7 +33,7 @@ public:
      * @param size      The width and height of a tile
      * @param color     The tile color
      */
-    GuardController(Vec2 position, Size size, Color4 color, const std::shared_ptr<cugl::AssetManager>& assets) {
+    GuardController(Vec2 position, Size size, Color4 color, const std::shared_ptr<cugl::AssetManager>& assets, bool cone) {
         _model = std::make_unique<GuardModel>(position, size, color);
         _view = std::make_unique<GuardView>(position, size, color, assets);
     }
@@ -66,30 +65,20 @@ public:
         _view->setSize(size);
     }
     
-    /**
-     *  Updates the model and view with the color of this tile.
-     *
-     *  @param color The tile color
-     */
-    void updateColor(Color4 color) {
-        _model->setColor(color);
-        _view->setColor(color);
-    }
     
-    
-    Vec2 getNodePosition(){
+    Vec2 getNodePosition(){        
         return _view->nodePos();
     }
 
-//#pragma mark Helpers
-//    /**
-//     *  See if the touch point is within the character
-//     *
-//     *  @param point The position of the touchpoint
-//     */
-//    bool contains(Vec2 point){
-//        return _model->contains(point);
-//    }
+#pragma mark Helpers
+    /**
+     *  See if the wall obstacle is within the guard cone
+     *
+     *  @param point The position of the wall obstacle
+     */
+    bool contains(Vec2 point){
+        return _model->contains(point);
+    }
     
 #pragma mark Scene Methods
 public:
@@ -110,11 +99,6 @@ public:
     void removeChildFrom(std::shared_ptr<cugl::Scene2> node) {
         _view->removeChildFrom(node);
     }
-    
-#pragma mark Controller Methods
-public:
-    
-    
 
 };
 
