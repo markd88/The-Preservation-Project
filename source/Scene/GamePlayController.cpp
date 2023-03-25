@@ -225,23 +225,9 @@ void GamePlayController::update(float dt){
     cant_switch = cant_switch || (_character->getNumRes() == 0);
     
     if(cant_switch){
-        
-        // CULog("can switch.... camera position is %s", _cam->getPosition().toString().c_str());
-        
-        Size  size  = Size(50, 50);
-        float scale = 1024/size.width;
-        size *= scale;
-
         _switchNode->setColor(Color4::RED);
-
     }
     else{
-//        _character->updateColor(Color4::BLUE);
-        // CULog("can NOT switch.... camera position is %s", _cam->getPosition().toString().c_str());
-        
-        Size  size  = Size(50, 50);
-        float scale = 1024/size.width;
-        size *= scale;
         _switchNode->setColor(Color4::GREEN);
     }
     if(elapsed.count() >= 0.5 && _input->getPinchDelta() != 0 && !cant_switch){
@@ -308,7 +294,6 @@ void GamePlayController::update(float dt){
         
         if(_character->contains(input_posi)){
             // create path
-            CULog("here");
             _path->setIsDrawing(true);
             _path->setIsInitiating(true);
             _path->updateLastPos(_character->getPosition()); //change to a fixed location on the character
@@ -342,7 +327,6 @@ void GamePlayController::update(float dt){
     }
     
     else if(_input->didRelease()){
-        CULog("didRelease");
         Vec2 input_posi = _input->getPosition();
         input_posi = _scene->screenToWorldCoords(input_posi);
         _path->setIsDrawing(false);

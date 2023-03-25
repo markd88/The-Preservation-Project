@@ -100,7 +100,6 @@ void TilemapController::addTile2(int col, int row, bool is_obs,
     _tilemap[row][col] = std::move(temp);
 
     _tilemap[row][col]->addChildTo(_view->getNode());
-    CULog("addTile2");
 };
 
 

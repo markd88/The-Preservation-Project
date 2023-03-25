@@ -12,8 +12,10 @@
 #define WALLS_FIELD         "wall"
 #define TILEMAP_FILED       "tilemap"
 
-#define WIDTH_FIELD         "width"
-#define HEIGHT_FIELD        "height"
+#define MAP_WIDTH           "width"
+#define MAP_HEIGHT          "height"
+#define TILE_WIDTH          "tilewidth"
+#define TILE_HEIGHT         "tileheight"
 
 /** The drawing fields for each object */
 #define TEXTURE_FIELD       "texture"
