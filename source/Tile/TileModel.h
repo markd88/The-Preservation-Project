@@ -13,7 +13,7 @@ private:
     Color4 _color;
     /** If the tile is a obstacle*/
     bool _is_obs;
-    std::string _textureKey = "testttttt";
+    std::string _textureKey;
     
 public:
     /** A public accessible, read-only version of the color */

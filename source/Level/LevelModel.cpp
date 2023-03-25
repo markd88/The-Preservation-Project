@@ -162,7 +162,11 @@ bool LevelModel::loadObject(const std::string type, const std::shared_ptr<JsonVa
 bool LevelModel::loadTilemap(const std::shared_ptr<JsonValue>& json) {
     bool success = true;
     
-    std::string textureType = json->get("type")->toString();
+    std::string textureType = json->get("type")->asString();
+//    std::string textureType = "tile_past_floor1";
+//    std::string textureType = "blue";
+
+
 
     int width = json->get("width")->asInt();
     int height = json->get("height")->asInt();
@@ -200,6 +204,6 @@ bool LevelModel::loadWall(const std::shared_ptr<JsonValue>& json) {
     return success;
 }
 
-//void LevelModel::setTilemapTexture() {
-//    _primaryWorld->setTexture(_assets);
-//};
+void LevelModel::setTilemapTexture() {
+    _primaryWorld->setTexture(_assets);
+};

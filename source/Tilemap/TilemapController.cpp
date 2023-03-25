@@ -104,20 +104,19 @@ void TilemapController::addTile2(int col, int row, bool is_obs,
     _tilemap[row][col]->addChildTo(_view->getNode());
 };
 
-//void TilemapController::setTexture(const std::shared_ptr<cugl::AssetManager>& assets){
-//    for(auto& tile_vec : _tilemap){
-//        for(auto& tile : tile_vec){
-//            if(tile != nullptr){
-////                std::string textureKey = tile->getTextureKey();
-////                tile->setTexture(assets, textureKey);
-//
-//                int textureKey = tile->getTextureKey();
-////                tile->setTexture(assets, textureKey);
-//
-//            }
-//        }
-//    }
-//}
+void TilemapController::setTexture(const std::shared_ptr<cugl::AssetManager>& assets){
+    for(auto& tile_vec : _tilemap){
+        for(auto& tile : tile_vec){
+            if(tile != nullptr){
+                std::string textureKey = tile->getTextureKey();
+                if (textureKey != "") {
+                    std::cout<<textureKey<<std::endl;
+                    tile->setTexture(assets, textureKey);
+                }
+            }
+        }
+    }
+}
 
 /**
  *  Updates the model and view with the dimensions of the tilemap.

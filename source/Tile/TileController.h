@@ -95,9 +95,9 @@ public:
 //        _model->setTextureKey(textureKey);
 //    }
 
-//    void setTexture(const std::shared_ptr<cugl::AssetManager>& assets, std::string textureKey) {
-//        _view->setTexture(assets, textureKey);
-//    }
+    void setTexture(const std::shared_ptr<cugl::AssetManager>& assets, std::string textureKey) {
+        _view->setTexture(assets, textureKey);
+    }
 
 #pragma mark Getters
 public:

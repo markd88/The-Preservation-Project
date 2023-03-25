@@ -1,4 +1,6 @@
 #include <cugl/cugl.h>
+#include <cugl/base/CUBase.h>
+
 using namespace cugl;
 
 class TileView {
@@ -36,7 +38,6 @@ public:
         this->_node = scene2::PolygonNode::alloc();
         _node->setAnchor(Vec2::ANCHOR_BOTTOM_LEFT);
         _node->setRelativeColor(false);
-        setColor(Color4::WHITE); // TODO
         setPosition(position);
         setSize(size);
 //        setTextureKey(textureKey);
@@ -113,19 +114,17 @@ public:
         _node->setColor(color);
     }
     
-//    void setTexture(const std::shared_ptr<cugl::AssetManager>& assets, std::string textureKey) {
-////        Size  size  = getDisplaySize();
-////        float scale = GAME_WIDTH/size.width;
-////        size *= scale;
-//
-//        // The logo is actually an image+label.  We need a parent node
-////        _logo = scene2::SceneNode::alloc();
-//
-//        // Get the image and add it to the node.
-//        std::shared_ptr<Texture> texture  = assets->get<Texture>(textureKey);
-//        _node = scene2::PolygonNode::allocWithTexture(texture);
-//        _node->setScale(0.8f); // Magic number to rescale asset
-//    }
+    void setTexture(const std::shared_ptr<cugl::AssetManager>& assets, std::string textureKey) {
+        // The logo is actually an image+label.  We need a parent node
+        auto tileNode = scene2::SceneNode::alloc();
+
+        // Get the image and add it to the node.
+        std::shared_ptr<Texture> texture  = assets->get<Texture>(textureKey);
+        tileNode = scene2::PolygonNode::allocWithTexture(texture);
+//        tileNode->setScale(1.0f);
+         
+        _node->addChild(tileNode);
+    }
 
     /**
      *  Detect if this file contains a point

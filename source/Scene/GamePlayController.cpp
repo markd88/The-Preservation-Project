@@ -39,7 +39,7 @@ GamePlayController::GamePlayController(const Size displaySize, std::shared_ptr<c
     }
     
     _level->setAssets(_assets);
-//    _level->setTilemapTexture();
+    _level->setTilemapTexture();
     
     _tilemap1 = _level->generatePrimaryWorld();
 //    _tilemap1 = _level->generateSecondaryWorld();

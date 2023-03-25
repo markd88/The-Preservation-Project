@@ -67,6 +67,34 @@
             "magfilter": "linear",
             "wrapS":     "clamp",
             "wrapT":     "clamp"
+        },
+        "blue": {
+            "file":      "textures/blue.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS":     "clamp",
+            "wrapT":     "clamp"
+        },
+        "tile_past_floor1": {
+            "file":      "textures/tile_past_floor1.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS":     "clamp",
+            "wrapT":     "clamp"
+        },
+        "tile_past_wall1": {
+            "file":      "textures/tile_past_wall1.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS":     "clamp",
+            "wrapT":     "clamp"
+        },
+        "tile_past_wall_windowcenter": {
+            "file":      "textures/tile_past_wall_windowcenter.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS":     "clamp",
+            "wrapT":     "clamp"
         }
 	},
 	"fonts": {
