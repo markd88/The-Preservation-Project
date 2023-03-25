@@ -18,9 +18,8 @@ private:
     Size _size;
     Color4 _color;
     bool _isStatic;
-    
-    int _radius;
-    
+    int radius;
+
 public:
     /** A public accessible, read-only version of the color */
     const Color4& color;

@@ -3,6 +3,7 @@
 #include "TilemapView.h"
 // This is NOT in the same directory
 #include <Tile/TileController.h>
+#include <memory>
 
 //namespace MVC {
 /**
@@ -190,6 +191,91 @@ public:
      * move these pointers without copying them, use `std::move`.
      */
     void initializeTilemap();
+    
+    void addPoints(Size size, const std::shared_ptr<scene2::SceneNode>& scene){
+        
+        auto origin = scene2::PolygonNode::alloc();
+        std::unordered_map<int, Vec2> nodes;
+        int count = 0;
+        
+        for (int i = 0; i < 1152 ; i += 30){
+            for (int j = 0; j < 672 ; j += 30){
+                origin = scene2::PolygonNode::alloc();
+                origin->setPolygon(Rect(10, 10, 10, 10));
+                origin->setPosition(Vec2(i,j));
+                origin->setColor(Color4::RED);
+                scene->addChild(origin);
+                nodes[count] = Vec2(i,j);
+                count += 1;
+            }
+        }
+                
+        SplinePather splinePather = SplinePather();
+        SimpleExtruder extruder = SimpleExtruder();
+        
+        for (int i = 0; i < 897; i++){
+            if ((i + 1)%23 != 0){
+                Vec2 a = nodes[i];
+                Vec2 b = nodes[i + 1];
+                bool hitObs = lineInObstacle(a, b);
+                Spline2 spline = Spline2(a, b);
+                splinePather.set(&spline);
+                splinePather.calculate();
+                
+                extruder.set(splinePather.getPath());
+                extruder.calculate(1);
+                Poly2 line = extruder.getPolygon();
+                
+                std::shared_ptr<scene2::PolygonNode> polyNode= scene2::PolygonNode::alloc();
+                polyNode->setPolygon(line);
+                if (hitObs){
+                    polyNode->setColor(Color4::BLUE);
+                }else{
+                    polyNode->setColor(Color4::GREEN);
+                }
+                polyNode->setPosition(a.getMidpoint(b));
+                scene->addChild(polyNode);
+            }
+        }
+        for (int i = 0; i < 897; i++){
+            if (i + 23 < 897){
+                Vec2 a = nodes[i];
+                Vec2 b = nodes[i + 23];
+                bool hitObs = lineInObstacle(a, b);
+                Spline2 spline = Spline2(a, b);
+                splinePather.set(&spline);
+                splinePather.calculate();
+                
+                extruder.set(splinePather.getPath());
+                extruder.calculate(1);
+                Poly2 line = extruder.getPolygon();
+                
+                std::shared_ptr<scene2::PolygonNode> polyNode= scene2::PolygonNode::alloc();
+                polyNode->setPolygon(line);
+                if (hitObs){
+                    polyNode->setColor(Color4::BLUE);
+                }else{
+                    polyNode->setColor(Color4::GREEN);
+                }
+                polyNode->setPosition(a.getMidpoint(b));
+                scene->addChild(polyNode);
+            }
+        }
+        
+        
+    }
+    
+    Size getSize(){
+        Size size = _model->dimensions * _model->tileSize;
+        return size;
+    }
+    
+    const std::shared_ptr<scene2::PolygonNode>& getNode() const {
+        // TODO: Implement me
+        return _view->getNode();
+    }
+    
+    
 
 #pragma mark Helpers
     /**
@@ -201,6 +287,17 @@ public:
             for(auto& tile : tile_vec){
             
                 if(tile != nullptr && tile->is_obs() && tile->contains(point)){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    
+    bool lineInObstacle(Vec2 a, Vec2 b){
+        for(auto& tile_vec : _tilemap){
+            for(auto& tile : tile_vec){
+                if(tile != nullptr && tile->is_obs() && tile->containsLine(a,b)){
                     return true;
                 }
             }

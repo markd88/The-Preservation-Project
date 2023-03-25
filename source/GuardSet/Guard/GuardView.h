@@ -20,13 +20,22 @@ private:
     std::shared_ptr<scene2::PolygonNode> _cone;
     
     
+    /** Manager to process the animation actions */
+    std::shared_ptr<cugl::scene2::ActionManager> _actions;
+    
+    
+    /** Manager to process the animation actions */
+    std::shared_ptr<cugl::scene2::ActionManager> _actions;
+    
+    
 #pragma mark Main Functions
 public:
     /** contructor */
-    GuardView(Vec2 position, Size size, Color4 color, const std::shared_ptr<cugl::AssetManager>& assets) {
+    GuardView(Vec2 position, Size size, Color4 color, const std::shared_ptr<cugl::AssetManager>& assets, std::shared_ptr<cugl::scene2::ActionManager> actions) {
         // Get the image and add it to the node.
-//        float scale = GAME_WIDTH/size.width;
-//        size *= scale;
+        _actions = actions;
+        float scale = GAME_WIDTH/size.width;
+        size *= scale;
         _node = scene2::SceneNode::alloc();
         std::shared_ptr<Texture> texture  = assets->get<Texture>("guard");
         _node = scene2::SpriteNode::allocWithSheet(texture, 1, 1, 1);
@@ -68,6 +77,10 @@ public:
      */
     void addChildTo(const std::shared_ptr<cugl::Scene2>& scene) {
         scene->addChild(_node);
+        auto cone = scene2::PolygonNode::alloc();
+        cone->setPolygon(Rect(0, 0, 50, 100));
+        cone->setColor(Color4::RED);
+        _node->addChild(cone);
     }
     
     /**
@@ -94,6 +107,17 @@ public:
     Vec2 nodePos(){
         return _node->getPosition();
     }
+    
+    void patrol(string actionName, const std::shared_ptr<cugl::scene2::MoveTo>& action){
+        _actions->activate(actionName, action, _node);
+    }
+    
+    void addCone(){
+        auto cone = scene2::PolygonNode::alloc();
+        cone->setPolygon(Rect(0, 0, 50, 100));
+        
+    }
+    
 };
 
 #endif /* GuardView_h */

@@ -14,7 +14,6 @@ using namespace cugl;
 GamePlayController::GamePlayController(const Size displaySize, std::shared_ptr<cugl::AssetManager>& assets ):_scene(cugl::Scene2::alloc(displaySize)) {
     // Initialize the assetManager
     _assets = assets;
-    
     // Initialize the scene to a locked width
     Size dimen = Application::get()->getDisplaySize();
     dimen *= SCENE_WIDTH/dimen.width; // Lock the game to a reasonable resolution
@@ -40,9 +39,10 @@ GamePlayController::GamePlayController(const Size displaySize, std::shared_ptr<c
     _resourceSet = std::make_unique<ArtifactSetController>(_assets);
     generateArtifact();
     generateResource();
-//    _coneSet1 = std::make_unique<GuardSetController>(_assets);
-    _guardSet1 = std::make_unique<GuardSetController>(_assets);
-    _guardSet2 = std::make_unique<GuardSetController>(_assets);
+    
+
+    _guardSet1 = std::make_unique<GuardSetController>(_assets, _actions);
+    _guardSet2 = std::make_unique<GuardSetController>(_assets, _actions);
     generateGuard();
     secondaryGuard();
     
@@ -114,6 +114,12 @@ GamePlayController::GamePlayController(const Size displaySize, std::shared_ptr<c
     // add switch indicator
     _switchNode = _assets->get<scene2::SceneNode>("button_switch");
 
+    
+    _moveTo = cugl::scene2::MoveTo::alloc();
+    _moveCam = CameraMoveTo::alloc();
+    _moveCam->setDuration(.08);
+    _moveTo->setDuration(.08);
+    
     init();
     
     
@@ -140,7 +146,7 @@ void GamePlayController::init(){
     _activeMap = "tileMap1";
     _template = 0;
     
-    Vec2 start = Vec2(1,1);
+    Vec2 start = Vec2(0,0);
     _character = make_unique<CharacterController>(start, _actions, _assets);
     _character->addChildTo(_scene);
     // Forward character movement
@@ -167,10 +173,8 @@ void GamePlayController::init(){
     _resourceSet->clearSet();
     generateArtifact();
     generateResource();
-//    _coneSet1 = make_unique<GuardSetController>(_assets);
-    _guardSet1 = make_unique<GuardSetController>(_assets);
-    _guardSet2 = make_unique<GuardSetController>(_assets);
-//    _coneSet1->clearSet();
+    _guardSet1 = make_unique<GuardSetController>(_assets, _actions);
+    _guardSet2 = make_unique<GuardSetController>(_assets, _actions);
     _guardSet1->clearSet();
     _guardSet2->clearSet();
     generateGuard();
@@ -198,6 +202,7 @@ void GamePlayController::init(){
 
 
 void GamePlayController::update(float dt){
+    _guardSet1->patrol();
     if(_fail_layer->getScene()!=nullptr || _complete_layer->getScene()!=nullptr){
         return;
     }
@@ -269,9 +274,11 @@ void GamePlayController::update(float dt){
         _character->addChildTo(_scene);
         _scene->removeChild(_button_layer);
         _scene->addChild(_button_layer);
+        // stop previous movement after switch world
+        _path->clearPath();
     }
     
-    else if (!_input->getPanDelta().isZero() && path_trace.size() == 0) {
+    else if (!_input->getPanDelta().isZero() && _path->getPath().size() == 0) {
         Vec2 delta = _input->getPanDelta();
 
         // init camera action
@@ -285,7 +292,7 @@ void GamePlayController::update(float dt){
         }
     }
     
-    else if (_input->didPan() && path_trace.size() == 0){
+    else if (_input->didPan() && _path->getPath().size() == 0){
         _moveCam = CameraMoveTo::alloc();
         _moveCam->setDuration(1.25);
         // pan move with the center of the camera view
@@ -304,6 +311,7 @@ void GamePlayController::update(float dt){
             _path->setIsDrawing(true);
             _path->setIsInitiating(true);
             _path->updateLastPos(_character->getPosition()); //change to a fixed location on the character
+            _path->clearPath();
         }
     }
     
@@ -323,7 +331,7 @@ void GamePlayController::update(float dt){
                 Vec2 checkpoint = _path->getLastPos() + (input_posi - _path->getLastPos()) / _path->getLastPos().distance(input_posi) * _path->getSize();
                 if((_activeMap == "tileMap1" && _tilemap1->inObstacle(checkpoint)) || (_activeMap == "tileMap2" && _tilemap2->inObstacle(checkpoint))){
                     _path->setIsDrawing(false);
-                    path_trace.clear();
+                    // path_trace.clear();
                     return;
                 }
                 else{
@@ -338,28 +346,25 @@ void GamePlayController::update(float dt){
         Vec2 input_posi = _input->getPosition();
         input_posi = _scene->screenToWorldCoords(input_posi);
         _path->setIsDrawing(false);
-        path_trace = _path->getPath();
-        _moveTo = cugl::scene2::MoveTo::alloc();
-        _moveCam = CameraMoveTo::alloc();
-        _moveCam->setDuration(.08);
-        _moveTo->setDuration(.08);
-        _path->clearPath(_scene);
+        // path_trace = _path->getPath();
+        
+        _path->removeFrom(_scene);
         
     }
     
-    else if (path_trace.size() != 0 && _actions->isActive("moving") == false){
-        _moveTo->setTarget(path_trace[0]);
-        _moveCam->setTarget(path_trace[0]);
+    if (_path->getPath().size() != 0 && _actions->isActive("moving") == false){
+        _moveTo->setTarget(_path->getPath()[0]);
+        _moveCam->setTarget(_path->getPath()[0]);
         
         _character->moveTo(_moveTo);
         _camManager->activate("movingCam", _moveCam, _cam);
-        path_trace.erase(path_trace.begin());
-
+        // path_trace.erase(path_trace.begin());
+        _path->removeFirst(_scene);
     }
 
     if (_actions->isActive("moving") && !_actions->isActive("character_animation")) {
-        _character->updateAnimation(_characterRight);
-    }
+            _character->updateAnimation(_characterRight);
+        }
     
     // if collect a resource
     if(_activeMap == "tileMap1"){
@@ -495,6 +500,8 @@ void GamePlayController::update(float dt){
         for(int j = 68; j <= 84; j++) {
             _tilemap->addTile(128, j, tileColor, is_obs);
         }
+
+
     }
     
     /**
@@ -507,6 +514,7 @@ void GamePlayController::update(float dt){
         _tilemap->updateColor(Color4::WHITE);
         _tilemap->updateTileSize(Size(8, 8));
         _tilemap->updatePosition(_scene->getSize()/2);
+        
         // walls
         Color4 tileColor = Color4::BLACK;
         bool is_obs = true;
@@ -564,6 +572,7 @@ void GamePlayController::update(float dt){
         for(int j = 0; j <= 18; j++) {
             _tilemap->addTile(126, j, tileColor, is_obs);
         }
+        
     }
 
     void GamePlayController::generateArtifact() {
@@ -585,7 +594,8 @@ void GamePlayController::update(float dt){
     }
 
     void GamePlayController::generateGuard() {
-        addGuard1(90, 500);
+        vector<Vec2> patrol_stops = { Vec2(90, 500), Vec2(190, 500), Vec2(190, 400) }; //must be at least two stops
+        addMovingGuard1(90, 500, patrol_stops);
         addGuard1(450, 250);
         addGuard1(500, 100);
         addGuard1(630, 500);
@@ -600,6 +610,8 @@ void GamePlayController::update(float dt){
 //        addGuard2(350, 350, cone);
 //        addGuard2(720, 320, cone);
     }
+
+    
         
     
 #pragma mark -

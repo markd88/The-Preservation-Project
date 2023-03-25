@@ -62,6 +62,9 @@ public:
     std::shared_ptr<cugl::scene2::Animate> _characterRight;
     std::shared_ptr<cugl::scene2::Animate> _characterLeft;
     
+    /** Adjacency matrix for shortest path algorithm**/
+    
+    
     /**manager to process camera actions**/
     std::shared_ptr<CameraManager> _camManager;
     std::shared_ptr<CameraMoveTo> _moveCam;
@@ -120,11 +123,21 @@ private:
         Vec2 aPos = Vec2(w,h);
         _artifactSet->add_this(aPos, _scene, _assets, isResource);
     }
+    void addMovingGuard1(int w, int h, vector<Vec2> patrol_stops) {
+        Vec2 gPos = Vec2(w,h);
+        _guardSet1->add_this_moving(gPos, _scene, _assets, patrol_stops);
+    }
     void addGuard1(int w, int h) {
         Vec2 gPos = Vec2(w,h);
         _guardSet1->add_this(gPos, _scene, _assets);
 //        _coneSet1->add_this(gPos, _scene, _assets);
     }
+    
+    void addMovingGuard2(int w, int h, vector<Vec2> patrol_stops) {
+        Vec2 gPos = Vec2(w,h);
+        _guardSet2->add_this_moving(gPos, _scene, _assets, patrol_stops);
+    }
+
     void addGuard2(int w, int h) {
         Vec2 gPos = Vec2(w,h);
         _guardSet2->add_this(gPos, _scene, _assets);
