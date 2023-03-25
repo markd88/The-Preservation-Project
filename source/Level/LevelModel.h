@@ -52,8 +52,8 @@ protected:
     /** Reference to the debug root of the scene graph */
 //    std::shared_ptr<scene2::SceneNode> _debugnode;
 
-    std::unique_ptr<TilemapController> _primaryWorld;
-    std::unique_ptr<TilemapController> _secondaryWorld;
+    std::shared_ptr<TilemapController> _primaryWorld;
+    std::shared_ptr<TilemapController> _secondaryWorld;
 
     /** Reference to all the active crates */
 //    std::vector<std::shared_ptr<CrateModel>> _crates;
@@ -269,11 +269,10 @@ public:
     void showDebug(bool flag);
     
     /** Generates primary world with guards. */
-//    void generatePrimaryWorld(std::unique_ptr<TilemapController>& tilemap);
+    std::shared_ptr<TilemapController> generatePrimaryWorld() {return _primaryWorld;};
 
     /** Generates secondary world without guards. */
-//    void generateSecondaryWorld(std::unique_ptr<TilemapController>& tilemap);
-
+    std::shared_ptr<TilemapController> generateSecondaryWorld() {return _secondaryWorld;};
 
 
 #pragma mark -

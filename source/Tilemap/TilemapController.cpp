@@ -31,6 +31,10 @@ TilemapController::TilemapController(Vec2 position, Vec2 dimensions,
     initializeTilemap();
 }
 
+void TilemapController::init(Vec2 position, Vec2 dimensions, Color4 color, Size tileSize) {
+    
+};
+
 #pragma mark -
 #pragma mark Model Methods
 /**
@@ -83,6 +87,22 @@ void TilemapController::addTile(int col, int row, Color4 color, bool is_obs) {
     
     _tilemap[row][col]->addChildTo(_view->getNode());
 }
+
+void TilemapController::addTile2(int col, int row, bool is_obs,
+             const std::shared_ptr<cugl::AssetManager>& assets, std::string textureKey) {
+//    if(col < 0 || row < 0 || col >= _model->dimensions.x || row >= _model->dimensions.y){
+//        return ;
+//    }
+    Vec2 pos;
+    pos = Vec2(col * _model->tileSize.width, row * _model->tileSize.height);
+    Tile temp = std::make_unique<TileController>(pos, _model->tileSize, is_obs, assets, textureKey);
+
+    _tilemap[row][col] = std::move(temp);
+
+    _tilemap[row][col]->addChildTo(_view->getNode());
+    CULog("addTile2");
+};
+
 
 /**
  *  Updates the model and view with the dimensions of the tilemap.
@@ -184,6 +204,13 @@ void TilemapController::removeChildFrom(const std::shared_ptr<cugl::Scene2>& sce
  *  move these pointers without copying them, use `std::move`.
  */
 void TilemapController::initializeTilemap() {
+    // TODO: change hard coded dimensions
+//    for(int i = 0; i < 2000; i++) {
+//        std::vector<Tile> tileVec(2000);
+//        // The compiler infers that tileVec contains unique pointers so std::move must be used to avoid copys
+//        _tilemap.push_back(std::move(tileVec));
+//    }
+
     for(int i = 0; i < _model->dimensions.y; i++) {
         std::vector<Tile> tileVec(_model->dimensions.x);
         // The compiler infers that tileVec contains unique pointers so std::move must be used to avoid copys

@@ -30,6 +30,17 @@ public:
         setSize(size);
     }
     
+    TileView(Vec2 position, Size size, const std::shared_ptr<cugl::AssetManager>& assets, std::string textureKey) {
+        // TODO: Implement me
+        this->_node = scene2::PolygonNode::alloc();
+        _node->setAnchor(Vec2::ANCHOR_BOTTOM_LEFT);
+        _node->setRelativeColor(false);
+        setColor(Color4::WHITE); // TODO
+        setPosition(position);
+        setSize(size);
+        // attach texture to tile
+    }
+    
     /**
      * Deletes this TileView
      *

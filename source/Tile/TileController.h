@@ -28,6 +28,12 @@ public:
         _view = std::make_unique<TileView>(position, size, color);
     }
     
+    TileController(Vec2 position, Size size, bool is_obs,
+                   const std::shared_ptr<cugl::AssetManager>& assets, std::string textureKey) {
+        this->_model = std::make_unique<TileModel>(position, size, Color4::WHITE, textureKey, is_obs);
+        _view = std::make_unique<TileView>(position, size, assets, textureKey);
+    }
+    
 #pragma mark Update Methods
 public:
     /**

@@ -2,6 +2,7 @@
 #include "GamePlayController.h"
 #include <chrono>
 #include <thread>
+#include "Level/LevelConstants.h"
 // This is NOT in the same directory
 using namespace std;
 using namespace cugl;
@@ -31,10 +32,19 @@ GamePlayController::GamePlayController(const Size displaySize, std::shared_ptr<c
     _path = make_unique<PathController>();
     // initialize character, two maps, path
     
-    _tilemap1 = std::make_unique<TilemapController>();
+    _level = _assets->get<LevelModel>(LEVEL_ZERO_KEY);
+    if (_level == nullptr) {
+        CULog("Failed to import level!");
+//        return false;
+    }
+    
+    _tilemap1 = _level->generatePrimaryWorld();
+//    _tilemap1 = _level->generateSecondaryWorld();
+    
+//    _tilemap1 = std::make_unique<TilemapController>();
     _tilemap2 = std::make_unique<TilemapController>();
-    generatePrimaryWorld(_tilemap1);
-    generateSecondaryWorld(_tilemap2);
+//    generatePrimaryWorld(_tilemap1);
+//    generateSecondaryWorld(_tilemap2);
     
     _artifactSet = std::make_unique<ArtifactSetController>(_assets);
     _resourceSet = std::make_unique<ArtifactSetController>(_assets);

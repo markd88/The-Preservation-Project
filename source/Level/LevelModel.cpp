@@ -31,8 +31,15 @@ _scale(32, 32)
 {
     _bounds.size.set(1.0f, 1.0f);
     _primaryWorld = std::make_unique<TilemapController>();
-    _secondaryWorld = std::make_unique<TilemapController>();
+    
+    //    _primaryWorld->updateDimensions(Vec2(144, 84));
+    //    _primaryWorld->updateDimensions(Vec2(1280, 1280));
+    _primaryWorld->updateDimensions(Vec2(10, 10)); // map height (20) / 2; map width divided by 2
 
+    //    _primaryWorld->updateColor(Color4::WHITE);
+    _primaryWorld->updateTileSize(Size(128, 128)); // tileheight(64) x 2, tilewidth x 2
+    
+    _secondaryWorld = std::make_unique<TilemapController>();
 }
 
 /**
@@ -270,18 +277,15 @@ bool LevelModel::loadTilemap(const std::shared_ptr<JsonValue>& json) {
     
     std::string textureType = json->get("type")->toString();
     std::cout<<textureType<<std::endl;
-    int x = json->get("x")->asInt();
-    int y = json->get("y")->asInt();
+    int x = json->get("x")->asInt() / 128;
+    int y = json->get("y")->asInt() / 128 - 1;
     int width = json->get("width")->asInt();
     int height = json->get("height")->asInt();
     
     // TODO: replace below
-    _primaryWorld->updateDimensions(Vec2(144, 84));
-    _primaryWorld->updateColor(Color4::WHITE);
-    _primaryWorld->updateTileSize(Size(8, 8));
+//    _primaryWorld->addTile(x, y, Color4::BLACK, false);
+    _primaryWorld->addTile2(x, y, false, _assets, textureType);
 
-    _primaryWorld->addTile(x, y, Color4::BLACK, false);
-    
     success = success && x >= 0 && y >= 0;
     return success;
 }
@@ -305,3 +309,11 @@ bool LevelModel::loadWall(const std::shared_ptr<JsonValue>& json) {
     success = success && x >= 0 && y >= 0;
     return success;
 }
+
+//std::unique_ptr<TilemapController> generatePrimaryWorld() {
+//    return _primaryWorld;
+//};
+//
+//std::unique_ptr<TilemapController> generateSecondaryWorld() {
+//    return _secondaryWorld;
+//};

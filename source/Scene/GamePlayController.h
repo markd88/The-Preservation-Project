@@ -17,7 +17,7 @@ using namespace std;
 //#include <GuardSet/Guard/GuardController.h>
 #include <ArtifactSet/ArtifactSetController.h>
 //#include <ArtifactSet/Artifact/ArtifactController.h>
-
+#include "LevelModel.h"
 
 class GamePlayController {
 #pragma mark Internal References
@@ -45,7 +45,7 @@ public:
     
     /** The tilemap to procedurally generate */
     std::unique_ptr<CharacterController> _character;
-    std::unique_ptr<TilemapController> _tilemap1;
+    std::shared_ptr<TilemapController> _tilemap1;
     std::unique_ptr<TilemapController> _tilemap2;
     
 //    std::unique_ptr<GuardController> _guard;
@@ -73,6 +73,7 @@ public:
     string _activeMap;
 
 //    std::shared_ptr<cugl::scene2::Label> _label;
+    std::shared_ptr<LevelModel> _level;
     
 #pragma mark Main Methods
 public:
