@@ -144,7 +144,6 @@ bool LevelModel::loadObject(const std::string type, const std::shared_ptr<JsonVa
 //    if (json->get("class") == nullptr) {
 //        CULog("json->get(class) is nullptr...");
 //    }
-    std::cout<<type<<std::endl;
 //    auto type = json->get("class")->asString();
     if (type == WALLS_FIELD) {
         return loadWall(json);
@@ -165,8 +164,6 @@ bool LevelModel::loadTilemap(const std::shared_ptr<JsonValue>& json) {
     
     std::string textureType = json->get("type")->toString();
 
-    std::cout<<textureType<<std::endl;
-
     int width = json->get("width")->asInt();
     int height = json->get("height")->asInt();
     int x = json->get("x")->asInt() / width;
@@ -175,6 +172,8 @@ bool LevelModel::loadTilemap(const std::shared_ptr<JsonValue>& json) {
     // TODO: replace below
 //    _primaryWorld->addTile(x, y, Color4::BLACK, false);
     _primaryWorld->addTile2(x, y, false, _assets, textureType);
+//    int &test = 999;
+//    _primaryWorld->addTile2(x, y, false, _assets, test);
 
     success = success && x >= 0 && y >= 0;
     return success;
@@ -201,10 +200,6 @@ bool LevelModel::loadWall(const std::shared_ptr<JsonValue>& json) {
     return success;
 }
 
-//std::unique_ptr<TilemapController> generatePrimaryWorld() {
-//    return _primaryWorld;
-//};
-//
-//std::unique_ptr<TilemapController> generateSecondaryWorld() {
-//    return _secondaryWorld;
+//void LevelModel::setTilemapTexture() {
+//    _primaryWorld->setTexture(_assets);
 //};

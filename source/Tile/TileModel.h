@@ -13,7 +13,7 @@ private:
     Color4 _color;
     /** If the tile is a obstacle*/
     bool _is_obs;
-    std::string _textureKey;
+    std::string _textureKey = "testttttt";
     
 public:
     /** A public accessible, read-only version of the color */
@@ -44,11 +44,15 @@ public:
         setColor(color);
         setPosition(position);
         setSize(size);
-        _textureKey = textureKey;
+        setTextureKey(textureKey);
     }
 
 #pragma mark Setters
 public:
+    
+    void setTextureKey(std::string textureKey) {
+        this->_textureKey = textureKey;
+    }
     /**
      *  Sets the position of the bottom left corner of the tile.
      *
@@ -92,5 +96,7 @@ public:
         return _is_obs;
     }
     
-    
+    std::string getTextureKey() {
+        return _textureKey;
+    }
 };

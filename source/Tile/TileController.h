@@ -33,7 +33,7 @@ public:
         this->_model = std::make_unique<TileModel>(position, size, Color4::WHITE, textureKey, is_obs);
         _view = std::make_unique<TileView>(position, size, assets, textureKey);
     }
-    
+
 #pragma mark Update Methods
 public:
     /**
@@ -91,6 +91,14 @@ public:
         _view->removeChildFrom(node);
     }
     
+//    void setTextureKey(std::string textureKey) {
+//        _model->setTextureKey(textureKey);
+//    }
+
+//    void setTexture(const std::shared_ptr<cugl::AssetManager>& assets, std::string textureKey) {
+//        _view->setTexture(assets, textureKey);
+//    }
+
 #pragma mark Getters
 public:
     /**
@@ -109,6 +117,10 @@ public:
      */
     bool contains(Vec2 point){
         return _view->contains(point);
+    }
+    
+    std::string getTextureKey() {
+        return _model->getTextureKey();
     }
 };
 #endif

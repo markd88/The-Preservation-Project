@@ -21,7 +21,8 @@ private:
     std::unique_ptr<TilemapView> _view;
     
 #pragma mark External References
-private:
+//private:
+public: // debug
     /** Tilemape is a 2D vector list of tiles */
     typedef std::unique_ptr<TileController> Tile;
     typedef std::vector<std::vector<Tile>> Tilemap;
@@ -117,6 +118,8 @@ public:
     void addTile2(int col, int row, bool is_obs,
                  const std::shared_ptr<cugl::AssetManager>& assets, std::string textureKey);
 
+//    void setTexture(const std::shared_ptr<cugl::AssetManager>& assets);
+    std::string getTextureKey();
     /**
      * Inverts the color of the tilemap and it's tiles.
      *

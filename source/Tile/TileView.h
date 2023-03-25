@@ -7,6 +7,7 @@ class TileView {
 private:
     /** Main tile view */
     std::shared_ptr<scene2::PolygonNode> _node;
+    std::string _textureKey;
     
 #pragma mark Main Functions
 public:
@@ -38,7 +39,7 @@ public:
         setColor(Color4::WHITE); // TODO
         setPosition(position);
         setSize(size);
-        // attach texture to tile
+//        setTextureKey(textureKey);
     }
     
     /**
@@ -111,6 +112,20 @@ public:
         // TODO: Implement me
         _node->setColor(color);
     }
+    
+//    void setTexture(const std::shared_ptr<cugl::AssetManager>& assets, std::string textureKey) {
+////        Size  size  = getDisplaySize();
+////        float scale = GAME_WIDTH/size.width;
+////        size *= scale;
+//
+//        // The logo is actually an image+label.  We need a parent node
+////        _logo = scene2::SceneNode::alloc();
+//
+//        // Get the image and add it to the node.
+//        std::shared_ptr<Texture> texture  = assets->get<Texture>(textureKey);
+//        _node = scene2::PolygonNode::allocWithTexture(texture);
+//        _node->setScale(0.8f); // Magic number to rescale asset
+//    }
 
     /**
      *  Detect if this file contains a point

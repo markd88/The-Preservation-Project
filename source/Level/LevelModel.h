@@ -171,6 +171,8 @@ public:
      * @param assets the loaded assets for this game level
      */
     void setAssets(const std::shared_ptr<AssetManager>& assets) { _assets = assets;  }
+    
+//    void setTilemapTexture();
 
     /** Generates primary world with guards. */
     std::shared_ptr<TilemapController> generatePrimaryWorld() {return _primaryWorld;};
