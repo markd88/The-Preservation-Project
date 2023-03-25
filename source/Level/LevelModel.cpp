@@ -9,9 +9,6 @@
 #include "LevelConstants.h"
 
 #include <cugl/assets/CUJsonLoader.h>
-//#include "TDExitModel.h"
-//#include "TDCrateModel.h"
-//#include "TDWallModel.h"
 #include <string>
 
 #pragma mark -
@@ -141,10 +138,6 @@ void LevelModel::unload() {
 
 
 bool LevelModel::loadObject(const std::string type, const std::shared_ptr<JsonValue>& json) {
-//    if (json->get("class") == nullptr) {
-//        CULog("json->get(class) is nullptr...");
-//    }
-//    auto type = json->get("class")->asString();
     if (type == WALLS_FIELD) {
         return loadWall(json);
     } else if (type == TILEMAP_FILED) {
@@ -163,10 +156,6 @@ bool LevelModel::loadTilemap(const std::shared_ptr<JsonValue>& json) {
     bool success = true;
     
     std::string textureType = json->get("type")->asString();
-//    std::string textureType = "tile_past_floor1";
-//    std::string textureType = "blue";
-
-
 
     int width = json->get("width")->asInt();
     int height = json->get("height")->asInt();
@@ -174,11 +163,8 @@ bool LevelModel::loadTilemap(const std::shared_ptr<JsonValue>& json) {
     int y = json->get("y")->asInt() / height - 1;
     
     // TODO: replace below
-//    _primaryWorld->addTile(x, y, Color4::BLACK, false);
     _primaryWorld->addTile2(x, y, false, _assets, textureType);
-//    int &test = 999;
-//    _primaryWorld->addTile2(x, y, false, _assets, test);
-
+    
     success = success && x >= 0 && y >= 0;
     return success;
 }
@@ -189,16 +175,16 @@ bool LevelModel::loadTilemap(const std::shared_ptr<JsonValue>& json) {
 */
 bool LevelModel::loadWall(const std::shared_ptr<JsonValue>& json) {
     bool success = true;
-
-    std::string textureType = json->get("type")->toString();
     
+    std::string textureType = json->get("type")->asString();
+
     int width = json->get("width")->asInt();
     int height = json->get("height")->asInt();
     int x = json->get("x")->asInt() / width;
     int y = json->get("y")->asInt() / height - 1;
     
     // TODO: replace below
-    _primaryWorld->addTile(x, y, Color4::RED, true);
+    _primaryWorld->addTile2(x, y, true, _assets, textureType);
     
     success = success && x >= 0 && y >= 0;
     return success;

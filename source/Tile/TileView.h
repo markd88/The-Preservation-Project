@@ -115,13 +115,9 @@ public:
     }
     
     void setTexture(const std::shared_ptr<cugl::AssetManager>& assets, std::string textureKey) {
-        // The logo is actually an image+label.  We need a parent node
         auto tileNode = scene2::SceneNode::alloc();
-
-        // Get the image and add it to the node.
         std::shared_ptr<Texture> texture  = assets->get<Texture>(textureKey);
         tileNode = scene2::PolygonNode::allocWithTexture(texture);
-//        tileNode->setScale(1.0f);
          
         _node->addChild(tileNode);
     }
