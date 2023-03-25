@@ -39,10 +39,13 @@ public:
         PolyFactory _polyFactory;
         Poly2 tri = _polyFactory.makeTriangle(Vec2(0,0), Vec2(0,200), Vec2(200,100));
         _cone = scene2::PolygonNode::allocWithPoly(tri);
-        _cone->setScale(5);
-        _node->setAnchor(Vec2::ANCHOR_MIDDLE_LEFT);
+        _cone->setAnchor(Vec2::ANCHOR_MIDDLE_RIGHT);
+        _cone->setScale(10);
         _cone->setColor(color);
         _cone->setVisible(true);
+        _cone->setPosition(_node->getSize()/_node->getScale()/2);
+//        _cone->setPosition(Vec2 (0, 400));
+//        _cone->setContentSize(size);
         
         _node->addChild(_cone);
 //        setPosition(position);
