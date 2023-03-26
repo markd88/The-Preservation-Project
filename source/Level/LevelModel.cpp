@@ -36,24 +36,6 @@ LevelModel::~LevelModel(void) {
 #pragma mark -
 #pragma mark Drawing Methods
 /**
-* Sets the drawing scale for this game level
-*
-* The drawing scale is the number of pixels to draw before Box2D unit. Because
-* mass is a function of area in Box2D, we typically want the physics objects
-* to be small.  So we decouple that scale from the physics object.  However,
-* we must track the scale difference to communicate with the scene graph.
-*
-* We allow for the scaling factor to be non-uniform.
-*
-* @param value  the drawing scale for this game level
-*/
-//void LevelModel::setDrawScale(float value) {
-//    if (_rocket != nullptr) {
-//        _rocket->setDrawScale(value);
-//    }
-//}
-
-/**
 * Clears the root scene graph node for this level
 */
 void LevelModel::clearRootNode() {
@@ -122,18 +104,6 @@ bool LevelModel:: preload(const std::shared_ptr<cugl::JsonValue>& json) {
 * references to other assets, then these should be disconnected earlier.
 */
 void LevelModel::unload() {
-//    _crates.clear();
-//    for(auto it = _walls.begin(); it != _walls.end(); ++it) {
-//        if (_world != nullptr) {
-//            _world->removeObstacle((*it).get());
-//        }
-//    (*it) = nullptr;
-//    }
-//    _walls.clear();
-//    if (_world != nullptr) {
-//        _world->clear();
-//        _world = nullptr;
-//    }
 }
 
 

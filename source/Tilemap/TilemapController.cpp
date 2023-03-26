@@ -90,15 +90,10 @@ void TilemapController::addTile(int col, int row, Color4 color, bool is_obs) {
 
 void TilemapController::addTile2(int col, int row, bool is_obs,
              const std::shared_ptr<cugl::AssetManager>& assets, std::string textureKey) {
-//    if(col < 0 || row < 0 || col >= _model->dimensions.x || row >= _model->dimensions.y){
-//        return ;
-//    }
+
     Vec2 pos;
     pos = Vec2(col * _model->tileSize.width, row * _model->tileSize.height);
     Tile temp = std::make_unique<TileController>(pos, _model->tileSize, is_obs, assets, textureKey);
-
-
-//    std::cout<<temp->getTextureKey()<<std::endl;
     _tilemap[row][col] = std::move(temp);
 
     _tilemap[row][col]->addChildTo(_view->getNode());
@@ -110,7 +105,6 @@ void TilemapController::setTexture(const std::shared_ptr<cugl::AssetManager>& as
             if(tile != nullptr){
                 std::string textureKey = tile->getTextureKey();
                 if (textureKey != "") {
-                    std::cout<<textureKey<<std::endl;
                     tile->setTexture(assets, textureKey);
                 }
             }
