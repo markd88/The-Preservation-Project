@@ -34,9 +34,6 @@ private:
     
     std::shared_ptr<cugl::scene2::MoveTo> _moveTo;
     
-
-    
-
     
 #pragma mark Main Methods
 public:
@@ -98,30 +95,10 @@ public:
         _view->setSize(size);
     }
     
-    /**
-     *  Updates the model and view with the color of this tile.
-     *
-     *  @param color The tile color
-     */
-    void updateColor(Color4 color) {
-        _model->setColor(color);
-        _view->setColor(color);
-    }
     
-    
-    Vec2 getNodePosition(){
+    Vec2 getNodePosition(){        
         return _view->nodePos();
     }
-
-//#pragma mark Helpers
-//    /**
-//     *  See if the touch point is within the character
-//     *
-//     *  @param point The position of the touchpoint
-//     */
-//    bool contains(Vec2 point){
-//        return _model->contains(point);
-//    }
     
 #pragma mark Scene Methods
 public:

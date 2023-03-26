@@ -158,7 +158,7 @@ void GamePlayController::init(){
     
     
     _pastWorld->addChildTo(_scene);
-    _activeMap = "tileMap1";
+    _activeMap = "pastWorld";
     _template = 0;
     
     Vec2 start = Vec2(0,0);
@@ -229,7 +229,7 @@ void GamePlayController::update(float dt){
     
     _input->update(dt);
     // if pinch, switch world
-    bool cant_switch = ((_activeMap == "tileMap1" && _presentWorld->inObstacle(_character->getPosition())) || (_activeMap == "tileMap2" && _pastWorld->inObstacle(_character->getPosition())));
+    bool cant_switch = ((_activeMap == "pastWorld" && _presentWorld->inObstacle(_character->getPosition())) || (_activeMap == "presentWorld" && _pastWorld->inObstacle(_character->getPosition())));
     
 
     cant_switch = cant_switch || (_character->getNumRes() == 0);
@@ -246,14 +246,20 @@ void GamePlayController::update(float dt){
         // remove and add the child back so that the child is always on the top layer
         
         _character->removeChildFrom(_scene);
-        if (_activeMap == "tileMap1") {
+        if (_activeMap == "pastWorld") {
+//<<<<<<< HEAD
             _pastWorld->removeChildFrom(_scene);
             _presentWorld->addChildTo(_scene);
+//=======
+//            _pastWorld->removeChildFrom(_scene);
+//            _presentWorld->addChildTo(_scene);
+//            _coneSet1->removeChildFrom(_scene);
+//>>>>>>> d0693c6936867fdaf151a3e1702b5ad3cfbbd9cc
             _guardSet1->removeChildFrom(_scene);
             _guardSet2->addChildTo(_scene);
             _artifactSet->removeChildFrom(_scene);
             _resourceSet->removeChildFrom(_scene);
-            _activeMap = "tileMap2";
+            _activeMap = "presentWorld";
             
             // when move to the second world, minus 1 visually
             _res_label->setText(cugl::strtool::to_string(_character->getNumRes()-1));
@@ -262,10 +268,11 @@ void GamePlayController::update(float dt){
             _presentWorld->removeChildFrom(_scene);
             _pastWorld->addChildTo(_scene);
             _guardSet2->removeChildFrom(_scene);
+//            _coneSet1->addChildTo(_scene);
             _guardSet1->addChildTo(_scene);
             _artifactSet->addChildTo(_scene);
             _resourceSet->addChildTo(_scene);
-            _activeMap = "tileMap1";
+            _activeMap = "pastWorld";
             
             // when move to the second world, minus 1 in model
             _character->useRes();
@@ -327,7 +334,7 @@ void GamePlayController::update(float dt){
         if(_path->isInitiating == false){
             while(_path->farEnough(input_posi)){
                 Vec2 checkpoint = _path->getLastPos() + (input_posi - _path->getLastPos()) / _path->getLastPos().distance(input_posi) * _path->getSize();
-                if((_activeMap == "tileMap1" && _pastWorld->inObstacle(checkpoint)) || (_activeMap == "tileMap2" && _presentWorld->inObstacle(checkpoint))){
+                if((_activeMap == "pastWorld" && _pastWorld->inObstacle(checkpoint)) || (_activeMap == "presentWorld" && _presentWorld->inObstacle(checkpoint))){
                     _path->setIsDrawing(false);
                     // path_trace.clear();
                     return;
@@ -364,7 +371,7 @@ void GamePlayController::update(float dt){
         }
     
     // if collect a resource
-    if(_activeMap == "tileMap1"){
+    if(_activeMap == "pastWorld"){
         for(int i=0; i<_artifactSet->_artifactSet.size(); i++){
             // detect collision
             if(_character->contains(_artifactSet->_artifactSet[i]->getNodePosition())){
@@ -400,11 +407,10 @@ void GamePlayController::update(float dt){
     
     
     // if collide with guard
-    if(_activeMap == "tileMap1"){
+    if(_activeMap == "pastWorld"){
         for(int i=0; i<_guardSet1->_guardSet.size(); i++){
             if(_character->contains(_guardSet1->_guardSet[i]->getNodePosition())){
                 _scene->addChild(_fail_layer);
-                
                 _fail_layer->setPosition(_cam->getPosition());
                 break;
             }
@@ -414,14 +420,21 @@ void GamePlayController::update(float dt){
         for(int i=0; i<_guardSet2->_guardSet.size(); i++){
             if(_character->contains(_guardSet2->_guardSet[i]->getNodePosition())){
                 _scene->addChild(_fail_layer);
-                
                 _fail_layer->setPosition(_cam->getPosition());
                 break;
             }
         }
     }
     
-    
+    // if guard cone collide with wall
+//    if(_activeMap == "pastWorld"){
+//        for(int i=0; i<_guardSet1->_guardSet.size(); i++){
+//            if(_pastWorld->inObstacle(_guardSet1->_guardSet[i]->getNodePosition())){
+//                _guardSet1->_guardSet[i]->removeChildFrom(_scene);
+//                break;
+//            }
+//        }
+//    }
     
     // Animate
     
@@ -468,8 +481,12 @@ void GamePlayController::update(float dt){
         addGuard1(970, 75);
     }
     void GamePlayController::secondaryGuard() {
+//        bool cone = false;
         addGuard2(350, 350);
         addGuard2(720, 320);
+//        cone = true;
+//        addGuard2(350, 350, cone);
+//        addGuard2(720, 320, cone);
     }
 
     
