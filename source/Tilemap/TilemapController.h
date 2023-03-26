@@ -1,3 +1,5 @@
+#ifndef __TILEMAP_CONTROLLER_H__
+#define __TILEMAP_CONTROLLER_H__
 // These are all in the same directory
 #include "TilemapModel.h"
 #include "TilemapView.h"
@@ -40,6 +42,8 @@ public:
      * @param tileSize      The width and height of a tile
      */
     TilemapController(Vec2 position, Vec2 dimensions, Color4 color, Size tileSize);
+    
+    void init(Vec2 position, Vec2 dimensions, Color4 color, Size tileSize);
     
 #pragma mark Model Methods
 public:
@@ -110,7 +114,12 @@ public:
      * @param is_obs if the tile is obstacle
      */
     void addTile(int col, int row, Color4 color, bool is_obs);
-    
+
+    void addTile2(int col, int row, bool is_obs,
+                 const std::shared_ptr<cugl::AssetManager>& assets, std::string textureKey);
+
+    void setTexture(const std::shared_ptr<cugl::AssetManager>& assets);
+    std::string getTextureKey();
     /**
      * Inverts the color of the tilemap and it's tiles.
      *
@@ -308,3 +317,4 @@ public:
 
 //}
 
+#endif

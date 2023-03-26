@@ -70,6 +70,160 @@
             "magfilter": "linear",
             "wrapS":     "clamp",
             "wrapT":     "clamp"
+        },
+        "blue": {
+            "file":      "textures/blue.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS":     "clamp",
+            "wrapT":     "clamp"
+        },
+        "tile_past_floor_windowleft": {
+            "file":      "textures/tile_past_floor_windowleft.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS":     "clamp",
+            "wrapT":     "clamp"
+        },
+        "tile_past_floor_windowright": {
+            "file":      "textures/tile_past_floor_windowright.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS":     "clamp",
+            "wrapT":     "clamp"
+        },
+        "tile_past_floor1": {
+            "file":      "textures/tile_past_floor1.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS":     "clamp",
+            "wrapT":     "clamp"
+        },
+        "tile_past_floor2": {
+            "file":      "textures/tile_past_floor2.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS":     "clamp",
+            "wrapT":     "clamp"
+        },
+        "tile_past_floor3": {
+            "file":      "textures/tile_past_floor3.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS":     "clamp",
+            "wrapT":     "clamp"
+        },
+        "tile_past_wall_windowcenter": {
+            "file":      "textures/tile_past_wall_windowcenter.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS":     "clamp",
+            "wrapT":     "clamp"
+        },
+        "tile_past_wall_windowleft": {
+            "file":      "textures/tile_past_wall_windowleft.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS":     "clamp",
+            "wrapT":     "clamp"
+        },
+        "tile_past_wall_windowright": {
+            "file":      "textures/tile_past_wall_windowright.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS":     "clamp",
+            "wrapT":     "clamp"
+        },
+        "tile_past_wall1": {
+            "file":      "textures/tile_past_wall1.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS":     "clamp",
+            "wrapT":     "clamp"
+        },
+        "tile_past_wall2": {
+            "file":      "textures/tile_past_wall2.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS":     "clamp",
+            "wrapT":     "clamp"
+        },
+        "tile_present_grass_s_half_rock": {
+            "file":      "textures/tile_present_grass_s_half_rock.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS":     "clamp",
+            "wrapT":     "clamp"
+        },
+        "tile_past_wall_windowcenter": {
+            "file":      "textures/tile_past_wall_windowcenter.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS":     "clamp",
+            "wrapT":     "clamp"
+        },
+        "tile_present_grass_s_rock": {
+            "file":      "textures/tile_present_grass_s_rock.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS":     "clamp",
+            "wrapT":     "clamp"
+        },
+        "tile_past_wall_windowcenter": {
+            "file":      "textures/tile_past_wall_windowcenter.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS":     "clamp",
+            "wrapT":     "clamp"
+        },
+        "tile_present_grass_s_slopepos_rock": {
+            "file":      "textures/tile_present_grass_s_slopepos_rock.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS":     "clamp",
+            "wrapT":     "clamp"
+        },
+        "tile_present_grass1": {
+            "file":      "textures/tile_present_grass1.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS":     "clamp",
+            "wrapT":     "clamp"
+        },
+        "tile_present_grass2": {
+            "file":      "textures/tile_present_grass2.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS":     "clamp",
+            "wrapT":     "clamp"
+        },
+        "tile_present_grass3": {
+            "file":      "textures/tile_present_grass3.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS":     "clamp",
+            "wrapT":     "clamp"
+        },
+        "tile_present_wall_half": {
+            "file":      "textures/tile_present_wall_half.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS":     "clamp",
+            "wrapT":     "clamp"
+        },
+        "tile_present_wall_slopepos": {
+            "file":      "textures/tile_present_wall_slopepos.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS":     "clamp",
+            "wrapT":     "clamp"
+        },
+        "tile_present_wall": {
+            "file":      "textures/tile_present_wall.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS":     "clamp",
+            "wrapT":     "clamp"
         }
 	},
 	"fonts": {

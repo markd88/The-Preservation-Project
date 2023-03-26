@@ -11,6 +11,8 @@
 //
 // Include the class header, which includes all of the CUGL classes
 #include "App.h"
+#include <Level/LevelConstants.h>
+#include <Level/LevelModel.h>
 
 // This keeps us from having to write cugl:: all the time
 using namespace cugl;
@@ -45,10 +47,14 @@ void App::onStartup() {
     _assets->attach<WidgetValue>(WidgetLoader::alloc()->getHook());
     _assets->attach<scene2::SceneNode>(Scene2Loader::alloc()->getHook());
     
+    _assets->attach<LevelModel>(GenericLoader<LevelModel>::alloc()->getHook());
+
     // for now, just loading synchronous
     _assets->loadDirectoryAsync("json/assets.json", nullptr);
-    
-    
+    // load level files
+    _assets->loadAsync<LevelModel>(LEVEL_ZERO_PAST_KEY, LEVEL_ZERO_PAST_FILE, nullptr);
+    _assets->loadAsync<LevelModel>(LEVEL_ZERO_PRESENT_KEY, LEVEL_ZERO_PRESENT_FILE, nullptr);
+
     // Create a sprite batch (and background color) to render the scene
     _batch = SpriteBatch::alloc();
     auto cam = OrthographicCamera::alloc(getDisplaySize());

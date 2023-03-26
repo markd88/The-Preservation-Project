@@ -14,7 +14,7 @@ using namespace std;
 #include <Camera/CameraMove.h>
 #include <GuardSet/GuardSetController.h>
 #include <ArtifactSet/ArtifactSetController.h>
-
+#include "LevelModel.h"
 
 class GamePlayController {
 #pragma mark Internal References
@@ -42,8 +42,8 @@ public:
     
     /** The tilemap to procedurally generate */
     std::unique_ptr<CharacterController> _character;
-    std::unique_ptr<TilemapController> _tilemap1;
-    std::unique_ptr<TilemapController> _tilemap2;
+    std::shared_ptr<TilemapController> _pastWorld;
+    std::shared_ptr<TilemapController> _presentWorld;
     
     std::unique_ptr<GuardSetController> _coneSet1;
     std::unique_ptr<GuardSetController> _guardSet1;
@@ -72,7 +72,9 @@ public:
     string _activeMap;
 
 //    std::shared_ptr<cugl::scene2::Label> _label;
-    
+    std::shared_ptr<LevelModel> _pastWorldLevel;
+    std::shared_ptr<LevelModel> _presentWorldLevel;
+
 #pragma mark Main Methods
 public:
     /**
@@ -111,13 +113,7 @@ public:
     void render(std::shared_ptr<SpriteBatch> &batch) ;
 
 #pragma mark Generation Helpers
-private:
-    /** Generates primary world with guards. */
-    void generatePrimaryWorld(std::unique_ptr<TilemapController>& tilemap);
-
-    /** Generates secondary world without guards. */
-    void generateSecondaryWorld(std::unique_ptr<TilemapController>& tilemap);
-    
+private:    
     /** Generates artifacts and guards in the primary world. */
     void addArtifact(int w, int h, bool isResource) {
         Vec2 aPos = Vec2(w,h);
@@ -125,7 +121,7 @@ private:
     }
     void addMovingGuard1(int w, int h, vector<Vec2> patrol_stops) {
         Vec2 gPos = Vec2(w,h);
-        _guardSet1->add_this_moving(gPos, _scene, _assets, patrol_stops);
+//        _guardSet1->add_this_moving(gPos, _scene, _assets, patrol_stops);
     }
     void addGuard1(int w, int h) {
         Vec2 gPos = Vec2(w,h);
@@ -135,7 +131,7 @@ private:
     
     void addMovingGuard2(int w, int h, vector<Vec2> patrol_stops) {
         Vec2 gPos = Vec2(w,h);
-        _guardSet2->add_this_moving(gPos, _scene, _assets, patrol_stops);
+//        _guardSet2->add_this_moving(gPos, _scene, _assets, patrol_stops);
     }
 
     void addGuard2(int w, int h) {

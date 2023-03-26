@@ -13,6 +13,7 @@ private:
     Color4 _color;
     /** If the tile is a obstacle*/
     bool _is_obs;
+    std::string _textureKey;
     
 public:
     /** A public accessible, read-only version of the color */
@@ -36,9 +37,22 @@ public:
         setSize(size);
          
     }
+    
+    TileModel(Vec2 position, Size size, Color4 color, std::string textureKey, bool is_obs): color(_color) {
+        // TODO: Implement me
+        _is_obs = is_obs;
+        setColor(color);
+        setPosition(position);
+        setSize(size);
+        setTextureKey(textureKey);
+    }
 
 #pragma mark Setters
 public:
+    
+    void setTextureKey(std::string textureKey) {
+        this->_textureKey = textureKey;
+    }
     /**
      *  Sets the position of the bottom left corner of the tile.
      *
@@ -82,5 +96,7 @@ public:
         return _is_obs;
     }
     
-    
+    std::string getTextureKey() {
+        return _textureKey;
+    }
 };
