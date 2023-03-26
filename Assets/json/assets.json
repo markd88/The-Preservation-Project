@@ -13,6 +13,9 @@
         "guard": {
             "file":     "textures/guard.png"
         },
+        "cone": {
+            "file":     "textures/cone.png"
+        },
         "artifact": {
             "file":     "textures/artifact.png"
         },

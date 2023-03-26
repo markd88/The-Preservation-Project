@@ -12,11 +12,8 @@ using namespace std;
 #include <Input/InputController.h>
 #include <Camera/CameraManager.h>
 #include <Camera/CameraMove.h>
-
 #include <GuardSet/GuardSetController.h>
-//#include <GuardSet/Guard/GuardController.h>
 #include <ArtifactSet/ArtifactSetController.h>
-//#include <ArtifactSet/Artifact/ArtifactController.h>
 
 
 class GamePlayController {
@@ -48,11 +45,10 @@ public:
     std::unique_ptr<TilemapController> _tilemap1;
     std::unique_ptr<TilemapController> _tilemap2;
     
-//    std::unique_ptr<GuardController> _guard;
+    std::unique_ptr<GuardSetController> _coneSet1;
     std::unique_ptr<GuardSetController> _guardSet1;
     std::unique_ptr<GuardSetController> _guardSet2;
     
-//    std::unique_ptr<ArtifactController> _artifact;
     std::unique_ptr<ArtifactSetController> _artifactSet;
     std::unique_ptr<ArtifactSetController> _resourceSet;
     
@@ -134,6 +130,7 @@ private:
     void addGuard1(int w, int h) {
         Vec2 gPos = Vec2(w,h);
         _guardSet1->add_this(gPos, _scene, _assets);
+//        _coneSet1->add_this(gPos, _scene, _assets);
     }
     
     void addMovingGuard2(int w, int h, vector<Vec2> patrol_stops) {
