@@ -10,19 +10,10 @@
 
 #include <stdio.h>
 #include <cugl/cugl.h>
-#include <cugl/physics2/CUObstacleWorld.h>
-#include <vector>
 #include <cugl/assets/CUAsset.h>
-#include <cugl/io/CUJsonReader.h>
-//#include "TDRocketModel.h"
 #include <Tilemap/TilemapController.h>
 
 using namespace cugl;
-
-/** Forward references to the various classes used by this level */
-//class ExitModel;
-//class WallModel;
-//class CrateModel;
 
 #pragma mark -
 #pragma mark Level Model
@@ -44,29 +35,6 @@ protected:
     std::shared_ptr<cugl::AssetManager> _assets;
 
 #pragma mark Internal Helper
-
-    /**
-    * Obtains a physics position for the game world from a tiled json object.
-    *
-    * This conversion is necessary since y=0 in tiled is at the top of the screen,
-    * whilst y=0 in our game is at the bottom.
-    *
-    * @param the json file for the tiled object that the position needs to be obtained from
-    *
-    * @return the resultant tiled position
-    *
-    */
-    Vec2 getObjectPos(const std::shared_ptr<JsonValue>& json);
-
-    /**
-    * Obtains a vector array of floats representing the vertices of a polygon
-    * given a tiled polygon object
-    *
-    *
-    * @return a vector array of floats representing the vertices of the polygon
-    */
-    std::vector<float> getVertices(const std::shared_ptr<JsonValue>& json);
-
     /**
     * Determines which object is currently being parsed,
     * and then sends the object over
@@ -97,19 +65,6 @@ protected:
      */
     void clearRootNode();
 
-    /**
-     * Adds the physics object to the physics world and loosely couples it to the scene graph
-     *
-     * There are two ways to link a physics object to a scene graph node on the
-     * screen.  One way is to make a subclass of a physics object, like we did
-     * with rocket.  The other is to use callback functions to loosely couple
-     * the two.  This function is an example of the latter.
-     *
-     * param obj    The physics object to add
-     * param node   The scene graph node to attach it to
-     */
-    void addObstacle(const std::shared_ptr<cugl::physics2::Obstacle>& obj,
-                     const std::shared_ptr<cugl::scene2::SceneNode>& node);
 
 public:
 #pragma mark Static Constructors
@@ -140,26 +95,9 @@ public:
     }
 
 #pragma mark Model Access
-    /**
-     * Returns the rocket in this game level
-     *
-     * @return the rocket in this game level
-     */
-//    const std::shared_ptr<RocketModel>& getRocket() { return _rocket; }
-
-    /**
-     * Returns the exit door in this game level
-     *
-     * @return the exit door in this game level
-     */
-//    const std::shared_ptr<ExitModel>& getExit() { return _goalDoor; }
-
-    /**
-     * Returns the Obstacle world in this game level
-     *
-     * @return the obstacle world in this game level
-     */
-//    const std::shared_ptr<physics2::ObstacleWorld>& getWorld() { return _world; }
+    
+    /** Get world map */
+    std::shared_ptr<TilemapController> getWorld() {return _world;};
 
 
 #pragma mark Drawing Methods
@@ -172,10 +110,6 @@ public:
     void setAssets(const std::shared_ptr<AssetManager>& assets) { _assets = assets;  }
     
     void setTilemapTexture();
-
-    /** Get past world with guards. */
-    std::shared_ptr<TilemapController> getWorld() {return _world;};
-
 
 #pragma mark -
 #pragma mark Asset Loading

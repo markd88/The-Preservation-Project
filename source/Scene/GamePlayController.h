@@ -114,13 +114,7 @@ public:
     void render(std::shared_ptr<SpriteBatch> &batch) ;
 
 #pragma mark Generation Helpers
-private:
-    /** Generates primary world with guards. */
-    void generatePrimaryWorld(std::unique_ptr<TilemapController>& tilemap);
-
-    /** Generates secondary world without guards. */
-    void generateSecondaryWorld(std::unique_ptr<TilemapController>& tilemap);
-    
+private:    
     /** Generates artifacts and guards in the primary world. */
     void addArtifact(int w, int h, bool isResource) {
         Vec2 aPos = Vec2(w,h);
