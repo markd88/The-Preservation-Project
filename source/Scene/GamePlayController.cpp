@@ -405,8 +405,7 @@ void GamePlayController::update(float dt){
     // if collide with guard
     if(_activeMap == "tileMap1"){
         for(int i=0; i<_guardSet1->_guardSet.size(); i++){
-//            if(_character->contains(_guardSet1->_guardSet[i]->getNodePosition())){
-            if(_guardSet1->_guardSet[i]->contains(_character->getPosition())){
+            if(_character->contains(_guardSet1->_guardSet[i]->getNodePosition())){
                 _scene->addChild(_fail_layer);
                 _fail_layer->setPosition(_cam->getPosition());
                 break;
@@ -415,8 +414,7 @@ void GamePlayController::update(float dt){
     }
     else{
         for(int i=0; i<_guardSet2->_guardSet.size(); i++){
-//            if(_character->contains(_guardSet2->_guardSet[i]->getNodePosition())){
-            if(_guardSet1->_guardSet[i]->contains(_character->getPosition())){
+            if(_character->contains(_guardSet2->_guardSet[i]->getNodePosition())){
                 _scene->addChild(_fail_layer);
                 _fail_layer->setPosition(_cam->getPosition());
                 break;

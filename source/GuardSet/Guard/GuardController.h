@@ -99,16 +99,6 @@ public:
     Vec2 getNodePosition(){        
         return _view->nodePos();
     }
-
-#pragma mark Helpers
-    /**
-     *  See if the wall obstacle is within the guard cone
-     *
-     *  @param point The position of the wall obstacle
-     */
-    bool contains(Vec2 point){
-        return _model->contains(point);
-    }
     
 #pragma mark Scene Methods
 public:

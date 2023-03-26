@@ -11,6 +11,8 @@
 #include <cugl/cugl.h>
 using namespace cugl;
 
+#include <math.h>
+
 class GuardView{
 private:
     /** Main character view */
@@ -18,10 +20,6 @@ private:
     std::shared_ptr<scene2::SceneNode> _node;
     std::shared_ptr<Poly2> tri;
     std::shared_ptr<scene2::PolygonNode> _cone;
-    
-    
-    /** Manager to process the animation actions */
-    std::shared_ptr<cugl::scene2::ActionManager> _actions;
     
     
     /** Manager to process the animation actions */
@@ -44,19 +42,6 @@ public:
         _node->setVisible(true);
         _node->setAnchor(Vec2::ANCHOR_CENTER);
         _node->setPosition(position);
-        
-        PolyFactory _polyFactory;
-        Poly2 tri = _polyFactory.makeTriangle(Vec2(0,0), Vec2(0,200), Vec2(200,100));
-        _cone = scene2::PolygonNode::allocWithPoly(tri);
-        _cone->setAnchor(Vec2::ANCHOR_MIDDLE_RIGHT);
-        _cone->setScale(10);
-        _cone->setColor(color);
-        _cone->setVisible(true);
-        _cone->setPosition(_node->getSize()/_node->getScale()/2);
-//        _cone->setPosition(Vec2 (0, 400));
-//        _cone->setContentSize(size);
-        
-        _node->addChild(_cone);
 //        setPosition(position);
 //        setSize(size);
     }
@@ -77,10 +62,15 @@ public:
      */
     void addChildTo(const std::shared_ptr<cugl::Scene2>& scene) {
         scene->addChild(_node);
-        auto cone = scene2::PolygonNode::alloc();
-        cone->setPolygon(Rect(0, 0, 50, 100));
-        cone->setColor(Color4::RED);
-        _node->addChild(cone);
+        
+        _cone = scene2::PolygonNode::allocWithPoly(makeCone(500, 90));
+        coneDirection(6);
+        _cone->setAnchor(Vec2::ANCHOR_MIDDLE_RIGHT);
+        _cone->setColor(Color4::RED);
+        _cone->setVisible(true);
+        _cone->setPosition(_node->getSize()/_node->getScale()/2);
+//        _cone->setPosition(Vec2 (0, 400));
+        _node->addChild(_cone);
     }
     
     /**
@@ -112,12 +102,20 @@ public:
         _actions->activate(actionName, action, _node);
     }
     
-    void addCone(){
-        auto cone = scene2::PolygonNode::alloc();
-        cone->setPolygon(Rect(0, 0, 50, 100));
-        
+#pragma mark Helpers
+public:
+    Poly2 makeCone(int height, int angle) {
+        PolyFactory _polyFactory;
+        float rad =  angle/2 * M_PI / 180.0;
+        float edge = height * tan(rad) *2;
+        Poly2 tri = _polyFactory.makeTriangle(Vec2(0,0), Vec2(0,edge), Vec2(height,edge/2));
+        return tri;
     }
     
+    void coneDirection(int i) {
+        float direction = i * 45;
+        _cone->setAngle(direction * M_PI / 180.0);
+    }
 };
 
 #endif /* GuardView_h */

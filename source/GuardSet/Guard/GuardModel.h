@@ -36,7 +36,6 @@ public:
     GuardModel(Vec2 position, Size size, Color4 color) : color(_color) {
         setPosition(position);
         setSize(size);
-        _radius = 15 * 6;
     }
     
 #pragma mark Setters
@@ -63,29 +62,7 @@ public:
     void setSize(Size size) {
         _size = size;
     }
-    
-    /**
-     *  Sets the radius of the Guard cone.
-     *
-     *  @param radius
-     */
-    void setRadius(int radius) {
-        _radius = radius;
-    }
-    
-#pragma mark Helpers
-public:
-    /**
-        *  See if the touch point is within the character
-        *
-        *  @param point The position of the touchpoint
-        */
-    bool contains(Vec2 point){
-        if(_position.distance(point) <= _radius){
-            return true;
-        }
-        return false;
-    }
+
 };
 
 #endif /* GuardModel_h */
