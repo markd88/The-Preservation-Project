@@ -80,12 +80,9 @@ public:
         _node->setPosition(position);
     }
     
-
-    
     void moveTo(const std::shared_ptr<cugl::scene2::MoveTo>& action){
         //auto fcn = EasingFunction::alloc(EasingFunction::Type::ELASTIC_IN_OUT);
         _actions->activate("moving", action, _node);
-
     }
 
     void updateAnimation(const std::shared_ptr<cugl::scene2::Animate>& animation) {

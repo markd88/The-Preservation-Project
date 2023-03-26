@@ -34,6 +34,7 @@ public:
     /**vector of guard IDs**/
     vector<int> _usedIDs;
 
+
 #pragma mark Main Methods
 public:
     GuardSetController(const std::shared_ptr<cugl::AssetManager>& assets, std::shared_ptr<cugl::scene2::ActionManager> actions)
@@ -103,19 +104,51 @@ public:
         return id;
     }
     
-    void patrol(){
+    void patrol(Vec2 _charPos){
         for (int i = 0; i < _guardSet.size(); i++){
-            if (_guardSet[i]->doesPatrol){
-                string actionName = "patrol" + std::to_string(_guardSet[i]->id);
-                if (_actions->isActive(actionName)){
-                    //guard is currently on patrol
-                }
-                else{
-                    _guardSet[i]->nextStop(actionName);
+            string chaseAction = "chasing" + std::to_string(_guardSet[i]->id);
+            string patrolAction = "patrol" + std::to_string(_guardSet[i]->id);
+            string returnAction = "return" + std::to_string(_guardSet[i]->id);
+
+            Vec2 guardPos = _guardSet[i]->getNodePosition();
+            float distance = guardPos.distance(_charPos);
+            
+            if (_actions->isActive(chaseAction) or _actions->isActive(returnAction)){
+                //wait for guard to finish current action
+            }
+            //detection
+            else if (distance < 200 and _actions->isActive(patrolAction)){
+                Vec2 pos = _guardSet[i]->getNodePosition();
+                _guardSet[i]->updateCurrentStop(-1);
+                _actions->remove(patrolAction);
+                _guardSet[i]->updatePosition(pos);
+            }
+            else if (distance < 200){
+                Vec2 target = guardPos + ((_charPos - guardPos)/distance)*8;
+                //chase
+                _guardSet[i]->updateChaseTarget(target);
+                _guardSet[i]->chaseChar(chaseAction);
+                //add to return vec
+                _guardSet[i]->prependReturnVec(target);
+            }
+            else if (_guardSet[i]->returnVec.size() != 0){
+                //return action
+                _guardSet[i]->updateReturnTarget(_guardSet[i]->returnVec[0]);
+                _guardSet[i]->returnGuard(returnAction);
+                //erase from return vector
+                _guardSet[i]->eraseReturnVec();
+            }
+            //no detection and no return vec
+            else if (_guardSet[i]->doesPatrol){
+                if (_actions->isActive(patrolAction)){
+                    //wait for guard to finish patrol
+                }else{
+                    _guardSet[i]->nextStop(patrolAction);
                 }
             }
         }
     }
+    
 
 };
 

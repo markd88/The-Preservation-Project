@@ -196,7 +196,7 @@ void GamePlayController::init(){
 
 
 void GamePlayController::update(float dt){
-    _guardSet1->patrol();
+    _guardSet1->patrol(_character->getNodePosition());
     if(_fail_layer->getScene()!=nullptr || _complete_layer->getScene()!=nullptr){
         return;
     }
@@ -577,7 +577,7 @@ void GamePlayController::update(float dt){
     }
 
     void GamePlayController::generateGuard() {
-        vector<Vec2> patrol_stops = { Vec2(90, 500), Vec2(190, 500), Vec2(190, 400) }; //must be at least two stops
+        vector<Vec2> patrol_stops = { Vec2(0, 500), Vec2(190, 500), Vec2(190, 400) }; //must be at least two stops
         addMovingGuard1(90, 500, patrol_stops);
         addGuard1(450, 250);
         addGuard1(500, 100);

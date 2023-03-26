@@ -32,11 +32,13 @@ private:
     
     bool _doesPatrol;
     
-    std::shared_ptr<cugl::scene2::MoveTo> _moveTo;
-    
+    std::shared_ptr<cugl::scene2::MoveTo> _patrolMove;
+    std::shared_ptr<cugl::scene2::MoveTo> _chaseMove;
+    std::shared_ptr<cugl::scene2::MoveTo> _returnMove;
 
-    
-
+    /**vector for the guard to use to return to his post*/
+    vector<Vec2> _returnVec;
+        
     
 #pragma mark Main Methods
 public:
@@ -44,7 +46,8 @@ public:
     const int& id;
     /**view only version of ID**/
     const bool& doesPatrol;
-    
+    /**view only version of return vec**/
+    const vector<Vec2>& returnVec;
     
     
     /**
@@ -56,8 +59,16 @@ public:
      */
     //static guard
     GuardController(Vec2 position, const std::shared_ptr<cugl::AssetManager>& assets, std::shared_ptr<cugl::scene2::ActionManager> actions, int id)
-    : id(_id), doesPatrol(_doesPatrol)
+    : id(_id), doesPatrol(_doesPatrol), returnVec(_returnVec)
     {
+        
+        _returnVec = {};
+        _chaseMove = cugl::scene2::MoveTo::alloc();
+        _chaseMove->setDuration(.15);
+        
+        _returnMove = cugl::scene2::MoveTo::alloc();
+        _returnMove->setDuration(.15);
+        
         _doesPatrol = false;
         _id = id;
         _model = std::make_unique<GuardModel>(position, Size(100, 100), Color4::RED);
@@ -65,10 +76,27 @@ public:
     }
     
     //moving guard
-    GuardController(Vec2 position, const std::shared_ptr<cugl::AssetManager>& assets, std::vector<Vec2> patrol_stops, std::shared_ptr<cugl::scene2::ActionManager> actions, int id) : id(_id), doesPatrol(_doesPatrol)
+    GuardController(Vec2 position, const std::shared_ptr<cugl::AssetManager>& assets, std::vector<Vec2> vec, std::shared_ptr<cugl::scene2::ActionManager> actions, int id) : id(_id), doesPatrol(_doesPatrol), returnVec(_returnVec)
     {
-        _patrol_stops = patrol_stops;
-        _moveTo = cugl::scene2::MoveTo::alloc();
+        _returnVec = {};
+        std::vector<Vec2> temp = vec;
+        temp.erase(temp.begin());
+        std::reverse(temp.begin(), temp.end());
+        std::cout<<temp.size()<<"\n";
+        temp.erase(temp.begin());
+        std::cout<<temp.size()<<"\n";
+        vec.insert(vec.end(), temp.begin(), temp.end());
+        
+        _patrol_stops = vec;
+        std::cout<<vec.size()<<"\n";
+
+        _chaseMove = cugl::scene2::MoveTo::alloc();
+        _chaseMove->setDuration(.15);
+        
+        _returnMove = cugl::scene2::MoveTo::alloc();
+        _returnMove->setDuration(.15);
+        
+        _patrolMove = cugl::scene2::MoveTo::alloc();
         _doesPatrol = true;
         _current_stop = 0;
         _id = id;
@@ -86,6 +114,32 @@ public:
     void updatePosition(Vec2 position) {
         _model->setPosition(position);
         _view->setPosition(position);
+    }
+
+#pragma mark Update Chase Methods
+    
+    void updateChaseTarget(Vec2 pos){
+        _chaseMove->setTarget(pos);
+    }
+    
+    void updateChaseSpeed(float speed){
+        _chaseMove->setDuration(speed);
+
+    }
+#pragma mark Update Patrol Methods
+    
+    void updatePatrolSpeed(float speed){
+        _patrolMove->setDuration(speed);
+    }
+    
+#pragma mark Update Return Methods
+    
+    void updateReturnSpeed(float speed){
+        _returnMove->setDuration(speed);
+    }
+    
+    void updateReturnTarget(Vec2 pos){
+        _returnMove->setTarget(pos);
     }
 
     /**
@@ -108,10 +162,10 @@ public:
         _view->setColor(color);
     }
     
-    
     Vec2 getNodePosition(){
         return _view->nodePos();
     }
+    
 
 //#pragma mark Helpers
 //    /**
@@ -147,20 +201,44 @@ public:
 public:
     //moves the guard to the next patrol stop
     void nextStop(string actionName){
-        _moveTo->setDuration(2);
         if (_current_stop + 1 < _patrol_stops.size()){
             _current_stop += 1;
-            _moveTo->setTarget(_patrol_stops[_current_stop]);
-            _view->patrol(actionName, _moveTo);
         }
         else{
             _current_stop = 0;
-            _moveTo->setTarget(_patrol_stops[_current_stop]);
-            _view->patrol(actionName, _moveTo);
+        }
+        float speed = 53.3;
+        int duration = getNodePosition().distance(_patrol_stops[_current_stop]) / speed;
+        _patrolMove->setDuration(duration);
+        _patrolMove->setTarget(_patrol_stops[_current_stop]);
+        _view->performAction(actionName, _patrolMove);
+    }
+    
+    void chaseChar(string actionName){
+        _view->performAction(actionName, _chaseMove);
+    }
+    
+    void returnGuard(string actionName){
+        _view->performAction(actionName, _returnMove);
+    }
+    
+    void prependReturnVec(Vec2 pos){
+        _returnVec.insert(_returnVec.begin(), pos);
+    }
+    
+    void eraseReturnVec(){
+        _returnVec.erase(_returnVec.begin());
+    }
+    
+    void updateCurrentStop(int stop){
+        if (_current_stop == 0){
+            _current_stop = 1;
+        }
+        else{
+            _current_stop = _current_stop + stop;
         }
     }
     
-
 };
 
 #endif /* __GUARD_CONTROLLER_H__ */
