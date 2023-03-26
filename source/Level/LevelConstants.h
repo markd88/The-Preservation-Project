@@ -9,9 +9,6 @@
 #define LevelConstants_h
 
 /** The global fields of the level model */
-#define WALLS_FIELD         "wall"
-#define TILEMAP_FILED       "tilemap"
-
 #define MAP_WIDTH           "width"
 #define MAP_HEIGHT          "height"
 #define TILE_WIDTH          "tilewidth"
@@ -19,37 +16,30 @@
 
 /** The drawing fields for each object */
 #define TEXTURE_FIELD       "texture"
-#define DEBUG_COLOR_FIELD   "debugcolor"
-#define DEBUG_OPACITY_FIELD "debugopacity"
 
 /** The character specific fields */
-#define THRUST_FIELD        "thrust"
-#define MAIN_FLAMES_FIELD   "flames"
-#define LEFT_FLAMES_FIELD   "flames-left"
-#define RIGHT_FLAMES_FIELD  "flames-right"
 #define MAIN_SOUND_FIELD    "main-sound"
 #define LEFT_SOUND_FIELD    "left-sound"
 #define RIGHT_SOUND_FIELD   "right-sound"
+
+/** Map specific fields */
+#define TILEMAP_FILED       "tilemap"
 
 /** Wall specific fields */
-#define VERTICES_FIELD      "polygon"
-#define BOUNDARY_FIELD      "boundary"
+#define WALLS_FIELD         "wall"
 
 /** Guard specific fields */
-#define THRUST_FIELD        "thrust"
-#define MAIN_FLAMES_FIELD   "flames"
-#define LEFT_FLAMES_FIELD   "flames-left"
-#define RIGHT_FLAMES_FIELD  "flames-right"
 #define MAIN_SOUND_FIELD    "main-sound"
 #define LEFT_SOUND_FIELD    "left-sound"
 #define RIGHT_SOUND_FIELD   "right-sound"
 
-/** The source for our level file */
-//#define LEVEL_ONE_FILE      "json/level.json"
-#define LEVEL_ZERO_FILE      "tileset/levels/level-0-primary/level-0-primary.json"
+/** The source for level files */
+#define LEVEL_ZERO_PAST_FILE      "tileset/levels/level-0-past/level-0-past.json"
+#define LEVEL_ZERO_PRESENT_FILE      "tileset/levels/level-0-present/level-0-present.json"
 
-/** The key for our loaded level */
-#define LEVEL_ZERO_KEY       "level0"
+/** The key for loaded levels */
+#define LEVEL_ZERO_PAST_KEY       "level-0-past"
+#define LEVEL_ZERO_PRESENT_KEY       "level-0-present"
 
 
 #endif /* LevelConstants_h */

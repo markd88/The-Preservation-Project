@@ -45,8 +45,8 @@ public:
     
     /** The tilemap to procedurally generate */
     std::unique_ptr<CharacterController> _character;
-    std::shared_ptr<TilemapController> _tilemap1;
-    std::unique_ptr<TilemapController> _tilemap2;
+    std::shared_ptr<TilemapController> _pastWorld;
+    std::shared_ptr<TilemapController> _presentWorld;
     
 //    std::unique_ptr<GuardController> _guard;
     std::unique_ptr<GuardSetController> _guardSet1;
@@ -73,8 +73,9 @@ public:
     string _activeMap;
 
 //    std::shared_ptr<cugl::scene2::Label> _label;
-    std::shared_ptr<LevelModel> _level;
-    
+    std::shared_ptr<LevelModel> _pastWorldLevel;
+    std::shared_ptr<LevelModel> _presentWorldLevel;
+
 #pragma mark Main Methods
 public:
     /**

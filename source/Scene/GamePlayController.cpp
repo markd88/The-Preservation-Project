@@ -32,22 +32,24 @@ GamePlayController::GamePlayController(const Size displaySize, std::shared_ptr<c
     _path = make_unique<PathController>();
     // initialize character, two maps, path
     
-    _level = _assets->get<LevelModel>(LEVEL_ZERO_KEY);
-    if (_level == nullptr) {
+    // Draw past world
+    _pastWorldLevel = _assets->get<LevelModel>(LEVEL_ZERO_PAST_KEY);
+    if (_pastWorldLevel == nullptr) {
         CULog("Failed to import level!");
-//        return false;
     }
+    _pastWorldLevel->setAssets(_assets);
+    _pastWorldLevel->setTilemapTexture();
+    _pastWorld = _pastWorldLevel->getWorld();
+
+    // Draw present world
+    _presentWorldLevel = _assets->get<LevelModel>(LEVEL_ZERO_PRESENT_KEY);
+    if (_presentWorldLevel == nullptr) {
+        CULog("Failed to import level!");
+    }
+    _presentWorldLevel->setAssets(_assets);
+    _presentWorldLevel->setTilemapTexture();
+    _presentWorld = _presentWorldLevel->getWorld();
     
-    _level->setAssets(_assets);
-    _level->setTilemapTexture();
-    
-    _tilemap1 = _level->generatePrimaryWorld();
-//    _tilemap1 = _level->generateSecondaryWorld();
-    
-//    _tilemap1 = std::make_unique<TilemapController>();
-    _tilemap2 = std::make_unique<TilemapController>();
-//    generatePrimaryWorld(_tilemap1);
-//    generateSecondaryWorld(_tilemap2);
     
     _artifactSet = std::make_unique<ArtifactSetController>(_assets);
     _resourceSet = std::make_unique<ArtifactSetController>(_assets);
@@ -150,7 +152,7 @@ void GamePlayController::init(){
     
     
     
-    _tilemap1->addChildTo(_scene);
+    _pastWorld->addChildTo(_scene);
     _activeMap = "tileMap1";
     _template = 0;
     
@@ -222,7 +224,7 @@ void GamePlayController::update(float dt){
     
     _input->update(dt);
     // if pinch, switch world
-    bool cant_switch = ((_activeMap == "tileMap1" && _tilemap2->inObstacle(_character->getPosition())) || (_activeMap == "tileMap2" && _tilemap1->inObstacle(_character->getPosition())));
+    bool cant_switch = ((_activeMap == "tileMap1" && _presentWorld->inObstacle(_character->getPosition())) || (_activeMap == "tileMap2" && _pastWorld->inObstacle(_character->getPosition())));
     
 
     cant_switch = cant_switch || (_character->getNumRes() == 0);
@@ -240,8 +242,8 @@ void GamePlayController::update(float dt){
         
         _character->removeChildFrom(_scene);
         if (_activeMap == "tileMap1") {
-            _tilemap1->removeChildFrom(_scene);
-            _tilemap2->addChildTo(_scene);
+            _pastWorld->removeChildFrom(_scene);
+            _presentWorld->addChildTo(_scene);
             _guardSet1->removeChildFrom(_scene);
             _guardSet2->addChildTo(_scene);
             _artifactSet->removeChildFrom(_scene);
@@ -252,8 +254,8 @@ void GamePlayController::update(float dt){
             _res_label->setText(cugl::strtool::to_string(_character->getNumRes()-1));
         }
         else {
-            _tilemap2->removeChildFrom(_scene);
-            _tilemap1->addChildTo(_scene);
+            _presentWorld->removeChildFrom(_scene);
+            _pastWorld->addChildTo(_scene);
             _guardSet2->removeChildFrom(_scene);
             _guardSet1->addChildTo(_scene);
             _artifactSet->addChildTo(_scene);
@@ -317,7 +319,7 @@ void GamePlayController::update(float dt){
         if(_path->isInitiating == false){
             while(_path->farEnough(input_posi)){
                 Vec2 checkpoint = _path->getLastPos() + (input_posi - _path->getLastPos()) / _path->getLastPos().distance(input_posi) * _path->getSize();
-                if((_activeMap == "tileMap1" && _tilemap1->inObstacle(checkpoint)) || (_activeMap == "tileMap2" && _tilemap2->inObstacle(checkpoint))){
+                if((_activeMap == "tileMap1" && _pastWorld->inObstacle(checkpoint)) || (_activeMap == "tileMap2" && _presentWorld->inObstacle(checkpoint))){
                     _path->setIsDrawing(false);
                     path_trace.clear();
                     return;
@@ -432,126 +434,7 @@ void GamePlayController::update(float dt){
 #pragma mark -
 #pragma mark Generation Helpers
 
-
-    /** Generates the first world. */
-    void GamePlayController::generatePrimaryWorld(std::unique_ptr<TilemapController> &_tilemap) {
-        _tilemap->updateDimensions(Vec2(144, 84));
-        _tilemap->updateColor(Color4::WHITE);
-        _tilemap->updateTileSize(Size(8, 8));
-        _tilemap->updatePosition(_scene->getSize()/2);
-        // walls
-        Color4 tileColor = Color4::BLACK;
-        bool is_obs = true;
-        for(int i = 0; i <= 32; i++) {
-            _tilemap->addTile(i, 24, tileColor, is_obs);
-        }
-        for(int j = 0; j <= 12; j++) {
-            _tilemap->addTile(20, j, tileColor, is_obs);
-        }
-        for(int j = 0; j <= 34; j++) {
-            _tilemap->addTile(50, j, tileColor, is_obs);
-        }
-        for(int i = 0; i <= 32; i++) {
-            _tilemap->addTile(i, 48, tileColor, is_obs);
-        }
-        for(int j = 48; j <= 66; j++) {
-            _tilemap->addTile(32, j, tileColor, is_obs);
-        }
-        for(int i = 50; i <= 84; i++) {
-            _tilemap->addTile(i, 34, tileColor, is_obs);
-        }
-        for(int j = 34; j <= 46; j++) {
-            _tilemap->addTile(84, j, tileColor, is_obs);
-        }
-        for(int i = 84; i <= 102; i++) {
-            _tilemap->addTile(i, 46, tileColor, is_obs);
-        }
-        for(int i = 85; i <= 115; i++) {
-            _tilemap->addTile(i, 18, tileColor, is_obs);
-        }
-        for(int j = 0; j <= 18; j++) {
-            _tilemap->addTile(115, j, tileColor, is_obs);
-        }
-        for(int j = 48; j <= 68; j++) {
-            _tilemap->addTile(110, j, tileColor, is_obs);
-        }
-        for(int i = 110; i <= 128; i++) {
-            _tilemap->addTile(i, 68, tileColor, is_obs);
-        }
-        for(int j = 68; j <= 84; j++) {
-            _tilemap->addTile(128, j, tileColor, is_obs);
-        }
-    }
-    
-    /**
-     * Generates the second world.
-     *
-     * @param p The probability that a tile is generated.
-     */
-    void GamePlayController::generateSecondaryWorld(std::unique_ptr<TilemapController> & _tilemap) {
-        _tilemap->updateDimensions(Vec2(144, 84));
-        _tilemap->updateColor(Color4::WHITE);
-        _tilemap->updateTileSize(Size(8, 8));
-        _tilemap->updatePosition(_scene->getSize()/2);
-        // walls
-        Color4 tileColor = Color4::BLACK;
-        bool is_obs = true;
-        // left block
-        for(int i = 0; i <= 28; i++) {
-            _tilemap->addTile(i, 44, tileColor, is_obs);
-        }
-        for(int j = 16; j <= 44; j++) {
-            _tilemap->addTile(28, j, tileColor, is_obs);
-        }
-        for(int i = 28; i <= 50; i++) {
-            _tilemap->addTile(i, 16, tileColor, is_obs);
-        }
-        for(int j = 0; j <= 62; j++) {
-            _tilemap->addTile(50, j, tileColor, is_obs);
-        }
-        for(int i = 16; i <= 50; i++) {
-            _tilemap->addTile(i, 62, tileColor, is_obs);
-        }
-        for(int j = 44; j <= 62; j++) {
-            _tilemap->addTile(16, j, tileColor, is_obs);
-        }
-        // upper middle block
-        for(int j = 42; j <= 84; j++) {
-            _tilemap->addTile(64, j, tileColor, is_obs);
-        }
-        for(int i = 64; i <= 122; i++) {
-            _tilemap->addTile(i, 42, tileColor, is_obs);
-        }
-        for(int j = 42; j <= 84; j++) {
-            _tilemap->addTile(92, j, tileColor, is_obs);
-        }
-        for(int i = 64; i <= 122; i++) {
-            _tilemap->addTile(i, 42, tileColor, is_obs);
-        }
-        for(int j = 26; j <= 42; j++) {
-            _tilemap->addTile(122, j, tileColor, is_obs);
-        }
-        for(int i = 114; i <= 144; i++) {
-            _tilemap->addTile(i, 68, tileColor, is_obs);
-        }
-        // lower blocks
-        for(int j = 0; j <= 28; j++) {
-            _tilemap->addTile(82, j, tileColor, is_obs);
-        }
-        for(int i = 82; i <= 112; i++) {
-            _tilemap->addTile(i, 18, tileColor, is_obs);
-        }
-        for(int j = 0; j <= 18; j++) {
-            _tilemap->addTile(112, j, tileColor, is_obs);
-        }
-        for(int i = 126; i <= 144; i++) {
-            _tilemap->addTile(i, 18, tileColor, is_obs);
-        }
-        for(int j = 0; j <= 18; j++) {
-            _tilemap->addTile(126, j, tileColor, is_obs);
-        }
-    }
-
+// TODO: Replace the following with LevelController methods
     void GamePlayController::generateArtifact() {
         //_artifactSet->_artifactSet = {};
         

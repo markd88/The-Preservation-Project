@@ -200,6 +200,27 @@
             "magfilter": "linear",
             "wrapS":     "clamp",
             "wrapT":     "clamp"
+        },
+        "tile_present_wall_half": {
+            "file":      "textures/tile_present_wall_half.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS":     "clamp",
+            "wrapT":     "clamp"
+        },
+        "tile_present_wall_slopepos": {
+            "file":      "textures/tile_present_wall_slopepos.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS":     "clamp",
+            "wrapT":     "clamp"
+        },
+        "tile_present_wall": {
+            "file":      "textures/tile_present_wall.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS":     "clamp",
+            "wrapT":     "clamp"
         }
 	},
 	"fonts": {

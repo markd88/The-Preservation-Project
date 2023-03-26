@@ -19,9 +19,7 @@
 */
 LevelModel::LevelModel(void) : Asset()
 {
-    _primaryWorld = std::make_unique<TilemapController>();
-        
-    _secondaryWorld = std::make_unique<TilemapController>();
+    _world = std::make_unique<TilemapController>();
 }
 
 /**
@@ -78,9 +76,8 @@ bool LevelModel:: preload(const std::shared_ptr<cugl::JsonValue>& json) {
     
     int tileHeight = json->get(TILE_HEIGHT)->asInt() * 2;
     int tileWidth = json->get(TILE_WIDTH)->asInt() * 2;
-    _primaryWorld->updateDimensions(Vec2(mapWidth, mapHeight));
-    _primaryWorld->updateTileSize(Size(tileWidth, tileHeight));
-
+    _world->updateDimensions(Vec2(mapWidth, mapHeight));
+    _world->updateTileSize(Size(tileWidth, tileHeight));
 
     // Get each object in each layer
     for (int i = 0; i < json->get("layers")->size(); i++) {
@@ -133,7 +130,7 @@ bool LevelModel::loadTilemap(const std::shared_ptr<JsonValue>& json) {
     int y = json->get("y")->asInt() / height - 1;
     
     // TODO: replace below
-    _primaryWorld->addTile2(x, y, false, _assets, textureType);
+    _world->addTile2(x, y, false, _assets, textureType);
     
     success = success && x >= 0 && y >= 0;
     return success;
@@ -154,12 +151,12 @@ bool LevelModel::loadWall(const std::shared_ptr<JsonValue>& json) {
     int y = json->get("y")->asInt() / height - 1;
     
     // TODO: replace below
-    _primaryWorld->addTile2(x, y, true, _assets, textureType);
+    _world->addTile2(x, y, true, _assets, textureType);
     
     success = success && x >= 0 && y >= 0;
     return success;
 }
 
 void LevelModel::setTilemapTexture() {
-    _primaryWorld->setTexture(_assets);
+    _world->setTexture(_assets);
 };

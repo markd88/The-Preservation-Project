@@ -38,8 +38,7 @@ using namespace cugl;
 */
 class LevelModel : public Asset {
 protected:
-    std::shared_ptr<TilemapController> _primaryWorld;
-    std::shared_ptr<TilemapController> _secondaryWorld;
+    std::shared_ptr<TilemapController> _world;
 
     /** The AssetManager for the game mode */
     std::shared_ptr<cugl::AssetManager> _assets;
@@ -174,11 +173,8 @@ public:
     
     void setTilemapTexture();
 
-    /** Generates primary world with guards. */
-    std::shared_ptr<TilemapController> generatePrimaryWorld() {return _primaryWorld;};
-
-    /** Generates secondary world without guards. */
-    std::shared_ptr<TilemapController> generateSecondaryWorld() {return _secondaryWorld;};
+    /** Get past world with guards. */
+    std::shared_ptr<TilemapController> getWorld() {return _world;};
 
 
 #pragma mark -
