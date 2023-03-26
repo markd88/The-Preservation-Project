@@ -122,5 +122,9 @@ public:
     std::string getTextureKey() {
         return _model->getTextureKey();
     }
+
+    bool containsLine(Vec2 a, Vec2 b){
+        return _view->containsLine(a, b);
+    }
 };
 #endif

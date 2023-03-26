@@ -66,6 +66,10 @@ public:
         _pathLines.clear();
     }
     
+//    void removeFirst(const std::shared_ptr<cugl::Scene2>& scene){
+//        scene->removeChild(_pathLines[0]);
+//        _pathLines.erase(_pathLines.begin());
+//    }
     
 };
 

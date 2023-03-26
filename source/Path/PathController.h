@@ -15,7 +15,7 @@
 class PathController{
     
 #pragma mark Internal References
-private:
+public:
     /** Model reference */
     std::unique_ptr<PathModel> _model;
     /** View reference */
@@ -80,8 +80,12 @@ public:
         _model->setLastPos(lastPos);
     }
     
-    void clearPath(const std::shared_ptr<cugl::Scene2>& scene){
+    // now only remove from scene
+    void clearPath(){
         _model->clearPath();
+    }
+    
+    void removeFrom(const std::shared_ptr<cugl::Scene2>& scene){
         _view->removeChildren(scene);
     }
     
@@ -89,6 +93,7 @@ public:
         _isDrawing = isDrawing;
     }
     
+    // for initial segments of the path from character
     void setIsInitiating(bool isInitiating){
         _isInitiating = isInitiating;
     }
@@ -136,6 +141,13 @@ public:
             addSegment(checkpoint, scene);
         }
     }
+    
+    // remove first segment in both model and view
+    void removeFirst(const std::shared_ptr<cugl::Scene2>& scene){
+        _model->removeFirst();
+        // _view->removeFirst(scene);
+    }
+    
     
 };
 
