@@ -578,7 +578,7 @@ void GamePlayController::update(float dt){
 
     void GamePlayController::generateGuard() {
         vector<Vec2> patrol_stops = { Vec2(0, 500), Vec2(190, 500), Vec2(190, 400) }; //must be at least two stops
-        addMovingGuard1(90, 500, patrol_stops);
+        addMovingGuard1(0, 500, patrol_stops);
         addGuard1(450, 250);
         addGuard1(500, 100);
         addGuard1(630, 500);

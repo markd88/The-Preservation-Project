@@ -90,7 +90,10 @@ public:
     
     void performAction(string actionName, const std::shared_ptr<cugl::scene2::MoveTo>& action){
         _actions->activate(actionName, action, _node);
-        
+    }
+    
+    Vec2 getCords(Vec2 point){
+        return _node->nodeToWorldCoords(point);
     }
     
 };

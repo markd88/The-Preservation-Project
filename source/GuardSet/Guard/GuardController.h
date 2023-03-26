@@ -28,7 +28,7 @@ private:
     /** patrol locations for the guard to follow*/
     vector<Vec2> _patrol_stops;
     //The current stop of the guard (index in _patrol_stops)
-    int _current_stop;
+    int _goingTo;
     
     bool _doesPatrol;
     
@@ -38,6 +38,9 @@ private:
 
     /**vector for the guard to use to return to his post*/
     vector<Vec2> _returnVec;
+    
+    //whether guard is traversing back the path
+    bool going_back;
         
     
 #pragma mark Main Methods
@@ -78,17 +81,11 @@ public:
     //moving guard
     GuardController(Vec2 position, const std::shared_ptr<cugl::AssetManager>& assets, std::vector<Vec2> vec, std::shared_ptr<cugl::scene2::ActionManager> actions, int id) : id(_id), doesPatrol(_doesPatrol), returnVec(_returnVec)
     {
+        _goingTo = 0;
         _returnVec = {};
-        std::vector<Vec2> temp = vec;
-        temp.erase(temp.begin());
-        std::reverse(temp.begin(), temp.end());
-        std::cout<<temp.size()<<"\n";
-        temp.erase(temp.begin());
-        std::cout<<temp.size()<<"\n";
-        vec.insert(vec.end(), temp.begin(), temp.end());
         
+        bool going_back = false;
         _patrol_stops = vec;
-        std::cout<<vec.size()<<"\n";
 
         _chaseMove = cugl::scene2::MoveTo::alloc();
         _chaseMove->setDuration(.15);
@@ -98,7 +95,7 @@ public:
         
         _patrolMove = cugl::scene2::MoveTo::alloc();
         _doesPatrol = true;
-        _current_stop = 0;
+        _goingTo = 0;
         _id = id;
         _model = std::make_unique<GuardModel>(position, Size(100, 100), Color4::RED);
         _view = std::make_unique<GuardView>(position, Size(100, 100), Color4::RED, assets, actions);
@@ -201,16 +198,24 @@ public:
 public:
     //moves the guard to the next patrol stop
     void nextStop(string actionName){
-        if (_current_stop + 1 < _patrol_stops.size()){
-            _current_stop += 1;
+        if (going_back and (_goingTo == 0)){
+            going_back = false;
+            _goingTo += 1;
         }
-        else{
-            _current_stop = 0;
+        else if(going_back){
+            _goingTo -= 1;
+        }else if (_goingTo + 1 == _patrol_stops.size() - 1){
+            going_back =  true;
+            _goingTo += 1;
+        }else{
+            _goingTo += 1;
         }
-        float speed = 53.3;
-        int duration = getNodePosition().distance(_patrol_stops[_current_stop]) / speed;
+        float speed = 53;
+        float distance = getNodePosition().distance(_patrol_stops[_goingTo]);
+        float duration = distance / speed;
+
         _patrolMove->setDuration(duration);
-        _patrolMove->setTarget(_patrol_stops[_current_stop]);
+        _patrolMove->setTarget(_patrol_stops[_goingTo]);
         _view->performAction(actionName, _patrolMove);
     }
     
@@ -231,11 +236,11 @@ public:
     }
     
     void updateCurrentStop(int stop){
-        if (_current_stop == 0){
-            _current_stop = 1;
+        if (_goingTo == 0){
+            _goingTo = 1;
         }
         else{
-            _current_stop = _current_stop + stop;
+            _goingTo = _goingTo + stop;
         }
     }
     
