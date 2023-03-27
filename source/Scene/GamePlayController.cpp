@@ -591,8 +591,6 @@ void GamePlayController::update(float dt){
     }
 
     
-        
-    
 #pragma mark -
 #pragma mark Helpers
 
