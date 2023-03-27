@@ -8,7 +8,7 @@
  "margin":0,
  "name":"tpp-tileset",
  "spacing":0,
- "tilecount":20,
+ "tilecount":26,
  "tiledversion":"1.10.0",
  "tileheight":128,
  "tiles":[
@@ -150,6 +150,48 @@
          "imageheight":128,
          "imagewidth":128,
          "type":"tile_present_wall"
+        }, 
+        {
+         "id":20,
+         "image":"..\/..\/..\/..\/..\/Downloads\/drive-download-20230327T171741Z-001\/artifact-1.png",
+         "imageheight":128,
+         "imagewidth":128,
+         "type":"artifact-1"
+        }, 
+        {
+         "id":21,
+         "image":"..\/..\/..\/..\/..\/Downloads\/drive-download-20230327T171741Z-001\/artifact-5.png",
+         "imageheight":128,
+         "imagewidth":128,
+         "type":"artifact-5"
+        }, 
+        {
+         "id":22,
+         "image":"..\/..\/..\/..\/..\/Downloads\/drive-download-20230327T171741Z-001\/artifact-2.png",
+         "imageheight":128,
+         "imagewidth":128,
+         "type":"artifact-2"
+        }, 
+        {
+         "id":23,
+         "image":"..\/..\/..\/..\/..\/Downloads\/drive-download-20230327T171741Z-001\/artifact-3.png",
+         "imageheight":128,
+         "imagewidth":128,
+         "type":"artifact-3"
+        }, 
+        {
+         "id":24,
+         "image":"..\/..\/..\/..\/..\/Downloads\/drive-download-20230327T171741Z-001\/artifact-4.png",
+         "imageheight":128,
+         "imagewidth":128,
+         "type":"artifact-4"
+        }, 
+        {
+         "id":25,
+         "image":"..\/..\/..\/..\/..\/Downloads\/drive-download-20230327T171741Z-001\/resource.png",
+         "imageheight":128,
+         "imagewidth":128,
+         "type":"resource"
         }],
  "tilewidth":128,
  "type":"tileset",
