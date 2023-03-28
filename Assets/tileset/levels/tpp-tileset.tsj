@@ -1,0 +1,157 @@
+{ "columns":0,
+ "grid":
+    {
+     "height":1,
+     "orientation":"orthogonal",
+     "width":1
+    },
+ "margin":0,
+ "name":"tpp-tileset",
+ "spacing":0,
+ "tilecount":20,
+ "tiledversion":"1.10.0",
+ "tileheight":128,
+ "tiles":[
+        {
+         "id":0,
+         "image":"..\/128 x 128\/tile_past_floor_windowleft.png",
+         "imageheight":128,
+         "imagewidth":128,
+         "type":"tile_past_floor_windowleft"
+        }, 
+        {
+         "id":1,
+         "image":"..\/128 x 128\/tile_past_floor_windowright.png",
+         "imageheight":128,
+         "imagewidth":128
+        }, 
+        {
+         "id":2,
+         "image":"..\/128 x 128\/tile_past_floor1.png",
+         "imageheight":128,
+         "imagewidth":128,
+         "type":"tile_past_floor1"
+        }, 
+        {
+         "id":3,
+         "image":"..\/128 x 128\/tile_past_floor2.png",
+         "imageheight":128,
+         "imagewidth":128,
+         "type":"tile_past_floor2"
+        }, 
+        {
+         "id":4,
+         "image":"..\/128 x 128\/tile_past_floor3.png",
+         "imageheight":128,
+         "imagewidth":128,
+         "type":"tile_past_floor3"
+        }, 
+        {
+         "id":5,
+         "image":"..\/128 x 128\/tile_past_roof.png",
+         "imageheight":128,
+         "imagewidth":128,
+         "type":"tile_past_roof"
+        }, 
+        {
+         "id":6,
+         "image":"..\/128 x 128\/tile_past_wall_windowcenter.png",
+         "imageheight":128,
+         "imagewidth":128,
+         "type":"tile_past_wall_windowcenter"
+        }, 
+        {
+         "id":7,
+         "image":"..\/128 x 128\/tile_past_wall_windowleft.png",
+         "imageheight":128,
+         "imagewidth":128,
+         "type":"tile_past_wall_windowleft"
+        }, 
+        {
+         "id":8,
+         "image":"..\/128 x 128\/tile_past_wall_windowright.png",
+         "imageheight":128,
+         "imagewidth":128,
+         "type":"tile_past_wall_windowright"
+        }, 
+        {
+         "id":9,
+         "image":"..\/128 x 128\/tile_past_wall1.png",
+         "imageheight":128,
+         "imagewidth":128,
+         "type":"tile_past_wall1"
+        }, 
+        {
+         "id":10,
+         "image":"..\/128 x 128\/tile_past_wall2.png",
+         "imageheight":128,
+         "imagewidth":128,
+         "type":"tile_past_wall2"
+        }, 
+        {
+         "id":11,
+         "image":"..\/128 x 128\/tile_present_grass_s_half_rock.png",
+         "imageheight":128,
+         "imagewidth":128,
+         "type":"tile_present_grass_s_half_rock"
+        }, 
+        {
+         "id":12,
+         "image":"..\/128 x 128\/tile_present_grass_s_rock.png",
+         "imageheight":128,
+         "imagewidth":128,
+         "type":"tile_present_grass_s_rock"
+        }, 
+        {
+         "id":13,
+         "image":"..\/128 x 128\/tile_present_grass_s_slopepos_rock.png",
+         "imageheight":128,
+         "imagewidth":128,
+         "type":"tile_present_grass_s_slopepos_rock"
+        }, 
+        {
+         "id":14,
+         "image":"..\/128 x 128\/tile_present_grass1.png",
+         "imageheight":128,
+         "imagewidth":128,
+         "type":"tile_present_grass1"
+        }, 
+        {
+         "id":15,
+         "image":"..\/128 x 128\/tile_present_grass2.png",
+         "imageheight":128,
+         "imagewidth":128,
+         "type":"tile_present_grass2"
+        }, 
+        {
+         "id":16,
+         "image":"..\/128 x 128\/tile_present_grass3.png",
+         "imageheight":128,
+         "imagewidth":128,
+         "type":"tile_present_grass3"
+        }, 
+        {
+         "id":17,
+         "image":"..\/128 x 128\/tile_present_wall_half.png",
+         "imageheight":128,
+         "imagewidth":128,
+         "type":"tile_present_wall_half"
+        }, 
+        {
+         "id":18,
+         "image":"..\/128 x 128\/tile_present_wall_slopepos.png",
+         "imageheight":128,
+         "imagewidth":128,
+         "type":"tile_present_wall_slopepos"
+        }, 
+        {
+         "id":19,
+         "image":"..\/128 x 128\/tile_present_wall.png",
+         "imageheight":128,
+         "imagewidth":128,
+         "type":"tile_present_wall"
+        }],
+ "tilewidth":128,
+ "type":"tileset",
+ "version":"1.10"
+}

@@ -36,16 +36,15 @@ public:
     GuardModel(Vec2 position, Size size, Color4 color) : color(_color) {
         setPosition(position);
         setSize(size);
-        setColor(color);
     }
     
 #pragma mark Setters
 public:
-
+    
     Vec2 getPosition() {
         return _position;
     }
-
+    
     /**
      *  Sets the position of the bottom left corner of the Artifact.
      *
@@ -54,7 +53,7 @@ public:
     void setPosition(Vec2 position) {
         _position = position;
     }
-
+    
     /**
      *  Sets the size of the Artifact.
      *
@@ -64,27 +63,6 @@ public:
         _size = size;
     }
 
-    /**
-     *  Sets the color of the Artifact.
-     *
-     *  @param color The color of the Artifact
-     */
-    void setColor(Color4 color) {
-        _color = color;
-    }
 };
-//#pragma mark Helpers
-//public:
-//    /**
-//     *  See if the touch point is within the character
-//     *
-//     *  @param point The position of the touchpoint
-//     */
-//    bool contains(Vec2 point){
-//        if(_position.distance(point) <= radius){
-//            return true;
-//        }
-//        return false;
-//    }
 
 #endif /* GuardModel_h */

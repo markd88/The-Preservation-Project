@@ -41,7 +41,10 @@ private:
     
     //whether guard is traversing back the path
     bool going_back;
-        
+    //whether or not guard returned from chasing
+    bool returned;
+    //saved stop to use when returning
+    int saved_stop;
     
 #pragma mark Main Methods
 public:
@@ -84,7 +87,6 @@ public:
         _goingTo = 0;
         _returnVec = {};
         
-        bool going_back = false;
         _patrol_stops = vec;
 
         _chaseMove = cugl::scene2::MoveTo::alloc();
@@ -149,21 +151,10 @@ public:
         _view->setSize(size);
     }
     
-    /**
-     *  Updates the model and view with the color of this tile.
-     *
-     *  @param color The tile color
-     */
-    void updateColor(Color4 color) {
-        _model->setColor(color);
-        _view->setColor(color);
-    }
-    
     Vec2 getNodePosition(){
         return _view->nodePos();
     }
     
-
 //#pragma mark Helpers
 //    /**
 //     *  See if the touch point is within the character
@@ -173,6 +164,7 @@ public:
 //    bool contains(Vec2 point){
 //        return _model->contains(point);
 //    }
+
     
 #pragma mark Scene Methods
 public:
@@ -198,17 +190,23 @@ public:
 public:
     //moves the guard to the next patrol stop
     void nextStop(string actionName){
-        if (going_back and (_goingTo == 0)){
-            going_back = false;
-            _goingTo += 1;
+        if (returned){
+            _goingTo = saved_stop;
+            returned = false;
         }
-        else if(going_back){
-            _goingTo -= 1;
-        }else if (_goingTo + 1 == _patrol_stops.size() - 1){
-            going_back =  true;
-            _goingTo += 1;
-        }else{
-            _goingTo += 1;
+        else{
+            if (going_back and (_goingTo == 0)){
+                going_back = false;
+                _goingTo += 1;
+            }
+            else if(going_back){
+                _goingTo -= 1;
+            }else if (_goingTo + 1 == _patrol_stops.size() - 1){
+                going_back =  true;
+                _goingTo += 1;
+            }else{
+                _goingTo += 1;
+            }
         }
         float speed = 53;
         float distance = getNodePosition().distance(_patrol_stops[_goingTo]);
@@ -235,13 +233,13 @@ public:
         _returnVec.erase(_returnVec.begin());
     }
     
-    void updateCurrentStop(int stop){
-        if (_goingTo == 0){
-            _goingTo = 1;
-        }
-        else{
-            _goingTo = _goingTo + stop;
-        }
+    void saveCurrentStop(){
+        saved_stop = _goingTo;
+        returned = true;
+    }
+    
+    bool detection(Vec2 pos){
+        return _view->detected(pos);
     }
     
 };

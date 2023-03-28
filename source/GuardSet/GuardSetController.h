@@ -4,14 +4,10 @@
 //
 //  Created by Hao Chen on 3/12/23.
 //
-
 #ifndef __GUARDSET_CONTROLLER_H__
 #define __GUARDSET_CONTROLLER_H__
-
-
 #include "Guard/GuardModel.h"
 #include "Guard/GuardView.h"
-#include "Guard/GuardController.h"
 
 /**
  * A class communicating between the model and the view. It only
@@ -37,6 +33,7 @@ public:
 
 #pragma mark Main Methods
 public:
+    
     GuardSetController(const std::shared_ptr<cugl::AssetManager>& assets, std::shared_ptr<cugl::scene2::ActionManager> actions)
     {
         _actions = actions;
@@ -86,7 +83,7 @@ public:
 //            _guardSet[i];
 //        }
 //    }
-    
+        
     int generateUniqueID() {
         int id = 0;
         bool isUsed = true;
@@ -117,13 +114,13 @@ public:
                 //wait for guard to finish current action
             }
             //detection
-            else if (distance < 200 and _actions->isActive(patrolAction)){
+            else if (_guardSet[i]->detection(_charPos)   and _actions->isActive(patrolAction)){
                 Vec2 pos = _guardSet[i]->getNodePosition();
-                _guardSet[i]->updateCurrentStop(-1);
+                _guardSet[i]->saveCurrentStop();
                 _actions->remove(patrolAction);
                 _guardSet[i]->updatePosition(pos);
             }
-            else if (distance < 200){
+            else if (_guardSet[i]->detection(_charPos)){
                 Vec2 target = guardPos + ((_charPos - guardPos)/distance)*8;
                 //chase
                 _guardSet[i]->updateChaseTarget(target);

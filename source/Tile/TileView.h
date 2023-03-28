@@ -1,4 +1,6 @@
 #include <cugl/cugl.h>
+#include <cugl/base/CUBase.h>
+
 using namespace cugl;
 
 class TileView {
@@ -7,6 +9,7 @@ class TileView {
 private:
     /** Main tile view */
     std::shared_ptr<scene2::PolygonNode> _node;
+    std::string _textureKey;
     
 #pragma mark Main Functions
 public:
@@ -28,6 +31,16 @@ public:
         setColor(color);
         setPosition(position);
         setSize(size);
+    }
+    
+    TileView(Vec2 position, Size size, const std::shared_ptr<cugl::AssetManager>& assets, std::string textureKey) {
+        // TODO: Implement me
+        this->_node = scene2::PolygonNode::alloc();
+        _node->setAnchor(Vec2::ANCHOR_BOTTOM_LEFT);
+        _node->setRelativeColor(false);
+        setPosition(position);
+        setSize(size);
+//        setTextureKey(textureKey);
     }
     
     /**
@@ -99,6 +112,14 @@ public:
     void setColor(Color4 color) {
         // TODO: Implement me
         _node->setColor(color);
+    }
+    
+    void setTexture(const std::shared_ptr<cugl::AssetManager>& assets, std::string textureKey) {
+        auto tileNode = scene2::SceneNode::alloc();
+        std::shared_ptr<Texture> texture  = assets->get<Texture>(textureKey);
+        tileNode = scene2::PolygonNode::allocWithTexture(texture);
+         
+        _node->addChild(tileNode);
     }
 
     /**
