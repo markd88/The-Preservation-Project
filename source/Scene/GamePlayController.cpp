@@ -90,6 +90,8 @@ _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displ
 
     _characterLeft = cugl::scene2::Animate::alloc(forward, DURATION);
 
+
+
     // init the button
     _button_layer = _assets->get<scene2::SceneNode>("button");
     _button_layer->setContentSize(dimen);
@@ -481,12 +483,12 @@ void GamePlayController::update(float dt){
 
     void GamePlayController::generateGuard() {
         vector<Vec2> patrol_stops = { Vec2(0, 500), Vec2(190, 500), Vec2(190, 400) }; //must be at least two stops
-        addMovingGuard1(0, 500, patrol_stops);
+        //addMovingGuard1(0, 500, patrol_stops);
         addGuard1(450, 250);
-        addGuard1(500, 100);
-        addGuard1(630, 500);
-        addGuard1(850, 380);
-        addGuard1(970, 75);
+        //addGuard1(500, 100);
+        //addGuard1(630, 500);
+        //addGuard1(850, 380);
+        //addGuard1(970, 75);
     }
     void GamePlayController::secondaryGuard() {
 //        bool cone = false;

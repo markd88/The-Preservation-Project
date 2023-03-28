@@ -64,6 +64,10 @@ public:
     std::shared_ptr<cugl::scene2::MoveTo> _moveTo;
     std::shared_ptr<cugl::scene2::Animate> _characterRight;
     std::shared_ptr<cugl::scene2::Animate> _characterLeft;
+
+
+
+
     
     /** Adjacency matrix for shortest path algorithm**/
     
