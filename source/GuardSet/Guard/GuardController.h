@@ -28,12 +28,23 @@ private:
     /** patrol locations for the guard to follow*/
     vector<Vec2> _patrol_stops;
     //The current stop of the guard (index in _patrol_stops)
-    int _current_stop;
+    int _goingTo;
     
     bool _doesPatrol;
     
-    std::shared_ptr<cugl::scene2::MoveTo> _moveTo;
+    std::shared_ptr<cugl::scene2::MoveTo> _patrolMove;
+    std::shared_ptr<cugl::scene2::MoveTo> _chaseMove;
+    std::shared_ptr<cugl::scene2::MoveTo> _returnMove;
+
+    /**vector for the guard to use to return to his post*/
+    vector<Vec2> _returnVec;
     
+    //whether guard is traversing back the path
+    bool going_back;
+    //whether or not guard returned from chasing
+    bool returned;
+    //saved stop to use when returning
+    int saved_stop;
     
 #pragma mark Main Methods
 public:
@@ -41,7 +52,8 @@ public:
     const int& id;
     /**view only version of ID**/
     const bool& doesPatrol;
-    
+    /**view only version of return vec**/
+    const vector<Vec2>& returnVec;
     
     
     /**
@@ -53,8 +65,16 @@ public:
      */
     //static guard
     GuardController(Vec2 position, const std::shared_ptr<cugl::AssetManager>& assets, std::shared_ptr<cugl::scene2::ActionManager> actions, int id)
-    : id(_id), doesPatrol(_doesPatrol)
+    : id(_id), doesPatrol(_doesPatrol), returnVec(_returnVec)
     {
+        
+        _returnVec = {};
+        _chaseMove = cugl::scene2::MoveTo::alloc();
+        _chaseMove->setDuration(.15);
+        
+        _returnMove = cugl::scene2::MoveTo::alloc();
+        _returnMove->setDuration(.15);
+        
         _doesPatrol = false;
         _id = id;
         _model = std::make_unique<GuardModel>(position, Size(100, 100), Color4::RED);
@@ -62,12 +82,22 @@ public:
     }
     
     //moving guard
-    GuardController(Vec2 position, const std::shared_ptr<cugl::AssetManager>& assets, std::vector<Vec2> patrol_stops, std::shared_ptr<cugl::scene2::ActionManager> actions, int id) : id(_id), doesPatrol(_doesPatrol)
+    GuardController(Vec2 position, const std::shared_ptr<cugl::AssetManager>& assets, std::vector<Vec2> vec, std::shared_ptr<cugl::scene2::ActionManager> actions, int id) : id(_id), doesPatrol(_doesPatrol), returnVec(_returnVec)
     {
-        _patrol_stops = patrol_stops;
-        _moveTo = cugl::scene2::MoveTo::alloc();
+        _goingTo = 0;
+        _returnVec = {};
+        
+        _patrol_stops = vec;
+
+        _chaseMove = cugl::scene2::MoveTo::alloc();
+        _chaseMove->setDuration(.15);
+        
+        _returnMove = cugl::scene2::MoveTo::alloc();
+        _returnMove->setDuration(.15);
+        
+        _patrolMove = cugl::scene2::MoveTo::alloc();
         _doesPatrol = true;
-        _current_stop = 0;
+        _goingTo = 0;
         _id = id;
         _model = std::make_unique<GuardModel>(position, Size(100, 100), Color4::RED);
         _view = std::make_unique<GuardView>(position, Size(100, 100), Color4::RED, assets, actions);
@@ -85,6 +115,32 @@ public:
         _view->setPosition(position);
     }
 
+#pragma mark Update Chase Methods
+    
+    void updateChaseTarget(Vec2 pos){
+        _chaseMove->setTarget(pos);
+    }
+    
+    void updateChaseSpeed(float speed){
+        _chaseMove->setDuration(speed);
+
+    }
+#pragma mark Update Patrol Methods
+    
+    void updatePatrolSpeed(float speed){
+        _patrolMove->setDuration(speed);
+    }
+    
+#pragma mark Update Return Methods
+    
+    void updateReturnSpeed(float speed){
+        _returnMove->setDuration(speed);
+    }
+    
+    void updateReturnTarget(Vec2 pos){
+        _returnMove->setTarget(pos);
+    }
+
     /**
      *  Updates the model and view with the size of this tile.
      *
@@ -95,10 +151,20 @@ public:
         _view->setSize(size);
     }
     
-    
-    Vec2 getNodePosition(){        
+    Vec2 getNodePosition(){
         return _view->nodePos();
     }
+    
+//#pragma mark Helpers
+//    /**
+//     *  See if the touch point is within the character
+//     *
+//     *  @param point The position of the touchpoint
+//     */
+//    bool contains(Vec2 point){
+//        return _model->contains(point);
+//    }
+
     
 #pragma mark Scene Methods
 public:
@@ -124,20 +190,59 @@ public:
 public:
     //moves the guard to the next patrol stop
     void nextStop(string actionName){
-        _moveTo->setDuration(2);
-        if (_current_stop + 1 < _patrol_stops.size()){
-            _current_stop += 1;
-            _moveTo->setTarget(_patrol_stops[_current_stop]);
-            _view->patrol(actionName, _moveTo);
+        if (returned){
+            _goingTo = saved_stop;
+            returned = false;
         }
         else{
-            _current_stop = 0;
-            _moveTo->setTarget(_patrol_stops[_current_stop]);
-            _view->patrol(actionName, _moveTo);
+            if (going_back and (_goingTo == 0)){
+                going_back = false;
+                _goingTo += 1;
+            }
+            else if(going_back){
+                _goingTo -= 1;
+            }else if (_goingTo + 1 == _patrol_stops.size() - 1){
+                going_back =  true;
+                _goingTo += 1;
+            }else{
+                _goingTo += 1;
+            }
         }
+        float speed = 53;
+        float distance = getNodePosition().distance(_patrol_stops[_goingTo]);
+        float duration = distance / speed;
+
+        _patrolMove->setDuration(duration);
+        _patrolMove->setTarget(_patrol_stops[_goingTo]);
+        _view->performAction(actionName, _patrolMove);
     }
     
-
+    void chaseChar(string actionName){
+        _view->performAction(actionName, _chaseMove);
+    }
+    
+    void returnGuard(string actionName){
+        _view->performAction(actionName, _returnMove);
+    }
+    
+    void prependReturnVec(Vec2 pos){
+        _returnVec.insert(_returnVec.begin(), pos);
+    }
+    
+    void eraseReturnVec(){
+        _returnVec.erase(_returnVec.begin());
+    }
+    
+    void saveCurrentStop(){
+        saved_stop = _goingTo;
+        returned = true;
+    }
+    
+    float getAngle(){
+        return _view->getNodeAngle();
+    }
+    
+    
 };
 
 #endif /* __GUARD_CONTROLLER_H__ */

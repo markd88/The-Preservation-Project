@@ -12,21 +12,26 @@ using namespace cugl;
 #define DURATION 1.0f
 #define ACT_KEY  "current"
 
-GamePlayController::GamePlayController(const Size displaySize, std::shared_ptr<cugl::AssetManager>& assets ):_scene(cugl::Scene2::alloc(displaySize)) {
+GamePlayController::GamePlayController(const Size displaySize, std::shared_ptr<cugl::AssetManager>& assets ):
+_scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displaySize)) {
     // Initialize the assetManager
     _assets = assets;
     // Initialize the scene to a locked width
     Size dimen = Application::get()->getDisplaySize();
     dimen *= SCENE_WIDTH/dimen.width; // Lock the game to a reasonable resolution
     _input->init(dimen);
+    
     _cam = _scene->getCamera();
+    _other_cam = _other_scene->getCamera();
+    
     // Allocate the manager and the actions
     _actions = cugl::scene2::ActionManager::alloc();
     
     // Allocate the camera manager
     _camManager = CameraManager::alloc();
     
-    _scene->setSize(displaySize/1);
+    _scene->setSize(displaySize);
+    _other_scene->setSize(displaySize);
     
     _path = make_unique<PathController>();
     // initialize character, two maps, path
@@ -48,6 +53,9 @@ GamePlayController::GamePlayController(const Size displaySize, std::shared_ptr<c
     _presentWorldLevel->setAssets(_assets);
     _presentWorldLevel->setTilemapTexture();
     _presentWorld = _presentWorldLevel->getWorld();
+    _presentWorld->updateColor(Color4::CLEAR);
+    _pastWorld->updateColor(Color4::CLEAR);
+
     
     
     _artifactSet = std::make_unique<ArtifactSetController>(_assets);
@@ -55,9 +63,8 @@ GamePlayController::GamePlayController(const Size displaySize, std::shared_ptr<c
     generateArtifact();
     generateResource();
     
-
-    _guardSet1 = std::make_unique<GuardSetController>(_assets, _actions);
-    _guardSet2 = std::make_unique<GuardSetController>(_assets, _actions);
+    _guardSet1 = std::make_unique<GuardSetController>(_assets, _actions, _pastWorld, _presentWorld);
+    _guardSet2 = std::make_unique<GuardSetController>(_assets, _actions, _pastWorld, _presentWorld);
     generateGuard();
     secondaryGuard();
     
@@ -158,6 +165,7 @@ void GamePlayController::init(){
     
     
     _pastWorld->addChildTo(_scene);
+    _presentWorld->addChildTo(_other_scene);
     _activeMap = "pastWorld";
     _template = 0;
     
@@ -188,8 +196,8 @@ void GamePlayController::init(){
     _resourceSet->clearSet();
     generateArtifact();
     generateResource();
-    _guardSet1 = make_unique<GuardSetController>(_assets, _actions);
-    _guardSet2 = make_unique<GuardSetController>(_assets, _actions);
+    _guardSet1 = make_unique<GuardSetController>(_assets, _actions, _pastWorld, _presentWorld);
+    _guardSet2 = make_unique<GuardSetController>(_assets, _actions, _pastWorld, _presentWorld);
     _guardSet1->clearSet();
     _guardSet2->clearSet();
     generateGuard();
@@ -213,11 +221,17 @@ void GamePlayController::init(){
     // reload initial label for n_res and n_art
     _res_label->setText("0");
     _art_label->setText("0/4");
+    //_pastWorld->addPoints(_scene->getSize(), _scene);
+    
 }
 
-
 void GamePlayController::update(float dt){
-    _guardSet1->patrol();
+    if (_activeMap == "pastWorld"){
+        _guardSet1->patrol(_character->getNodePosition(), true, _scene, _character->getAngle());
+    }else{
+        _guardSet2->patrol(_character->getNodePosition(), false, _scene, _character->getAngle());
+    }
+    
     if(_fail_layer->getScene()!=nullptr || _complete_layer->getScene()!=nullptr){
         return;
     }
@@ -310,7 +324,7 @@ void GamePlayController::update(float dt){
     else if(_input->didPress()){        // if press, determine if press on character
         Vec2 input_posi = _input->getPosition();
         input_posi = _scene->screenToWorldCoords(input_posi);
-        
+        //_pastWorld->setInvisible(input_posi);
         if(_character->contains(input_posi)){
             // create path
             _path->setIsDrawing(true);
@@ -351,7 +365,6 @@ void GamePlayController::update(float dt){
         input_posi = _scene->screenToWorldCoords(input_posi);
         _path->setIsDrawing(false);
         // path_trace = _path->getPath();
-        
         _path->removeFrom(_scene);
         
     }
@@ -359,7 +372,6 @@ void GamePlayController::update(float dt){
     if (_path->getPath().size() != 0 && _actions->isActive("moving") == false){
         _moveTo->setTarget(_path->getPath()[0]);
         _moveCam->setTarget(_path->getPath()[0]);
-        
         _character->moveTo(_moveTo);
         _camManager->activate("movingCam", _moveCam, _cam);
         // path_trace.erase(path_trace.begin());
@@ -382,15 +394,12 @@ void GamePlayController::update(float dt){
                     _character->addRes();
                     // update panel
                     _res_label->setText(cugl::strtool::to_string(_character->getNumRes()));
-                    
                 }
                 // if artifact
                 else{
                     _character->addArt();
                     _art_label->setText(cugl::strtool::to_string(_character->getNumArt()) + "/4");
-                    
                 }
-
                 // make the artifact disappear and remove from set
                 _artifactSet->remove_this(i, _scene);
                 if(_character->getNumArt() == 4){
@@ -404,7 +413,6 @@ void GamePlayController::update(float dt){
             
         }
     }
-    
     
     // if collide with guard
     if(_activeMap == "pastWorld"){
@@ -472,8 +480,8 @@ void GamePlayController::update(float dt){
     }
 
     void GamePlayController::generateGuard() {
-        vector<Vec2> patrol_stops = { Vec2(90, 500), Vec2(190, 500), Vec2(190, 400) }; //must be at least two stops
-        addMovingGuard1(90, 500, patrol_stops);
+        vector<Vec2> patrol_stops = { Vec2(0, 500), Vec2(190, 500), Vec2(190, 400) }; //must be at least two stops
+        addMovingGuard1(0, 500, patrol_stops);
         addGuard1(450, 250);
         addGuard1(500, 100);
         addGuard1(630, 500);
@@ -490,13 +498,12 @@ void GamePlayController::update(float dt){
     }
 
     
-        
-    
 #pragma mark -
 #pragma mark Helpers
 
     
     void GamePlayController::render(std::shared_ptr<SpriteBatch>& batch){
+        //_other_scene->render(batch);
         _scene->render(batch);
     }
     

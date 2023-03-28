@@ -20,11 +20,8 @@ private:
     std::shared_ptr<scene2::SceneNode> _node;
     std::shared_ptr<Poly2> tri;
     std::shared_ptr<scene2::PolygonNode> _cone;
-    
-    
     /** Manager to process the animation actions */
     std::shared_ptr<cugl::scene2::ActionManager> _actions;
-    
     
 #pragma mark Main Functions
 public:
@@ -42,6 +39,7 @@ public:
         _node->setVisible(true);
         _node->setAnchor(Vec2::ANCHOR_CENTER);
         _node->setPosition(position);
+    
 //        setPosition(position);
 //        setSize(size);
     }
@@ -63,14 +61,16 @@ public:
     void addChildTo(const std::shared_ptr<cugl::Scene2>& scene) {
         scene->addChild(_node);
         
-        _cone = scene2::PolygonNode::allocWithPoly(makeCone(500, 90));
-        coneDirection(6);
-        _cone->setAnchor(Vec2::ANCHOR_MIDDLE_RIGHT);
-        _cone->setColor(Color4::RED);
-        _cone->setVisible(true);
-        _cone->setPosition(_node->getSize()/_node->getScale()/2);
-//        _cone->setPosition(Vec2 (0, 400));
-        _node->addChild(_cone);
+        /*
+         _cone = scene2::PolygonNode::allocWithPoly(makeCone(500, 90));
+         coneDirection(6);
+         _cone->setAnchor(Vec2::ANCHOR_MIDDLE_RIGHT);
+         _cone->setColor(Color4::RED);
+         _cone->setVisible(true);
+         _cone->setPosition(_node->getSize()/_node->getScale()/2);
+         _cone->setPosition(Vec2 (0, 400));
+         _node->addChild(_cone);
+         */
     }
     
     /**
@@ -98,8 +98,12 @@ public:
         return _node->getPosition();
     }
     
-    void patrol(string actionName, const std::shared_ptr<cugl::scene2::MoveTo>& action){
+    void performAction(string actionName, const std::shared_ptr<cugl::scene2::MoveTo>& action){
         _actions->activate(actionName, action, _node);
+    }
+    
+    float getNodeAngle(){
+        return _node->getAngle();
     }
     
 #pragma mark Helpers
@@ -116,6 +120,7 @@ public:
         float direction = i * 45;
         _cone->setAngle(direction * M_PI / 180.0);
     }
+   
 };
 
 #endif /* GuardView_h */
