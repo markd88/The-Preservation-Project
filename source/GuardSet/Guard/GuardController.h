@@ -10,6 +10,7 @@
 
 #include "GuardView.h"
 #include "GuardModel.h"
+#define DURATION 1.0f
 
 /**
  * A class communicating between the model and the view. It only
@@ -70,10 +71,10 @@ public:
         
         _returnVec = {};
         _chaseMove = cugl::scene2::MoveTo::alloc();
-        _chaseMove->setDuration(.15);
+        _chaseMove->setDuration(DURATION);
         
         _returnMove = cugl::scene2::MoveTo::alloc();
-        _returnMove->setDuration(.15);
+        _returnMove->setDuration(DURATION);
         
         _doesPatrol = false;
         _id = id;
@@ -90,10 +91,10 @@ public:
         _patrol_stops = vec;
 
         _chaseMove = cugl::scene2::MoveTo::alloc();
-        _chaseMove->setDuration(.15);
+        _chaseMove->setDuration(DURATION);
         
         _returnMove = cugl::scene2::MoveTo::alloc();
-        _returnMove->setDuration(.15);
+        _returnMove->setDuration(DURATION);
         
         _patrolMove = cugl::scene2::MoveTo::alloc();
         _doesPatrol = true;
@@ -215,14 +216,34 @@ public:
         _patrolMove->setDuration(duration);
         _patrolMove->setTarget(_patrol_stops[_goingTo]);
         _view->performAction(actionName, _patrolMove);
+
+        Vec2 target = _patrolMove->getTarget();
+        Vec2 pos = _view->nodePos();
+        int direction = calculateMappedAngle(pos.x, pos.y, target.x, target.y);
+        _view->performAnimation(actionName+"Animation", direction);
+
     }
     
-    void chaseChar(string actionName){
+    void chaseChar(string actionName, int direction){
+        CULog("chasing");
         _view->performAction(actionName, _chaseMove);
+        _view->performAnimation(actionName+"Animation", direction);
     }
     
     void returnGuard(string actionName){
+        CULog("returning");
         _view->performAction(actionName, _returnMove);
+        Vec2 target = _returnMove->getTarget();
+        Vec2 pos = _view->nodePos();
+        CULog("%f", pos.x);
+        CULog("%f", pos.y);
+        CULog("%f", target.x);
+        CULog("%f", target.y);
+        int direction = calculateMappedAngle(pos.x, pos.y, target.x, target.y);
+        _view->performAnimation(actionName+"Animation", direction);
+
+
+
     }
     
     void prependReturnVec(Vec2 pos){
@@ -238,11 +259,57 @@ public:
         returned = true;
     }
     
-    float getAngle(){
-        return _view->getNodeAngle();
+//    float getAngle(){
+//        return _view->getNodeAngle();
+//    }
+    int getDirection() {
+        return _model->getDirection();
     }
-    
-    
+
+    int calculateMappedAngle(float x1, float y1, float x2, float y2)
+    {
+        // calculate the angle in radians
+        double angleRadians = atan2(y2 - y1, x2 - x1);
+
+        // convert the angle to degrees
+        float angleDegrees = angleRadians * 180.0 / M_PI;
+
+        // make sure the angle is between 0 and 360 degrees
+        if (angleDegrees < 0.0)
+        {
+            angleDegrees += 360.0;
+        }
+
+        // map the angle from 0 to 360 degrees to 0 to 7
+        CULog("%f", angleDegrees);
+        if (angleDegrees > 337.5 || angleDegrees < 22.5) {
+            return 2;
+        } else if (angleDegrees >= 22.5 && angleDegrees < 67.5){
+            return 1;
+        }
+        else if (angleDegrees >= 67.5 && angleDegrees < 112.5){
+            return 0;
+        }
+        else if (angleDegrees >= 112.5 && angleDegrees < 157.5){
+            return 7;
+        }
+        else if (angleDegrees >= 157.5 && angleDegrees < 202.5){
+            return 6;
+        }
+        else if (angleDegrees >= 202.5 && angleDegrees < 247.5){
+            return 5;
+        }
+        else if (angleDegrees >= 247.5 && angleDegrees < 292.5){
+            return 4;
+        }else if (angleDegrees >= 292.5 && angleDegrees < 337.5){
+            return 3;
+        }
+
+
+    }
+
+
+
 };
 
 #endif /* __GUARD_CONTROLLER_H__ */

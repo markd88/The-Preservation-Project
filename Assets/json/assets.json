@@ -11,7 +11,7 @@
             "file":     "textures/walking.png"
         },
         "guard": {
-            "file":     "textures/guard.png"
+            "file":     "textures/enemy.png"
         },
         "cone": {
             "file":     "textures/cone.png"
