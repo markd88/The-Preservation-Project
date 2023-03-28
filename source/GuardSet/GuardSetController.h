@@ -8,6 +8,8 @@
 #define __GUARDSET_CONTROLLER_H__
 #include "Guard/GuardModel.h"
 #include "Guard/GuardView.h"
+#include "Guard/GuardController.h"
+#include <Tilemap/TilemapController.h>
 
 /**
  * A class communicating between the model and the view. It only
@@ -29,13 +31,20 @@ public:
     
     /**vector of guard IDs**/
     vector<int> _usedIDs;
+    
+    std::shared_ptr<TilemapController> _pastWorld;
+    
+    std::shared_ptr<TilemapController> _presentWorld;
 
 
 #pragma mark Main Methods
 public:
     
-    GuardSetController(const std::shared_ptr<cugl::AssetManager>& assets, std::shared_ptr<cugl::scene2::ActionManager> actions)
+    GuardSetController(const std::shared_ptr<cugl::AssetManager>& assets, std::shared_ptr<cugl::scene2::ActionManager> actions, std::shared_ptr<TilemapController> pastWorld,
+                std::shared_ptr<TilemapController> presentWorld)
     {
+        _pastWorld = pastWorld;
+        _presentWorld = presentWorld;
         _actions = actions;
         std::vector<Guard> _guardSet;
     };
@@ -101,8 +110,10 @@ public:
         return id;
     }
     
-    void patrol(Vec2 _charPos){
+    void patrol(Vec2 _charPos, bool isPast, Scene s, float char_angle){
+        
         for (int i = 0; i < _guardSet.size(); i++){
+            
             string chaseAction = "chasing" + std::to_string(_guardSet[i]->id);
             string patrolAction = "patrol" + std::to_string(_guardSet[i]->id);
             string returnAction = "return" + std::to_string(_guardSet[i]->id);
@@ -110,17 +121,30 @@ public:
             Vec2 guardPos = _guardSet[i]->getNodePosition();
             float distance = guardPos.distance(_charPos);
             
+            bool detection = false;
+            if (distance < 200){
+                if (isPast){
+                    //drawLines(s, _charPos, guardPos);
+                    detection = !_presentWorld->lineInObstacle(guardPos,_charPos);
+                }else{
+                    detection = !_presentWorld->lineInObstacle(guardPos,_charPos);
+                }
+            }
+             
             if (_actions->isActive(chaseAction) or _actions->isActive(returnAction)){
                 //wait for guard to finish current action
+                //interupt return action if detection
             }
             //detection
-            else if (_guardSet[i]->detection(_charPos)   and _actions->isActive(patrolAction)){
+            else if (detection and _actions->isActive(patrolAction)){
                 Vec2 pos = _guardSet[i]->getNodePosition();
                 _guardSet[i]->saveCurrentStop();
                 _actions->remove(patrolAction);
                 _guardSet[i]->updatePosition(pos);
             }
-            else if (_guardSet[i]->detection(_charPos)){
+            else if (detection){
+                std::cout<<"guard angle: "<< _guardSet[i]->getAngle()<<"\n";
+                std::cout<<"char angle: "<<char_angle<<"\n";
                 Vec2 target = guardPos + ((_charPos - guardPos)/distance)*8;
                 //chase
                 _guardSet[i]->updateChaseTarget(target);
@@ -144,6 +168,32 @@ public:
                 }
             }
         }
+    }
+    
+    void drawLines(Scene s, Vec2 a, Vec2 b){
+        s->removeChildByName("line");
+        
+        SplinePather splinePather = SplinePather();
+        SimpleExtruder extruder = SimpleExtruder();
+        bool detection = _pastWorld->lineInObstacle(a, b);
+        Spline2 spline = Spline2(a, b);
+        splinePather.set(&spline);
+        splinePather.calculate();
+
+        extruder.set(splinePather.getPath());
+        extruder.calculate(1);
+        Poly2 line = extruder.getPolygon();
+        std::shared_ptr<scene2::PolygonNode> polyNode= scene2::PolygonNode::alloc();
+        polyNode->setPolygon(line);
+        if (detection){
+            polyNode->setColor(Color4::BLUE);
+        }else{
+            polyNode->setColor(Color4::GREEN);
+        }
+        polyNode->setPosition(a.getMidpoint(b));
+        
+        s->addChildWithName(polyNode, "line");
+        
     }
     
 

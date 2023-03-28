@@ -21,6 +21,8 @@ class GamePlayController {
 private:
     /** The Game scene */
     std::shared_ptr<cugl::Scene2> _scene;
+    
+    std::shared_ptr<cugl::Scene2> _other_scene;
 
     /** The current tile map template (for regeneration) */
     int _template;
@@ -56,6 +58,7 @@ public:
     std::shared_ptr<InputController> _input = InputController::getInstance();
     vector<Vec2> path_trace;
     std::shared_ptr<Camera> _cam;
+    std::shared_ptr<Camera> _other_cam;
     /** Manager to process the animation actions */
     std::shared_ptr<cugl::scene2::ActionManager> _actions;
     std::shared_ptr<cugl::scene2::MoveTo> _moveTo;

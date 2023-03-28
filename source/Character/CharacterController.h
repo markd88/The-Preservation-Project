@@ -131,6 +131,10 @@ public:
         _view->removeChildFrom(node);
     }
     
+    float getAngle(){
+        return _view->getAngle();
+    }
+    
 #pragma mark Controller Methods
 public:
 

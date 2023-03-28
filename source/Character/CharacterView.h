@@ -93,6 +93,10 @@ public:
     Vec2 nodePos(){
         return _node->getPosition();
     }
+    
+    float getAngle(){
+        return _node->getAngle();
+    }
 };
 
 

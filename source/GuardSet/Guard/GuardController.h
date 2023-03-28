@@ -238,9 +238,10 @@ public:
         returned = true;
     }
     
-    bool detection(Vec2 pos){
-        return _view->detected(pos);
+    float getAngle(){
+        return _view->getNodeAngle();
     }
+    
     
 };
 

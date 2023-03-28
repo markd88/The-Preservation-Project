@@ -71,7 +71,6 @@ public:
     void setPosition(Vec2 position) {
         // TODO: Implement me
         _node->setPosition(position);
-    
     }
     
     /**
