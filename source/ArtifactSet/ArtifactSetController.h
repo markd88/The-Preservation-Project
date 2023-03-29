@@ -32,13 +32,17 @@ public:
     ArtifactSetController(const std::shared_ptr<cugl::AssetManager>& assets) {
         ArtifactSet _artifactSet;
     };
+    
+    ArtifactSetController() {
+        ArtifactSet _artifactSet;
+    };
 
 #pragma mark Update Methods
 public:
     
-    void add_this(Vec2 aPos, Scene s, const std::shared_ptr<cugl::AssetManager>& assets, bool isResource){
+    void add_this(Vec2 aPos, const std::shared_ptr<cugl::AssetManager>& assets, bool isResource){
         Artifact _artifact = std::make_unique<ArtifactController>(aPos, assets, isResource);
-        _artifact->addChildTo(s);
+//        _artifact->addChildTo(s);
         _artifactSet.push_back(std::move(_artifact));
     }
     

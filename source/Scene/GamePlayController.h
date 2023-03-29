@@ -49,8 +49,8 @@ public:
     std::unique_ptr<GuardSetController> _guardSet1;
     std::unique_ptr<GuardSetController> _guardSet2;
     
-    std::unique_ptr<ArtifactSetController> _artifactSet;
-    std::unique_ptr<ArtifactSetController> _resourceSet;
+    std::shared_ptr<ArtifactSetController> _artifactSet;
+    std::shared_ptr<ArtifactSetController> _resourceSet;
     
     std::unique_ptr<PathController> _path;
     std::shared_ptr<InputController> _input = InputController::getInstance();
@@ -74,6 +74,7 @@ public:
 //    std::shared_ptr<cugl::scene2::Label> _label;
     std::shared_ptr<LevelModel> _pastWorldLevel;
     std::shared_ptr<LevelModel> _presentWorldLevel;
+    std::shared_ptr<LevelModel> _artifactLevel;
 
 #pragma mark Main Methods
 public:
@@ -113,11 +114,11 @@ public:
     void render(std::shared_ptr<SpriteBatch> &batch) ;
 
 #pragma mark Generation Helpers
-private:    
+//private:
     /** Generates artifacts and guards in the primary world. */
     void addArtifact(int w, int h, bool isResource) {
         Vec2 aPos = Vec2(w,h);
-        _artifactSet->add_this(aPos, _scene, _assets, isResource);
+        _artifactSet->add_this(aPos, _assets, isResource);
     }
     void addMovingGuard1(int w, int h, vector<Vec2> patrol_stops) {
         Vec2 gPos = Vec2(w,h);

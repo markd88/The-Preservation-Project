@@ -20,6 +20,7 @@
 LevelModel::LevelModel(void) : Asset()
 {
     _world = std::make_unique<TilemapController>();
+    _item = std::make_unique<ArtifactSetController>();
 }
 
 /**
@@ -109,6 +110,8 @@ bool LevelModel::loadObject(const std::string type, const std::shared_ptr<JsonVa
         return loadWall(json);
     } else if (type == TILEMAP_FILED) {
         return loadTilemap(json);
+    } else if (type == ARTIFACTS_FIELD) {
+        return loadArtifact(json);
     }
     return false;
 }
@@ -152,6 +155,24 @@ bool LevelModel::loadWall(const std::shared_ptr<JsonValue>& json) {
     
     // TODO: replace below
     _world->addTile2(x, y, true, _assets, textureType);
+    
+    success = success && x >= 0 && y >= 0;
+    return success;
+}
+
+/**
+* Loads an artifact object
+*/
+bool LevelModel::loadArtifact(const std::shared_ptr<JsonValue>& json) {
+    bool success = true;
+
+    int width = json->get("width")->asInt();
+    int height = json->get("height")->asInt();
+    int x = json->get("x")->asInt() / width;
+    int y = json->get("y")->asInt() / height - 1;
+    
+    Vec2 aPos = Vec2 (x, y);
+    _item->add_this(aPos, _assets, false);
     
     success = success && x >= 0 && y >= 0;
     return success;

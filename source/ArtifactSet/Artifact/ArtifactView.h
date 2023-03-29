@@ -22,8 +22,8 @@ public:
     /** contructor */
     ArtifactView(Vec2 position, Size size, Color4 color, const std::shared_ptr<cugl::AssetManager>& assets, bool isResource) {
         // Get the image and add it to the node.
-        float scale = GAME_WIDTH/size.width;
-        size *= scale;
+//        float scale = GAME_WIDTH/size.width;
+//        size *= scale;
         _node = scene2::SceneNode::alloc();
         
         if (isResource) {

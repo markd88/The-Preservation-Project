@@ -150,6 +150,13 @@
          "imageheight":128,
          "imagewidth":128,
          "type":"tile_present_wall"
+        },
+        {
+         "id":20,
+         "image":"..\/128 x 128\/artifact.png",
+         "imageheight":128,
+         "imagewidth":128,
+         "type":"artifact"
         }],
  "tilewidth":128,
  "type":"tileset",

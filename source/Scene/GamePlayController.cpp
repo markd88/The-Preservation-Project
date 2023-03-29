@@ -49,12 +49,16 @@ GamePlayController::GamePlayController(const Size displaySize, std::shared_ptr<c
     _presentWorldLevel->setTilemapTexture();
     _presentWorld = _presentWorldLevel->getWorld();
     
+    _artifactLevel = _assets->get<LevelModel>(LEVEL_ONE_PRESENT_KEY);
+    _artifactLevel->setAssets(_assets);
+    _artifactSet = _artifactLevel->getItem();
+//    generateArtifact();
+    _artifactSet->addChildTo(_scene);
     
-    _artifactSet = std::make_unique<ArtifactSetController>(_assets);
+    
     _resourceSet = std::make_unique<ArtifactSetController>(_assets);
-    generateArtifact();
     generateResource();
-    
+    _resourceSet->addChildTo(_scene);
 
     _guardSet1 = std::make_unique<GuardSetController>(_assets, _actions);
     _guardSet2 = std::make_unique<GuardSetController>(_assets, _actions);
@@ -188,6 +192,9 @@ void GamePlayController::init(){
     _resourceSet->clearSet();
     generateArtifact();
     generateResource();
+    _artifactSet->addChildTo(_scene);
+    _resourceSet->addChildTo(_scene);
+    
     _guardSet1 = make_unique<GuardSetController>(_assets, _actions);
     _guardSet2 = make_unique<GuardSetController>(_assets, _actions);
     _guardSet1->clearSet();
@@ -455,12 +462,11 @@ void GamePlayController::update(float dt){
 // TODO: Replace the following with LevelController methods
     void GamePlayController::generateArtifact() {
         //_artifactSet->_artifactSet = {};
-        
-        bool isResource = false;
-        addArtifact(90, 375, isResource);
-        addArtifact(650, 250, isResource);
-        addArtifact(1000, 530, isResource);
-        addArtifact(750, 0, isResource);
+//        bool isResource = false;
+//        addArtifact(90, 375, isResource);
+//        addArtifact(650, 250, isResource);
+//        addArtifact(1000, 530, isResource);
+//        addArtifact(750, 0, isResource);
     }
     void GamePlayController::generateResource() {
         // switching hourglass
