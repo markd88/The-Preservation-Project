@@ -111,6 +111,8 @@ public:
      */
 
     void render(std::shared_ptr<SpriteBatch> &batch) ;
+    
+    void dispose();
 
 #pragma mark Generation Helpers
 private:    

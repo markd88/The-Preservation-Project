@@ -3,6 +3,8 @@
 #include <chrono>
 #include <thread>
 #include "Level/LevelConstants.h"
+#include <common.h>
+
 // This is NOT in the same directory
 using namespace std;
 using namespace cugl;
@@ -15,6 +17,13 @@ using namespace cugl;
 GamePlayController::GamePlayController(const Size displaySize, std::shared_ptr<cugl::AssetManager>& assets ):_scene(cugl::Scene2::alloc(displaySize)) {
     // Initialize the assetManager
     _assets = assets;
+    
+    // load the level info
+    
+    _assets->load<LevelModel>(LEVEL_ZERO_PAST_KEY, LEVEL_ZERO_PAST_FILE);
+    _assets->load<LevelModel>(LEVEL_ZERO_PRESENT_KEY, LEVEL_ZERO_PRESENT_FILE);
+    
+    
     // Initialize the scene to a locked width
     Size dimen = Application::get()->getDisplaySize();
     dimen *= SCENE_WIDTH/dimen.width; // Lock the game to a reasonable resolution
@@ -113,6 +122,18 @@ GamePlayController::GamePlayController(const Size displaySize, std::shared_ptr<c
     
     complete_again_button->activate();
     
+    auto complete_back_button = std::dynamic_pointer_cast<scene2::Button>(assets->get<scene2::SceneNode>("complete_back"));
+    
+    complete_back_button->addListener([this](const std::string& name, bool down) {
+        if (down) {
+            nextScene = MENU;
+            // this->_scene->setActive(down);
+        }
+    });
+
+    complete_back_button->activate();
+    
+    // fail panel
     _fail_layer = _assets->get<scene2::SceneNode>("fail");
     auto fail_again_button = std::dynamic_pointer_cast<scene2::Button>(assets->get<scene2::SceneNode>("fail_again"));
     
@@ -123,6 +144,17 @@ GamePlayController::GamePlayController(const Size displaySize, std::shared_ptr<c
     });
     
     fail_again_button->activate();
+    
+    auto fail_back_button = std::dynamic_pointer_cast<scene2::Button>(assets->get<scene2::SceneNode>("fail_back"));
+    
+    fail_back_button->addListener([this](const std::string& name, bool down) {
+        if (down) {
+            nextScene = MENU;
+            // this->_scene->setActive(down);
+        }
+    });
+    
+    fail_back_button->activate();
     
     
     
@@ -215,6 +247,13 @@ void GamePlayController::init(){
     _art_label->setText("0/4");
 }
 
+void GamePlayController::dispose(){
+    _actions->dispose();
+    _camManager->dispose();
+    
+    // remove everything first
+    _scene->removeAllChildren();
+}
 
 void GamePlayController::update(float dt){
     _guardSet1->patrol();

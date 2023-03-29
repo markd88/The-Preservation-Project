@@ -18,6 +18,9 @@ using namespace std;
 // This is NOT in the same directory
 #include <Scene/GamePlayController.h>
 #include <Scene/LoadingController.h>
+#include <Scene/MenuController.h>
+#include <common.h>
+
 /**
  * Class for a viewing procedurally generated tile-based content
  *
@@ -41,8 +44,15 @@ protected:
     /** The loading controller*/
     std::shared_ptr<LoadingController> _loadingController;
     
+    
+    std::shared_ptr<MenuController> _menuController;
+    
     /** Whether or not we have finished loading all assets */
     bool _loaded;
+    
+    
+    
+    
     
 public:
     /**
