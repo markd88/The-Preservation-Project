@@ -11,6 +11,11 @@
 #include "Guard/GuardController.h"
 #include <Tilemap/TilemapController.h>
 
+
+#include <cmath>
+
+#define DURATION 3.0f
+
 /**
  * A class communicating between the model and the view. It only
  * controls a single tile.
@@ -35,6 +40,8 @@ public:
     std::shared_ptr<TilemapController> _world;
     
 
+
+
 #pragma mark Main Methods
 public:
     
@@ -43,10 +50,15 @@ public:
         _world = world;
         _actions = actions;
         std::vector<Guard> _guardSet;
+
+
+
     };
     
 #pragma mark Update Methods
 public:
+
+
     // add one guard
     void add_this_moving(Vec2 gPos, Scene s, const std::shared_ptr<cugl::AssetManager>& assets, vector<Vec2> patrol_stops){
         Guard _guard = std::make_unique<GuardController>(gPos, assets, patrol_stops, _actions, generateUniqueID());
@@ -120,6 +132,8 @@ public:
             string patrolAction = "patrol" + std::to_string(_guardSet[i]->id);
             string returnAction = "return" + std::to_string(_guardSet[i]->id);
 
+
+
             Vec2 guardPos = _guardSet[i]->getNodePosition();
             float distance = guardPos.distance(_charPos);
             
@@ -127,6 +141,7 @@ public:
             if (distance < 200 and _world->isActive()){
                 //drawLines(s, _charPos, guardPos);
                 detection = !_world->lineInObstacle(guardPos,_charPos);
+
             }
             
             if (_actions->isActive(chaseAction) or _actions->isActive(returnAction)){
@@ -138,17 +153,23 @@ public:
                 Vec2 pos = _guardSet[i]->getNodePosition();
                 _guardSet[i]->saveCurrentStop();
                 _actions->remove(patrolAction);
+                _actions->remove(patrolAction + "Animation");
                 _guardSet[i]->updatePosition(pos);
             }
             
             else if (detection){
-                //std::cout<<"guard angle: "<< _guardSet[i]->getAngle()<<"\n";
-                //std::cout<<"char angle: "<<char_angle<<"\n";
-                Vec2 target = guardPos + ((_charPos - guardPos)/distance)*8;
-                
+
+                // std::cout<<"guard angle: "<< _guardSet[i]->getDirection()<<"\n";
+                std::cout<<"char angle: "<<char_angle<<"\n";
+                Vec2 target = guardPos + ((_charPos - guardPos)/distance)*20;
+                Vec2 pos = _guardSet[i]->getNodePosition();
+                int direction = calculateMappedAngle(float (pos.x), float (pos.y), float (target.x), float (target.y));
+
                 //chase
+
                 _guardSet[i]->updateChaseTarget(target);
-                _guardSet[i]->chaseChar(chaseAction);
+
+                _guardSet[i]->chaseChar(chaseAction, direction);
                 //add to return vec
                 _guardSet[i]->prependReturnVec(target);
             }
@@ -195,7 +216,54 @@ public:
         s->addChildWithName(polyNode, "line");
         
     }
-    
+
+
+
+    int calculateMappedAngle(float x1, float y1, float x2, float y2)
+    {
+        // calculate the angle in radians
+        double angleRadians = atan2(y2 - y1, x2 - x1);
+
+        // convert the angle to degrees
+        float angleDegrees = angleRadians * 180.0 / M_PI;
+
+        // make sure the angle is between 0 and 360 degrees
+        if (angleDegrees < 0.0)
+        {
+            angleDegrees += 360.0;
+        }
+
+        // map the angle from 0 to 360 degrees to 0 to 7
+        CULog("%f", angleDegrees);
+        if (angleDegrees > 337.5 || angleDegrees < 22.5) {
+            return 2;
+        } else if (angleDegrees >= 22.5 && angleDegrees < 67.5){
+            return 1;
+        }
+        else if (angleDegrees >= 67.5 && angleDegrees < 112.5){
+            return 0;
+        }
+        else if (angleDegrees >= 112.5 && angleDegrees < 157.5){
+            return 7;
+        }
+        else if (angleDegrees >= 157.5 && angleDegrees < 202.5){
+            return 6;
+        }
+        else if (angleDegrees >= 202.5 && angleDegrees < 247.5){
+            return 5;
+        }
+        else if (angleDegrees >= 247.5 && angleDegrees < 292.5){
+            return 4;
+        }else if (angleDegrees >= 292.5 && angleDegrees < 337.5){
+            return 3;
+        }
+        return 0;
+
+
+    }
+
+
+
 
 };
 
