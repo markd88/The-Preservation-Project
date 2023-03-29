@@ -126,5 +126,9 @@ public:
     bool containsLine(Vec2 a, Vec2 b){
         return _view->containsLine(a, b);
     }
+    
+    void setVisibility(bool visible){
+        _view->setVisibility(visible);
+    }
 };
 #endif

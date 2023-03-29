@@ -99,4 +99,8 @@ public:
         _node->setColor(color);
     }
     
+    void setVisibility(bool active){
+        _node->setVisible(active);
+    }
+    
 };

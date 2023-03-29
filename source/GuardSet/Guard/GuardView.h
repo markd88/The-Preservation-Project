@@ -121,6 +121,9 @@ public:
         _cone->setAngle(direction * M_PI / 180.0);
     }
    
+    void setVisibility(bool visible){
+        _node->setVisible(visible);
+    }
 };
 
 #endif /* GuardView_h */

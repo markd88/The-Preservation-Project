@@ -63,10 +63,10 @@ _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displ
     generateArtifact();
     generateResource();
     
-    _guardSet1 = std::make_unique<GuardSetController>(_assets, _actions, _pastWorld, _presentWorld);
-    _guardSet2 = std::make_unique<GuardSetController>(_assets, _actions, _pastWorld, _presentWorld);
-    generateGuard();
-    secondaryGuard();
+    _guardSetPast = std::make_unique<GuardSetController>(_assets, _actions, _pastWorld);
+    _guardSetPresent = std::make_unique<GuardSetController>(_assets, _actions, _presentWorld);
+    generatePastGuards();
+    generatePresentGuards();
     
 //    Vec2 start = Vec2(_scene->getSize().width * 0.85, _scene->getSize().height * 0.15);
     Vec2 start = Vec2(1,1);
@@ -131,11 +131,8 @@ _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displ
     
     fail_again_button->activate();
     
-    
-    
     // add switch indicator
     _switchNode = _assets->get<scene2::SceneNode>("button_switch");
-
     
     _moveTo = cugl::scene2::MoveTo::alloc();
     _moveCam = CameraMoveTo::alloc();
@@ -144,12 +141,8 @@ _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displ
     
     init();
     
-    
-//    _scene->addChild(_complete_layer);
-//    _complete_layer->setPosition(_cam->getPosition());
-//    _scene->addChild(_fail_layer);
-//    _fail_layer->setPosition(_cam->getPosition());
 }
+
 
 
 // init some assets when restart
@@ -161,11 +154,15 @@ void GamePlayController::init(){
     
     // remove everything first
     _scene->removeAllChildren();
-    
-    
+    _other_scene->removeAllChildren();
     
     _pastWorld->addChildTo(_scene);
+    _pastWorld->setVisibility(true);
+    _artifactSet->setVisibility(true);
+    
     _presentWorld->addChildTo(_other_scene);
+    _presentWorld->setActive(false);
+    
     _activeMap = "pastWorld";
     _template = 0;
     
@@ -192,17 +189,22 @@ void GamePlayController::init(){
     
     _artifactSet = make_unique<ArtifactSetController>(_assets);
     _resourceSet = make_unique<ArtifactSetController>(_assets);
+    
     _artifactSet->clearSet();
     _resourceSet->clearSet();
+    
     generateArtifact();
     generateResource();
-    _guardSet1 = make_unique<GuardSetController>(_assets, _actions, _pastWorld, _presentWorld);
-    _guardSet2 = make_unique<GuardSetController>(_assets, _actions, _pastWorld, _presentWorld);
-    _guardSet1->clearSet();
-    _guardSet2->clearSet();
-    generateGuard();
-    secondaryGuard();
-    _guardSet2->removeChildFrom(_scene);
+    
+    _guardSetPast = make_unique<GuardSetController>(_assets, _actions, _pastWorld);
+    _guardSetPresent = make_unique<GuardSetController>(_assets, _actions, _presentWorld);
+    
+    _guardSetPast->clearSet();
+    _guardSetPresent->clearSet();
+    
+    generatePastGuards();
+    generatePresentGuards();
+    _guardSetPresent->setVisbility(true);
     
     _path = make_unique<PathController>();
     path_trace = {};
@@ -211,12 +213,13 @@ void GamePlayController::init(){
     
     Vec2 cPos = _character->getPosition();
     _cam->setPosition(Vec3(cPos.x,cPos.y,0));
-
+    _other_cam->setPosition(Vec3(cPos.x,cPos.y,0));
+    
     _cam->update();
+    _other_cam->update();
     
     // to make the button pos fixed relative to screen
     _button_layer->setPosition(_cam->getPosition());
-
     
     // reload initial label for n_res and n_art
     _res_label->setText("0");
@@ -226,21 +229,17 @@ void GamePlayController::init(){
 }
 
 void GamePlayController::update(float dt){
-    if (_activeMap == "pastWorld"){
-        _guardSet1->patrol(_character->getNodePosition(), true, _scene, _character->getAngle());
-    }else{
-        _guardSet2->patrol(_character->getNodePosition(), false, _scene, _character->getAngle());
-    }
     
     if(_fail_layer->getScene()!=nullptr || _complete_layer->getScene()!=nullptr){
         return;
     }
+    
+#pragma mark Switch World Methods
     static auto last_time = std::chrono::steady_clock::now();
     // Calculate the time elapsed since the last call to pinch
     auto now = std::chrono::steady_clock::now();
     auto elapsed = std::chrono::duration_cast<std::chrono::seconds>(now - last_time);
        
-    
     _input->update(dt);
     // if pinch, switch world
     bool cant_switch = ((_activeMap == "pastWorld" && _presentWorld->inObstacle(_character->getPosition())) || (_activeMap == "presentWorld" && _pastWorld->inObstacle(_character->getPosition())));
@@ -259,45 +258,43 @@ void GamePlayController::update(float dt){
         last_time = now;
         // remove and add the child back so that the child is always on the top layer
         
-        _character->removeChildFrom(_scene);
         if (_activeMap == "pastWorld") {
-//<<<<<<< HEAD
-            _pastWorld->removeChildFrom(_scene);
-            _presentWorld->addChildTo(_scene);
-//=======
-//            _pastWorld->removeChildFrom(_scene);
-//            _presentWorld->addChildTo(_scene);
-//            _coneSet1->removeChildFrom(_scene);
-//>>>>>>> d0693c6936867fdaf151a3e1702b5ad3cfbbd9cc
-            _guardSet1->removeChildFrom(_scene);
-            _guardSet2->addChildTo(_scene);
-            _artifactSet->removeChildFrom(_scene);
-            _resourceSet->removeChildFrom(_scene);
             _activeMap = "presentWorld";
+            
+            _presentWorld->setVisibility(true);
+            _guardSetPresent->setVisbility(true);
+
+            _pastWorld->setVisibility(false);
+            _guardSetPast->setVisbility(false);
+            _artifactSet->setVisibility(false);
+            
+            _character->removeChildFrom(_scene);
+            _character->addChildTo(_other_scene);
             
             // when move to the second world, minus 1 visually
             _res_label->setText(cugl::strtool::to_string(_character->getNumRes()-1));
         }
         else {
-            _presentWorld->removeChildFrom(_scene);
-            _pastWorld->addChildTo(_scene);
-            _guardSet2->removeChildFrom(_scene);
-//            _coneSet1->addChildTo(_scene);
-            _guardSet1->addChildTo(_scene);
-            _artifactSet->addChildTo(_scene);
-            _resourceSet->addChildTo(_scene);
+            _pastWorld->setVisibility(true);
+            _guardSetPast->setVisbility(true);
+            _artifactSet->setVisibility(true);
+            
+            _presentWorld->setActive(false);
+
             _activeMap = "pastWorld";
+            
+            _character->removeChildFrom(_other_scene);
+            _character->addChildTo(_scene);
             
             // when move to the second world, minus 1 in model
             _character->useRes();
         }
-        _character->addChildTo(_scene);
-        _scene->removeChild(_button_layer);
-        _scene->addChild(_button_layer);
+        
         // stop previous movement after switch world
         _path->clearPath();
     }
-    
+#pragma mark Pan Methods
+
     else if (!_input->getPanDelta().isZero() && _path->getPath().size() == 0) {
         Vec2 delta = _input->getPanDelta();
 
@@ -320,11 +317,13 @@ void GamePlayController::update(float dt){
         auto fcn = EasingFunction::alloc(EasingFunction::Type::BACK_OUT);
         _camManager->activate("movingCam", _moveCam, _cam, fcn);
     }
-        
+    
+#pragma mark Character Movement Methods
     else if(_input->didPress()){        // if press, determine if press on character
+        _isPreviewing = true;
         Vec2 input_posi = _input->getPosition();
         input_posi = _scene->screenToWorldCoords(input_posi);
-        //_pastWorld->setInvisible(input_posi);
+        
         if(_character->contains(input_posi)){
             // create path
             _path->setIsDrawing(true);
@@ -335,6 +334,7 @@ void GamePlayController::update(float dt){
     }
     
     else if (_input->isDown() && _path->isDrawing){
+        
         Vec2 input_posi = _input->getPosition();
         input_posi = _scene->screenToWorldCoords(input_posi);
         // if input still within the character
@@ -344,7 +344,7 @@ void GamePlayController::update(float dt){
                 _path->setIsInitiating(false);
             }
         }
-        // an updated version to iteratively add segments until the input_posi is too close to last point in the model
+        
         if(_path->isInitiating == false){
             while(_path->farEnough(input_posi)){
                 Vec2 checkpoint = _path->getLastPos() + (input_posi - _path->getLastPos()) / _path->getLastPos().distance(input_posi) * _path->getSize();
@@ -360,13 +360,20 @@ void GamePlayController::update(float dt){
         }
     }
     
+    else if(_input->isDown() and _isPreviewing){
+        Vec2 input_posi = _input->getPosition();
+        input_posi = _scene->screenToWorldCoords(input_posi);
+        _pastWorld->makePreview(input_posi);
+    }
+    
     else if(_input->didRelease()){
+        _isPreviewing = false;
+        _pastWorld->removePreview();
         Vec2 input_posi = _input->getPosition();
         input_posi = _scene->screenToWorldCoords(input_posi);
         _path->setIsDrawing(false);
         // path_trace = _path->getPath();
         _path->removeFrom(_scene);
-        
     }
     
     if (_path->getPath().size() != 0 && _actions->isActive("moving") == false){
@@ -374,6 +381,7 @@ void GamePlayController::update(float dt){
         _moveCam->setTarget(_path->getPath()[0]);
         _character->moveTo(_moveTo);
         _camManager->activate("movingCam", _moveCam, _cam);
+        _camManager->activate("movingOtherCam", _moveCam, _other_cam);
         // path_trace.erase(path_trace.begin());
         _path->removeFirst(_scene);
     }
@@ -381,7 +389,7 @@ void GamePlayController::update(float dt){
     if (_actions->isActive("moving") && !_actions->isActive("character_animation")) {
             _character->updateAnimation(_characterRight);
         }
-    
+#pragma mark Resource Collection Methods
     // if collect a resource
     if(_activeMap == "pastWorld"){
         for(int i=0; i<_artifactSet->_artifactSet.size(); i++){
@@ -404,7 +412,6 @@ void GamePlayController::update(float dt){
                 _artifactSet->remove_this(i, _scene);
                 if(_character->getNumArt() == 4){
                     _scene->addChild(_complete_layer);
-                    
                     _complete_layer->setPosition(_cam->getPosition());
                 }
                 
@@ -413,20 +420,13 @@ void GamePlayController::update(float dt){
             
         }
     }
-    
+#pragma mark Guard Methods
+    _guardSetPast->patrol(_character->getNodePosition(), _scene, _character->getAngle());
+    _guardSetPresent->patrol(_character->getNodePosition(), _other_scene, _character->getAngle());
     // if collide with guard
     if(_activeMap == "pastWorld"){
-        for(int i=0; i<_guardSet1->_guardSet.size(); i++){
-            if(_character->contains(_guardSet1->_guardSet[i]->getNodePosition())){
-                _scene->addChild(_fail_layer);
-                _fail_layer->setPosition(_cam->getPosition());
-                break;
-            }
-        }
-    }
-    else{
-        for(int i=0; i<_guardSet2->_guardSet.size(); i++){
-            if(_character->contains(_guardSet2->_guardSet[i]->getNodePosition())){
+        for(int i=0; i<_guardSetPast->_guardSet.size(); i++){
+            if(_character->contains(_guardSetPast->_guardSet[i]->getNodePosition())){
                 _scene->addChild(_fail_layer);
                 _fail_layer->setPosition(_cam->getPosition());
                 break;
@@ -434,18 +434,17 @@ void GamePlayController::update(float dt){
         }
     }
     
-    // if guard cone collide with wall
-//    if(_activeMap == "pastWorld"){
-//        for(int i=0; i<_guardSet1->_guardSet.size(); i++){
-//            if(_pastWorld->inObstacle(_guardSet1->_guardSet[i]->getNodePosition())){
-//                _guardSet1->_guardSet[i]->removeChildFrom(_scene);
-//                break;
-//            }
-//        }
-//    }
+    else{
+        for(int i=0; i<_guardSetPresent->_guardSet.size(); i++){
+            if(_character->contains(_guardSetPresent->_guardSet[i]->getNodePosition())){
+                _scene->addChild(_fail_layer);
+                _fail_layer->setPosition(_cam->getPosition());
+                break;
+            }
+        }
+    }
     
     // Animate
-    
     _actions->update(dt);
     _camManager->update(dt);
     
@@ -479,7 +478,7 @@ void GamePlayController::update(float dt){
         addArtifact(850, 530, isResource);
     }
 
-    void GamePlayController::generateGuard() {
+    void GamePlayController::generatePastGuards() {
         vector<Vec2> patrol_stops = { Vec2(0, 500), Vec2(190, 500), Vec2(190, 400) }; //must be at least two stops
         addMovingGuard1(0, 500, patrol_stops);
         addGuard1(450, 250);
@@ -488,13 +487,11 @@ void GamePlayController::update(float dt){
         addGuard1(850, 380);
         addGuard1(970, 75);
     }
-    void GamePlayController::secondaryGuard() {
-//        bool cone = false;
+    void GamePlayController::generatePresentGuards() {
         addGuard2(350, 350);
         addGuard2(720, 320);
-//        cone = true;
-//        addGuard2(350, 350, cone);
-//        addGuard2(720, 320, cone);
+        addGuard2(0, 50);
+       
     }
 
     
@@ -503,7 +500,7 @@ void GamePlayController::update(float dt){
 
     
     void GamePlayController::render(std::shared_ptr<SpriteBatch>& batch){
-        //_other_scene->render(batch);
+        _other_scene->render(batch);
         _scene->render(batch);
     }
     

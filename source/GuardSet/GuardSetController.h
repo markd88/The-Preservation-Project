@@ -32,19 +32,15 @@ public:
     /**vector of guard IDs**/
     vector<int> _usedIDs;
     
-    std::shared_ptr<TilemapController> _pastWorld;
+    std::shared_ptr<TilemapController> _world;
     
-    std::shared_ptr<TilemapController> _presentWorld;
-
 
 #pragma mark Main Methods
 public:
     
-    GuardSetController(const std::shared_ptr<cugl::AssetManager>& assets, std::shared_ptr<cugl::scene2::ActionManager> actions, std::shared_ptr<TilemapController> pastWorld,
-                std::shared_ptr<TilemapController> presentWorld)
+    GuardSetController(const std::shared_ptr<cugl::AssetManager>& assets, std::shared_ptr<cugl::scene2::ActionManager> actions, std::shared_ptr<TilemapController> world)
     {
-        _pastWorld = pastWorld;
-        _presentWorld = presentWorld;
+        _world = world;
         _actions = actions;
         std::vector<Guard> _guardSet;
     };
@@ -80,6 +76,12 @@ public:
         }
     }
     
+    void setVisbility(bool visible){
+        for (int i = 0; i < _guardSet.size(); i++){
+            _guardSet[i]->setVisibility(visible);
+        }
+    }
+    
     void clearSet () {
         _guardSet.clear();
     }
@@ -110,7 +112,7 @@ public:
         return id;
     }
     
-    void patrol(Vec2 _charPos, bool isPast, Scene s, float char_angle){
+    void patrol(Vec2 _charPos, Scene s, float char_angle){
         
         for (int i = 0; i < _guardSet.size(); i++){
             
@@ -122,15 +124,11 @@ public:
             float distance = guardPos.distance(_charPos);
             
             bool detection = false;
-            if (distance < 200){
-                if (isPast){
-                    //drawLines(s, _charPos, guardPos);
-                    detection = !_presentWorld->lineInObstacle(guardPos,_charPos);
-                }else{
-                    detection = !_presentWorld->lineInObstacle(guardPos,_charPos);
-                }
+            if (distance < 200 and _world->isActive()){
+                //drawLines(s, _charPos, guardPos);
+                detection = !_world->lineInObstacle(guardPos,_charPos);
             }
-             
+            
             if (_actions->isActive(chaseAction) or _actions->isActive(returnAction)){
                 //wait for guard to finish current action
                 //interupt return action if detection
@@ -142,10 +140,12 @@ public:
                 _actions->remove(patrolAction);
                 _guardSet[i]->updatePosition(pos);
             }
+            
             else if (detection){
-                std::cout<<"guard angle: "<< _guardSet[i]->getAngle()<<"\n";
-                std::cout<<"char angle: "<<char_angle<<"\n";
+                //std::cout<<"guard angle: "<< _guardSet[i]->getAngle()<<"\n";
+                //std::cout<<"char angle: "<<char_angle<<"\n";
                 Vec2 target = guardPos + ((_charPos - guardPos)/distance)*8;
+                
                 //chase
                 _guardSet[i]->updateChaseTarget(target);
                 _guardSet[i]->chaseChar(chaseAction);
@@ -175,7 +175,7 @@ public:
         
         SplinePather splinePather = SplinePather();
         SimpleExtruder extruder = SimpleExtruder();
-        bool detection = _pastWorld->lineInObstacle(a, b);
+        bool detection = _world->lineInObstacle(a, b);
         Spline2 spline = Spline2(a, b);
         splinePather.set(&spline);
         splinePather.calculate();

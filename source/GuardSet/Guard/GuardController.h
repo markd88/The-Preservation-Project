@@ -242,6 +242,11 @@ public:
         return _view->getNodeAngle();
     }
     
+    void setVisibility(bool visible){
+        _view->setVisibility(visible);
+        
+    }
+    
     
 };
 
