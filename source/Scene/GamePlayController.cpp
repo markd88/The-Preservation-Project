@@ -36,6 +36,7 @@ GamePlayController::GamePlayController(const Size displaySize, std::shared_ptr<c
     _camManager = CameraManager::alloc();
     
     _scene->setSize(displaySize/1);
+    _scene->setActive(true);
     
     _path = make_unique<PathController>();
     // initialize character, two maps, path
@@ -97,13 +98,15 @@ GamePlayController::GamePlayController(const Size displaySize, std::shared_ptr<c
     _button_layer->setContentSize(dimen);
     _button_layer->doLayout(); // This rearranges the children to fit the screen
     
-    _button = std::dynamic_pointer_cast<scene2::Button>(assets->get<scene2::SceneNode>("button_reset"));
-    _button->addListener([this](const std::string& name, bool down) {
-        if (down) {
-            this->init();
-        }
-    });
-    _button->activate();
+    auto reset_button = std::dynamic_pointer_cast<scene2::Button>(assets->get<scene2::SceneNode>("button_reset"));
+//    reset_button->addListener([this](const std::string& name, bool down) {
+//        if (down) {
+//
+//            cout<<"reset"<<endl;
+//            this->init();
+//        }
+//    });
+//    reset_button->activate();
     
     // load label for n_res and n_art
     _res_label  = std::dynamic_pointer_cast<scene2::Label>(assets->get<scene2::SceneNode>("button_resources"));
@@ -116,6 +119,7 @@ GamePlayController::GamePlayController(const Size displaySize, std::shared_ptr<c
     
     complete_again_button->addListener([this](const std::string& name, bool down) {
         if (down) {
+            cout<<"complete_again"<<endl;
             this->init();
         }
     });
@@ -126,8 +130,8 @@ GamePlayController::GamePlayController(const Size displaySize, std::shared_ptr<c
     
     complete_back_button->addListener([this](const std::string& name, bool down) {
         if (down) {
-            nextScene = MENU;
-            // this->_scene->setActive(down);
+            cout<<"complete_back"<<endl;
+            // nextScene = MENU;
         }
     });
 
@@ -139,6 +143,7 @@ GamePlayController::GamePlayController(const Size displaySize, std::shared_ptr<c
     
     fail_again_button->addListener([this](const std::string& name, bool down) {
         if (down) {
+            cout<<"fail_again"<<endl;
             this->init();
         }
     });
@@ -149,8 +154,8 @@ GamePlayController::GamePlayController(const Size displaySize, std::shared_ptr<c
     
     fail_back_button->addListener([this](const std::string& name, bool down) {
         if (down) {
-            nextScene = MENU;
-            // this->_scene->setActive(down);
+            cout<<"fail_back"<<endl;
+            // nextScene = MENU;
         }
     });
     
@@ -253,6 +258,7 @@ void GamePlayController::dispose(){
     
     // remove everything first
     _scene->removeAllChildren();
+    _scene->setActive(false);
 }
 
 void GamePlayController::update(float dt){

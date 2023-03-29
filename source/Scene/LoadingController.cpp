@@ -34,6 +34,7 @@ bool LoadingController::init(const std::shared_ptr<cugl::AssetManager>& assets) 
     dimen *= SCENE_WIDTH/dimen.width; // Lock the game to a reasonable resolution
     cout<<dimen.toString()<<endl;
     _scene = cugl::Scene2::alloc(dimen);
+    _scene->setActive(true);
     
     // IMMEDIATELY load the splash screen assets
     _assets = assets;
@@ -69,6 +70,7 @@ void LoadingController::dispose() {
     _bar = nullptr;
     _assets = nullptr;
     _progress = 0.0f;
+    this->_scene->setActive(false);
 }
 
 
