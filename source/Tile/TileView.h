@@ -165,5 +165,9 @@ public:
         // if uA and uB are between 0-1, lines are colliding
         return (uA >= 0 && uA <= 1 && uB >= 0 && uB <= 1);
     }
+    
+    void setVisibility(bool visible){
+        _node->setVisible(visible);
+    }
      
 };

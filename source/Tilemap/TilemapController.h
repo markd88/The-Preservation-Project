@@ -312,14 +312,38 @@ public:
         return false;
     }
     
-    void setInvisible(Vec2 point){
+    void makePreview(Vec2 point){
+        removePreview();
         for(auto& tile_vec : _tilemap){
             for(auto& tile : tile_vec){
                 if(tile != nullptr && tile->contains(point)){
-                    tile->updateColor(Color4::CLEAR);
+                    tile->setVisibility(false);
                 }
             }
         }
+    }
+    
+    void removePreview(){
+        for(auto& tile_vec : _tilemap){
+            for(auto& tile : tile_vec){
+                if(tile != nullptr){
+                    tile->setVisibility(true);
+                }
+            }
+        }
+    }
+    
+    void setVisibility(bool active){
+        _view->setVisibility(active);
+        _model->setActive(active);
+    }
+    
+    bool isActive(){
+        return _model->isActive();
+    }
+    
+    void setActive(bool active){
+        _model->setActive(active);
     }
 };
 

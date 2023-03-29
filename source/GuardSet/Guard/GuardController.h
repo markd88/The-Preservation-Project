@@ -266,6 +266,12 @@ public:
         return _model->getDirection();
     }
 
+    
+    void setVisibility(bool visible){
+        _view->setVisibility(visible);
+        
+    }
+    
     int calculateMappedAngle(float x1, float y1, float x2, float y2)
     {
         // calculate the angle in radians
@@ -305,10 +311,8 @@ public:
             return 3;
         }
 
-
+        return 0;
     }
-
-
 
 };
 

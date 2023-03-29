@@ -111,6 +111,10 @@ public:
         _view->removeChildFrom(node);
     }
     
+    void setVisibility(bool visible){
+        _view->setVisibility(visible);
+    }
+    
 #pragma mark Controller Methods
 public:
 

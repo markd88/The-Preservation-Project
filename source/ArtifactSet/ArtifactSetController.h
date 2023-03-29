@@ -69,6 +69,13 @@ public:
     void clearSet () {
         _artifactSet.clear();
     }
+    
+    void setVisibility(bool visible){
+        int vecSize = _artifactSet.size();
+        for(int i = 0; i < vecSize; i++) {
+            _artifactSet[i]->setVisibility(visible);
+        }
+    }
 };
 
 

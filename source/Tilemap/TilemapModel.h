@@ -13,6 +13,8 @@ private:
     Color4 _color;
     /** Width and height of a single tile */
     Size _tileSize;
+    /** Whether or not this map is currently active*/
+    bool _isActive;
     
 public:
     /// Instead of writing getters for private states that need setters, you
@@ -103,6 +105,14 @@ public:
     void setTileSize(Size tileSize) {
         // TODO: Implement me
         _tileSize = tileSize;
+    }
+    
+    bool isActive(){
+        return _isActive;
+    }
+    
+    void setActive(bool active){
+        _isActive = active;
     }
     
 };
