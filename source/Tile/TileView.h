@@ -135,21 +135,13 @@ public:
         return hor && ver;
     }
     
-    bool containsLocally(Vec2 point){
-        Vec2 pos = _node->getPosition();
-        Size s = _node->getSize();
-        bool hor = (point.x >= pos.x && point.x <= pos.x + s.width);
-        bool ver = (point.y >= pos.y && point.y <= pos.y + s.height);
-        return hor && ver;
-    }
-    
     bool containsLine(Vec2 a, Vec2 b){
         
-        if (containsLocally(a) or containsLocally(b)){
+        if (contains(a) or contains(b)){
             return true;
         }
-            
-        Vec2 pos = _node->getPosition();
+    
+        Vec2 pos = _node->getWorldPosition();
         Size s = _node->getSize();
         float rx = pos.x;
         float ry = pos.y;
@@ -172,6 +164,10 @@ public:
         
         // if uA and uB are between 0-1, lines are colliding
         return (uA >= 0 && uA <= 1 && uB >= 0 && uB <= 1);
+    }
+    
+    void setVisibility(bool visible){
+        _node->setVisible(visible);
     }
      
 };

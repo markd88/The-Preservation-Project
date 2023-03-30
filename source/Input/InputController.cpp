@@ -123,6 +123,7 @@ bool InputController::initPinch(const Size &size) {
 bool InputController::init(const Size &size) {
     bool registerTouch = initTouch();
     bool registerPinch = initPinch(size);
+    SDL_ShowCursor(SDL_ENABLE);
     return registerTouch && registerPinch;
 }
 

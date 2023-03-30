@@ -71,7 +71,6 @@ public:
     void setPosition(Vec2 position) {
         // TODO: Implement me
         _node->setPosition(position);
-    
     }
     
     /**
@@ -98,6 +97,10 @@ public:
     void setColor(Color4 color) {
         // TODO: Implement me
         _node->setColor(color);
+    }
+    
+    void setVisibility(bool active){
+        _node->setVisible(active);
     }
     
 };

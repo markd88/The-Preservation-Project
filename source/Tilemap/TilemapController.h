@@ -201,7 +201,7 @@ public:
      */
     void initializeTilemap();
     
-    void addPoints(Size size, const std::shared_ptr<scene2::SceneNode>& scene){
+    void addPoints(Size size, const std::shared_ptr<cugl::Scene2>& scene){
         
         auto origin = scene2::PolygonNode::alloc();
         std::unordered_map<int, Vec2> nodes;
@@ -270,8 +270,6 @@ public:
                 scene->addChild(polyNode);
             }
         }
-        
-        
     }
     
     Size getSize(){
@@ -312,6 +310,40 @@ public:
             }
         }
         return false;
+    }
+    
+    void makePreview(Vec2 point){
+        removePreview();
+        for(auto& tile_vec : _tilemap){
+            for(auto& tile : tile_vec){
+                if(tile != nullptr && tile->contains(point)){
+                    tile->setVisibility(false);
+                }
+            }
+        }
+    }
+    
+    void removePreview(){
+        for(auto& tile_vec : _tilemap){
+            for(auto& tile : tile_vec){
+                if(tile != nullptr){
+                    tile->setVisibility(true);
+                }
+            }
+        }
+    }
+    
+    void setVisibility(bool active){
+        _view->setVisibility(active);
+        _model->setActive(active);
+    }
+    
+    bool isActive(){
+        return _model->isActive();
+    }
+    
+    void setActive(bool active){
+        _model->setActive(active);
     }
 };
 
