@@ -27,63 +27,63 @@
          "type":"tile_past_floor_windowright"
         }, 
         {
-         "id":29,
+         "id":28,
          "image":"..\/..\/textures\/tile_past_floor1.png",
          "imageheight":128,
          "imagewidth":128,
          "type":"tile_past_floor1"
         }, 
         {
-         "id":30,
+         "id":29,
          "image":"..\/..\/textures\/tile_past_floor2.png",
          "imageheight":128,
          "imagewidth":128,
          "type":"tile_past_floor2"
         }, 
         {
-         "id":31,
+         "id":30,
          "image":"..\/..\/textures\/tile_past_floor3.png",
          "imageheight":128,
          "imagewidth":128,
          "type":"tile_past_floor3"
         }, 
         {
-         "id":32,
+         "id":31,
          "image":"..\/..\/textures\/tile_past_roof.png",
          "imageheight":128,
          "imagewidth":128,
          "type":"tile_past_roof"
         }, 
         {
-         "id":33,
+         "id":32,
          "image":"..\/..\/textures\/tile_past_wall_windowcenter.png",
          "imageheight":128,
          "imagewidth":128,
          "type":"tile_past_wall_windowcenter"
         }, 
         {
-         "id":34,
+         "id":33,
          "image":"..\/..\/textures\/tile_past_wall_windowleft.png",
          "imageheight":128,
          "imagewidth":128,
          "type":"tile_past_wall_windowleft"
         }, 
         {
-         "id":35,
+         "id":34,
          "image":"..\/..\/textures\/tile_past_wall_windowright.png",
          "imageheight":128,
          "imagewidth":128,
          "type":"tile_past_wall_windowright"
         }, 
         {
-         "id":36,
+         "id":35,
          "image":"..\/..\/textures\/tile_past_wall1.png",
          "imageheight":128,
          "imagewidth":128,
          "type":"tile_past_wall1"
         }, 
         {
-         "id":28,
+         "id":36,
          "image":"..\/..\/textures\/tile_past_wall2.png",
          "imageheight":128,
          "imagewidth":128,
@@ -153,42 +153,42 @@
          "type":"tile_present_wall"
         }, 
         {
-         "id":47,
+         "id":46,
          "image":"..\/..\/textures\/artifact-1.png",
          "imageheight":128,
          "imagewidth":128,
          "type":"artifact-1"
         }, 
         {
-         "id":48,
+         "id":47,
          "image":"..\/..\/textures\/artifact-2.png",
          "imageheight":128,
          "imagewidth":128,
          "type":"artifact-2"
         }, 
         {
-         "id":49,
+         "id":48,
          "image":"..\/..\/textures\/artifact-3.png",
          "imageheight":128,
          "imagewidth":128,
          "type":"artifact-3"
         }, 
         {
-         "id":50,
+         "id":49,
          "image":"..\/..\/textures\/artifact-4.png",
          "imageheight":128,
          "imagewidth":128,
          "type":"artifact-4"
         }, 
         {
-         "id":51,
+         "id":50,
          "image":"..\/..\/textures\/resource.png",
          "imageheight":128,
          "imagewidth":128,
          "type":"resource"
         }, 
         {
-         "id":46,
+         "id":51,
          "image":"..\/..\/textures\/artifact-5.png",
          "imageheight":128,
          "imagewidth":128,
