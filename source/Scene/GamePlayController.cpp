@@ -33,34 +33,29 @@ GamePlayController::GamePlayController(const Size displaySize, std::shared_ptr<c
     
     // Draw past world
     _pastWorldLevel = _assets->get<LevelModel>(LEVEL_ZERO_PAST_KEY);
+//    _pastWorldLevel = _assets->get<LevelModel>(LEVEL_ONE_PAST_KEY);
     if (_pastWorldLevel == nullptr) {
         CULog("Failed to import level!");
     }
     _pastWorldLevel->setAssets(_assets);
     _pastWorldLevel->setTilemapTexture();
     _pastWorld = _pastWorldLevel->getWorld();
+    _artifactSet = _pastWorldLevel->getItem();
+    _resourceSet = _pastWorldLevel->getResource();
+    _artifactSet->addChildTo(_scene);
+    _resourceSet->addChildTo(_scene);
 
     // Draw present world
     _presentWorldLevel = _assets->get<LevelModel>(LEVEL_ZERO_PRESENT_KEY);
+//    _presentWorldLevel = _assets->get<LevelModel>(LEVEL_ONE_PRESENT_KEY);
     if (_presentWorldLevel == nullptr) {
         CULog("Failed to import level!");
     }
     _presentWorldLevel->setAssets(_assets);
     _presentWorldLevel->setTilemapTexture();
     _presentWorld = _presentWorldLevel->getWorld();
-    
-    _artifactLevel = _assets->get<LevelModel>(LEVEL_ONE_PRESENT_KEY);
-    _artifactLevel->setAssets(_assets);
-    _artifactSet = _artifactLevel->getItem();
-//    generateArtifact();
-    _artifactSet->addChildTo(_scene);
-    
-    
-    _resourceSet = std::make_unique<ArtifactSetController>(_assets);
-    generateResource();
-    _resourceSet->addChildTo(_scene);
 
-    _guardSet1 = std::make_unique<GuardSetController>(_assets, _actions);
+    _guardSet1 = std::make_shared<GuardSetController>(_assets, _actions);
     _guardSet2 = std::make_unique<GuardSetController>(_assets, _actions);
     generateGuard();
     secondaryGuard();
@@ -186,12 +181,6 @@ void GamePlayController::init(){
 
     _characterLeft = cugl::scene2::Animate::alloc(forward, DURATION);
     
-    _artifactSet = make_unique<ArtifactSetController>(_assets);
-    _resourceSet = make_unique<ArtifactSetController>(_assets);
-    _artifactSet->clearSet();
-    _resourceSet->clearSet();
-    generateArtifact();
-    generateResource();
     _artifactSet->addChildTo(_scene);
     _resourceSet->addChildTo(_scene);
     
@@ -254,14 +243,8 @@ void GamePlayController::update(float dt){
         
         _character->removeChildFrom(_scene);
         if (_activeMap == "pastWorld") {
-//<<<<<<< HEAD
             _pastWorld->removeChildFrom(_scene);
             _presentWorld->addChildTo(_scene);
-//=======
-//            _pastWorld->removeChildFrom(_scene);
-//            _presentWorld->addChildTo(_scene);
-//            _coneSet1->removeChildFrom(_scene);
-//>>>>>>> d0693c6936867fdaf151a3e1702b5ad3cfbbd9cc
             _guardSet1->removeChildFrom(_scene);
             _guardSet2->addChildTo(_scene);
             _artifactSet->removeChildFrom(_scene);
@@ -275,7 +258,6 @@ void GamePlayController::update(float dt){
             _presentWorld->removeChildFrom(_scene);
             _pastWorld->addChildTo(_scene);
             _guardSet2->removeChildFrom(_scene);
-//            _coneSet1->addChildTo(_scene);
             _guardSet1->addChildTo(_scene);
             _artifactSet->addChildTo(_scene);
             _resourceSet->addChildTo(_scene);
@@ -437,7 +419,6 @@ void GamePlayController::update(float dt){
 //    if(_activeMap == "pastWorld"){
 //        for(int i=0; i<_guardSet1->_guardSet.size(); i++){
 //            if(_pastWorld->inObstacle(_guardSet1->_guardSet[i]->getNodePosition())){
-//                _guardSet1->_guardSet[i]->removeChildFrom(_scene);
 //                break;
 //            }
 //        }
@@ -459,23 +440,14 @@ void GamePlayController::update(float dt){
 #pragma mark -
 #pragma mark Generation Helpers
 
-// TODO: Replace the following with LevelController methods
-    void GamePlayController::generateArtifact() {
-        //_artifactSet->_artifactSet = {};
-//        bool isResource = false;
-//        addArtifact(90, 375, isResource);
-//        addArtifact(650, 250, isResource);
-//        addArtifact(1000, 530, isResource);
-//        addArtifact(750, 0, isResource);
-    }
-    void GamePlayController::generateResource() {
+//    void GamePlayController::generateResource() {
         // switching hourglass
-        bool isResource = true;
-        addArtifact(0, 175, isResource);
-        addArtifact(280, 0, isResource);
-        addArtifact(550, 0, isResource);
-        addArtifact(850, 530, isResource);
-    }
+//        bool isResource = true;
+//        addArtifact(0, 175, isResource);
+//        addArtifact(280, 0, isResource);
+//        addArtifact(550, 0, isResource);
+//        addArtifact(850, 530, isResource);
+//    }
 
     void GamePlayController::generateGuard() {
         vector<Vec2> patrol_stops = { Vec2(90, 500), Vec2(190, 500), Vec2(190, 400) }; //must be at least two stops

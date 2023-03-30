@@ -36,17 +36,21 @@ public:
      */
     
 
-    ArtifactController(Vec2 position, Size size, Color4 color, const std::shared_ptr<cugl::AssetManager>& assets, bool isResource = false) {
-        _model = std::make_unique<ArtifactModel>(position, size, color, isResource);
-        _view = std::make_unique<ArtifactView>(position, size, color, assets, isResource);
-    }
-    
-    ArtifactController(Vec2 position, const std::shared_ptr<cugl::AssetManager>& assets, bool isResource) {
-        Color4 color = Color4::ORANGE;
-        if (isResource) { color = Color4::CYAN; }
-        _model = std::make_unique<ArtifactModel>(position, Size(40, 40), color, isResource);
-        _view = std::make_unique<ArtifactView>(position, Size(40, 40), color, assets, isResource);
-
+//    ArtifactController(Vec2 position, Size size, Color4 color, const std::shared_ptr<cugl::AssetManager>& assets, bool isResource = false) {
+//        _model = std::make_unique<ArtifactModel>(position, size, color, isResource);
+//        _view = std::make_unique<ArtifactView>(position, size, color, assets, isResource);
+//    }
+//
+//    ArtifactController(Vec2 position, const std::shared_ptr<cugl::AssetManager>& assets, bool isResource) {
+//        Color4 color = Color4::ORANGE;
+//        if (isResource) { color = Color4::CYAN; }
+//        _model = std::make_unique<ArtifactModel>(position, Size(40, 40), color, isResource);
+//        _view = std::make_unique<ArtifactView>(position, Size(40, 40), color, assets, isResource);
+//    }
+        
+    ArtifactController(Vec2 position, Size size, bool isResource, const std::shared_ptr<cugl::AssetManager>& assets, std::string textureKey) {
+        _model = std::make_unique<ArtifactModel>(position, size, isResource, textureKey);
+        _view = std::make_unique<ArtifactView>(position, size, isResource, assets, textureKey);
     }
 
 #pragma mark Update Methods
@@ -77,7 +81,6 @@ public:
      *  @param color The tile color
      */
     void updateColor(Color4 color) {
-        _model->setColor(color);
         _view->setColor(color);
     }
     
@@ -88,6 +91,10 @@ public:
     
     bool isResource(){
         return _model->isResource();
+    }
+    
+    std::string getTextureKey() {
+        return _model->getTextureKey();
     }
 
     
@@ -111,9 +118,12 @@ public:
         _view->removeChildFrom(node);
     }
     
+    void setTexture(const std::shared_ptr<cugl::AssetManager>& assets, std::string textureKey) {
+        _view->setTexture(assets, textureKey);
+    }
+    
 #pragma mark Controller Methods
 public:
-
 };
 
 #endif /* __ARTIFACT_CONTROLLER_H__ */

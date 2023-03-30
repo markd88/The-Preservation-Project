@@ -16,14 +16,14 @@ private:
     /** Center of the character */
     Vec2 _position;
     Size _size;
-    Color4 _color;
     bool _isResource;
-
+    
+    std::string _textureKey;
     int radius;
 
-public:
-    /** A public accessible, read-only version of the color */
-    const Color4& color;
+//public:
+//    /** A public accessible, read-only version of the color */
+//    const Color4& color;
     
 #pragma mark Main Functions
 public:
@@ -34,11 +34,11 @@ public:
      * @param size      The width and height of a Artifact
      * @param color     The Artifact color
      */
-    ArtifactModel(Vec2 position, Size size, Color4 color, bool isResource) : color(_color) {
+    ArtifactModel(Vec2 position, Size size, bool isResource, std::string textureKey){
         setPosition(position);
         setSize(size);
-        setColor(color);
         setType(isResource);
+        setTextureKey(textureKey);
     }
     
 #pragma mark Setters
@@ -46,6 +46,10 @@ public:
 
     Vec2 getPosition() {
         return _position;
+    }
+    
+    std::string getTextureKey() {
+        return _textureKey;
     }
 
     /**
@@ -65,17 +69,6 @@ public:
     void setSize(Size size) {
         _size = size;
     }
-
-    /**
-     *  Sets the color of the Artifact.
-     *
-     *  @param color The color of the Artifact
-     */
-    void setColor(Color4 color) {
-        _color = color;
-    }
-    
-
     
     bool isResource(){
         return _isResource;
@@ -89,6 +82,10 @@ public:
     void setType(bool isResource) {
         _isResource = isResource;
 
+    }
+    
+    void setTextureKey(std::string textureKey) {
+        this->_textureKey = textureKey;
     }
 };
 

@@ -29,7 +29,7 @@
 #define WALLS_FIELD         "wall"
 
 /** Artifact specific fields */
-#define ARTIFACTS_FIELD     "artifacts"
+#define ARTIFACTS_FIELD     "artifact"
 
 /** Guard specific fields */
 #define MAIN_SOUND_FIELD    "main-sound"

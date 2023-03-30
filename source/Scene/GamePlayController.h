@@ -45,8 +45,7 @@ public:
     std::shared_ptr<TilemapController> _pastWorld;
     std::shared_ptr<TilemapController> _presentWorld;
     
-    std::unique_ptr<GuardSetController> _coneSet1;
-    std::unique_ptr<GuardSetController> _guardSet1;
+    std::shared_ptr<GuardSetController> _guardSet1;
     std::unique_ptr<GuardSetController> _guardSet2;
     
     std::shared_ptr<ArtifactSetController> _artifactSet;
@@ -74,7 +73,6 @@ public:
 //    std::shared_ptr<cugl::scene2::Label> _label;
     std::shared_ptr<LevelModel> _pastWorldLevel;
     std::shared_ptr<LevelModel> _presentWorldLevel;
-    std::shared_ptr<LevelModel> _artifactLevel;
 
 #pragma mark Main Methods
 public:
@@ -116,10 +114,10 @@ public:
 #pragma mark Generation Helpers
 //private:
     /** Generates artifacts and guards in the primary world. */
-    void addArtifact(int w, int h, bool isResource) {
-        Vec2 aPos = Vec2(w,h);
-        _artifactSet->add_this(aPos, _assets, isResource);
-    }
+//    void addArtifact(int w, int h, bool isResource, const std::shared_ptr<cugl::AssetManager>& assets, std::string textureKey) {
+//        Vec2 aPos = Vec2(w,h);
+//        _artifactSet->add_this(aPos, isResource, assets, textureKey);
+//    }
     void addMovingGuard1(int w, int h, vector<Vec2> patrol_stops) {
         Vec2 gPos = Vec2(w,h);
 //        _guardSet1->add_this_moving(gPos, _scene, _assets, patrol_stops);
