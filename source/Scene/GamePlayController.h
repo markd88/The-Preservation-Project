@@ -42,6 +42,15 @@ public:
     std::shared_ptr<cugl::scene2::SceneNode> _fail_layer;
     std::shared_ptr<cugl::scene2::SceneNode> _switchNode;
     
+    // all buttons
+    std::shared_ptr<cugl::scene2::Button> _reset_button;
+    std::shared_ptr<cugl::scene2::Button> _complete_back_button;
+    std::shared_ptr<cugl::scene2::Button> _complete_again_button;
+    std::shared_ptr<cugl::scene2::Button> _fail_back_button;
+    std::shared_ptr<cugl::scene2::Button> _fail_again_button;
+    
+    
+    
     /** The tilemap to procedurally generate */
     std::unique_ptr<CharacterController> _character;
     std::shared_ptr<TilemapController> _pastWorld;
@@ -121,6 +130,18 @@ public:
      */
 
     void render(std::shared_ptr<SpriteBatch> &batch) ;
+    
+    void dispose();
+    
+    void setActive(bool active){
+        // only handle when active is false
+        // otherwise go init
+        _reset_button->deactivate();
+        _fail_back_button->deactivate();
+        _fail_again_button->deactivate();
+        _complete_back_button->deactivate();
+        _complete_again_button->deactivate();
+    }
 
 #pragma mark Generation Helpers
 private:    
@@ -150,6 +171,23 @@ private:
     }
     void generateArtifact();
     void generateResource();
+
+
+    void failTerminate(){
+        _scene->addChild(_fail_layer);
+        _fail_layer->setPosition(_cam->getPosition());
+        _fail_back_button->activate();
+        _fail_again_button->activate();
+    }
+    
+    void completeTerminate(){
+        _scene->addChild(_complete_layer);
+        _complete_layer->setPosition(_cam->getPosition());
+        _complete_back_button->activate();
+        _complete_again_button->activate();
+    }
+    
+    // called when scene becomes active or inactive
     void generatePastGuards();
     void generatePresentGuards();
 

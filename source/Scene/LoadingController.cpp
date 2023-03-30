@@ -6,12 +6,15 @@
 //
 
 #include "LoadingController.h"
-
+#include "common.h"
 using namespace cugl;
 using namespace std;
 
 /** This is adjusted by screen aspect ratio to get the height */
 #define SCENE_WIDTH 1024
+
+//ActiveScene curScene;
+//ActiveScene nextScene;
 
 /**
 * Initializes the controller contents, making it ready for loading
@@ -27,22 +30,27 @@ using namespace std;
 bool LoadingController::init(const std::shared_ptr<cugl::AssetManager>& assets) {
     // Initialize the scene to a locked width
     Size dimen = Application::get()->getDisplaySize();
-    dimen *= SCENE_WIDTH/dimen.width; // Lock the game to a reasonable resolution
     
+    dimen *= SCENE_WIDTH/dimen.width; // Lock the game to a reasonable resolution
+    cout<<dimen.toString()<<endl;
     _scene = cugl::Scene2::alloc(dimen);
+    _scene->setActive(true);
     
     // IMMEDIATELY load the splash screen assets
     _assets = assets;
     _assets->loadDirectory("json/loading.json");
+    
+    
     auto layer = assets->get<scene2::SceneNode>("load");
     layer->setContentSize(dimen);
     layer->doLayout(); // This rearranges the children to fit the screen
-    
+     
     _bar = std::dynamic_pointer_cast<scene2::ProgressBar>(assets->get<scene2::SceneNode>("load_bar"));
     _brand = assets->get<scene2::SceneNode>("load_name");
     _button = std::dynamic_pointer_cast<scene2::Button>(assets->get<scene2::SceneNode>("load_play"));
     _button->addListener([=](const std::string& name, bool down) {
         this->_scene->setActive(down);
+        nextScene = MENU;
     });
 
     Application::get()->setClearColor(Color4(192,192,192,255));
@@ -62,6 +70,7 @@ void LoadingController::dispose() {
     _bar = nullptr;
     _assets = nullptr;
     _progress = 0.0f;
+    this->_scene->setActive(false);
 }
 
 
