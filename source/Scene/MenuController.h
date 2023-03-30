@@ -66,9 +66,12 @@ public:
             _level_buttons[i]->setVisible(true);
             _level_buttons[i]->activate();
             _level_buttons[i]->addListener([=](const std::string& name, bool down) {
-                // this->_scene->setActive(down);
-                nextScene = GAMEPLAY;
-                level = i+1;
+                if(!down){
+                    // this->_scene->setActive(down);
+                    nextScene = GAMEPLAY;
+                    level = i+1;
+                }
+                
             });
 
         }
@@ -84,5 +87,18 @@ public:
 
     void render(std::shared_ptr<SpriteBatch> &batch){
         _scene->render(batch);
+    }
+    
+    void setActive(bool active){
+        if(active){
+            for(auto button : _level_buttons){
+                button->activate();
+            }
+        }
+        else{
+            for(auto button : _level_buttons){
+                button->deactivate();
+            }
+        }
     }
 };

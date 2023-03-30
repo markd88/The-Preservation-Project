@@ -162,10 +162,10 @@ void App::update(float timestep) {
                 _loadingController->dispose();
                 break;
             case MENU:
-                // _menuController->dispose();
+                _menuController->setActive(false);
                 break;
             case GAMEPLAY:
-                _gameplayController->dispose();
+                _gameplayController->setActive(false);
                 break;
         }
 
@@ -179,12 +179,20 @@ void App::update(float timestep) {
                     _menuController = make_shared<MenuController>();
                     _menuController->init(_assets);
                 }
+                else{
+                    _menuController->setActive(true);
+                }
                 curScene = MENU;
                 break;
             case GAMEPLAY:
-                Size size = getDisplaySize();
-                size *= GAME_WIDTH/size.width;
-                _gameplayController = make_shared<GamePlayController>(size, _assets);
+                if(_gameplayController == nullptr){
+                    Size size = getDisplaySize();
+                    size *= GAME_WIDTH/size.width;
+                    _gameplayController = make_shared<GamePlayController>(size, _assets);
+                }
+                else{
+                    _gameplayController->init();
+                }
                 curScene = GAMEPLAY;
                 break;
         }
@@ -219,5 +227,4 @@ void App::draw() {
         case GAMEPLAY:
             _gameplayController->render(_batch);
     }
-   
 }
