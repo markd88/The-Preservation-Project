@@ -13,6 +13,7 @@
 #include "App.h"
 #include <Level/LevelConstants.h>
 #include <Level/LevelModel.h>
+#include <common.h>
 
 // This keeps us from having to write cugl:: all the time
 using namespace cugl;
@@ -21,6 +22,10 @@ using namespace std;
 #define TIME_STEP 60
 // This is adjusted by screen aspect ratio to get the height
 #define GAME_WIDTH 1024
+
+ActiveScene curScene;
+ActiveScene nextScene;
+int level;
 
 /**
  * The method called after OpenGL is initialized, but before running the application.
@@ -49,7 +54,7 @@ void App::onStartup() {
     
     _assets->attach<LevelModel>(GenericLoader<LevelModel>::alloc()->getHook());
 
-    // for now, just loading synchronous
+    // load gameplay assets
     _assets->loadDirectoryAsync("json/assets.json", nullptr);
 //    // load level files
     _assets->loadAsync<LevelModel>(LEVEL_ZERO_PAST_KEY, LEVEL_ZERO_PAST_FILE, nullptr);
@@ -66,16 +71,21 @@ void App::onStartup() {
 
     Input::activate<Touchscreen>();
     
-    active_scene = "GamePlay";
+    // active_scene = "GamePlay";
     
     // Initialize GameController, passing it the random number generator
     Size size = getDisplaySize();
     size *= GAME_WIDTH/size.width;
     
     
-    _loadingController = make_unique<LoadingController>();
+    _loadingController = make_shared<LoadingController>();
     
-    _loaded = false;
+    // _loaded = false;
+
+    
+    curScene = LOADING;
+    nextScene = LOADING;
+    
     _loadingController->init(_assets);
     
     // parent call
@@ -115,17 +125,78 @@ void App::onShutdown() {
  * @param timestep  The amount of time (in seconds) since the last frame
  */
 void App::update(float timestep) {
-    if (!_loaded && _loadingController->_scene->isActive()) {
-        _loadingController->update(timestep);
-    } else if (!_loaded) {
-        _loadingController->dispose(); // Disables the input listeners in this mode
-        _loaded = true;
-        Size size = getDisplaySize();
-        size *= GAME_WIDTH/size.width;
-        _gameplayController = make_unique<GamePlayController>(size, _assets);
-    } else {
-        
-        _gameplayController->update(timestep);
+//    if (!_loaded && _loadingController->_scene->isActive()) {
+//        _loadingController->update(timestep);
+//    } else if (!_loaded) {
+//        _loadingController->dispose(); // Disables the input listeners in this mode
+//        _loaded = true;
+//        Size size = getDisplaySize();
+//        size *= GAME_WIDTH/size.width;
+//        // _gameplayController = make_shared<GamePlayController>(size, _assets);
+//        _menuController = make_shared<MenuController>();
+//        _menuController->init(_assets);
+//
+//    } else {
+//
+//        //_gameplayController->update(timestep);
+//        _menuController->update(timestep);
+//    }
+    if(curScene == nextScene){
+        switch(curScene)
+        {
+            case LOADING:
+                _loadingController->update(timestep);
+                break;
+            case MENU:
+                _menuController->update(timestep);
+                break;
+            case GAMEPLAY:
+                _gameplayController->update(timestep);
+        }
+    }
+    else{
+
+        switch(curScene)
+        {
+            case LOADING:
+                _loadingController->dispose();
+                break;
+            case MENU:
+                _menuController->setActive(false);
+                break;
+            case GAMEPLAY:
+                _gameplayController->setActive(false);
+                break;
+        }
+
+        switch(nextScene)
+        {
+            case LOADING:
+                break;
+            case MENU:
+                // if init before, just use previous menu
+                if(_menuController == nullptr) {
+                    _menuController = make_shared<MenuController>();
+                    _menuController->init(_assets);
+                }
+                else{
+                    _menuController->setActive(true);
+                }
+                curScene = MENU;
+                break;
+            case GAMEPLAY:
+                if(_gameplayController == nullptr){
+                    Size size = getDisplaySize();
+                    size *= GAME_WIDTH/size.width;
+                    _gameplayController = make_shared<GamePlayController>(size, _assets);
+                }
+                else{
+                    _gameplayController->init();
+                }
+                curScene = GAMEPLAY;
+                break;
+        }
+
     }
 }
 
@@ -139,10 +210,21 @@ void App::update(float timestep) {
  * at all. The default implmentation does nothing.
  */
 void App::draw() {
-    if (!_loaded) {
-        _loadingController->render(_batch);
-    } else {
-        _gameplayController->render(_batch);
+//    if (!_loaded) {
+//        _loadingController->render(_batch);
+//    } else {
+//        _menuController->render(_batch);
+//        //_gameplayController->render(_batch);
+//    }
+    switch(curScene)
+    {
+        case LOADING:
+            _loadingController->render(_batch);
+            break;
+        case MENU:
+            _menuController->render(_batch);
+            break;
+        case GAMEPLAY:
+            _gameplayController->render(_batch);
     }
-   
 }

@@ -3,6 +3,8 @@
 #include <chrono>
 #include <thread>
 #include "Level/LevelConstants.h"
+#include <common.h>
+
 // This is NOT in the same directory
 using namespace std;
 using namespace cugl;
@@ -16,6 +18,13 @@ GamePlayController::GamePlayController(const Size displaySize, std::shared_ptr<c
 _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displaySize)) {
     // Initialize the assetManager
     _assets = assets;
+    
+    // load the level info
+    
+    _assets->load<LevelModel>(LEVEL_ZERO_PAST_KEY, LEVEL_ZERO_PAST_FILE);
+    _assets->load<LevelModel>(LEVEL_ZERO_PRESENT_KEY, LEVEL_ZERO_PRESENT_FILE);
+    
+    
     // Initialize the scene to a locked width
     Size dimen = Application::get()->getDisplaySize();
     dimen *= SCENE_WIDTH/dimen.width; // Lock the game to a reasonable resolution
@@ -96,13 +105,15 @@ _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displ
     _button_layer->setContentSize(dimen);
     _button_layer->doLayout(); // This rearranges the children to fit the screen
     
-    _button = std::dynamic_pointer_cast<scene2::Button>(assets->get<scene2::SceneNode>("button_reset"));
-    _button->addListener([this](const std::string& name, bool down) {
-        if (down) {
+    _reset_button = std::dynamic_pointer_cast<scene2::Button>(assets->get<scene2::SceneNode>("button_reset"));
+    _reset_button->addListener([this](const std::string& name, bool down) {
+        if (!down) {
+
+            // cout<<"reset"<<endl;
             this->init();
         }
     });
-    _button->activate();
+    _reset_button->activate();
     
     // load label for n_res and n_art
     _res_label  = std::dynamic_pointer_cast<scene2::Label>(assets->get<scene2::SceneNode>("button_resources"));
@@ -111,27 +122,44 @@ _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displ
     
     // add Win/lose panel
     _complete_layer = _assets->get<scene2::SceneNode>("complete");
-    auto complete_again_button = std::dynamic_pointer_cast<scene2::Button>(assets->get<scene2::SceneNode>("complete_again"));
+    _complete_again_button = std::dynamic_pointer_cast<scene2::Button>(assets->get<scene2::SceneNode>("complete_again"));
     
-    complete_again_button->addListener([this](const std::string& name, bool down) {
-        if (down) {
+    _complete_again_button->addListener([this](const std::string& name, bool down) {
+        if (!down) {
+            // cout<<"complete_again"<<endl;
             this->init();
         }
     });
     
-    complete_again_button->activate();
+    _complete_back_button = std::dynamic_pointer_cast<scene2::Button>(assets->get<scene2::SceneNode>("complete_back"));
     
+    _complete_back_button->addListener([this](const std::string& name, bool down) {
+        if (!down) {
+            // cout<<"complete_back"<<endl;
+            nextScene = MENU;
+        }
+    });
+
+    // fail panel
     _fail_layer = _assets->get<scene2::SceneNode>("fail");
-    auto fail_again_button = std::dynamic_pointer_cast<scene2::Button>(assets->get<scene2::SceneNode>("fail_again"));
+    _fail_again_button = std::dynamic_pointer_cast<scene2::Button>(assets->get<scene2::SceneNode>("fail_again"));
     
-    fail_again_button->addListener([this](const std::string& name, bool down) {
-        if (down) {
+    _fail_again_button->addListener([this](const std::string& name, bool down) {
+        if (!down) {
+            // cout<<"fail_again"<<endl;
             this->init();
         }
     });
     
-    fail_again_button->activate();
+    _fail_back_button = std::dynamic_pointer_cast<scene2::Button>(assets->get<scene2::SceneNode>("fail_back"));
     
+    _fail_back_button->addListener([this](const std::string& name, bool down) {
+        if (!down) {
+            // cout<<"fail_back"<<endl;
+            nextScene = MENU;
+        }
+    });
+
     // add switch indicator
     _switchNode = _assets->get<scene2::SceneNode>("button_switch");
     
@@ -155,7 +183,11 @@ void GamePlayController::init(){
     
     // remove everything first
     _scene->removeAllChildren();
+
+    _reset_button->activate();
+
     _other_scene->removeAllChildren();
+
     
     _pastWorld->addChildTo(_scene);
     _pastWorld->setVisibility(true);
@@ -242,7 +274,18 @@ void GamePlayController::update(float dt){
     // Calculate the time elapsed since the last call to pinch
     auto now = std::chrono::steady_clock::now();
     auto elapsed = std::chrono::duration_cast<std::chrono::seconds>(now - last_time);
-       
+
+    // codes to determine if buttons should be activated
+    if(_fail_layer->getScene() == nullptr){
+        _fail_back_button->deactivate();
+        _fail_again_button->deactivate();
+    }
+    if(_complete_layer->getScene() == nullptr){
+        _complete_back_button->deactivate();
+        _complete_again_button->deactivate();
+    }
+    
+
     _input->update(dt);
     // if pinch, switch world
     bool cant_switch = ((_activeMap == "pastWorld" && _presentWorld->inObstacle(_character->getPosition())) || (_activeMap == "presentWorld" && _pastWorld->inObstacle(_character->getPosition())));
@@ -414,15 +457,14 @@ void GamePlayController::update(float dt){
                 // make the artifact disappear and remove from set
                 _artifactSet->remove_this(i, _scene);
                 if(_character->getNumArt() == 4){
-                    _scene->addChild(_complete_layer);
-                    _complete_layer->setPosition(_cam->getPosition());
+                    completeTerminate();
                 }
-                
                 break;
             }
             
         }
     }
+
 #pragma mark Guard Methods
     _guardSetPast->patrol(_character->getNodePosition(), _scene, _character->getAngle());
     _guardSetPresent->patrol(_character->getNodePosition(), _other_scene, _character->getAngle());
@@ -430,8 +472,7 @@ void GamePlayController::update(float dt){
     if(_activeMap == "pastWorld"){
         for(int i=0; i<_guardSetPast->_guardSet.size(); i++){
             if(_character->contains(_guardSetPast->_guardSet[i]->getNodePosition())){
-                _scene->addChild(_fail_layer);
-                _fail_layer->setPosition(_cam->getPosition());
+                failTerminate();
                 break;
             }
         }
@@ -440,8 +481,7 @@ void GamePlayController::update(float dt){
     else{
         for(int i=0; i<_guardSetPresent->_guardSet.size(); i++){
             if(_character->contains(_guardSetPresent->_guardSet[i]->getNodePosition())){
-                _scene->addChild(_fail_layer);
-                _fail_layer->setPosition(_cam->getPosition());
+                failTerminate();
                 break;
             }
         }
