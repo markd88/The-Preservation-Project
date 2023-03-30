@@ -61,13 +61,6 @@ _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displ
     _presentWorld = _presentWorldLevel->getWorld();
     _presentWorld->updateColor(Color4::CLEAR);
     _pastWorld->updateColor(Color4::CLEAR);
-
-    
-    
-    _artifactSet = std::make_unique<ArtifactSetController>(_assets);
-    _resourceSet = std::make_unique<ArtifactSetController>(_assets);
-    generateArtifact();
-    generateResource();
     
     _guardSetPast = std::make_unique<GuardSetController>(_assets, _actions, _pastWorld);
     _guardSetPresent = std::make_unique<GuardSetController>(_assets, _actions, _presentWorld);
@@ -198,13 +191,13 @@ void GamePlayController::init(){
     _artifactSet->addChildTo(_scene);
     _resourceSet->addChildTo(_scene);
     
-    _guardSet1 = make_unique<GuardSetController>(_assets, _actions);
-    _guardSet2 = make_unique<GuardSetController>(_assets, _actions);
-    _guardSet1->clearSet();
-    _guardSet2->clearSet();
-    generateGuard();
-    secondaryGuard();
-    _guardSet2->removeChildFrom(_scene);
+//    _guardSet1 = make_unique<GuardSetController>(_assets, _actions);
+//    _guardSet2 = make_unique<GuardSetController>(_assets, _actions);
+//    _guardSet1->clearSet();
+//    _guardSet2->clearSet();
+//    generateGuard();
+//    secondaryGuard();
+//    _guardSet2->removeChildFrom(_scene);
     
     _guardSetPast = make_unique<GuardSetController>(_assets, _actions, _pastWorld);
     _guardSetPresent = make_unique<GuardSetController>(_assets, _actions, _presentWorld);
@@ -468,15 +461,6 @@ void GamePlayController::update(float dt){
     
 #pragma mark -
 #pragma mark Generation Helpers
-
-//    void GamePlayController::generateResource() {
-        // switching hourglass
-//        bool isResource = true;
-//        addArtifact(0, 175, isResource);
-//        addArtifact(280, 0, isResource);
-//        addArtifact(550, 0, isResource);
-//        addArtifact(850, 530, isResource);
-//    }
 
     void GamePlayController::generatePastGuards() {
         vector<Vec2> patrol_stops = { Vec2(0, 500), Vec2(190, 500), Vec2(190, 400) }; //must be at least two stops
