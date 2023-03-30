@@ -21,6 +21,8 @@ class GamePlayController {
 private:
     /** The Game scene */
     std::shared_ptr<cugl::Scene2> _scene;
+    
+    std::shared_ptr<cugl::Scene2> _other_scene;
 
     /** The current tile map template (for regeneration) */
     int _template;
@@ -45,8 +47,9 @@ public:
     std::shared_ptr<TilemapController> _pastWorld;
     std::shared_ptr<TilemapController> _presentWorld;
     
-    std::shared_ptr<GuardSetController> _guardSet1;
-    std::unique_ptr<GuardSetController> _guardSet2;
+    std::unique_ptr<GuardSetController> _coneSet1;
+    std::unique_ptr<GuardSetController> _guardSetPast;
+    std::unique_ptr<GuardSetController> _guardSetPresent;
     
     std::shared_ptr<ArtifactSetController> _artifactSet;
     std::shared_ptr<ArtifactSetController> _resourceSet;
@@ -55,11 +58,16 @@ public:
     std::shared_ptr<InputController> _input = InputController::getInstance();
     vector<Vec2> path_trace;
     std::shared_ptr<Camera> _cam;
+    std::shared_ptr<Camera> _other_cam;
     /** Manager to process the animation actions */
     std::shared_ptr<cugl::scene2::ActionManager> _actions;
     std::shared_ptr<cugl::scene2::MoveTo> _moveTo;
     std::shared_ptr<cugl::scene2::Animate> _characterRight;
     std::shared_ptr<cugl::scene2::Animate> _characterLeft;
+
+
+
+
     
     /** Adjacency matrix for shortest path algorithm**/
     
@@ -73,6 +81,9 @@ public:
 //    std::shared_ptr<cugl::scene2::Label> _label;
     std::shared_ptr<LevelModel> _pastWorldLevel;
     std::shared_ptr<LevelModel> _presentWorldLevel;
+    
+    //whether or not user is previewing
+    bool _isPreviewing;
 
 #pragma mark Main Methods
 public:
@@ -120,28 +131,27 @@ public:
 //    }
     void addMovingGuard1(int w, int h, vector<Vec2> patrol_stops) {
         Vec2 gPos = Vec2(w,h);
-//        _guardSet1->add_this_moving(gPos, _scene, _assets, patrol_stops);
+        _guardSetPast->add_this_moving(gPos, _scene, _assets, patrol_stops);
     }
     void addGuard1(int w, int h) {
         Vec2 gPos = Vec2(w,h);
-        _guardSet1->add_this(gPos, _scene, _assets);
+        _guardSetPast->add_this(gPos, _scene, _assets);
 //        _coneSet1->add_this(gPos, _scene, _assets);
     }
     
     void addMovingGuard2(int w, int h, vector<Vec2> patrol_stops) {
         Vec2 gPos = Vec2(w,h);
-//        _guardSet2->add_this_moving(gPos, _scene, _assets, patrol_stops);
+        _guardSetPresent->add_this_moving(gPos, _other_scene, _assets, patrol_stops);
     }
 
     void addGuard2(int w, int h) {
         Vec2 gPos = Vec2(w,h);
-        _guardSet2->add_this(gPos, _scene, _assets);
+        _guardSetPresent->add_this(gPos, _other_scene, _assets);
     }
     void generateArtifact();
     void generateResource();
-    void generateGuard();
-    void secondaryGuard();
-
+    void generatePastGuards();
+    void generatePresentGuards();
 
 
 };

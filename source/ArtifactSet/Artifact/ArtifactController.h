@@ -122,6 +122,10 @@ public:
         _view->setTexture(assets, textureKey);
     }
     
+    void setVisibility(bool visible){
+        _view->setVisibility(visible);
+    }
+    
 #pragma mark Controller Methods
 public:
 };

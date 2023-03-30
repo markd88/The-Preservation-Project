@@ -19,6 +19,8 @@ private:
     Color4 _color;
     bool _isStatic;
     int radius;
+    /* 0 means up, 0-7 **/
+    int _direction;
 
 public:
     /** A public accessible, read-only version of the color */
@@ -36,6 +38,7 @@ public:
     GuardModel(Vec2 position, Size size, Color4 color) : color(_color) {
         setPosition(position);
         setSize(size);
+        _direction = 0;
     }
     
 #pragma mark Setters
@@ -61,6 +64,14 @@ public:
      */
     void setSize(Size size) {
         _size = size;
+    }
+
+    int getDirection() {
+        return _direction;
+    }
+
+    void setDirection(int d) {
+        _direction = d;
     }
 
 };

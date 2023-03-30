@@ -114,6 +114,10 @@ public:
         return _node->getPosition();
     }
     
+    void setVisibility(bool visible){
+        _node->setVisible(visible);
+    }
+    
 };
 
 #endif /* ArtifactView_h */
