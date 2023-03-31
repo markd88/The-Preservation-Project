@@ -189,6 +189,9 @@ void GamePlayController::init(){
     
     _pastWorld->addChildTo(_scene);
     _pastWorld->setVisibility(true);
+    
+    _artifactSet->clearSet();
+    _artifactSet = _pastWorldLevel->getItem();
     _artifactSet->addChildTo(_scene);
     _artifactSet->setVisibility(true);
     
