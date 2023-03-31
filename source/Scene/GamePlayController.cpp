@@ -55,9 +55,7 @@ _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displ
     _pastWorldLevel->setTilemapTexture();
     _pastWorld = _pastWorldLevel->getWorld();
     _artifactSet = _pastWorldLevel->getItem();
-    _resourceSet = _pastWorldLevel->getResource();
-    _artifactSet->addChildTo(_scene);
-    _resourceSet->addChildTo(_scene);
+//    _artifactSet->addChildTo(_scene);
 
     // Draw present world
     _presentWorldLevel = _assets->get<LevelModel>(LEVEL_ZERO_PRESENT_KEY);
@@ -191,8 +189,11 @@ void GamePlayController::init(){
     
     _pastWorld->addChildTo(_scene);
     _pastWorld->setVisibility(true);
+    
+//    _artifactSet->clearSet();
+//    _artifactSet = _pastWorldLevel->getItem();
+    _artifactSet->addChildTo(_scene);
     _artifactSet->setVisibility(true);
-    _resourceSet->setVisibility(true);
     
     _presentWorld->addChildTo(_other_scene);
     _presentWorld->setActive(false);
@@ -220,16 +221,7 @@ void GamePlayController::init(){
     }
 
     _characterLeft = cugl::scene2::Animate::alloc(forward, DURATION);
-    
-    _artifactSet->addChildTo(_scene);
-    _resourceSet->addChildTo(_scene);
-    
-//    _guardSet1 = make_unique<GuardSetController>(_assets, _actions);
-//    _guardSet2 = make_unique<GuardSetController>(_assets, _actions);
-//    _guardSet1->clearSet();
-//    _guardSet2->clearSet();
-//    generateGuard();
-//    secondaryGuard();
+
 //    _guardSet2->removeChildFrom(_scene);
     
     _guardSetPast = make_unique<GuardSetController>(_assets, _actions, _pastWorld);
@@ -240,7 +232,8 @@ void GamePlayController::init(){
     
     generatePastGuards();
     generatePresentGuards();
-    _guardSetPresent->setVisbility(true);
+    _guardSetPast->setVisbility(true);
+    _guardSetPresent->setVisbility(false);
     
     _path = make_unique<PathController>();
     path_trace = {};
@@ -259,7 +252,7 @@ void GamePlayController::init(){
     
     // reload initial label for n_res and n_art
     _res_label->setText("0");
-    _art_label->setText("0/4");
+    _art_label->setText("0/3");
     //_pastWorld->addPoints(_scene->getSize(), _scene);
     
 }
@@ -314,7 +307,7 @@ void GamePlayController::update(float dt){
             _pastWorld->setVisibility(false);
             _guardSetPast->setVisbility(false);
             _artifactSet->setVisibility(false);
-            _resourceSet->setVisibility(false);
+//            _resourceSet->setVisibility(false);
             
             _character->removeChildFrom(_scene);
             _character->addChildTo(_other_scene);
@@ -326,7 +319,7 @@ void GamePlayController::update(float dt){
             _pastWorld->setVisibility(true);
             _guardSetPast->setVisbility(true);
             _artifactSet->setVisibility(true);
-            _resourceSet->setVisibility(true);
+//            _resourceSet->setVisibility(true);
             
             _presentWorld->setActive(false);
 
@@ -451,15 +444,16 @@ void GamePlayController::update(float dt){
                     _character->addRes();
                     // update panel
                     _res_label->setText(cugl::strtool::to_string(_character->getNumRes()));
+                    CULog("resource");
                 }
                 // if artifact
                 else{
                     _character->addArt();
-                    _art_label->setText(cugl::strtool::to_string(_character->getNumArt()) + "/4");
+                    _art_label->setText(cugl::strtool::to_string(_character->getNumArt()) + "/3");
                 }
                 // make the artifact disappear and remove from set
                 _artifactSet->remove_this(i, _scene);
-                if(_character->getNumArt() == 4){
+                if(_character->getNumArt() == 3){
                     completeTerminate();
                 }
                 break;
@@ -508,19 +502,14 @@ void GamePlayController::update(float dt){
     void GamePlayController::generatePastGuards() {
 //        vector<Vec2> patrol_stops = { Vec2(0, 500), Vec2(190, 500), Vec2(190, 400) }; //must be at least two stops
         //addMovingGuard1(0, 500, patrol_stops);
-        vector<Vec2> patrol_stops = { Vec2(0, 500), Vec2(500, 500), Vec2(1000, 500) };
-        addMovingGuard1(0, 500, patrol_stops);
+//        vector<Vec2> patrol_stops = { Vec2(0, 600), Vec2(500, 600), Vec2(1000, 600) };
+//        addMovingGuard1(0, 600, patrol_stops);
         addGuard1(1200, 200);
-        //addGuard1(500, 100);
-        //addGuard1(630, 500);
-        //addGuard1(850, 380);
-        //addGuard1(970, 75);
+        addGuard1(100, 500);
+        addGuard1(700, 600);
     }
     void GamePlayController::generatePresentGuards() {
-        addGuard2(350, 350);
         addGuard2(720, 320);
-        addGuard2(0, 50);
-       
     }
 
     

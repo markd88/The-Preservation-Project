@@ -32,7 +32,6 @@ class LevelModel : public Asset {
 protected:
     std::shared_ptr<TilemapController> _world;
     std::shared_ptr<ArtifactSetController> _item;
-    std::shared_ptr<ArtifactSetController> _resource;
 
     /** The AssetManager for the game mode */
     std::shared_ptr<cugl::AssetManager> _assets;
@@ -102,7 +101,6 @@ public:
     /** Get world map */
     std::shared_ptr<TilemapController> getWorld() {return _world;};
     std::shared_ptr<ArtifactSetController> getItem() {return _item;};
-    std::shared_ptr<ArtifactSetController> getResource() {return _resource;};
 
 
 #pragma mark Drawing Methods

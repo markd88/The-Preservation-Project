@@ -56,7 +56,6 @@ public:
     std::shared_ptr<TilemapController> _pastWorld;
     std::shared_ptr<TilemapController> _presentWorld;
     
-    std::unique_ptr<GuardSetController> _coneSet1;
     std::unique_ptr<GuardSetController> _guardSetPast;
     std::unique_ptr<GuardSetController> _guardSetPresent;
     
@@ -157,7 +156,6 @@ public:
     void addGuard1(int w, int h) {
         Vec2 gPos = Vec2(w,h);
         _guardSetPast->add_this(gPos, _scene, _assets);
-//        _coneSet1->add_this(gPos, _scene, _assets);
     }
     
     void addMovingGuard2(int w, int h, vector<Vec2> patrol_stops) {

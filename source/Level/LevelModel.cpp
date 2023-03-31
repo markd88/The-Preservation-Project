@@ -21,7 +21,6 @@ LevelModel::LevelModel(void) : Asset()
 {
     _world = std::make_unique<TilemapController>();
     _item = std::make_shared<ArtifactSetController>();
-    _resource = std::make_shared<ArtifactSetController>();
 }
 
 /**
@@ -133,10 +132,10 @@ bool LevelModel::loadTilemap(const std::shared_ptr<JsonValue>& json) {
     int height = json->get("width")->asInt();
     int x = json->get("x")->asInt() / width;
     int y = json->get("y")->asInt() / height - 1;
-//
-//    x = 896 - x;
-//    y = 1536 - y;
-//
+    
+//    x = 1536 -x;
+//    y = 896 -y;
+    
     // TODO: replace below
     _world->addTile2(x, y, false, _assets, textureType);
     
@@ -176,16 +175,17 @@ bool LevelModel::loadArtifact(const std::shared_ptr<JsonValue>& json) {
     int width = json->get("height")->asInt() /2;
     int height = json->get("width")->asInt() /2;
 //    int x = json->get("x")->asInt() -738;
-//    int y = 1536 - json->get("y")->asInt() -430.5 -500;
+//    int y = 896 - json->get("y")->asInt() -430.5;
     int x = json->get("x")->asInt();
-    int y = 1536 - json->get("y")->asInt() -640;
+    int y = 896 - json->get("y")->asInt() +40; 
     
     Vec2 pos = Vec2 (x, y);
     Size size = Size(width, height);
     if (textureType == RESOURCE_FIELD) {
-        _resource->add_this(pos, size, true, _assets, textureType);
-    } else
-    _item->add_this(pos, size, false, _assets, textureType);
+        _item->add_this(pos, size, true, _assets, textureType);
+    } else {
+        _item->add_this(pos, size, false, _assets, textureType);
+    }
 
     success = success && x >= 0 && y >= 0;
     return success;
@@ -194,5 +194,4 @@ bool LevelModel::loadArtifact(const std::shared_ptr<JsonValue>& json) {
 void LevelModel::setTilemapTexture() {
     _world->setTexture(_assets);
     _item->setTexture(_assets);
-    _resource->setTexture(_assets);
 };
