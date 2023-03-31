@@ -178,7 +178,7 @@ bool LevelModel::loadArtifact(const std::shared_ptr<JsonValue>& json) {
 //    int x = json->get("x")->asInt() -738;
 //    int y = 1536 - json->get("y")->asInt() -430.5 -500;
     int x = json->get("x")->asInt();
-    int y = 1536 - json->get("y")->asInt() -640;
+    int y = 1536 - json->get("y")->asInt() -600;
     
     Vec2 pos = Vec2 (x, y);
     Size size = Size(width, height);
