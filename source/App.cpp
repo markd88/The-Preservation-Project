@@ -56,12 +56,12 @@ void App::onStartup() {
 
     // load gameplay assets
     _assets->loadDirectoryAsync("json/assets.json", nullptr);
-    // load level files
-//    _assets->loadAsync<LevelModel>(LEVEL_ZERO_PAST_KEY, LEVEL_ZERO_PAST_FILE, nullptr);
-//    _assets->loadAsync<LevelModel>(LEVEL_ZERO_PRESENT_KEY, LEVEL_ZERO_PRESENT_FILE, nullptr);
+//    // load level files
+    _assets->loadAsync<LevelModel>(LEVEL_ZERO_PAST_KEY, LEVEL_ZERO_PAST_FILE, nullptr);
+    _assets->loadAsync<LevelModel>(LEVEL_ZERO_PRESENT_KEY, LEVEL_ZERO_PRESENT_FILE, nullptr);
+//    _assets->loadAsync<LevelModel>(LEVEL_ONE_PAST_KEY, LEVEL_ONE_PAST_FILE, nullptr);
+//    _assets->loadAsync<LevelModel>(LEVEL_ONE_PRESENT_KEY, LEVEL_ONE_PRESENT_FILE, nullptr);
 
-    
-    
     // Create a sprite batch (and background color) to render the scene
     _batch = SpriteBatch::alloc();
     auto cam = OrthographicCamera::alloc(getDisplaySize());

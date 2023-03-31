@@ -12,6 +12,7 @@
 #include <cugl/cugl.h>
 #include <cugl/assets/CUAsset.h>
 #include <Tilemap/TilemapController.h>
+#include <ArtifactSet/ArtifactSetController.h>
 
 using namespace cugl;
 
@@ -30,6 +31,8 @@ using namespace cugl;
 class LevelModel : public Asset {
 protected:
     std::shared_ptr<TilemapController> _world;
+    std::shared_ptr<ArtifactSetController> _item;
+    std::shared_ptr<ArtifactSetController> _resource;
 
     /** The AssetManager for the game mode */
     std::shared_ptr<cugl::AssetManager> _assets;
@@ -59,7 +62,7 @@ protected:
      */
     bool loadWall(const std::shared_ptr<JsonValue>& json);
     bool loadTilemap(const std::shared_ptr<JsonValue>& json);
-
+    bool loadArtifact(const std::shared_ptr<JsonValue>& json);
     /**
      * Clears the root scene graph node for this level
      */
@@ -98,6 +101,8 @@ public:
     
     /** Get world map */
     std::shared_ptr<TilemapController> getWorld() {return _world;};
+    std::shared_ptr<ArtifactSetController> getItem() {return _item;};
+    std::shared_ptr<ArtifactSetController> getResource() {return _resource;};
 
 
 #pragma mark Drawing Methods

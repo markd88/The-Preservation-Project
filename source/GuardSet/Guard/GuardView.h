@@ -46,7 +46,7 @@ public:
 
         std::shared_ptr<Texture> texture  = assets->get<Texture>("guard");
         _node = scene2::SpriteNode::allocWithSheet(texture, 16, 16, 256); // SpriteNode for animation
-        _node->setScale(0.5f); // Magic number to rescale asset
+        _node->setScale(0.6f); // Magic number to rescale asset
 
         _node->setRelativeColor(false);
         _node->setVisible(true);

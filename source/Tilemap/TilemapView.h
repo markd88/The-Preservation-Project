@@ -28,7 +28,6 @@ public:
         setPosition(position);
         setColor(color);
         setSize(dimensions * tileSize);
-        
     }
     
 #pragma mark Scene Methods
