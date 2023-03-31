@@ -30,6 +30,7 @@
 
 /** Artifact specific fields */
 #define ARTIFACTS_FIELD     "artifact"
+#define RESOURCE_FIELD      "resource"
 
 /** Guard specific fields */
 #define MAIN_SOUND_FIELD    "main-sound"

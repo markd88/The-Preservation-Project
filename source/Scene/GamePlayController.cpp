@@ -76,7 +76,7 @@ _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displ
     generatePastGuards();
     generatePresentGuards();
     
-//    Vec2 start = Vec2(_scene->getSize().width * 0.85, _scene->getSize().height * 0.15);
+//    Vec2 start = Vec2(_scene->getSize().width *.85, _scene->getSize().height *.15);
     Vec2 start = Vec2(1,1);
 
     _character = make_unique<CharacterController>(start, _actions, _assets);
@@ -192,6 +192,7 @@ void GamePlayController::init(){
     _pastWorld->addChildTo(_scene);
     _pastWorld->setVisibility(true);
     _artifactSet->setVisibility(true);
+    _resourceSet->setVisibility(true);
     
     _presentWorld->addChildTo(_other_scene);
     _presentWorld->setActive(false);
@@ -313,6 +314,7 @@ void GamePlayController::update(float dt){
             _pastWorld->setVisibility(false);
             _guardSetPast->setVisbility(false);
             _artifactSet->setVisibility(false);
+            _resourceSet->setVisibility(false);
             
             _character->removeChildFrom(_scene);
             _character->addChildTo(_other_scene);
@@ -324,6 +326,7 @@ void GamePlayController::update(float dt){
             _pastWorld->setVisibility(true);
             _guardSetPast->setVisbility(true);
             _artifactSet->setVisibility(true);
+            _resourceSet->setVisibility(true);
             
             _presentWorld->setActive(false);
 
@@ -503,9 +506,11 @@ void GamePlayController::update(float dt){
 #pragma mark Generation Helpers
 
     void GamePlayController::generatePastGuards() {
-        vector<Vec2> patrol_stops = { Vec2(0, 500), Vec2(190, 500), Vec2(190, 400) }; //must be at least two stops
+//        vector<Vec2> patrol_stops = { Vec2(0, 500), Vec2(190, 500), Vec2(190, 400) }; //must be at least two stops
         //addMovingGuard1(0, 500, patrol_stops);
-        addGuard1(450, 250);
+        vector<Vec2> patrol_stops = { Vec2(0, 500), Vec2(500, 500), Vec2(1000, 500) };
+        addMovingGuard1(0, 500, patrol_stops);
+        addGuard1(1200, 200);
         //addGuard1(500, 100);
         //addGuard1(630, 500);
         //addGuard1(850, 380);

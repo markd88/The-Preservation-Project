@@ -129,11 +129,14 @@ bool LevelModel::loadTilemap(const std::shared_ptr<JsonValue>& json) {
     
     std::string textureType = json->get("type")->asString();
 
-    int width = json->get("width")->asInt();
-    int height = json->get("height")->asInt();
+    int width = json->get("height")->asInt();
+    int height = json->get("width")->asInt();
     int x = json->get("x")->asInt() / width;
     int y = json->get("y")->asInt() / height - 1;
-    
+//
+//    x = 896 - x;
+//    y = 1536 - y;
+//
     // TODO: replace below
     _world->addTile2(x, y, false, _assets, textureType);
     
@@ -150,10 +153,11 @@ bool LevelModel::loadWall(const std::shared_ptr<JsonValue>& json) {
     
     std::string textureType = json->get("type")->asString();
 
-    int width = json->get("width")->asInt();
-    int height = json->get("height")->asInt();
+    int width = json->get("height")->asInt();
+    int height = json->get("width")->asInt();
     int x = json->get("x")->asInt() / width;
     int y = json->get("y")->asInt() / height -1;
+    
     
     // TODO: replace below
     _world->addTile2(x, y, true, _assets, textureType);
@@ -169,14 +173,16 @@ bool LevelModel::loadArtifact(const std::shared_ptr<JsonValue>& json) {
     bool success = true;
     std::string textureType = json->get("type")->asString();
     
-    int width = json->get("width")->asInt() /2;
-    int height = json->get("height")->asInt() /2;
-    int x = json->get("x")->asInt() -615;
-    int y = json->get("y")->asInt() -615;
+    int width = json->get("height")->asInt() /2;
+    int height = json->get("width")->asInt() /2;
+//    int x = json->get("x")->asInt() -738;
+//    int y = 1536 - json->get("y")->asInt() -430.5 -500;
+    int x = json->get("x")->asInt();
+    int y = 1536 - json->get("y")->asInt() -640;
     
     Vec2 pos = Vec2 (x, y);
     Size size = Size(width, height);
-    if (textureType == "resource") {
+    if (textureType == RESOURCE_FIELD) {
         _resource->add_this(pos, size, true, _assets, textureType);
     } else
     _item->add_this(pos, size, false, _assets, textureType);

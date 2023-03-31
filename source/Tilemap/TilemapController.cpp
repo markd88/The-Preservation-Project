@@ -92,7 +92,12 @@ void TilemapController::addTile2(int col, int row, bool is_obs,
              const std::shared_ptr<cugl::AssetManager>& assets, std::string textureKey) {
 
     Vec2 pos;
-    pos = Vec2(col * _model->tileSize.width, row * _model->tileSize.height);
+//    pos = Vec2(col * _model->tileSize.width, row * _model->tileSize.height);
+    
+    int x = col*128;
+    int y = 896 - row*128;
+    pos = Vec2 (x,y);
+    
     Tile temp = std::make_unique<TileController>(pos, _model->tileSize, is_obs, assets, textureKey);
     _tilemap[row][col] = std::move(temp);
 
@@ -154,12 +159,14 @@ void TilemapController::updateTileSize(Size tileSize) {
     // TODO: Implement me
     if(tileSize.width < 0 || tileSize.height < 0) return ;
     
-    Vec2 center = bottomLeftToCenterPosition(_model->position, _model->tileSize*_model->dimensions);
+//    Vec2 center = bottomLeftToCenterPosition(_model->position, _model->tileSize*_model->dimensions);
     
     _model->setTileSize(tileSize);
     _view->setSize(_model->dimensions * tileSize);
     
-    Vec2 pos = centerToBottomLeftPosition(center, _model->tileSize*_model->dimensions);
+//    Vec2 pos = centerToBottomLeftPosition(center, _model->tileSize*_model->dimensions);
+    
+    Vec2 pos = Vec2 (_model->position.x -128, _model->position.y -150);
     
     _model->setPosition(pos);
     _view->setPosition(pos);
