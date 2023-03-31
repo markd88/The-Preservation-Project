@@ -102,7 +102,7 @@ public:
     /** Get world map */
     std::shared_ptr<TilemapController> getWorld() {return _world;};
     std::shared_ptr<ArtifactSetController> getItem() {return _item;};
-    std::shared_ptr<ArtifactSetController> getResource() {return _resource;};
+//    std::shared_ptr<ArtifactSetController> getResource() {return _resource;};
 
 
 #pragma mark Drawing Methods

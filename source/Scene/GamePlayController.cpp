@@ -55,9 +55,7 @@ _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displ
     _pastWorldLevel->setTilemapTexture();
     _pastWorld = _pastWorldLevel->getWorld();
     _artifactSet = _pastWorldLevel->getItem();
-    _resourceSet = _pastWorldLevel->getResource();
-    _artifactSet->addChildTo(_scene);
-    _resourceSet->addChildTo(_scene);
+//    _artifactSet->addChildTo(_scene);
 
     // Draw present world
     _presentWorldLevel = _assets->get<LevelModel>(LEVEL_ZERO_PRESENT_KEY);
@@ -191,8 +189,8 @@ void GamePlayController::init(){
     
     _pastWorld->addChildTo(_scene);
     _pastWorld->setVisibility(true);
+    _artifactSet->addChildTo(_scene);
     _artifactSet->setVisibility(true);
-    _resourceSet->setVisibility(true);
     
     _presentWorld->addChildTo(_other_scene);
     _presentWorld->setActive(false);
@@ -220,10 +218,7 @@ void GamePlayController::init(){
     }
 
     _characterLeft = cugl::scene2::Animate::alloc(forward, DURATION);
-    
-    _artifactSet->addChildTo(_scene);
-    _resourceSet->addChildTo(_scene);
-    
+
 //    _guardSet1 = make_unique<GuardSetController>(_assets, _actions);
 //    _guardSet2 = make_unique<GuardSetController>(_assets, _actions);
 //    _guardSet1->clearSet();
@@ -314,7 +309,7 @@ void GamePlayController::update(float dt){
             _pastWorld->setVisibility(false);
             _guardSetPast->setVisbility(false);
             _artifactSet->setVisibility(false);
-            _resourceSet->setVisibility(false);
+//            _resourceSet->setVisibility(false);
             
             _character->removeChildFrom(_scene);
             _character->addChildTo(_other_scene);
@@ -326,7 +321,7 @@ void GamePlayController::update(float dt){
             _pastWorld->setVisibility(true);
             _guardSetPast->setVisbility(true);
             _artifactSet->setVisibility(true);
-            _resourceSet->setVisibility(true);
+//            _resourceSet->setVisibility(true);
             
             _presentWorld->setActive(false);
 
@@ -451,11 +446,12 @@ void GamePlayController::update(float dt){
                     _character->addRes();
                     // update panel
                     _res_label->setText(cugl::strtool::to_string(_character->getNumRes()));
+                    CULog("resource");
                 }
                 // if artifact
                 else{
                     _character->addArt();
-                    _art_label->setText(cugl::strtool::to_string(_character->getNumArt()) + "/4");
+                    _art_label->setText(cugl::strtool::to_string(_character->getNumArt()) + "/3");
                 }
                 // make the artifact disappear and remove from set
                 _artifactSet->remove_this(i, _scene);
