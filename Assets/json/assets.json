@@ -8,10 +8,13 @@
             "wrapT":     "clamp"
         },
         "character": {
-            "file":     "textures/walking.png"
+            "file":     "textures/character.png"
         },
         "guard": {
             "file":     "textures/enemy.png"
+        },
+        "shadow": {
+            "file":    "textures/Shadow.png"
         },
  
         "artifact-1": {

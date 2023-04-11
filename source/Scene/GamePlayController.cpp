@@ -11,7 +11,7 @@ using namespace cugl;
 #define PHYSICS_SCALE 50
 /** This is adjusted by screen aspect ratio to get the height */
 #define SCENE_WIDTH 1024
-#define DURATION 1.0f
+#define DURATION 0.8f
 #define ACT_KEY  "current"
 
 GamePlayController::GamePlayController(const Size displaySize, std::shared_ptr<cugl::AssetManager>& assets ):
@@ -78,23 +78,6 @@ _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displ
     Vec2 start = Vec2(1,1);
 
     _character = make_unique<CharacterController>(start, _actions, _assets);
-    // Forward character movement
-    const int span = 8;
-    std::vector<int> forward;
-    for(int ii = 1; ii < span; ii++) {
-        forward.push_back(ii);
-    }
-    // Loop back to beginning
-    forward.push_back(0);
-    _characterRight = cugl::scene2::Animate::alloc(forward, DURATION);
-
-    // Reverse charater movement
-    std::vector<int> reverse;
-    for(int ii = 1; ii <= span; ii++) {
-        reverse.push_back(span-ii);
-    }
-
-    _characterLeft = cugl::scene2::Animate::alloc(forward, DURATION);
 
 
 
@@ -163,8 +146,8 @@ _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displ
     
     _moveTo = cugl::scene2::MoveTo::alloc();
     _moveCam = CameraMoveTo::alloc();
-    _moveCam->setDuration(.08);
-    _moveTo->setDuration(.08);
+    _moveCam->setDuration(DURATION);
+    _moveTo->setDuration(DURATION);
     
     init();
     
@@ -204,23 +187,7 @@ void GamePlayController::init(){
     Vec2 start = Vec2(0,0);
     _character = make_unique<CharacterController>(start, _actions, _assets);
     _character->addChildTo(_scene);
-    // Forward character movement
-    const int span = 8;
-    std::vector<int> forward;
-    for(int ii = 1; ii < span; ii++) {
-        forward.push_back(ii);
-    }
-    // Loop back to beginning
-    forward.push_back(0);
-    _characterRight = cugl::scene2::Animate::alloc(forward, DURATION);
 
-    // Reverse charater movement
-    std::vector<int> reverse;
-    for(int ii = 1; ii <= span; ii++) {
-        reverse.push_back(span-ii);
-    }
-
-    _characterLeft = cugl::scene2::Animate::alloc(forward, DURATION);
 
 //    _guardSet2->removeChildFrom(_scene);
     
@@ -418,19 +385,17 @@ void GamePlayController::update(float dt){
         _path->removeFrom(_scene);
     }
     
-    if (_path->getPath().size() != 0 && _actions->isActive("moving") == false){
+    if (_path->getPath().size() != 0 && !_actions->isActive("moving")  && !_actions->isActive("character_animation")){
         _moveTo->setTarget(_path->getPath()[0]);
         _moveCam->setTarget(_path->getPath()[0]);
         _character->moveTo(_moveTo);
+        _character->updateAnimation(_path->getPath()[0]);
         _camManager->activate("movingCam", _moveCam, _cam);
         _camManager->activate("movingOtherCam", _moveCam, _other_cam);
         // path_trace.erase(path_trace.begin());
         _path->removeFirst(_scene);
     }
 
-    if (_actions->isActive("moving") && !_actions->isActive("character_animation")) {
-            _character->updateAnimation(_characterRight);
-        }
 #pragma mark Resource Collection Methods
     // if collect a resource
     if(_activeMap == "pastWorld"){
