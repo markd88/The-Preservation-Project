@@ -11,7 +11,7 @@
 #include "Guard/GuardController.h"
 #include <Tilemap/TilemapController.h>
 
-
+using namespace std;
 #include <cmath>
 
 #define DURATION 3.0f
@@ -39,19 +39,27 @@ public:
     
     std::shared_ptr<TilemapController> _world;
     
+    /**adjacency matrix*/
+    bool** _adjMatrix;
+    
+    /** nodes to vec2 positions*/
+    std::unordered_map<int, Vec2> _nodes;
+    
+    
 
 
 
 #pragma mark Main Methods
 public:
     
-    GuardSetController(const std::shared_ptr<cugl::AssetManager>& assets, std::shared_ptr<cugl::scene2::ActionManager> actions, std::shared_ptr<TilemapController> world)
+    GuardSetController(const std::shared_ptr<cugl::AssetManager>& assets, std::shared_ptr<cugl::scene2::ActionManager> actions, std::shared_ptr<TilemapController> world, bool** adjMatrix, std::unordered_map<int, Vec2> nodes)
     {
+        _adjMatrix = adjMatrix;
+        _nodes = nodes;
         _world = world;
         _actions = actions;
         std::vector<Guard> _guardSet;
-
-
+        
 
     };
     
@@ -62,7 +70,7 @@ public:
     // add one guard
     void add_this_moving(Vec2 gPos, Scene s, const std::shared_ptr<cugl::AssetManager>& assets, vector<Vec2> patrol_stops){
         Guard _guard = std::make_unique<GuardController>(gPos, assets, patrol_stops, _actions, generateUniqueID());
-//        _guard->addChildTo(s);
+        _guard->addChildTo(s);
         _guardSet.push_back(std::move(_guard));
     }
     
@@ -132,16 +140,12 @@ public:
             string patrolAction = "patrol" + std::to_string(_guardSet[i]->id);
             string returnAction = "return" + std::to_string(_guardSet[i]->id);
 
-
-
             Vec2 guardPos = _guardSet[i]->getNodePosition();
             float distance = guardPos.distance(_charPos);
             
             bool detection = false;
             if (distance < 200 and _world->isActive()){
-                //drawLines(s, _charPos, guardPos);
                 detection = !_world->lineInObstacle(guardPos,_charPos);
-
             }
             
             if (_actions->isActive(chaseAction) or _actions->isActive(returnAction)){
@@ -158,15 +162,13 @@ public:
             }
             
             else if (detection){
-
                 // std::cout<<"guard angle: "<< _guardSet[i]->getDirection()<<"\n";
-                std::cout<<"char angle: "<<char_angle<<"\n";
+                // std::cout<<"char angle: "<<char_angle<<"\n";
                 Vec2 target = guardPos + ((_charPos - guardPos)/distance)*20;
                 Vec2 pos = _guardSet[i]->getNodePosition();
                 int direction = calculateMappedAngle(float (pos.x), float (pos.y), float (target.x), float (target.y));
 
                 //chase
-
                 _guardSet[i]->updateChaseTarget(target);
 
                 _guardSet[i]->chaseChar(chaseAction, direction);
@@ -174,6 +176,7 @@ public:
                 _guardSet[i]->prependReturnVec(target);
             }
             else if (_guardSet[i]->returnVec.size() != 0){
+                
                 //return action
                 _guardSet[i]->updateReturnTarget(_guardSet[i]->returnVec[0]);
                 _guardSet[i]->returnGuard(returnAction);
@@ -188,15 +191,53 @@ public:
                     _guardSet[i]->nextStop(patrolAction);
                 }
             }
+            else{
+                int closestNode = findClosestNode(_guardSet[i]->getNodePosition());
+                vector<int> path = shortestPath(closestNode, 0);
+                for (int i = 0; i < path.size() - 1; i++){
+                    drawLines(s, _nodes[path[i]], _nodes[path[i+1]]);
+                    //std::cout<<"shortestPath: "<<path[i]<<"\n";
+                }
+                int n = _nodes.size();
+                for (int i = 0; i < n; i++){
+                    for(int j = 0; j < n; j++){
+                        if (_adjMatrix[i][j]){
+                            //drawLines(s, _nodes[i], _nodes[j]);
+                        }
+                    }
+                }
+            }
         }
     }
     
+    int findClosestNode(Vec2 pos){
+        int closest = 0;
+        int minDistance = 100000000;
+        for (int i = 0; i < _nodes.size(); i++){
+            int dis = pos.distance(_nodes[i]);
+            if (dis < minDistance){
+                minDistance = dis;
+                closest = i;
+            }
+        }
+        return closest;
+    }
+    
+    void drawClosest(Scene s, Vec2 pos){
+        auto origin = scene2::PolygonNode::alloc();
+        origin = scene2::PolygonNode::alloc();
+        origin->setPolygon(Rect(10, 10, 10, 10));
+        origin->setPosition(pos);
+        origin->setColor(Color4::RED);
+        s->addChild(origin);
+            
+    }
+    
+    
     void drawLines(Scene s, Vec2 a, Vec2 b){
-        s->removeChildByName("line");
         
         SplinePather splinePather = SplinePather();
         SimpleExtruder extruder = SimpleExtruder();
-        bool detection = _world->lineInObstacle(a, b);
         Spline2 spline = Spline2(a, b);
         splinePather.set(&spline);
         splinePather.calculate();
@@ -206,18 +247,53 @@ public:
         Poly2 line = extruder.getPolygon();
         std::shared_ptr<scene2::PolygonNode> polyNode= scene2::PolygonNode::alloc();
         polyNode->setPolygon(line);
-        if (detection){
-            polyNode->setColor(Color4::BLUE);
-        }else{
-            polyNode->setColor(Color4::GREEN);
-        }
+        
+        polyNode->setColor(Color4::GREEN);
+        
         polyNode->setPosition(a.getMidpoint(b));
         
-        s->addChildWithName(polyNode, "line");
+        s->addChild(polyNode);
         
     }
+    
+    vector<int> shortestPath(int start, int end){
+        int n = _nodes.size();
+        vector<int> dist(n, 1e9);
+        dist[start] = 0;
 
+        // initialize parent vector
+        vector<int> parent(n, -1);
 
+        // initialize queue
+        queue<int> q;
+        q.push(start);
+
+        while (!q.empty()) {
+            int u = q.front();
+            q.pop();
+
+            for (int v = 0; v < n; v++) {
+                if (_adjMatrix[u][v] && dist[u] + 1 < dist[v]) {
+                    dist[v] = dist[u] + 1;
+                    parent[v] = u;
+                    q.push(v);
+                }
+            }
+        }
+
+        // backtrack from end to start to get path
+        vector<int> path;
+        int curr = end;
+        while (curr != -1) {
+            path.push_back(curr);
+            curr = parent[curr];
+        }
+        reverse(path.begin(), path.end());
+
+        return path;
+    }
+
+    
 
     int calculateMappedAngle(float x1, float y1, float x2, float y2)
     {

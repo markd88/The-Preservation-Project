@@ -20,8 +20,6 @@ private:
     /** Main character view */
     /** The node is attached to the root-scene*/
     std::shared_ptr<scene2::SpriteNode> _node;
-    std::shared_ptr<Poly2> tri;
-    std::shared_ptr<scene2::PolygonNode> _cone;
     /** Manager to process the animation actions */
     std::shared_ptr<cugl::scene2::ActionManager> _actions;
 
@@ -102,16 +100,6 @@ public:
     void addChildTo(const std::shared_ptr<cugl::Scene2>& scene) {
         scene->addChild(_node);
         
-        /*
-         _cone = scene2::PolygonNode::allocWithPoly(makeCone(500, 90));
-         coneDirection(6);
-         _cone->setAnchor(Vec2::ANCHOR_MIDDLE_RIGHT);
-         _cone->setColor(Color4::RED);
-         _cone->setVisible(true);
-         _cone->setPosition(_node->getSize()/_node->getScale()/2);
-         _cone->setPosition(Vec2 (0, 400));
-         _node->addChild(_cone);
-         */
     }
     
     /**
@@ -127,11 +115,9 @@ public:
 public:
     void setPosition(Vec2 position){
         _node->setPosition(position);
-//        _cone->setPosition(position);
     }
     
     void setSize(Size size){
-//        _cone->setPolygon(Rect(Vec2(0,0), size));
         _node->setContentSize(size);
     }
 
@@ -170,25 +156,12 @@ public:
             animation = _guard_7;
         }
 
-
-
         _actions->activate(actionName, animation, _node);
     }
     
 #pragma mark Helpers
 public:
-    Poly2 makeCone(int height, int angle) {
-        PolyFactory _polyFactory;
-        float rad =  angle/2 * M_PI / 180.0;
-        float edge = height * tan(rad) *2;
-        Poly2 tri = _polyFactory.makeTriangle(Vec2(0,0), Vec2(0,edge), Vec2(height,edge/2));
-        return tri;
-    }
     
-    void coneDirection(int i) {
-        float direction = i * 45;
-        _cone->setAngle(direction * M_PI / 180.0);
-    }
    
     void setVisibility(bool visible){
         _node->setVisible(visible);
