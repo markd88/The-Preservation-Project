@@ -27,6 +27,8 @@ private:
     typedef std::unique_ptr<TileController> Tile;
     typedef std::vector<std::vector<Tile>> Tilemap;
     Tilemap _tilemap;
+    int _vertices; //number of vertices for adjaceny matrix
+    std::unordered_map<int, Vec2> _nodes; //nodes for the matrix
     
 #pragma mark Main Methods
 public:
@@ -201,77 +203,6 @@ public:
      */
     void initializeTilemap();
     
-    void addPoints(Size size, const std::shared_ptr<cugl::Scene2>& scene){
-        
-        auto origin = scene2::PolygonNode::alloc();
-        std::unordered_map<int, Vec2> nodes;
-        int count = 0;
-        
-        for (int i = 0; i < 1152 ; i += 30){
-            for (int j = 0; j < 672 ; j += 30){
-                origin = scene2::PolygonNode::alloc();
-                origin->setPolygon(Rect(10, 10, 10, 10));
-                origin->setPosition(Vec2(i,j));
-                origin->setColor(Color4::RED);
-                scene->addChild(origin);
-                nodes[count] = Vec2(i,j);
-                count += 1;
-            }
-        }
-                
-        SplinePather splinePather = SplinePather();
-        SimpleExtruder extruder = SimpleExtruder();
-        
-        for (int i = 0; i < 897; i++){
-            if ((i + 1)%23 != 0){
-                Vec2 a = nodes[i];
-                Vec2 b = nodes[i + 1];
-                bool hitObs = lineInObstacle(a, b);
-                Spline2 spline = Spline2(a, b);
-                splinePather.set(&spline);
-                splinePather.calculate();
-                
-                extruder.set(splinePather.getPath());
-                extruder.calculate(1);
-                Poly2 line = extruder.getPolygon();
-                
-                std::shared_ptr<scene2::PolygonNode> polyNode= scene2::PolygonNode::alloc();
-                polyNode->setPolygon(line);
-                if (hitObs){
-                    polyNode->setColor(Color4::BLUE);
-                }else{
-                    polyNode->setColor(Color4::GREEN);
-                }
-                polyNode->setPosition(a.getMidpoint(b));
-                scene->addChild(polyNode);
-            }
-        }
-        for (int i = 0; i < 897; i++){
-            if (i + 23 < 897){
-                Vec2 a = nodes[i];
-                Vec2 b = nodes[i + 23];
-                bool hitObs = lineInObstacle(a, b);
-                Spline2 spline = Spline2(a, b);
-                splinePather.set(&spline);
-                splinePather.calculate();
-                
-                extruder.set(splinePather.getPath());
-                extruder.calculate(1);
-                Poly2 line = extruder.getPolygon();
-                
-                std::shared_ptr<scene2::PolygonNode> polyNode= scene2::PolygonNode::alloc();
-                polyNode->setPolygon(line);
-                if (hitObs){
-                    polyNode->setColor(Color4::BLUE);
-                }else{
-                    polyNode->setColor(Color4::GREEN);
-                }
-                polyNode->setPosition(a.getMidpoint(b));
-                scene->addChild(polyNode);
-            }
-        }
-    }
-    
     Size getSize(){
         Size size = _model->dimensions * _model->tileSize;
         return size;
@@ -344,6 +275,178 @@ public:
     
     void setActive(bool active){
         _model->setActive(active);
+    }
+    
+    std::vector<std::pair<int,int>> getEdges(const std::shared_ptr<cugl::Scene2>& scene){
+        std::unordered_map<int, Vec2> nodes;
+        std::vector<std::pair<int,int>> edges;
+        int count = 0;
+        
+        int width = _model->dimensions.x * _model->tileSize.width;
+        int edgeLength = width / 30;
+        
+        int numPerRow = (width/edgeLength) + 1;
+        
+        auto& start = _tilemap[0][0];
+        Vec2 startPos = start->getPosition() + Vec2(0, start->getSize().y);
+        
+        for (int j = startPos.y; j > 0; j -= edgeLength){
+            for (int i = startPos.x; i < startPos.x + width; i += edgeLength){
+                nodes[count] = Vec2(i,j);
+                count += 1;
+            }
+        }
+        
+        SplinePather splinePather = SplinePather();
+        SimpleExtruder extruder = SimpleExtruder();
+        
+        for (int i = 0; i < count - 1; i++){
+            if ( (i+1) % (numPerRow) != 0){
+                Vec2 a = nodes[i];
+                Vec2 b = nodes[i + 1];
+                bool hitObs = lineInObstacle(a, b);
+                
+                if (hitObs == false){
+                    edges.push_back(std::make_pair(i, i+1));
+                }
+                /*
+                Spline2 spline = Spline2(a, b);
+                splinePather.set(&spline);
+                splinePather.calculate();
+                
+                extruder.set(splinePather.getPath());
+                extruder.calculate(1);
+                Poly2 line = extruder.getPolygon();
+                
+                std::shared_ptr<scene2::PolygonNode> polyNode= scene2::PolygonNode::alloc();
+                polyNode->setPolygon(line);
+                polyNode->setPosition(a.getMidpoint(b));
+                scene->addChild(polyNode);
+                 */
+                 
+            }
+            
+        }
+        
+        for (int i = 0; i < count - numPerRow; i++){
+            splinePather.clear();
+            extruder.clear();
+            
+            Vec2 a = nodes[i];
+            Vec2 b = nodes[i + numPerRow];
+            bool hitObs = lineInObstacle(a, b);
+            
+            if (hitObs == false){
+                edges.push_back(std::make_pair(i, i + numPerRow));
+            }
+            /*
+            Spline2 spline = Spline2(a, b);
+            splinePather.set(&spline);
+            splinePather.calculate();
+            
+            extruder.set(splinePather.getPath());
+            extruder.calculate(1);
+            Poly2 line = extruder.getPolygon();
+            
+            std::shared_ptr<scene2::PolygonNode> polyNode= scene2::PolygonNode::alloc();
+            polyNode->setPolygon(line);
+        
+            polyNode->setPosition(a.getMidpoint(b));
+            scene->addChild(polyNode);
+             */
+            
+        }
+        
+        _vertices = count;
+        _nodes = nodes;
+        return edges;
+        
+    }
+    
+    int getVertices(){
+        return _vertices;
+    }
+    
+    std::unordered_map<int, Vec2> getNodes(){
+        return _nodes;
+    }
+    
+    void addPoints1(const std::shared_ptr<cugl::Scene2>& scene){
+        
+        auto origin = scene2::PolygonNode::alloc();
+        std::unordered_map<int, Vec2> nodes;
+        int count = 0;
+        int x = _model->dimensions.x;
+        
+        for(auto& tile_vec : _tilemap){
+            for(auto& tile : tile_vec){
+                origin = scene2::PolygonNode::alloc();
+                origin->setPolygon(Rect(10, 10, 10, 10));
+                int i = tile->getPosition().x;
+                int j = tile->getPosition().y;
+                origin->setPosition(Vec2(i,j));
+                origin->setColor(Color4::RED);
+                scene->addChild(origin);
+                nodes[count] = Vec2(i,j);
+                count += 1;
+            }
+                
+        }
+                
+        SplinePather splinePather = SplinePather();
+        SimpleExtruder extruder = SimpleExtruder();
+        
+        for (int i = 0; i < count - 1; i++){
+            if ((i + 1) % x != 0){
+                Vec2 a = nodes[i];
+                Vec2 b = nodes[i + 1];
+                bool hitObs = lineInObstacle(a, b);
+                Spline2 spline = Spline2(a, b);
+                splinePather.set(&spline);
+                splinePather.calculate();
+                
+                extruder.set(splinePather.getPath());
+                extruder.calculate(1);
+                Poly2 line = extruder.getPolygon();
+                
+                std::shared_ptr<scene2::PolygonNode> polyNode= scene2::PolygonNode::alloc();
+                polyNode->setPolygon(line);
+                if (hitObs){
+                    polyNode->setColor(Color4::BLUE);
+                }else{
+                    polyNode->setColor(Color4::GREEN);
+                }
+                polyNode->setPosition(a.getMidpoint(b));
+                scene->addChild(polyNode);
+            }
+            
+        }
+        for (int i = 0; i < count - x; i++){
+            
+                Vec2 a = nodes[i];
+                Vec2 b = nodes[i + x];
+                bool hitObs = lineInObstacle(a, b);
+                Spline2 spline = Spline2(a, b);
+                splinePather.set(&spline);
+                splinePather.calculate();
+                
+                extruder.set(splinePather.getPath());
+                extruder.calculate(1);
+                Poly2 line = extruder.getPolygon();
+                
+                std::shared_ptr<scene2::PolygonNode> polyNode= scene2::PolygonNode::alloc();
+                polyNode->setPolygon(line);
+                if (hitObs){
+                    polyNode->setColor(Color4::BLUE);
+                }else{
+                    polyNode->setColor(Color4::GREEN);
+                }
+                polyNode->setPosition(a.getMidpoint(b));
+                scene->addChild(polyNode);
+            
+        }
+        
+        
     }
 };
 

@@ -29,7 +29,7 @@ private:
     /** patrol locations for the guard to follow*/
     vector<Vec2> _patrol_stops;
     //The current stop of the guard (index in _patrol_stops)
-    int _goingTo;
+    int _goingTo = 0;
     
     bool _doesPatrol;
     
@@ -41,11 +41,15 @@ private:
     vector<Vec2> _returnVec;
     
     //whether guard is traversing back the path
-    bool going_back;
+    bool going_back = false;
     //whether or not guard returned from chasing
     bool returned;
     //saved stop to use when returning
     int saved_stop;
+    //current state
+    string _state;
+    //prev state
+    string _prev_state;
     
 #pragma mark Main Methods
 public:
@@ -55,6 +59,11 @@ public:
     const bool& doesPatrol;
     /**view only version of return vec**/
     const vector<Vec2>& returnVec;
+    /**view only version of state**/
+    const string& state;
+
+    /**view only version of prev state**/
+    const string& prev_state;
     
     
     /**
@@ -66,9 +75,10 @@ public:
      */
     //static guard
     GuardController(Vec2 position, const std::shared_ptr<cugl::AssetManager>& assets, std::shared_ptr<cugl::scene2::ActionManager> actions, int id)
-    : id(_id), doesPatrol(_doesPatrol), returnVec(_returnVec)
+    : id(_id), doesPatrol(_doesPatrol), returnVec(_returnVec), state(_state), prev_state(_prev_state)
     {
-        
+        _state = "static";
+        _prev_state = "patrol";
         _returnVec = {};
         _chaseMove = cugl::scene2::MoveTo::alloc();
         _chaseMove->setDuration(DURATION);
@@ -83,8 +93,10 @@ public:
     }
     
     //moving guard
-    GuardController(Vec2 position, const std::shared_ptr<cugl::AssetManager>& assets, std::vector<Vec2> vec, std::shared_ptr<cugl::scene2::ActionManager> actions, int id) : id(_id), doesPatrol(_doesPatrol), returnVec(_returnVec)
+    GuardController(Vec2 position, const std::shared_ptr<cugl::AssetManager>& assets, std::vector<Vec2> vec, std::shared_ptr<cugl::scene2::ActionManager> actions, int id) : id(_id), doesPatrol(_doesPatrol), returnVec(_returnVec), state(_state), prev_state(_prev_state)
     {
+        _state = "patrol";
+        _prev_state = "patrol";
         _goingTo = 0;
         _returnVec = {};
         
@@ -98,7 +110,7 @@ public:
         
         _patrolMove = cugl::scene2::MoveTo::alloc();
         _doesPatrol = true;
-        _goingTo = 0;
+        
         _id = id;
         _model = std::make_unique<GuardModel>(position, Size(100, 100), Color4::RED);
         _view = std::make_unique<GuardView>(position, Size(100, 100), Color4::RED, assets, actions);
@@ -196,27 +208,36 @@ public:
             returned = false;
         }
         else{
-            if (going_back and (_goingTo == 0)){
-                going_back = false;
-                _goingTo += 1;
+            if (_goingTo + 1 == _patrol_stops.size()){
+                going_back = true;
             }
-            else if(going_back){
+            else if (going_back and (_goingTo == 0)){
+                going_back = false;
+            }
+            
+            if(going_back){
                 _goingTo -= 1;
-            }else if (_goingTo + 1 == _patrol_stops.size() - 1){
-                going_back =  true;
-                _goingTo += 1;
-            }else{
+            }
+            else{
                 _goingTo += 1;
             }
         }
+        
         float speed = 53;
         float distance = getNodePosition().distance(_patrol_stops[_goingTo]);
         float duration = distance / speed;
-
+        
+        //move guard
         _patrolMove->setDuration(duration);
         _patrolMove->setTarget(_patrol_stops[_goingTo]);
         _view->performAction(actionName, _patrolMove);
 
+        //animate guard
+        animateGuard(actionName);
+
+    }
+    
+    void animateGuard(string actionName){
         Vec2 target = _patrolMove->getTarget();
         Vec2 pos = _view->nodePos();
         int direction = calculateMappedAngle(pos.x, pos.y, target.x, target.y);
@@ -235,19 +256,21 @@ public:
         _view->performAction(actionName, _returnMove);
         Vec2 target = _returnMove->getTarget();
         Vec2 pos = _view->nodePos();
-        CULog("%f", pos.x);
-        CULog("%f", pos.y);
-        CULog("%f", target.x);
-        CULog("%f", target.y);
+        //CULog("%f", pos.x);
+        //CULog("%f", pos.y);
+        //CULog("%f", target.x);
+        //CULog("%f", target.y);
         int direction = calculateMappedAngle(pos.x, pos.y, target.x, target.y);
         _view->performAnimation(actionName+"Animation", direction);
-
-
 
     }
     
     void prependReturnVec(Vec2 pos){
         _returnVec.insert(_returnVec.begin(), pos);
+    }
+    
+    void setReturnVec(vector<Vec2> returnVec){
+        _returnVec = returnVec;
     }
     
     void eraseReturnVec(){
@@ -269,7 +292,18 @@ public:
     
     void setVisibility(bool visible){
         _view->setVisibility(visible);
-        
+    }
+    
+    void updateState(string state){
+        _state = state;
+    }
+    
+    void updatePrevState(string prev_state){
+        _prev_state = prev_state;
+    }
+    
+    Vec2 getSavedStop(){
+        return _patrol_stops[saved_stop];
     }
     
     int calculateMappedAngle(float x1, float y1, float x2, float y2)
@@ -287,7 +321,7 @@ public:
         }
 
         // map the angle from 0 to 360 degrees to 0 to 7
-        CULog("%f", angleDegrees);
+        //CULog("%f", angleDegrees);
         if (angleDegrees > 337.5 || angleDegrees < 22.5) {
             return 2;
         } else if (angleDegrees >= 22.5 && angleDegrees < 67.5){
