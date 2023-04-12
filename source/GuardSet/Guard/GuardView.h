@@ -55,18 +55,14 @@ public:
         std::vector<int> d0 = {1,2,3,4,5,6,7,0};
         _guard_0 = cugl::scene2::Animate::alloc(d0, DURATION);
 
-
         std::vector<int> d1 = {9,10,11,12,13,14,15,8};
         _guard_1 = cugl::scene2::Animate::alloc(d1, DURATION);
-
 
         std::vector<int> d2 = {17,18,19,20,21,22,23,16};
         _guard_2 = cugl::scene2::Animate::alloc(d2, DURATION);
 
-
         std::vector<int> d3 = {25,26,27,28,29,30,31,24};
         _guard_3 = cugl::scene2::Animate::alloc(d3, DURATION);
-
 
         std::vector<int> d4 = {33,34,35,36,37,38,39,32};
         _guard_4 = cugl::scene2::Animate::alloc(d4, DURATION);
@@ -131,7 +127,7 @@ public:
 
 
     void performAnimation(string actionName, int d) {
-        CULog("%d", d);
+        //CULog("%d", d);
         std::shared_ptr<cugl::scene2::Animate> animation = _guard_0;
         if (d == 0) {
             animation = _guard_0;

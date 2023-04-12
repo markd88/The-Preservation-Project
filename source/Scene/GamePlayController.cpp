@@ -495,9 +495,11 @@ void GamePlayController::update(float dt){
         addMovingGuard1(100, 500, patrol_stops);
 //        vector<Vec2> patrol_stops = { Vec2(0, 600), Vec2(500, 600), Vec2(1000, 600) };
 //        addMovingGuard1(0, 600, patrol_stops);
-        addGuard1(1200, 200);
-        addGuard1(100, 500);
-        addGuard1(100, 100);
+        
+        vector<Vec2> patrol_stops1 = { Vec2(1200, 200), Vec2(1000, 200)};
+        addMovingGuard1(1200, 200, patrol_stops1);
+        //addGuard1(100, 500);
+        addGuard1(400, 600);
     }
 
     void GamePlayController::generatePresentGuards() {

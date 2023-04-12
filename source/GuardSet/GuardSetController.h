@@ -144,69 +144,113 @@ public:
             float distance = guardPos.distance(_charPos);
             
             bool detection = false;
-            if (distance < 200 and _world->isActive()){
+            if (distance < 300 and _world->isActive()){
                 detection = !_world->lineInObstacle(guardPos,_charPos);
             }
             
-            if (_actions->isActive(chaseAction) or _actions->isActive(returnAction)){
-                //wait for guard to finish current action
-                //interupt return action if detection
+#pragma mark Guard State Updates
+            //patrol state
+            if (_guardSet[i]->state == "patrol"){
+                
+                //detection in patrol state = chase
+                if (detection){
+                    _guardSet[i]->updatePrevState(_guardSet[i]->state);
+                    _guardSet[i]->updateState("chase");
+                }
+                //keep patroling otherwise
+                else{
+                    _guardSet[i]->updatePrevState(_guardSet[i]->state);
+                }
+                
             }
-            //detection
-            else if (detection and _actions->isActive(patrolAction)){
+            else if (_guardSet[i]->state == "chase"){
+                
+                //return from chase if no detection
+                if (!detection){
+                    _guardSet[i]->updatePrevState(_guardSet[i]->state);
+                    _guardSet[i]->updateState("return");
+                }
+                //keep chasing otherwise
+                else{
+                    _guardSet[i]->updatePrevState(_guardSet[i]->state);
+                }
+                
+            }
+            
+            else if (_guardSet[i]->state == "return"){
+                //state change from chase to return
+                if (_guardSet[i]->prev_state == "chase"){
+                    //shortest path
+                    int start = findClosestNode(_guardSet[i]->getNodePosition());
+                    int finish = findClosestNode(_guardSet[i]->getSavedStop());
+                    _guardSet[i]->setReturnVec(shortestPath(start, finish));
+                    
+                    _guardSet[i]->updatePrevState(_guardSet[i]->state);
+                    _guardSet[i]->updateState("return");
+                }
+                //state change from return to chase
+                else if (detection){
+                    _guardSet[i]->updatePrevState(_guardSet[i]->state);
+                    _guardSet[i]->updateState("chase");
+                }
+                //state change from return to patrol
+                else if (_guardSet[i]->returnVec.size() == 0){
+                    _guardSet[i]->updatePrevState(_guardSet[i]->state);
+                    _guardSet[i]->updateState("patrol");
+                }
+                //otherwise continue returning
+                else{
+                    _guardSet[i]->updatePrevState(_guardSet[i]->state);
+                }
+            }
+            
+            
+#pragma mark Guard action accoring to state
+            
+            //wait for guard to finish current action
+            if (_actions->isActive(chaseAction) or _actions->isActive(returnAction)){
+                
+            }
+            //detection for active guard
+            else if (_guardSet[i]->state == "chase" and _actions->isActive(patrolAction)){
                 Vec2 pos = _guardSet[i]->getNodePosition();
                 _guardSet[i]->saveCurrentStop();
                 _actions->remove(patrolAction);
                 _actions->remove(patrolAction + "Animation");
                 _guardSet[i]->updatePosition(pos);
             }
-            
-            else if (detection){
-                // std::cout<<"guard angle: "<< _guardSet[i]->getDirection()<<"\n";
-                // std::cout<<"char angle: "<<char_angle<<"\n";
-                Vec2 target = guardPos + ((_charPos - guardPos)/distance)*20;
+            //detection for static guard
+            else if (_guardSet[i]->state == "chase"){
+                Vec2 target = guardPos + ((_charPos - guardPos)/distance)*50;
                 Vec2 pos = _guardSet[i]->getNodePosition();
                 int direction = calculateMappedAngle(float (pos.x), float (pos.y), float (target.x), float (target.y));
-
                 //chase
                 _guardSet[i]->updateChaseTarget(target);
-
                 _guardSet[i]->chaseChar(chaseAction, direction);
-                //add to return vec
-                _guardSet[i]->prependReturnVec(target);
             }
-            else if (_guardSet[i]->returnVec.size() != 0){
-                
-                //return action
+            //return state
+            else if (_guardSet[i]->state == "return"){
                 _guardSet[i]->updateReturnTarget(_guardSet[i]->returnVec[0]);
                 _guardSet[i]->returnGuard(returnAction);
                 //erase from return vector
                 _guardSet[i]->eraseReturnVec();
             }
-            //no detection and no return vec
-            else if (_guardSet[i]->doesPatrol){
-                if (_actions->isActive(patrolAction)){
-                    //wait for guard to finish patrol
-                }else{
+            //patrol state
+            else if (_guardSet[i]->state == "patrol" and _guardSet[i]->doesPatrol){
+                if (_actions->isActive(patrolAction) and !_actions->isActive(patrolAction + "Animation"))
+                {
+                    //guard is moving but no animation
+                    _guardSet[i]->animateGuard(patrolAction + "Animation");
+                }
+                else if(_actions->isActive(patrolAction)){
+                    //guard is moving properly, wait till finished
+                }
+                else{
+                    //guard is done moving, set next stop
                     _guardSet[i]->nextStop(patrolAction);
                 }
             }
-            else{
-                int closestNode = findClosestNode(_guardSet[i]->getNodePosition());
-                vector<int> path = shortestPath(closestNode, 0);
-                for (int i = 0; i < path.size() - 1; i++){
-                    drawLines(s, _nodes[path[i]], _nodes[path[i+1]]);
-                    //std::cout<<"shortestPath: "<<path[i]<<"\n";
-                }
-                int n = _nodes.size();
-                for (int i = 0; i < n; i++){
-                    for(int j = 0; j < n; j++){
-                        if (_adjMatrix[i][j]){
-                            //drawLines(s, _nodes[i], _nodes[j]);
-                        }
-                    }
-                }
-            }
+            
         }
     }
     
@@ -221,16 +265,6 @@ public:
             }
         }
         return closest;
-    }
-    
-    void drawClosest(Scene s, Vec2 pos){
-        auto origin = scene2::PolygonNode::alloc();
-        origin = scene2::PolygonNode::alloc();
-        origin->setPolygon(Rect(10, 10, 10, 10));
-        origin->setPosition(pos);
-        origin->setColor(Color4::RED);
-        s->addChild(origin);
-            
     }
     
     
@@ -256,7 +290,7 @@ public:
         
     }
     
-    vector<int> shortestPath(int start, int end){
+    vector<Vec2> shortestPath(int start, int end){
         int n = _nodes.size();
         vector<int> dist(n, 1e9);
         dist[start] = 0;
@@ -282,10 +316,10 @@ public:
         }
 
         // backtrack from end to start to get path
-        vector<int> path;
+        vector<Vec2> path;
         int curr = end;
         while (curr != -1) {
-            path.push_back(curr);
+            path.push_back(_nodes[curr]);
             curr = parent[curr];
         }
         reverse(path.begin(), path.end());
@@ -293,7 +327,6 @@ public:
         return path;
     }
 
-    
 
     int calculateMappedAngle(float x1, float y1, float x2, float y2)
     {
@@ -310,7 +343,7 @@ public:
         }
 
         // map the angle from 0 to 360 degrees to 0 to 7
-        CULog("%f", angleDegrees);
+        //CULog("%f", angleDegrees);
         if (angleDegrees > 337.5 || angleDegrees < 22.5) {
             return 2;
         } else if (angleDegrees >= 22.5 && angleDegrees < 67.5){
@@ -335,10 +368,7 @@ public:
         }
         return 0;
 
-
     }
-
-
 
 
 };
