@@ -87,6 +87,7 @@ bool LevelModel:: preload(const std::shared_ptr<cugl::JsonValue>& json) {
         std::string type = json->get("layers")->get(i)->get("name")->asString();
         for (int j = 0; j < objects->size(); j++) {
             // For each object, determine what it is and load it
+            std::cout<<type<<std::endl;
             loadObject(type, objects->get(j));
         }
     }
@@ -108,11 +109,15 @@ void LevelModel::unload() {
 bool LevelModel::loadObject(const std::string type, const std::shared_ptr<JsonValue>& json) {
     if (type == WALLS_FIELD) {
         return loadWall(json);
-    } else if (type == TILEMAP_FILED) {
+    }
+    if (type == TILEMAP_FILED) {
         return loadTilemap(json);
     }
     if (type == ARTIFACTS_FIELD) {
         return loadArtifact(json);
+    }
+    if (type == CHARACTER_FIELD) {
+        return loadCharacter(json);
     }
     return false;
 }
@@ -188,6 +193,28 @@ bool LevelModel::loadArtifact(const std::shared_ptr<JsonValue>& json) {
     }
 
     success = success && x >= 0 && y >= 0;
+    return success;
+}
+
+
+/**
+* Loads character initial position
+*/
+bool LevelModel::loadCharacter(const std::shared_ptr<JsonValue>& json) {
+    bool success = true;
+    
+    std::string textureType = json->get("type")->asString();
+
+//    int width = json->get("height")->asInt();
+//    int height = json->get("width")->asInt();
+//    int x = json->get("x")->asInt() / width;
+//    int y = json->get("y")->asInt() / height - 1;
+
+    int x = json->get("x")->asInt() ;
+    int y = json->get("y")->asInt() ;
+
+    _characterPos.set(x, y);
+    
     return success;
 }
 

@@ -35,6 +35,7 @@ protected:
 
     /** The AssetManager for the game mode */
     std::shared_ptr<cugl::AssetManager> _assets;
+    cugl::Vec2 _characterPos;
 
 #pragma mark Internal Helper
     /**
@@ -62,6 +63,7 @@ protected:
     bool loadWall(const std::shared_ptr<JsonValue>& json);
     bool loadTilemap(const std::shared_ptr<JsonValue>& json);
     bool loadArtifact(const std::shared_ptr<JsonValue>& json);
+    bool loadCharacter(const std::shared_ptr<JsonValue>& json);
     /**
      * Clears the root scene graph node for this level
      */
@@ -101,7 +103,7 @@ public:
     /** Get world map */
     std::shared_ptr<TilemapController> getWorld() {return _world;};
     std::shared_ptr<ArtifactSetController> getItem() {return _item;};
-
+    cugl::Vec2 getCharacterPos() {return _characterPos;};
 
 #pragma mark Drawing Methods
 

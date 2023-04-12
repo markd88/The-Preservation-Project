@@ -32,6 +32,9 @@
 #define ARTIFACTS_FIELD     "artifact"
 #define RESOURCE_FIELD      "resource"
 
+/** Character specific fields */
+#define CHARACTER_FIELD         "character"
+
 /** Guard specific fields */
 #define MAIN_SOUND_FIELD    "main-sound"
 #define LEFT_SOUND_FIELD    "left-sound"

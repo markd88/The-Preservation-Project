@@ -75,7 +75,9 @@ _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displ
     generatePresentGuards();
     
 //    Vec2 start = Vec2(_scene->getSize().width *.85, _scene->getSize().height *.15);
-    Vec2 start = Vec2(1,1);
+    
+//    Vec2 start = Vec2(1,1);
+    Vec2 start = _pastWorldLevel->getCharacterPos();
 
     _character = make_unique<CharacterController>(start, _actions, _assets);
 
@@ -184,7 +186,8 @@ void GamePlayController::init(){
     _activeMap = "pastWorld";
     _template = 0;
     
-    Vec2 start = Vec2(0,0);
+    Vec2 start = _pastWorldLevel->getCharacterPos();
+
     _character = make_unique<CharacterController>(start, _actions, _assets);
     _character->addChildTo(_scene);
 

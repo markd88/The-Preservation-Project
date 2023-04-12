@@ -219,44 +219,9 @@
                  "value":false
                 }, 
                 {
-                 "name":"pos0_x",
-                 "type":"int",
-                 "value":0
-                }, 
-                {
-                 "name":"pos0_y",
-                 "type":"int",
-                 "value":0
-                }, 
-                {
-                 "name":"pos1_x",
-                 "type":"int",
-                 "value":0
-                }, 
-                {
-                 "name":"pos1_y",
-                 "type":"int",
-                 "value":0
-                }, 
-                {
-                 "name":"pos2_x",
-                 "type":"int",
-                 "value":0
-                }, 
-                {
-                 "name":"pos2_y",
-                 "type":"int",
-                 "value":0
-                }, 
-                {
-                 "name":"pos3_x",
-                 "type":"int",
-                 "value":0
-                }, 
-                {
-                 "name":"pos3_y",
-                 "type":"int",
-                 "value":0
+                 "name":"path",
+                 "type":"string",
+                 "value":""
                 }],
          "type":"guard-moving"
         }, 
