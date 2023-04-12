@@ -8,7 +8,7 @@
  "margin":0,
  "name":"tpp-tileset",
  "spacing":0,
- "tilecount":26,
+ "tilecount":39,
  "tiledversion":"1.10.0",
  "tileheight":128,
  "tiles":[
@@ -46,13 +46,6 @@
          "imageheight":128,
          "imagewidth":128,
          "type":"tile_past_floor3"
-        }, 
-        {
-         "id":32,
-         "image":"..\/..\/textures\/tile_past_roof.png",
-         "imageheight":128,
-         "imagewidth":128,
-         "type":"tile_past_roof"
         }, 
         {
          "id":33,
@@ -193,6 +186,156 @@
          "imageheight":128,
          "imagewidth":128,
          "type":"artifact-5"
+        }, 
+        {
+         "id":55,
+         "image":"..\/..\/textures\/character-placeholder.png",
+         "imageheight":128,
+         "imagewidth":128,
+         "type":"character-placeholder"
+        }, 
+        {
+         "id":56,
+         "image":"..\/..\/textures\/guard-static.png",
+         "imageheight":128,
+         "imagewidth":128,
+         "properties":[
+                {
+                 "name":"isStatic",
+                 "type":"bool",
+                 "value":true
+                }],
+         "type":"guard-static"
+        }, 
+        {
+         "id":57,
+         "image":"..\/..\/textures\/guard-moving.png",
+         "imageheight":128,
+         "imagewidth":128,
+         "properties":[
+                {
+                 "name":"isStatic",
+                 "type":"bool",
+                 "value":false
+                }, 
+                {
+                 "name":"pos0_x",
+                 "type":"int",
+                 "value":0
+                }, 
+                {
+                 "name":"pos0_y",
+                 "type":"int",
+                 "value":0
+                }, 
+                {
+                 "name":"pos1_x",
+                 "type":"int",
+                 "value":0
+                }, 
+                {
+                 "name":"pos1_y",
+                 "type":"int",
+                 "value":0
+                }, 
+                {
+                 "name":"pos2_x",
+                 "type":"int",
+                 "value":0
+                }, 
+                {
+                 "name":"pos2_y",
+                 "type":"int",
+                 "value":0
+                }, 
+                {
+                 "name":"pos3_x",
+                 "type":"int",
+                 "value":0
+                }, 
+                {
+                 "name":"pos3_y",
+                 "type":"int",
+                 "value":0
+                }],
+         "type":"guard-moving"
+        }, 
+        {
+         "id":58,
+         "image":"..\/..\/textures\/tile_past_roof.png",
+         "imageheight":64,
+         "imagewidth":128,
+         "type":"tile_past_roof"
+        }, 
+        {
+         "id":59,
+         "image":"..\/..\/textures\/deco_past_cabinet_front.png",
+         "imageheight":69,
+         "imagewidth":128,
+         "type":"deco_past_cabinet_front"
+        }, 
+        {
+         "id":60,
+         "image":"..\/..\/textures\/deco_past_cabinet_side_L.png",
+         "imageheight":128,
+         "imagewidth":64,
+         "type":"deco_past_cabinet_side_L"
+        }, 
+        {
+         "id":61,
+         "image":"..\/..\/textures\/deco_past_cabinet_side_R.png",
+         "imageheight":128,
+         "imagewidth":64,
+         "type":"deco_past_cabinet_side_R"
+        }, 
+        {
+         "id":62,
+         "image":"..\/..\/textures\/deco_past_chair_back.png",
+         "imageheight":64,
+         "imagewidth":64,
+         "type":"deco_past_chair_back"
+        }, 
+        {
+         "id":63,
+         "image":"..\/..\/textures\/deco_past_chair_front.png",
+         "imageheight":76,
+         "imagewidth":64,
+         "type":"deco_past_chair_front"
+        }, 
+        {
+         "id":64,
+         "image":"..\/..\/textures\/deco_past_chair_side_L.png",
+         "imageheight":89,
+         "imagewidth":64,
+         "type":"deco_past_chair_side_L"
+        }, 
+        {
+         "id":65,
+         "image":"..\/..\/textures\/deco_past_chair_side_R.png",
+         "imageheight":88,
+         "imagewidth":64,
+         "type":"deco_past_chair_side_R"
+        }, 
+        {
+         "id":66,
+         "image":"..\/..\/textures\/deco_past_table_front.png",
+         "imageheight":78,
+         "imagewidth":128,
+         "type":"deco_past_table_front"
+        }, 
+        {
+         "id":67,
+         "image":"..\/..\/textures\/deco_past_table_side.png",
+         "imageheight":128,
+         "imagewidth":64,
+         "type":"deco_past_table_side"
+        }, 
+        {
+         "id":68,
+         "image":"..\/..\/textures\/deco_past_vase_FORTABLE.png",
+         "imageheight":64,
+         "imagewidth":64,
+         "type":"deco_past_vase_FORTABLE"
         }],
  "tilewidth":128,
  "type":"tileset",
