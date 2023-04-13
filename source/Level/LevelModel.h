@@ -13,6 +13,7 @@
 #include <cugl/assets/CUAsset.h>
 #include <Tilemap/TilemapController.h>
 #include <ArtifactSet/ArtifactSetController.h>
+//#include <GuardSet/GuardSetController.h>
 
 using namespace cugl;
 
@@ -36,6 +37,7 @@ protected:
     /** The AssetManager for the game mode */
     std::shared_ptr<cugl::AssetManager> _assets;
     cugl::Vec2 _characterPos;
+//    std::shared_ptr<GuardSetController> _guardSetPast;
 
 #pragma mark Internal Helper
     /**
@@ -64,6 +66,8 @@ protected:
     bool loadTilemap(const std::shared_ptr<JsonValue>& json);
     bool loadArtifact(const std::shared_ptr<JsonValue>& json);
     bool loadCharacter(const std::shared_ptr<JsonValue>& json);
+    bool loadGuard(const std::shared_ptr<JsonValue>& json);
+
     /**
      * Clears the root scene graph node for this level
      */
@@ -104,7 +108,8 @@ public:
     std::shared_ptr<TilemapController> getWorld() {return _world;};
     std::shared_ptr<ArtifactSetController> getItem() {return _item;};
     cugl::Vec2 getCharacterPos() {return _characterPos;};
-
+//    std::shared_ptr<GuardSetController> getGuardSet() {return _guardSetPast;};
+    
 #pragma mark Drawing Methods
 
     /**

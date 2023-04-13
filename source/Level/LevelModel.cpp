@@ -119,6 +119,9 @@ bool LevelModel::loadObject(const std::string type, const std::shared_ptr<JsonVa
     if (type == CHARACTER_FIELD) {
         return loadCharacter(json);
     }
+    if (type == GUARD_FIELD) {
+        return loadGuard(json);
+    }
     return false;
 }
 
@@ -205,16 +208,57 @@ bool LevelModel::loadCharacter(const std::shared_ptr<JsonValue>& json) {
     
     std::string textureType = json->get("type")->asString();
 
-//    int width = json->get("height")->asInt();
-//    int height = json->get("width")->asInt();
-//    int x = json->get("x")->asInt() / width;
-//    int y = json->get("y")->asInt() / height - 1;
-
-    int x = json->get("x")->asInt() ;
-    int y = json->get("y")->asInt() ;
+    int x = json->get("x")->asInt() - 50;
+    int y = 896 - json->get("y")->asInt() + 80;
 
     _characterPos.set(x, y);
     
+    return success;
+}
+
+/**
+* Loads a guard object
+*/
+bool LevelModel::loadGuard(const std::shared_ptr<JsonValue>& json) {
+    bool success = true;
+    std::string textureType = json->get("type")->asString();
+    
+    bool isStatic = json->get("properties")->get(0)->get("value")->asBool();
+    
+    if (!isStatic) {
+        // parse input path with format x1,y1:x2,y2...
+        std::string inputPath = json->get("properties")->get(1)->get("value")->asString();
+        size_t start = 0;
+        size_t end = inputPath.find(':');
+        std::vector<Vec2> output;
+
+        while (end != std::string::npos) {
+            Vec2 vec;
+            size_t comma = inputPath.find(',', start);
+            vec.x = std::stoi(inputPath.substr(start, comma - start));
+            vec.y = std::stoi(inputPath.substr(comma + 1, end - comma - 1));
+            output.push_back(vec);
+            start = end + 1;
+            end = inputPath.find(':', start);
+        }
+
+        Vec2 vec;
+        size_t comma = inputPath.find(',', start);
+        vec.x = std::stoi(inputPath.substr(start, comma - start));
+        vec.y = std::stoi(inputPath.substr(comma + 1));
+        output.push_back(vec);
+
+        // Print the vector of Vec2s
+        for (const auto& v : output) {
+            std::cout << "(" << v.x << ", " << v.y << ")" << std::endl;
+        }
+    }
+
+
+    int x = json->get("x")->asInt();
+    int y = 896 - json->get("y")->asInt() +40;
+
+//    success = success && x >= 0 && y >= 0;
     return success;
 }
 
