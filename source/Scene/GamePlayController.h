@@ -88,6 +88,23 @@ public:
     //whether or not user is previewing
     bool _isPreviewing;
 
+    // two_world switch
+
+    // if two-world switch is in progress
+    bool _isSwitching;
+    // first half: collapse
+    std::shared_ptr<cugl::scene2::Animate> _world_switch_0;
+    // second half: expand
+    std::shared_ptr<cugl::scene2::Animate> _world_switch_1;
+
+    std::shared_ptr<cugl::scene2::SpriteNode>  _world_switch_node;
+
+    std::shared_ptr<cugl::scene2::ActionManager> _action_world_switch;
+
+
+
+
+
 #pragma mark Main Methods
 public:
     /**
