@@ -169,5 +169,10 @@ public:
     void setVisibility(bool visible){
         _node->setVisible(visible);
     }
+    
+    Vec2 getPos(){
+        return _node->getWorldPosition();
+    }
+    
      
 };

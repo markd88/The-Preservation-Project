@@ -20,8 +20,6 @@ private:
     /** Main character view */
     /** The node is attached to the root-scene*/
     std::shared_ptr<scene2::SpriteNode> _node;
-    std::shared_ptr<Poly2> tri;
-    std::shared_ptr<scene2::PolygonNode> _cone;
     /** Manager to process the animation actions */
     std::shared_ptr<cugl::scene2::ActionManager> _actions;
 
@@ -57,18 +55,14 @@ public:
         std::vector<int> d0 = {1,2,3,4,5,6,7,0};
         _guard_0 = cugl::scene2::Animate::alloc(d0, DURATION);
 
-
         std::vector<int> d1 = {9,10,11,12,13,14,15,8};
         _guard_1 = cugl::scene2::Animate::alloc(d1, DURATION);
-
 
         std::vector<int> d2 = {17,18,19,20,21,22,23,16};
         _guard_2 = cugl::scene2::Animate::alloc(d2, DURATION);
 
-
         std::vector<int> d3 = {25,26,27,28,29,30,31,24};
         _guard_3 = cugl::scene2::Animate::alloc(d3, DURATION);
-
 
         std::vector<int> d4 = {33,34,35,36,37,38,39,32};
         _guard_4 = cugl::scene2::Animate::alloc(d4, DURATION);
@@ -102,16 +96,6 @@ public:
     void addChildTo(const std::shared_ptr<cugl::Scene2>& scene) {
         scene->addChild(_node);
         
-        /*
-         _cone = scene2::PolygonNode::allocWithPoly(makeCone(500, 90));
-         coneDirection(6);
-         _cone->setAnchor(Vec2::ANCHOR_MIDDLE_RIGHT);
-         _cone->setColor(Color4::RED);
-         _cone->setVisible(true);
-         _cone->setPosition(_node->getSize()/_node->getScale()/2);
-         _cone->setPosition(Vec2 (0, 400));
-         _node->addChild(_cone);
-         */
     }
     
     /**
@@ -127,11 +111,9 @@ public:
 public:
     void setPosition(Vec2 position){
         _node->setPosition(position);
-//        _cone->setPosition(position);
     }
     
     void setSize(Size size){
-//        _cone->setPolygon(Rect(Vec2(0,0), size));
         _node->setContentSize(size);
     }
 
@@ -145,7 +127,7 @@ public:
 
 
     void performAnimation(string actionName, int d) {
-        CULog("%d", d);
+        //CULog("%d", d);
         std::shared_ptr<cugl::scene2::Animate> animation = _guard_0;
         if (d == 0) {
             animation = _guard_0;
@@ -170,25 +152,12 @@ public:
             animation = _guard_7;
         }
 
-
-
         _actions->activate(actionName, animation, _node);
     }
     
 #pragma mark Helpers
 public:
-    Poly2 makeCone(int height, int angle) {
-        PolyFactory _polyFactory;
-        float rad =  angle/2 * M_PI / 180.0;
-        float edge = height * tan(rad) *2;
-        Poly2 tri = _polyFactory.makeTriangle(Vec2(0,0), Vec2(0,edge), Vec2(height,edge/2));
-        return tri;
-    }
     
-    void coneDirection(int i) {
-        float direction = i * 45;
-        _cone->setAngle(direction * M_PI / 180.0);
-    }
    
     void setVisibility(bool visible){
         _node->setVisible(visible);
