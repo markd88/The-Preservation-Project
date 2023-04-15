@@ -38,6 +38,9 @@ protected:
     std::shared_ptr<cugl::AssetManager> _assets;
     cugl::Vec2 _characterPos;
 //    std::shared_ptr<GuardSetController> _guardSetPast;
+    
+    std::vector<std::vector<cugl::Vec2>> _movingGuardsPos;
+    std::vector<cugl::Vec2> _staticGuardsPos;
 
 #pragma mark Internal Helper
     /**
@@ -108,8 +111,9 @@ public:
     std::shared_ptr<TilemapController> getWorld() {return _world;};
     std::shared_ptr<ArtifactSetController> getItem() {return _item;};
     cugl::Vec2 getCharacterPos() {return _characterPos;};
-//    std::shared_ptr<GuardSetController> getGuardSet() {return _guardSetPast;};
-    
+    std::vector<std::vector<cugl::Vec2>> getMovingGuardsPos() {return _movingGuardsPos;};
+    std::vector<cugl::Vec2> getStaticGuardsPos() {return _staticGuardsPos;};
+
 #pragma mark Drawing Methods
 
     /**

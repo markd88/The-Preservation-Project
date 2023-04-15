@@ -221,23 +221,32 @@ bool LevelModel::loadCharacter(const std::shared_ptr<JsonValue>& json) {
 */
 bool LevelModel::loadGuard(const std::shared_ptr<JsonValue>& json) {
     bool success = true;
-    std::string textureType = json->get("type")->asString();
     
+    // in case old tileset is loaded
+    if (json->get("properties") == nullptr) {
+        return false;
+    }
+    
+    std::string textureType = json->get("type")->asString();
     bool isStatic = json->get("properties")->get(0)->get("value")->asBool();
     
-    if (!isStatic) {
+    if (isStatic) {
+        int x = json->get("x")->asInt();
+        int y = 896 - json->get("y")->asInt() + 40;
+        _staticGuardsPos.push_back(Vec2(x, y));
+    } else {
+        std::vector<Vec2> patrolPoints;
         // parse input path with format x1,y1:x2,y2...
         std::string inputPath = json->get("properties")->get(1)->get("value")->asString();
         size_t start = 0;
         size_t end = inputPath.find(':');
-        std::vector<Vec2> output;
 
         while (end != std::string::npos) {
             Vec2 vec;
             size_t comma = inputPath.find(',', start);
             vec.x = std::stoi(inputPath.substr(start, comma - start));
-            vec.y = std::stoi(inputPath.substr(comma + 1, end - comma - 1));
-            output.push_back(vec);
+            vec.y = 896 - std::stoi(inputPath.substr(comma + 1, end - comma - 1)) + 40;
+            patrolPoints.push_back(vec);
             start = end + 1;
             end = inputPath.find(':', start);
         }
@@ -246,19 +255,17 @@ bool LevelModel::loadGuard(const std::shared_ptr<JsonValue>& json) {
         size_t comma = inputPath.find(',', start);
         vec.x = std::stoi(inputPath.substr(start, comma - start));
         vec.y = std::stoi(inputPath.substr(comma + 1));
-        output.push_back(vec);
+        patrolPoints.push_back(vec);
 
+        _movingGuardsPos.push_back(patrolPoints);
+        
         // Print the vector of Vec2s
-        for (const auto& v : output) {
+        for (const auto& v : patrolPoints) {
             std::cout << "(" << v.x << ", " << v.y << ")" << std::endl;
         }
+
     }
 
-
-    int x = json->get("x")->asInt();
-    int y = 896 - json->get("y")->asInt() +40;
-
-//    success = success && x >= 0 && y >= 0;
     return success;
 }
 
