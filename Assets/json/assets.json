@@ -13,7 +13,24 @@
         "guard": {
             "file":     "textures/enemy.png"
         },
- 
+        "enemy_past_moving_horizontal": {
+            "file":     "textures/enemy_past_moving_horizontal.png"
+        },
+        "enemy_past_moving_vertical": {
+            "file":     "textures/enemy_past_moving_vertical.png"
+        },
+        "enemy_past_static": {
+            "file":     "textures/enemy_past_static.png"
+        },
+        "enemy_present_moving_horizontal": {
+            "file":     "textures/enemy_present_moving_horizontal.png"
+        },
+        "enemy_present_moving_vertical": {
+            "file":     "textures/enemy_present_moving_vertical.png"
+        },
+        "enemy_present_static": {
+            "file":     "textures/enemy_present_static.png"
+        },
         "artifact-1-big": {
             "file":      "textures/artifact-1-big.png",
             "minfilter": "linear",
@@ -42,6 +59,34 @@
             "wrapS":     "clamp",
             "wrapT":     "clamp"
         },
+        "artifact-1": {
+            "file":      "textures/artifact-1.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS":     "clamp",
+            "wrapT":     "clamp"
+        },
+        "artifact-2": {
+            "file":      "textures/artifact-2.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS":     "clamp",
+            "wrapT":     "clamp"
+        },
+        "artifact-3": {
+            "file":      "textures/artifact-3.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS":     "clamp",
+            "wrapT":     "clamp"
+        },
+        "artifact-4": {
+            "file":      "textures/artifact-4.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS":     "clamp",
+            "wrapT":     "clamp"
+        },
         "artifact-5": {
             "file":      "textures/artifact-5.png",
             "minfilter": "linear",
@@ -51,6 +96,9 @@
         },
         "resource-big": {
             "file":     "textures/resource-big.png"
+        },
+        "resource": {
+            "file":     "textures/resource.png"
         },
         "panel": {
             "file":      "textures/panel.png",
@@ -87,6 +135,13 @@
             "wrapS":     "clamp",
             "wrapT":     "clamp"
         },
+        "background": {
+            "file":      "textures/back.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS":     "clamp",
+            "wrapT":     "clamp"
+        },
         "switch": {
             "file":      "textures/switch.png",
             "minfilter": "linear",
@@ -110,6 +165,27 @@
         },
         "tile_present_grass_shadow_slopepos": {
             "file":      "textures/tile_present_grass_shadow_slopepos.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS":     "clamp",
+            "wrapT":     "clamp"
+        },
+        "Shadow": {
+            "file":      "textures/Shadow.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS":     "clamp",
+            "wrapT":     "clamp"
+        },
+        "past_cast_light 1": {
+            "file":      "textures/past_cast_light 1.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS":     "clamp",
+            "wrapT":     "clamp"
+        },
+        "past_roof": {
+            "file":      "textures/past_roof.png",
             "minfilter": "linear",
             "magfilter": "linear",
             "wrapS":     "clamp",
@@ -185,6 +261,13 @@
             "wrapS":     "clamp",
             "wrapT":     "clamp"
         },
+        "tile_past_roof": {
+            "file":      "textures/tile_past_roof.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS":     "clamp",
+            "wrapT":     "clamp"
+        },
         "tile_past_wall_windowcenter": {
             "file":      "textures/tile_past_wall_windowcenter.png",
             "minfilter": "linear",
@@ -201,6 +284,13 @@
         },
         "tile_past_wall_windowright": {
             "file":      "textures/tile_past_wall_windowright.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS":     "clamp",
+            "wrapT":     "clamp"
+        },
+        "tile_past_wall_window": {
+            "file":      "textures/tile_past_wall_window.png",
             "minfilter": "linear",
             "magfilter": "linear",
             "wrapS":     "clamp",
@@ -234,13 +324,6 @@
             "wrapS":     "clamp",
             "wrapT":     "clamp"
         },
-        "tile_past_wall_windowcenter": {
-            "file":      "textures/tile_past_wall_windowcenter.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS":     "clamp",
-            "wrapT":     "clamp"
-        },
         "tile_present_grass_s_rock": {
             "file":      "textures/tile_present_grass_s_rock.png",
             "minfilter": "linear",
@@ -248,20 +331,7 @@
             "wrapS":     "clamp",
             "wrapT":     "clamp"
         },
-        "tile_past_wall_windowcenter": {
-            "file":      "textures/tile_past_wall_windowcenter.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS":     "clamp",
-            "wrapT":     "clamp"
-        },
-        "tile_past_wall_window": {
-            "file":      "textures/tile_past_wall_window.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS":     "clamp",
-            "wrapT":     "clamp"
-        },
+        
         "tile_past_wall_column_left_window": {
             "file":      "textures/tile_past_wall_column_left_window.png",
             "minfilter": "linear",
@@ -285,6 +355,27 @@
         },
         "tile_present_grass_s_slopepos_rock": {
             "file":      "textures/tile_present_grass_s_slopepos_rock.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS":     "clamp",
+            "wrapT":     "clamp"
+        },
+        "tile_present_grass_shadow_slopepos": {
+            "file":      "textures/tile_present_grass_shadow_slopepos.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS":     "clamp",
+            "wrapT":     "clamp"
+        },
+        "tile_present_grass_shadow_slopeneg": {
+            "file":      "textures/tile_present_grass_shadow_slopeneg.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS":     "clamp",
+            "wrapT":     "clamp"
+        },
+        "tile_present_grass_shadow": {
+            "file":      "textures/tile_present_grass_shadow.png",
             "minfilter": "linear",
             "magfilter": "linear",
             "wrapS":     "clamp",
@@ -318,6 +409,13 @@
             "wrapS":     "clamp",
             "wrapT":     "clamp"
         },
+        "tile_present_wall_side": {
+            "file":      "textures/tile_present_wall_side.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS":     "clamp",
+            "wrapT":     "clamp"
+        },
         "tile_present_wall_slopepos": {
             "file":      "textures/tile_present_wall_slopepos.png",
             "minfilter": "linear",
@@ -327,6 +425,27 @@
         },
         "tile_present_wall": {
             "file":      "textures/tile_present_wall.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS":     "clamp",
+            "wrapT":     "clamp"
+        },
+        "tile_present_wall2": {
+            "file":      "textures/tile_present_wall2.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS":     "clamp",
+            "wrapT":     "clamp"
+        },
+        "tile_present_wall3": {
+            "file":      "textures/tile_present_wall3.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS":     "clamp",
+            "wrapT":     "clamp"
+        },
+        "tile_present_wall4": {
+            "file":      "textures/tile_present_wall4.png",
             "minfilter": "linear",
             "magfilter": "linear",
             "wrapS":     "clamp",
@@ -348,6 +467,34 @@
         },
         "tile_present_obstacle_shaded_block": {
             "file":      "textures/tile_present_obstacle_shaded_block.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS":     "clamp",
+            "wrapT":     "clamp"
+        },
+        "tile_present_side_wall": {
+            "file":      "textures/tile_present_side_wall.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS":     "clamp",
+            "wrapT":     "clamp"
+        },
+        "tile_present_stones1": {
+            "file":      "textures/tile_present_stones1.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS":     "clamp",
+            "wrapT":     "clamp"
+        },
+        "tile_present_stones2": {
+            "file":      "textures/tile_present_stones2.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS":     "clamp",
+            "wrapT":     "clamp"
+        },
+        "tile_present_stones3": {
+            "file":      "textures/tile_present_stones3.png",
             "minfilter": "linear",
             "magfilter": "linear",
             "wrapS":     "clamp",

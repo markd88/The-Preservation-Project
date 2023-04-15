@@ -88,14 +88,14 @@ void TilemapController::addTile(int col, int row, Color4 color, bool is_obs) {
     _tilemap[row][col]->addChildTo(_view->getNode());
 }
 
-void TilemapController::addTile2(int col, int row, bool is_obs,
+void TilemapController::addTile2(int col, int row, int height, int totHeight, bool is_obs,
              const std::shared_ptr<cugl::AssetManager>& assets, std::string textureKey) {
 
     Vec2 pos;
 //    pos = Vec2(col * _model->tileSize.width, row * _model->tileSize.height);
     
-    int x = col*128;
-    int y = 1152 - row*128;
+    int x = col* height;
+    int y = totHeight - row* height;
     pos = Vec2 (x,y);
     
     Tile temp = std::make_unique<TileController>(pos, _model->tileSize, is_obs, assets, textureKey);

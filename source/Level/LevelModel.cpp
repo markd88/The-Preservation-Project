@@ -78,7 +78,7 @@ bool LevelModel:: preload(const std::shared_ptr<cugl::JsonValue>& json) {
     int tileWidth = json->get(TILE_WIDTH)->asInt() * 2;
     _world->updateDimensions(Vec2(mapWidth, mapHeight));
     _world->updateTileSize(Size(tileWidth, tileHeight));
-    int totWidth = mapWidth *tileWidth;
+//    int totWidth = mapWidth *tileWidth;
     int totHeight = mapHeight *tileHeight;
     
     // Get each object in each layer
@@ -88,7 +88,7 @@ bool LevelModel:: preload(const std::shared_ptr<cugl::JsonValue>& json) {
         std::string type = json->get("layers")->get(i)->get("name")->asString();
         for (int j = 0; j < objects->size(); j++) {
             // For each object, determine what it is and load it
-            loadObject(type, objects->get(j));
+            loadObject(type, totHeight, objects->get(j));
         }
     }
 
@@ -106,17 +106,17 @@ void LevelModel::unload() {
 }
 
 
-bool LevelModel::loadObject(const std::string type, const std::shared_ptr<JsonValue>& json) {
+bool LevelModel::loadObject(const std::string type, int totHeight, const std::shared_ptr<JsonValue>& json) {
 //    if (type == WALLS_FIELD) {
 //        return loadWall(json);
 //    } else if (type == TILEMAP_FILED) {
 //        return loadTilemap(json);
 //    }
     if (type == TILEMAP_FILED) {
-        return loadTilemap(json);
+        return loadTilemap(json, totHeight);
     }
     if (type == ARTIFACTS_FIELD || type == WALLS_FIELD) {
-        return loadArtifact(json);
+        return loadArtifact(json, totHeight);
     }
     return false;
 }
@@ -127,7 +127,7 @@ bool LevelModel::loadObject(const std::string type, const std::shared_ptr<JsonVa
 /**
 * Loads a single tile object
 */
-bool LevelModel::loadTilemap(const std::shared_ptr<JsonValue>& json) {
+bool LevelModel::loadTilemap(const std::shared_ptr<JsonValue>& json, int totHeight) {
     bool success = true;
     
     std::string textureType = json->get("type")->asString();
@@ -141,7 +141,7 @@ bool LevelModel::loadTilemap(const std::shared_ptr<JsonValue>& json) {
 //    y = 1152 -y;
     
     // TODO: replace below
-    _world->addTile2(x, y, false, _assets, textureType);
+    _world->addTile2(x, y, height, totHeight, false, _assets, textureType);
     
     success = success && x >= 0 && y >= 0;
     return success;
@@ -151,35 +151,35 @@ bool LevelModel::loadTilemap(const std::shared_ptr<JsonValue>& json) {
 /**
 * Loads a single wall object
 */
-bool LevelModel::loadWall(const std::shared_ptr<JsonValue>& json) {
-    bool success = true;
-    
-    std::string textureType = json->get("type")->asString();
-
-    int width = json->get("height")->asInt();
-    int height = json->get("width")->asInt();
-    int x = json->get("x")->asInt() / width;
-    int y = json->get("y")->asInt() / height -1;
-    
-    
-    // TODO: replace below
-    _world->addTile2(x, y, true, _assets, textureType);
-    
-    success = success && x >= 0 && y >= 0;
-    return success;
-}
+//bool LevelModel::loadWall(const std::shared_ptr<JsonValue>& json) {
+//    bool success = true;
+//
+//    std::string textureType = json->get("type")->asString();
+//
+//    int width = json->get("height")->asInt();
+//    int height = json->get("width")->asInt();
+//    int x = json->get("x")->asInt() / width;
+//    int y = json->get("y")->asInt() / height -1;
+//
+//
+//    // TODO: replace below
+//    _world->addTile2(x, y, true, _assets, textureType);
+//
+//    success = success && x >= 0 && y >= 0;
+//    return success;
+//}
 
 /**
 * Loads an artifact object
 */
-bool LevelModel::loadArtifact(const std::shared_ptr<JsonValue>& json) {
+bool LevelModel::loadArtifact(const std::shared_ptr<JsonValue>& json,  int totHeight) {
     bool success = true;
     std::string textureType = json->get("type")->asString();
     
     int width = json->get("height")->asInt() /2;
     int height = json->get("width")->asInt() /2;
     int x = json->get("x")->asInt();
-    int y = 1152 - json->get("y")->asInt();
+    int y = totHeight - json->get("y")->asInt();
     int rot = json->get("rotation")->asInt();
     
     Vec2 pos = Vec2 (x, y);

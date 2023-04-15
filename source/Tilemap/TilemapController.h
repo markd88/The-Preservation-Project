@@ -115,7 +115,7 @@ public:
      */
     void addTile(int col, int row, Color4 color, bool is_obs);
 
-    void addTile2(int col, int row, bool is_obs,
+    void addTile2(int col, int row, int height, int totHeight, bool is_obs,
                  const std::shared_ptr<cugl::AssetManager>& assets, std::string textureKey);
 
     void setTexture(const std::shared_ptr<cugl::AssetManager>& assets);
