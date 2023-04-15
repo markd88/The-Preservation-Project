@@ -30,7 +30,7 @@
 
 /** Artifact specific fields */
 #define ARTIFACTS_FIELD     "artifact"
-#define RESOURCE_FIELD      "resource"
+#define RESOURCE_FIELD      "resource-big"
 
 /** Character specific fields */
 #define CHARACTER_FIELD         "character"
@@ -45,6 +45,7 @@
 /** The source for level files */
 #define LEVEL_ZERO_PAST_FILE      "tileset/levels/level-0-past/level-0-past.json"
 #define LEVEL_ZERO_PRESENT_FILE      "tileset/levels/level-0-present/level-0-present.json"
+//#define LEVEL_ZERO_PRESENT_FILE      "tileset/levels/test.json"
 #define LEVEL_ONE_PAST_FILE      "tileset/levels/level-1-past/level-1-past.json"
 #define LEVEL_ONE_PRESENT_FILE      "tileset/levels/level-1-present/level-1-present.json"
 

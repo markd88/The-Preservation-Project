@@ -88,14 +88,14 @@ void TilemapController::addTile(int col, int row, Color4 color, bool is_obs) {
     _tilemap[row][col]->addChildTo(_view->getNode());
 }
 
-void TilemapController::addTile2(int col, int row, bool is_obs,
+void TilemapController::addTile2(int col, int row, int height, int totHeight, bool is_obs,
              const std::shared_ptr<cugl::AssetManager>& assets, std::string textureKey) {
 
     Vec2 pos;
 //    pos = Vec2(col * _model->tileSize.width, row * _model->tileSize.height);
     
-    int x = col*128;
-    int y = 896 - row*128;
+    int x = col* height;
+    int y = totHeight - row* height;
     pos = Vec2 (x,y);
     
     Tile temp = std::make_unique<TileController>(pos, _model->tileSize, is_obs, assets, textureKey);
@@ -160,13 +160,12 @@ void TilemapController::updateTileSize(Size tileSize) {
     if(tileSize.width < 0 || tileSize.height < 0) return ;
     
 //    Vec2 center = bottomLeftToCenterPosition(_model->position, _model->tileSize*_model->dimensions);
-    
     _model->setTileSize(tileSize);
     _view->setSize(_model->dimensions * tileSize);
-    
+
 //    Vec2 pos = centerToBottomLeftPosition(center, _model->tileSize*_model->dimensions);
-    
-    Vec2 pos = Vec2 (_model->position.x -128, _model->position.y -150);
+    Vec2 pos = Vec2 (_model->position.x, _model->position.y -_model->tileSize.height);
+//    Vec2 pos = _model->position;
     
     _model->setPosition(pos);
     _view->setPosition(pos);

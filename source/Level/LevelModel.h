@@ -52,7 +52,7 @@ protected:
     *
     * @return true if the object was successfully loaded
     */
-    bool loadObject(const std::string type, const std::shared_ptr<JsonValue>& json);
+    bool loadObject(const std::string type, int totHeight, const std::shared_ptr<JsonValue>& json);
 
     /**
      * Loads a single wall object
@@ -66,8 +66,8 @@ protected:
      * @return true if the wall was successfully loaded
      */
     bool loadWall(const std::shared_ptr<JsonValue>& json);
-    bool loadTilemap(const std::shared_ptr<JsonValue>& json);
-    bool loadArtifact(const std::shared_ptr<JsonValue>& json);
+    bool loadTilemap(const std::shared_ptr<JsonValue>& json, int totHeight);
+    bool loadArtifact(const std::shared_ptr<JsonValue>& json, int totHeight);
     bool loadCharacter(const std::shared_ptr<JsonValue>& json);
     bool loadGuard(const std::shared_ptr<JsonValue>& json);
 

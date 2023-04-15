@@ -34,9 +34,9 @@ public:
      * @param size      The width and height of a tile
      * @param color     The tile color
      */
-    ArtifactController(Vec2 position, Size size, bool isResource, const std::shared_ptr<cugl::AssetManager>& assets, std::string textureKey) {
+    ArtifactController(Vec2 position, float rot, Size size, bool isResource, const std::shared_ptr<cugl::AssetManager>& assets, std::string textureKey) {
         _model = std::make_unique<ArtifactModel>(position, size, isResource, textureKey);
-        _view = std::make_unique<ArtifactView>(position, size, isResource, assets, textureKey);
+        _view = std::make_unique<ArtifactView>(position, rot, size, isResource, assets, textureKey);
     }
 
 #pragma mark Update Methods

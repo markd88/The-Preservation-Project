@@ -46,8 +46,8 @@ public:
 //        _artifactSet.push_back(std::move(_artifact));
 //    }
     
-    void add_this(Vec2 aPos, Size size, bool isResource, const std::shared_ptr<cugl::AssetManager>& assets, std::string textureKey){
-        Artifact _artifact = std::make_unique<ArtifactController>(aPos, size, isResource, assets, textureKey);
+    void add_this(Vec2 aPos, float rot, Size size, bool isResource, const std::shared_ptr<cugl::AssetManager>& assets, std::string textureKey){
+        Artifact _artifact = std::make_unique<ArtifactController>(aPos, rot, size, isResource, assets, textureKey);
         _artifactSet.push_back(std::move(_artifact));
     }
     
