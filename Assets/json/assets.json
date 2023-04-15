@@ -16,9 +16,7 @@
         "shadow": {
             "file":    "textures/Shadow.png"
         },
-        "two_world_switch": {
-            "file": "textures/spritesheet_switch_anim.png"
-        },
+ 
         "artifact-1": {
             "file":      "textures/artifact-1.png",
             "minfilter": "linear",
