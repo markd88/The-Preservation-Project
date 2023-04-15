@@ -71,8 +71,8 @@ public:
         _view->moveTo(action);
     }
 
-    void updateAnimation(const std::shared_ptr<cugl::scene2::Animate>& animation) {
-        _view->updateAnimation(animation);
+    void updateAnimation(Vec2 pos) {
+        _view->updateAnimation(pos);
     }
 
     Vec2 getNodePosition(){

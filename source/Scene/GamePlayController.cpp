@@ -11,7 +11,7 @@ using namespace cugl;
 #define PHYSICS_SCALE 50
 /** This is adjusted by screen aspect ratio to get the height */
 #define SCENE_WIDTH 1024
-#define DURATION 1.0f
+#define DURATION 0.8f
 #define ACT_KEY  "current"
 
 GamePlayController::GamePlayController(const Size displaySize, std::shared_ptr<cugl::AssetManager>& assets ):
@@ -39,8 +39,8 @@ _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displ
     // Allocate the camera manager
     _camManager = CameraManager::alloc();
     
-    _scene->setSize(displaySize);
-    _other_scene->setSize(displaySize);
+    _scene->setSize(displaySize * 3);
+    _other_scene->setSize(displaySize * 3);
     
     _path = make_unique<PathController>();
     // initialize character, two maps, path
@@ -69,8 +69,20 @@ _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displ
     _presentWorld->updateColor(Color4::CLEAR);
     _pastWorld->updateColor(Color4::CLEAR);
     
-    _guardSetPast = std::make_unique<GuardSetController>(_assets, _actions, _pastWorld);
-    _guardSetPresent = std::make_unique<GuardSetController>(_assets, _actions, _presentWorld);
+    auto pastEdges = _pastWorld->getEdges(_scene);
+    generatePastMat(_pastWorld->getVertices());
+    for (int i = 0; i < pastEdges.size(); i++){
+        addPastEdge(pastEdges[i].first, pastEdges[i].second);
+    }
+    
+    auto presentEdges = _presentWorld->getEdges(_other_scene);
+    generatePresentMat(_presentWorld->getVertices());
+    for (int i = 0; i < presentEdges.size(); i++){
+        addPresentEdge(presentEdges[i].first, presentEdges[i].second);
+    }
+    
+    _guardSetPast = std::make_unique<GuardSetController>(_assets, _actions, _pastWorld, pastMatrix, _pastWorld->getNodes());
+    _guardSetPresent = std::make_unique<GuardSetController>(_assets, _actions, _presentWorld, presentMatrix, _presentWorld->getNodes());
     generatePastGuards();
     generatePresentGuards();
     
@@ -78,23 +90,6 @@ _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displ
     Vec2 start = Vec2(1,1);
 
     _character = make_unique<CharacterController>(start, _actions, _assets);
-    // Forward character movement
-    const int span = 8;
-    std::vector<int> forward;
-    for(int ii = 1; ii < span; ii++) {
-        forward.push_back(ii);
-    }
-    // Loop back to beginning
-    forward.push_back(0);
-    _characterRight = cugl::scene2::Animate::alloc(forward, DURATION);
-
-    // Reverse charater movement
-    std::vector<int> reverse;
-    for(int ii = 1; ii <= span; ii++) {
-        reverse.push_back(span-ii);
-    }
-
-    _characterLeft = cugl::scene2::Animate::alloc(forward, DURATION);
 
 
 
@@ -163,8 +158,8 @@ _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displ
     
     _moveTo = cugl::scene2::MoveTo::alloc();
     _moveCam = CameraMoveTo::alloc();
-    _moveCam->setDuration(.08);
-    _moveTo->setDuration(.08);
+    _moveCam->setDuration(DURATION);
+    _moveTo->setDuration(DURATION);
     
     init();
     
@@ -190,6 +185,12 @@ void GamePlayController::init(){
     _pastWorld->addChildTo(_scene);
     _pastWorld->setVisibility(true);
     
+    auto edges = _pastWorld->getEdges(_scene);
+    generatePastMat(_pastWorld->getVertices());
+    for (int i = 0; i < edges.size(); i++){
+        addPastEdge(edges[i].first, edges[i].second);
+    }
+    
 //    _artifactSet->clearSet();
 //    _artifactSet = _pastWorldLevel->getItem();
     _artifactSet->addChildTo(_scene);
@@ -198,34 +199,25 @@ void GamePlayController::init(){
     _presentWorld->addChildTo(_other_scene);
     _presentWorld->setActive(false);
     
+    auto presentEdges = _presentWorld->getEdges(_other_scene);
+    generatePresentMat(_presentWorld->getVertices());
+    for (int i = 0; i < presentEdges.size(); i++){
+        addPresentEdge(presentEdges[i].first, presentEdges[i].second);
+    }
+    
+    
     _activeMap = "pastWorld";
     _template = 0;
     
     Vec2 start = Vec2(0,0);
     _character = make_unique<CharacterController>(start, _actions, _assets);
     _character->addChildTo(_scene);
-    // Forward character movement
-    const int span = 8;
-    std::vector<int> forward;
-    for(int ii = 1; ii < span; ii++) {
-        forward.push_back(ii);
-    }
-    // Loop back to beginning
-    forward.push_back(0);
-    _characterRight = cugl::scene2::Animate::alloc(forward, DURATION);
 
-    // Reverse charater movement
-    std::vector<int> reverse;
-    for(int ii = 1; ii <= span; ii++) {
-        reverse.push_back(span-ii);
-    }
-
-    _characterLeft = cugl::scene2::Animate::alloc(forward, DURATION);
 
 //    _guardSet2->removeChildFrom(_scene);
     
-    _guardSetPast = make_unique<GuardSetController>(_assets, _actions, _pastWorld);
-    _guardSetPresent = make_unique<GuardSetController>(_assets, _actions, _presentWorld);
+    _guardSetPast = std::make_unique<GuardSetController>(_assets, _actions, _pastWorld, pastMatrix, _pastWorld->getNodes());
+    _guardSetPresent = std::make_unique<GuardSetController>(_assets, _actions, _presentWorld, presentMatrix, _presentWorld->getNodes());
     
     _guardSetPast->clearSet();
     _guardSetPresent->clearSet();
@@ -253,6 +245,7 @@ void GamePlayController::init(){
     // reload initial label for n_res and n_art
     _res_label->setText("0");
     _art_label->setText("0/3");
+    
     //_pastWorld->addPoints(_scene->getSize(), _scene);
     
 }
@@ -418,19 +411,17 @@ void GamePlayController::update(float dt){
         _path->removeFrom(_scene);
     }
     
-    if (_path->getPath().size() != 0 && _actions->isActive("moving") == false){
+    if (_path->getPath().size() != 0 && !_actions->isActive("moving")  && !_actions->isActive("character_animation")){
         _moveTo->setTarget(_path->getPath()[0]);
         _moveCam->setTarget(_path->getPath()[0]);
         _character->moveTo(_moveTo);
+        _character->updateAnimation(_path->getPath()[0]);
         _camManager->activate("movingCam", _moveCam, _cam);
         _camManager->activate("movingOtherCam", _moveCam, _other_cam);
         // path_trace.erase(path_trace.begin());
         _path->removeFirst(_scene);
     }
 
-    if (_actions->isActive("moving") && !_actions->isActive("character_animation")) {
-            _character->updateAnimation(_characterRight);
-        }
 #pragma mark Resource Collection Methods
     // if collect a resource
     if(_activeMap == "pastWorld"){
@@ -500,14 +491,17 @@ void GamePlayController::update(float dt){
 #pragma mark Generation Helpers
 
     void GamePlayController::generatePastGuards() {
-//        vector<Vec2> patrol_stops = { Vec2(0, 500), Vec2(190, 500), Vec2(190, 400) }; //must be at least two stops
-        //addMovingGuard1(0, 500, patrol_stops);
+        vector<Vec2> patrol_stops = { Vec2(100, 500), Vec2(190, 500), Vec2(190, 400) }; //must be at least two stops
+        addMovingGuard1(100, 500, patrol_stops);
 //        vector<Vec2> patrol_stops = { Vec2(0, 600), Vec2(500, 600), Vec2(1000, 600) };
 //        addMovingGuard1(0, 600, patrol_stops);
-        addGuard1(1200, 200);
-        addGuard1(100, 500);
-        addGuard1(700, 600);
+        
+        vector<Vec2> patrol_stops1 = { Vec2(1200, 200), Vec2(1000, 200)};
+        addMovingGuard1(1200, 200, patrol_stops1);
+        //addGuard1(100, 500);
+        addGuard1(400, 600);
     }
+
     void GamePlayController::generatePresentGuards() {
         addGuard2(720, 320);
     }

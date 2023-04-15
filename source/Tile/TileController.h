@@ -130,5 +130,13 @@ public:
     void setVisibility(bool visible){
         _view->setVisibility(visible);
     }
+    
+    Vec2 getPosition(){
+        return _view->getPos();
+    }
+    
+    Vec2 getSize(){
+        return _model->getSize();
+    }
 };
 #endif

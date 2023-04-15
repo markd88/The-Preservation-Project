@@ -70,15 +70,10 @@ public:
     /** Manager to process the animation actions */
     std::shared_ptr<cugl::scene2::ActionManager> _actions;
     std::shared_ptr<cugl::scene2::MoveTo> _moveTo;
-    std::shared_ptr<cugl::scene2::Animate> _characterRight;
-    std::shared_ptr<cugl::scene2::Animate> _characterLeft;
 
-
-
-
-    
-    /** Adjacency matrix for shortest path algorithm**/
-    
+    /**adjacency matrix*/
+    bool** pastMatrix;
+    bool** presentMatrix;
     
     /**manager to process camera actions**/
     std::shared_ptr<CameraManager> _camManager;
@@ -153,6 +148,7 @@ public:
         Vec2 gPos = Vec2(w,h);
         _guardSetPast->add_this_moving(gPos, _scene, _assets, patrol_stops);
     }
+    
     void addGuard1(int w, int h) {
         Vec2 gPos = Vec2(w,h);
         _guardSetPast->add_this(gPos, _scene, _assets);
@@ -168,8 +164,38 @@ public:
         _guardSetPresent->add_this(gPos, _other_scene, _assets);
     }
     void generateArtifact();
+    
     void generateResource();
-
+    
+    void generatePastMat(int vertices){
+        pastMatrix = new bool*[vertices];
+        
+        for (int i = 0; i < vertices; i++) {
+          pastMatrix[i] = new bool[vertices];
+          for (int j = 0; j < vertices; j++)
+            pastMatrix[i][j] = false;
+        }
+    }
+    
+    void generatePresentMat(int vertices){
+        presentMatrix = new bool*[vertices];
+        
+        for (int i = 0; i < vertices; i++) {
+          presentMatrix[i] = new bool[vertices];
+          for (int j = 0; j < vertices; j++)
+            presentMatrix[i][j] = false;
+        }
+    }
+    
+    void addPastEdge(int i, int j) {
+        pastMatrix[i][j] = true;
+        pastMatrix[j][i] = true;
+    }
+    
+    void addPresentEdge(int i, int j) {
+        presentMatrix[i][j] = true;
+        presentMatrix[j][i] = true;
+    }
 
     void failTerminate(){
         _scene->addChild(_fail_layer);

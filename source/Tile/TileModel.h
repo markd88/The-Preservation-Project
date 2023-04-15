@@ -99,4 +99,8 @@ public:
     std::string getTextureKey() {
         return _textureKey;
     }
+    
+    Size getSize(){
+        return _size;
+    }
 };
