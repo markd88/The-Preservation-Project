@@ -8,7 +8,7 @@
  "margin":0,
  "name":"tileset",
  "spacing":0,
- "tilecount":57,
+ "tilecount":56,
  "tiledversion":"1.10.0",
  "tileheight":256,
  "tiles":[
@@ -420,13 +420,6 @@
          "imageheight":128,
          "imagewidth":128,
          "type":"artifact-4-big"
-        }, 
-        {
-         "id":56,
-         "image":"The-Preservation-Project\/Assets\/textures\/resource-big.png",
-         "imageheight":128,
-         "imagewidth":128,
-         "type":"resource-big"
         }],
  "tilewidth":256,
  "type":"tileset",

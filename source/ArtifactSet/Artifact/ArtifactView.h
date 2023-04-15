@@ -9,6 +9,7 @@
 #define ArtifactView_h
 
 #include <cugl/cugl.h>
+#include <math.h>
 //using namespace cugl;
 
 class ArtifactView{
@@ -20,11 +21,12 @@ private:
 #pragma mark Main Functions
 public:
     /** contructor */
-    ArtifactView(Vec2 position, Size size, bool isResource, const std::shared_ptr<cugl::AssetManager>& assets, std::string textureKey) {
+    ArtifactView(Vec2 position, float rot, Size size, bool isResource, const std::shared_ptr<cugl::AssetManager>& assets, std::string textureKey) {
 //        float scale = GAME_WIDTH/size.width;
 //        size *= scale;
         _node = scene2::PolygonNode::alloc();
         _node->setAnchor(Vec2::ANCHOR_CENTER);
+        _node->setAngle(-rot * M_PI/180);
         setPosition(position);
 //        setSize(size);
     }
