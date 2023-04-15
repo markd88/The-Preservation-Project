@@ -13,7 +13,7 @@ using namespace cugl;
 
 class GuardModel {
 private:
-    /** Center of the character */
+    /** Center of the guard */
     Vec2 _position;
     Size _size;
     Color4 _color;
@@ -35,10 +35,10 @@ public:
      * @param size      The width and height of a Artifact
      * @param color     The Artifact color
      */
-    GuardModel(Vec2 position, Size size, Color4 color) : color(_color) {
+    GuardModel(Vec2 position, Size size, Color4 color, int direction) : color(_color) {
         setPosition(position);
         setSize(size);
-        _direction = 0;
+        _direction = direction; // fixed for now, but should from the level editor for initialization
     }
     
 #pragma mark Setters

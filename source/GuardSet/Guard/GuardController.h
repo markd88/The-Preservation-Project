@@ -39,6 +39,8 @@ private:
 
     /**vector for the guard to use to return to his post*/
     vector<Vec2> _returnVec;
+
+    vector<Vec2> _chaseVec;
     
     //whether guard is traversing back the path
     bool going_back = false;
@@ -50,6 +52,14 @@ private:
     string _state;
     //prev state
     string _prev_state;
+    // if the guard is in question state
+    bool _is_question;
+    // fixed direction for static guard
+    int _fixed_direction;
+
+    string _state_before_question;
+
+
     
 #pragma mark Main Methods
 public:
@@ -59,6 +69,9 @@ public:
     const bool& doesPatrol;
     /**view only version of return vec**/
     const vector<Vec2>& returnVec;
+
+    const vector<Vec2>& chaseVec;
+
     /**view only version of state**/
     const string& state;
 
@@ -75,31 +88,37 @@ public:
      */
     //static guard
     GuardController(Vec2 position, const std::shared_ptr<cugl::AssetManager>& assets, std::shared_ptr<cugl::scene2::ActionManager> actions, int id)
-    : id(_id), doesPatrol(_doesPatrol), returnVec(_returnVec), state(_state), prev_state(_prev_state)
+    : id(_id), doesPatrol(_doesPatrol), returnVec(_returnVec), chaseVec(_chaseVec),state(_state), prev_state(_prev_state)
     {
         _state = "static";
-        _prev_state = "patrol";
+        _prev_state = "static";
         _returnVec = {};
+        _chaseVec = {};
         _chaseMove = cugl::scene2::MoveTo::alloc();
         _chaseMove->setDuration(DURATION);
         
         _returnMove = cugl::scene2::MoveTo::alloc();
         _returnMove->setDuration(DURATION);
+        _is_question = false;
         
         _doesPatrol = false;
         _id = id;
-        _model = std::make_unique<GuardModel>(position, Size(100, 100), Color4::RED);
+
+        _fixed_direction = 0;
+
+
+        _model = std::make_unique<GuardModel>(position, Size(100, 100), Color4::RED, _fixed_direction);
         _view = std::make_unique<GuardView>(position,Size(100, 100), Color4::RED, assets, actions);
     }
     
     //moving guard
-    GuardController(Vec2 position, const std::shared_ptr<cugl::AssetManager>& assets, std::vector<Vec2> vec, std::shared_ptr<cugl::scene2::ActionManager> actions, int id) : id(_id), doesPatrol(_doesPatrol), returnVec(_returnVec), state(_state), prev_state(_prev_state)
+    GuardController(Vec2 position, const std::shared_ptr<cugl::AssetManager>& assets, std::vector<Vec2> vec, std::shared_ptr<cugl::scene2::ActionManager> actions, int id) : id(_id), doesPatrol(_doesPatrol), returnVec(_returnVec), chaseVec(_chaseVec), state(_state), prev_state(_prev_state)
     {
         _state = "patrol";
         _prev_state = "patrol";
         _goingTo = 0;
         _returnVec = {};
-        
+        _chaseVec = {};
         _patrol_stops = vec;
 
         _chaseMove = cugl::scene2::MoveTo::alloc();
@@ -110,13 +129,20 @@ public:
         
         _patrolMove = cugl::scene2::MoveTo::alloc();
         _doesPatrol = true;
-        
+        _is_question = false;
+
+        // just a placeholder
+        _fixed_direction = 0;
+
         _id = id;
-        _model = std::make_unique<GuardModel>(position, Size(100, 100), Color4::RED);
+        // starting direction should from level editor
+        _model = std::make_unique<GuardModel>(position, Size(100, 100), Color4::RED, 0);
         _view = std::make_unique<GuardView>(position, Size(100, 100), Color4::RED, assets, actions);
     }
 
 #pragma mark Update Methods
+
+
 public:
     /**
      *  Updates the model and view with position of this tile.
@@ -126,6 +152,16 @@ public:
     void updatePosition(Vec2 position) {
         _model->setPosition(position);
         _view->setPosition(position);
+    }
+
+
+
+    void setStateBeforeQuestion(string s) {
+        _state_before_question = s;
+    }
+
+    string getStateBeforeQuestion() {
+        return _state_before_question;
     }
 
 #pragma mark Update Chase Methods
@@ -153,6 +189,11 @@ public:
     void updateReturnTarget(Vec2 pos){
         _returnMove->setTarget(pos);
     }
+
+    void updateChaseSPTarget(Vec2 pos){
+        _chaseMove->setTarget(pos);
+    }
+
 
     /**
      *  Updates the model and view with the size of this tile.
@@ -198,7 +239,7 @@ public:
     void removeChildFrom(std::shared_ptr<cugl::Scene2> node) {
         _view->removeChildFrom(node);
     }
-    
+
 #pragma mark Controller Methods
 public:
     //moves the guard to the next patrol stop
@@ -232,37 +273,60 @@ public:
         _patrolMove->setTarget(_patrol_stops[_goingTo]);
         _view->performAction(actionName, _patrolMove);
 
+
         //animate guard
-        animateGuard(actionName);
 
     }
-    
-    void animateGuard(string actionName){
-        Vec2 target = _patrolMove->getTarget();
-        Vec2 pos = _view->nodePos();
-        int direction = calculateMappedAngle(pos.x, pos.y, target.x, target.y);
-        _view->performAnimation(actionName+"Animation", direction);
+
+    void updateAnimation(Vec2 target, string state, int last_direction, string last_state, bool valid_target) {
+
+        int direction;
+        if (!valid_target and state == "static") {
+            direction = _fixed_direction;
+        }
+        else if (!valid_target and state == "question") {
+            direction = last_direction;
+        }
+        else {
+            Vec2 pos = _view->nodePos();
+            direction = calculateMappedAngle(pos.x, pos.y, target.x, target.y);
+        }
+        _view->performAnimation(direction, state, last_direction, last_state);
+
 
     }
-    
-    void chaseChar(string actionName, int direction){
+    void lookAroundAnim() {
+        updateAnimation(Vec2(0,0), _state, _model->getDirection(), _prev_state, false);
+    }
+    void questionAnim() {
+        updateAnimation(Vec2(0,0), _state, _model->getDirection(), _prev_state, false);
+        // question animation
+    }
+
+    void staticGuardAnim() {
+        updateAnimation(Vec2(0,0), _state, _model->getDirection(), _prev_state, false);
+    }
+
+    void chaseGuardAnim() {
+        updateAnimation(_chaseMove->getTarget(), _state, _model->getDirection(), _prev_state, true);
+    }
+
+    void patrolGuardAnim() {
+        updateAnimation(_patrolMove->getTarget(), _state, _model->getDirection(), _prev_state, true);
+    }
+
+    void returnGuardAnim() {
+        updateAnimation(_returnMove->getTarget(), _state, _model->getDirection(), _prev_state, true);
+    }
+
+    void chaseChar(string actionName){
         CULog("chasing");
         _view->performAction(actionName, _chaseMove);
-        _view->performAnimation(actionName+"Animation", direction);
     }
     
     void returnGuard(string actionName){
         CULog("returning");
         _view->performAction(actionName, _returnMove);
-        Vec2 target = _returnMove->getTarget();
-        Vec2 pos = _view->nodePos();
-        //CULog("%f", pos.x);
-        //CULog("%f", pos.y);
-        //CULog("%f", target.x);
-        //CULog("%f", target.y);
-        int direction = calculateMappedAngle(pos.x, pos.y, target.x, target.y);
-        _view->performAnimation(actionName+"Animation", direction);
-
     }
     
     void prependReturnVec(Vec2 pos){
@@ -272,7 +336,14 @@ public:
     void setReturnVec(vector<Vec2> returnVec){
         _returnVec = returnVec;
     }
-    
+
+    void setChaseVec(vector<Vec2> chaseVec){
+        _chaseVec = chaseVec;
+    }
+
+    void eraseChaseSPVec(){
+        _chaseVec.erase(_chaseVec.begin());
+    }
     void eraseReturnVec(){
         _returnVec.erase(_returnVec.begin());
     }
@@ -282,9 +353,7 @@ public:
         returned = true;
     }
     
-//    float getAngle(){
-//        return _view->getNodeAngle();
-//    }
+
     int getDirection() {
         return _model->getDirection();
     }
@@ -305,7 +374,18 @@ public:
     Vec2 getSavedStop(){
         return _patrol_stops[saved_stop];
     }
-    
+
+
+//    int getIsQuestion() {
+//        return _is_question;
+//    }
+//
+//    void setIsQuestion(bool value) {
+//        _is_question = value;
+//    }
+
+
+
     int calculateMappedAngle(float x1, float y1, float x2, float y2)
     {
         // calculate the angle in radians

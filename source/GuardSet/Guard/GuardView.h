@@ -13,24 +13,30 @@ using namespace cugl;
 
 #include <math.h>
 
-#define DURATION 1.0f
+
 
 class GuardView{
 private:
     /** Main character view */
     /** The node is attached to the root-scene*/
     std::shared_ptr<scene2::SpriteNode> _node;
+
+
     /** Manager to process the animation actions */
     std::shared_ptr<cugl::scene2::ActionManager> _actions;
 
-    std::shared_ptr<cugl::scene2::Animate> _guard_0;
-    std::shared_ptr<cugl::scene2::Animate> _guard_1;
-    std::shared_ptr<cugl::scene2::Animate> _guard_2;
-    std::shared_ptr<cugl::scene2::Animate> _guard_3;
-    std::shared_ptr<cugl::scene2::Animate> _guard_4;
-    std::shared_ptr<cugl::scene2::Animate> _guard_5;
-    std::shared_ptr<cugl::scene2::Animate> _guard_6;
-    std::shared_ptr<cugl::scene2::Animate> _guard_7;
+    // questions mark
+    std::shared_ptr<scene2::SpriteNode> _question_node;
+    std::vector<int> q_anim = {1,2,3,4,5,6,7,0};
+    std::shared_ptr<cugl::scene2::Animate> q_animation = cugl::scene2::Animate::alloc(q_anim, QANIM);
+
+
+
+
+
+
+
+
 
 
 #pragma mark Main Functions
@@ -42,8 +48,8 @@ public:
         float scale = GAME_WIDTH/size.width;
         // size *= scale;
 
-        std::shared_ptr<Texture> texture  = assets->get<Texture>("guard");
-        _node = scene2::SpriteNode::allocWithSheet(texture, 16, 16, 256); // SpriteNode for animation
+        std::shared_ptr<Texture> guard  = assets->get<Texture>("guard");
+        _node = scene2::SpriteNode::allocWithSheet(guard, 16, 16, 256); // SpriteNode for animation
         _node->setScale(0.6f); // Magic number to rescale asset
 
         _node->setRelativeColor(false);
@@ -52,29 +58,15 @@ public:
         _node->setPosition(position);
 
 
-        std::vector<int> d0 = {1,2,3,4,5,6,7,0};
-        _guard_0 = cugl::scene2::Animate::alloc(d0, DURATION);
+        std::shared_ptr<Texture> question = assets->get<Texture>("question_mark_anim");
+        _question_node = scene2::SpriteNode::allocWithSheet(question, 1,8,8);
+        _question_node->setVisible(false);
+        _question_node->setRelativeColor(false);
+        _node->addChildWithName(_question_node, "question_mark");
 
-        std::vector<int> d1 = {9,10,11,12,13,14,15,8};
-        _guard_1 = cugl::scene2::Animate::alloc(d1, DURATION);
+        // fixed, but should be from initialization( level editor)
+        // _last_direction = 0;
 
-        std::vector<int> d2 = {17,18,19,20,21,22,23,16};
-        _guard_2 = cugl::scene2::Animate::alloc(d2, DURATION);
-
-        std::vector<int> d3 = {25,26,27,28,29,30,31,24};
-        _guard_3 = cugl::scene2::Animate::alloc(d3, DURATION);
-
-        std::vector<int> d4 = {33,34,35,36,37,38,39,32};
-        _guard_4 = cugl::scene2::Animate::alloc(d4, DURATION);
-
-        std::vector<int> d5 = {41,42,43,44,45,46,47,40};
-        _guard_5 = cugl::scene2::Animate::alloc(d5, DURATION);
-
-        std::vector<int> d6 = {49,50,51,52,53,54,55,48};
-        _guard_6 = cugl::scene2::Animate::alloc(d6, DURATION);
-
-        std::vector<int> d7 = {57,58,59,60,61,62,63,56};
-        _guard_7 = cugl::scene2::Animate::alloc(d7, DURATION);
 
 
     }
@@ -126,33 +118,54 @@ public:
     }
 
 
-    void performAnimation(string actionName, int d) {
+    void performAnimation(int current_d, string state, int last_direction, string last_state) {
         //CULog("%d", d);
-        std::shared_ptr<cugl::scene2::Animate> animation = _guard_0;
-        if (d == 0) {
-            animation = _guard_0;
-        } else if (d == 1){
-            animation = _guard_1;
-        }
-        else if (d == 2){
-            animation = _guard_2;
-        }
-        else if (d == 3){
-            animation = _guard_3;
-        }
-        else if (d == 4){
-            animation = _guard_4;
-        }
-        else if (d == 5){
-            animation = _guard_5;
-        }else if (d == 6){
-            animation = _guard_6;
-        }
-        else if ( d ==7 ){
-            animation = _guard_7;
+        if (_actions->isActive("guard_animation") and current_d == last_direction and state != last_state) {
+            // continue the current animation
+            return;
         }
 
-        _actions->activate(actionName, animation, _node);
+        if (_actions->isActive("guard_animation") and (current_d != last_direction or state != last_state)) {
+            _actions->remove("guard_animation");
+        }
+
+        int direction;
+        // walk or run or lookaround or static. this is the starting index in spritesheet
+        int start_index;
+        float duration;
+
+        if (state == "chase") {
+            // running
+            start_index = 64;
+            direction = current_d;
+            duration = 0.5f;
+        } else if (state == "patrol" or state=="return") {
+            // walking
+            start_index = 0;
+            direction = current_d;
+            duration = 1.0f;
+        } else if (state == "lookaround") {
+            // look around, need to use the last direction as the direction
+            start_index = 192;
+            direction = last_direction;
+            duration = 1.0f;
+        } else if (state == "static") {
+            start_index = 128;
+            direction = last_direction;
+            duration = 1.0f;
+        }
+        // looping frames
+        std::vector<int> frames;
+        for(int ii = 1 + start_index + 8*direction; ii < 8 + start_index + 8*direction; ii++) {
+            frames.push_back(ii);
+        }
+        frames.push_back(start_index + 8*direction);
+
+        std::shared_ptr<cugl::scene2::Animate> animation = cugl::scene2::Animate::alloc(frames, duration);
+
+
+        _actions->activate("guard_animation", animation, _node);
+
     }
     
 #pragma mark Helpers
@@ -161,7 +174,10 @@ public:
    
     void setVisibility(bool visible){
         _node->setVisible(visible);
+
     }
+
+
 };
 
 #endif /* GuardView_h */

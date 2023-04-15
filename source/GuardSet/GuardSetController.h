@@ -106,15 +106,7 @@ public:
         _guardSet.clear();
     }
     
-//    void addChildTo(Scene2 s) {
-//        unsigned int vecSize = _guardSet.size();
-//        // run for loop from 0 to vecSize
-//        for(unsigned int i = 0; i < vecSize; i++)
-//        {
-//            _guardSet[i];
-//        }
-//    }
-        
+
     int generateUniqueID() {
         int id = 0;
         bool isUsed = true;
@@ -133,29 +125,169 @@ public:
     }
     
     void patrol(Vec2 _charPos, Scene s, float char_angle){
-        
+
+        static auto last_time_question = std::chrono::steady_clock::now();
+        static auto last_time_lookaround = std::chrono::steady_clock::now();
+
+        // Calculate the time elapsed since the last call to pinch
+        auto now = std::chrono::steady_clock::now();
+        auto elapsed_question = std::chrono::duration_cast<std::chrono::seconds>(now - last_time_question);
+        auto elapsed_lookaround = std::chrono::duration_cast<std::chrono::seconds>(now - last_time_lookaround);
+
         for (int i = 0; i < _guardSet.size(); i++){
-            
-            string chaseAction = "chasing" + std::to_string(_guardSet[i]->id);
-            string patrolAction = "patrol" + std::to_string(_guardSet[i]->id);
-            string returnAction = "return" + std::to_string(_guardSet[i]->id);
+
+            string id = std::to_string(_guardSet[i]->id);
+
+            string chaseAction = "chase" + id;
+            string patrolAction = "patrol" + id;
+            string returnAction = "return" + id;
+
 
             Vec2 guardPos = _guardSet[i]->getNodePosition();
             float distance = guardPos.distance(_charPos);
-            
-            bool detection = false;
-            if (distance < 300 and _world->isActive()){
-                detection = !_world->lineInObstacle(guardPos,_charPos);
+            int charDirection = calculateMappedAngle(guardPos.x, guardPos.y, _charPos.x, _charPos.y);
+            int guardFacingDirection = _guardSet[i]->getDirection();
+            bool insideVisionCone = false;
+            if ((guardFacingDirection + 8 -1) %8 == charDirection || (guardFacingDirection + 8 + 1) % 8 == charDirection) {
+                insideVisionCone = true;
             }
-            
+            bool visual_detection = false;
+            if (distance < 100 and _world->isActive() and insideVisionCone){
+                visual_detection = !_world->lineInObstacle(guardPos,_charPos);
+            }
+
+            bool acoustic_detection = false;
+            if (distance < 400 and _world->isActive()) {
+                acoustic_detection = true;
+            }
+
 #pragma mark Guard State Updates
-            //patrol state
-            if (_guardSet[i]->state == "patrol"){
-                
-                //detection in patrol state = chase
-                if (detection){
+
+            // static state
+            if (_guardSet[i]->state == "static") {
+                if (visual_detection) {
+                    _guardSet[i]->updatePrevState(_guardSet[i]->state);
+                    _guardSet[i]->updateState("chaseD");
+                }
+                else if (acoustic_detection) {
+                    _guardSet[i]->updatePrevState(_guardSet[i]->state);
+                    _guardSet[i]->updateState("question");
+                    last_time_question = now;
+                    _guardSet[i]->setStateBeforeQuestion("static");
+                }
+                else {
+                    // keep static
+                    _guardSet[i]->updatePrevState(_guardSet[i]->state);
+                }
+            }
+
+            // question state
+            else if (_guardSet[i]->state == "question") {
+                if (visual_detection) {
+                    // chase immediately
                     _guardSet[i]->updatePrevState(_guardSet[i]->state);
                     _guardSet[i]->updateState("chase");
+                }
+                else if (acoustic_detection && elapsed_question.count() <= 1 ) {
+                    // keep question
+                    _guardSet[i]->updatePrevState(_guardSet[i]->state);
+                }
+                else if (acoustic_detection && elapsed_question.count() > 1) {
+                    // chase in shortest path
+                    _guardSet[i]->updatePrevState(_guardSet[i]->state);
+
+                    int start = findClosestNode(_guardSet[i]->getNodePosition());
+                    int finish = findClosestNode(_charPos);
+                    _guardSet[i]->setChaseVec(shortestPath(start, finish));
+
+                    _guardSet[i]->updateState("chaseSP");
+                }
+                else {
+                    // return to the previous state
+                    _guardSet[i]->updatePrevState(_guardSet[i]->state);
+                    _guardSet[i]->updateState(_guardSet[i]->getStateBeforeQuestion());
+                    if (_guardSet[i]->getStateBeforeQuestion() == "question") {
+                        last_time_question = now;
+                    }
+                }
+            }
+
+            else if (_guardSet[i]->state == "chaseD") {
+
+                //go to lookaround if no detection
+                if (!visual_detection){
+                    _guardSet[i]->updatePrevState(_guardSet[i]->state);
+                    _guardSet[i]->updateState("lookaround");
+                    last_time_lookaround = now;
+                }
+                else{
+                    //keep chasing otherwise
+                    _guardSet[i]->updatePrevState(_guardSet[i]->state);
+                }
+            }
+
+            else if (_guardSet[i]->state == "chaseSP") {
+                if (visual_detection) {
+                    _guardSet[i]->updatePrevState(_guardSet[i]->state);
+                    _guardSet[i]->updateState("chaseD");
+                }
+                else if (acoustic_detection) {
+                    _guardSet[i]->updatePrevState(_guardSet[i]->state);
+                    _guardSet[i]->updateState("question");
+                    last_time_question = now;
+                    _guardSet[i]->setStateBeforeQuestion("chaseSP");
+                }
+                else if (_guardSet[i]->chaseVec.size() == 0 ){
+                    _guardSet[i]->updatePrevState(_guardSet[i]->state);
+                    _guardSet[i]->updateState("lookaround");
+                }
+                else {
+                    _guardSet[i]->updatePrevState(_guardSet[i]->state);
+                }
+
+            }
+
+            else if (_guardSet[i]->state == "lookaround") {
+                // maybe wider visual detection
+                if (visual_detection) {
+                    _guardSet[i]->updatePrevState(_guardSet[i]->state);
+                    _guardSet[i]->updateState("chaseD");
+                }
+                else if (acoustic_detection) {
+                    _guardSet[i]->updatePrevState(_guardSet[i]->state);
+                    _guardSet[i]->updateState("question");
+                    last_time_question = now;
+                    _guardSet[i]->setStateBeforeQuestion("lookaround");
+                }
+                else if (elapsed_lookaround.count() <= 1){
+                    // keep lookaround
+                    _guardSet[i]->updatePrevState(_guardSet[i]->state);
+                }
+                else if (elapsed_lookaround.count() > 1) {
+                    int start = findClosestNode(_guardSet[i]->getNodePosition());
+                    int finish = findClosestNode(_guardSet[i]->getSavedStop());
+                    _guardSet[i]->setReturnVec(shortestPath(start, finish));
+
+                    _guardSet[i]->updatePrevState(_guardSet[i]->state);
+                    _guardSet[i]->updateState("return");
+
+                }
+            }
+
+            //patrol state
+            else if (_guardSet[i]->state == "patrol"){
+                
+                //detection in patrol state = chase
+                if (visual_detection){
+                    _guardSet[i]->updatePrevState(_guardSet[i]->state);
+                    _guardSet[i]->updateState("chase");
+                }
+                else if (acoustic_detection){
+                    // if did not see, but hear
+                    _guardSet[i]->updatePrevState(_guardSet[i]->state);
+                    _guardSet[i]->updateState("question");
+                    last_time_question = now;
+                    _guardSet[i]->setStateBeforeQuestion("patrol");
                 }
                 //keep patroling otherwise
                 else{
@@ -163,93 +295,98 @@ public:
                 }
                 
             }
-            else if (_guardSet[i]->state == "chase"){
-                
-                //return from chase if no detection
-                if (!detection){
-                    _guardSet[i]->updatePrevState(_guardSet[i]->state);
-                    _guardSet[i]->updateState("return");
-                }
-                //keep chasing otherwise
-                else{
-                    _guardSet[i]->updatePrevState(_guardSet[i]->state);
-                }
-                
-            }
+
             
             else if (_guardSet[i]->state == "return"){
-                //state change from chase to return
-                if (_guardSet[i]->prev_state == "chase"){
-                    //shortest path
-                    int start = findClosestNode(_guardSet[i]->getNodePosition());
-                    int finish = findClosestNode(_guardSet[i]->getSavedStop());
-                    _guardSet[i]->setReturnVec(shortestPath(start, finish));
-                    
-                    _guardSet[i]->updatePrevState(_guardSet[i]->state);
-                    _guardSet[i]->updateState("return");
-                }
-                //state change from return to chase
-                else if (detection){
+                if (visual_detection){
                     _guardSet[i]->updatePrevState(_guardSet[i]->state);
                     _guardSet[i]->updateState("chase");
                 }
+                else if (acoustic_detection){
+                    // if did not see, but hear
+                    _guardSet[i]->updatePrevState(_guardSet[i]->state);
+                    _guardSet[i]->updateState("question");
+                    last_time_question = now;
+                    _guardSet[i]->setStateBeforeQuestion("return");
+                }
                 //state change from return to patrol
-                else if (_guardSet[i]->returnVec.size() == 0){
+                else if (_guardSet[i]->returnVec.size() == 0 and _guardSet[i]->doesPatrol){
                     _guardSet[i]->updatePrevState(_guardSet[i]->state);
                     _guardSet[i]->updateState("patrol");
+                }
+                else if (_guardSet[i]->returnVec.size() == 0 and !_guardSet[i]->doesPatrol){
+                    _guardSet[i]->updatePrevState(_guardSet[i]->state);
+                    _guardSet[i]->updateState("static");
                 }
                 //otherwise continue returning
                 else{
                     _guardSet[i]->updatePrevState(_guardSet[i]->state);
                 }
             }
+
+
             
-            
-#pragma mark Guard action accoring to state
-            
-            //wait for guard to finish current action
-            if (_actions->isActive(chaseAction) or _actions->isActive(returnAction)){
-                
+#pragma mark Guard action according to state
+
+
+
+            if (_guardSet[i]->state == "static") {
+                _guardSet[i]->staticGuardAnim();
             }
-            //detection for active guard
-            else if (_guardSet[i]->state == "chase" and _actions->isActive(patrolAction)){
-                Vec2 pos = _guardSet[i]->getNodePosition();
-                _guardSet[i]->saveCurrentStop();
-                _actions->remove(patrolAction);
-                _actions->remove(patrolAction + "Animation");
-                _guardSet[i]->updatePosition(pos);
+            else if (_guardSet[i]->state == "question") {
+                _guardSet[i]->questionAnim();
             }
-            //detection for static guard
-            else if (_guardSet[i]->state == "chase"){
-                Vec2 target = guardPos + ((_charPos - guardPos)/distance)*50;
-                Vec2 pos = _guardSet[i]->getNodePosition();
-                int direction = calculateMappedAngle(float (pos.x), float (pos.y), float (target.x), float (target.y));
-                //chase
-                _guardSet[i]->updateChaseTarget(target);
-                _guardSet[i]->chaseChar(chaseAction, direction);
+            else if (_guardSet[i]->state == "lookaround") {
+                _guardSet[i]->lookAroundAnim();
             }
-            //return state
+            // return state
             else if (_guardSet[i]->state == "return"){
                 _guardSet[i]->updateReturnTarget(_guardSet[i]->returnVec[0]);
                 _guardSet[i]->returnGuard(returnAction);
-                //erase from return vector
+                // erase from return vector
                 _guardSet[i]->eraseReturnVec();
+                _guardSet[i]->returnGuardAnim();
             }
             //patrol state
             else if (_guardSet[i]->state == "patrol" and _guardSet[i]->doesPatrol){
-                if (_actions->isActive(patrolAction) and !_actions->isActive(patrolAction + "Animation"))
-                {
-                    //guard is moving but no animation
-                    _guardSet[i]->animateGuard(patrolAction + "Animation");
-                }
-                else if(_actions->isActive(patrolAction)){
-                    //guard is moving properly, wait till finished
+
+                if(_actions->isActive(patrolAction)){
+                    // guard is moving properly, wait till finished
                 }
                 else{
-                    //guard is done moving, set next stop
+                    // guard is done moving, set next stop
                     _guardSet[i]->nextStop(patrolAction);
                 }
+                _guardSet[i]->patrolGuardAnim();
             }
+
+
+
+            //detection for active guard
+            else if (_guardSet[i]->state == "chaseD" and _actions->isActive(patrolAction)){
+                Vec2 pos = _guardSet[i]->getNodePosition();
+                _guardSet[i]->saveCurrentStop();
+                _actions->remove(patrolAction);
+
+                _guardSet[i]->updatePosition(pos);
+            }
+            //detection for static guard
+            else if (_guardSet[i]->state == "chaseD"){
+                Vec2 target = guardPos + ((_charPos - guardPos)/distance)*50;
+                // chase
+                _guardSet[i]->updateChaseTarget(target);
+                _guardSet[i]->chaseChar(chaseAction);
+                _guardSet[i]->chaseGuardAnim();
+            }
+            else if (_guardSet[i]->state == "chaseSP"){
+                _guardSet[i]->updateChaseSPTarget(_guardSet[i]->chaseVec[0]);
+                _guardSet[i]->chaseChar(chaseAction);
+                // erase from return vector
+                _guardSet[i]->eraseChaseSPVec();
+                _guardSet[i]->chaseGuardAnim();
+            }
+
+
             
         }
     }

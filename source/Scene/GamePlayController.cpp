@@ -11,8 +11,10 @@ using namespace cugl;
 #define PHYSICS_SCALE 50
 /** This is adjusted by screen aspect ratio to get the height */
 #define SCENE_WIDTH 1024
-#define DURATION 0.8f
-#define SWITCH_DURATION 1f
+#define ACTIONDURATION 0.08f
+#define ANIMDURATION 1f
+
+#define SWITCH_DURATION 1
 
 #define ACT_KEY  "current"
 
@@ -104,10 +106,10 @@ _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displ
     _world_switch_node->setFrame(19);
 
     std::vector<int> d0 = {0,1,2,3,4,5,6,7,8};
-    _world_switch_0 = cugl::scene2::Animate::alloc(d0, DURATION);
+    _world_switch_0 = cugl::scene2::Animate::alloc(d0, SWITCH_DURATION);
 
     std::vector<int> d1 = {9,10,11,12,13,14,15,16,17,18};
-    _world_switch_1 = cugl::scene2::Animate::alloc(d1, DURATION);
+    _world_switch_1 = cugl::scene2::Animate::alloc(d1, SWITCH_DURATION);
 
 
 
@@ -175,8 +177,8 @@ _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displ
     
     _moveTo = cugl::scene2::MoveTo::alloc();
     _moveCam = CameraMoveTo::alloc();
-    _moveCam->setDuration(DURATION);
-    _moveTo->setDuration(DURATION);
+    _moveCam->setDuration(ACTIONDURATION);
+    _moveTo->setDuration(ACTIONDURATION);
     
     init();
     
@@ -461,15 +463,20 @@ void GamePlayController::update(float dt){
         _path->removeFrom(_scene);
     }
     
-    if (_path->getPath().size() != 0 && !_actions->isActive("moving")  && !_actions->isActive("character_animation")){
+    if (_path->getPath().size() != 0 && !_actions->isActive("moving") ){
         _moveTo->setTarget(_path->getPath()[0]);
         _moveCam->setTarget(_path->getPath()[0]);
         _character->moveTo(_moveTo);
-        _character->updateAnimation(_path->getPath()[0]);
+        _character->updateLastDirection(_path->getPath()[0]);
         _camManager->activate("movingCam", _moveCam, _cam);
         _camManager->activate("movingOtherCam", _moveCam, _other_cam);
         _path->removeFirst(_scene);
     }
+
+    if (!_actions->isActive("moving") && _actions->isActive("character_animation")) {
+        _character->stopAnimation();
+    }
+
 
 #pragma mark Resource Collection Methods
     // if collect a resource
@@ -542,8 +549,7 @@ void GamePlayController::update(float dt){
     void GamePlayController::generatePastGuards() {
         vector<Vec2> patrol_stops = { Vec2(100, 500), Vec2(190, 500), Vec2(190, 400) }; //must be at least two stops
         addMovingGuard1(100, 500, patrol_stops);
-//        vector<Vec2> patrol_stops = { Vec2(0, 600), Vec2(500, 600), Vec2(1000, 600) };
-//        addMovingGuard1(0, 600, patrol_stops);
+
         
         vector<Vec2> patrol_stops1 = { Vec2(1200, 200), Vec2(1000, 200)};
         addMovingGuard1(1200, 200, patrol_stops1);
