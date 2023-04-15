@@ -39,8 +39,10 @@ _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displ
     // Allocate the camera manager
     _camManager = CameraManager::alloc();
     
-    _scene->setSize(displaySize * 3);
-    _other_scene->setSize(displaySize * 3);
+//    _scene->setSize(displaySize * 3);
+//    _other_scene->setSize(displaySize * 3);
+    _scene->setSize(displaySize);
+    _other_scene->setSize(displaySize);
     
     _path = make_unique<PathController>();
     // initialize character, two maps, path
