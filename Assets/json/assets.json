@@ -10,8 +10,11 @@
         "character": {
             "file":     "textures/character.png"
         },
-        "guard": {
-            "file":     "textures/enemy.png"
+        "guard_past": {
+            "file":     "textures/spritesheet_guard_past.png"
+        },
+        "guard_present": {
+            "file": "textures/spritesheet_guard_present.png"
         },
         "shadow": {
             "file":    "textures/Shadow.png"

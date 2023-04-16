@@ -28,7 +28,7 @@ private:
     // questions mark
     std::shared_ptr<scene2::SpriteNode> _question_node;
     std::vector<int> q_anim = {1,2,3,4,5,6,7,0};
-    std::shared_ptr<cugl::scene2::Animate> q_animation = cugl::scene2::Animate::alloc(q_anim, QANIM);
+    std::shared_ptr<cugl::scene2::Animate> q_animation = cugl::scene2::Animate::alloc(q_anim, 1.0f);
 
 
 
@@ -47,8 +47,15 @@ public:
         _actions = actions;
         float scale = GAME_WIDTH/size.width;
         // size *= scale;
-
-        std::shared_ptr<Texture> guard  = assets->get<Texture>("guard");
+//        string a;
+//        CULog("%s", if_present.c_str());
+//        if (if_present == "present") {
+//            a = "guard_present";
+//        }
+//        else{
+//            a = "guard_past";
+//        }
+        std::shared_ptr<Texture> guard  = assets->get<Texture>("guard_present");
         _node = scene2::SpriteNode::allocWithSheet(guard, 16, 16, 256); // SpriteNode for animation
         _node->setScale(0.6f); // Magic number to rescale asset
 
@@ -115,18 +122,40 @@ public:
     
     void performAction(string actionName, const std::shared_ptr<cugl::scene2::MoveTo>& action){
         _actions->activate(actionName, action, _node);
+        _question_node->setVisible(false);
     }
 
+    void stopQuestionAnim(string id){
+        _actions->remove("question"+id);
+    }
 
-    void performAnimation(int current_d, string state, int last_direction, string last_state) {
+    void startQuestionAnim(string id) {
+        if (_actions->isActive("question")) {
+            // let it finish
+        }
+        else {
+            std::vector<int> frames;
+            for(int ii = 1 ; ii < 8; ii++) {
+                frames.push_back(ii);
+            }
+            frames.push_back(0);
+
+            std::shared_ptr<cugl::scene2::Animate> animation = cugl::scene2::Animate::alloc(frames, 1.0f);
+            _question_node->setVisible(true);
+            _actions->activate("question"+id, animation, _question_node);
+
+        }
+    }
+    void performAnimation(int current_d, string state, int last_direction, string last_state, string id) {
         //CULog("%d", d);
-        if (_actions->isActive("guard_animation") and current_d == last_direction and state != last_state) {
+        if (_actions->isActive("guard_animation"+id) and current_d == last_direction and state == last_state) {
             // continue the current animation
             return;
         }
 
-        if (_actions->isActive("guard_animation") and (current_d != last_direction or state != last_state)) {
-            _actions->remove("guard_animation");
+        if (_actions->isActive("guard_animation"+id) and (current_d != last_direction or state != last_state)) {
+            _actions->remove("guard_animation"+id);
+            CULog("remove current animation, start a new one curent d:%d last d: %d  current state: %s   last state: %s", current_d, last_direction, state.c_str(), last_state.c_str());
         }
 
         int direction;
@@ -134,7 +163,7 @@ public:
         int start_index;
         float duration;
 
-        if (state == "chase") {
+        if (state == "chaseD" or state == "chaseSP") {
             // running
             start_index = 64;
             direction = current_d;
@@ -149,7 +178,7 @@ public:
             start_index = 192;
             direction = last_direction;
             duration = 1.0f;
-        } else if (state == "static") {
+        } else if (state == "static" or state == "question") {
             start_index = 128;
             direction = last_direction;
             duration = 1.0f;
@@ -162,9 +191,11 @@ public:
         frames.push_back(start_index + 8*direction);
 
         std::shared_ptr<cugl::scene2::Animate> animation = cugl::scene2::Animate::alloc(frames, duration);
-
-
-        _actions->activate("guard_animation", animation, _node);
+//        CULog("animation cycle");
+//        for(int i=0; i < frames.size(); i++) {
+//            CULog( "%d",frames.at(i));
+//        }
+        _actions->activate("guard_animation"+id, animation, _node);
 
     }
     

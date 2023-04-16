@@ -44,8 +44,8 @@ _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displ
     // Allocate the camera manager
     _camManager = CameraManager::alloc();
     
-    _scene->setSize(displaySize );
-    _other_scene->setSize(displaySize );
+    _scene->setSize(displaySize  *3);
+    _other_scene->setSize(displaySize *3);
     
     _path = make_unique<PathController>();
     // initialize character, two maps, path
@@ -550,15 +550,17 @@ void GamePlayController::update(float dt){
         vector<Vec2> patrol_stops = { Vec2(100, 500), Vec2(190, 500), Vec2(190, 400) }; //must be at least two stops
         addMovingGuard1(100, 500, patrol_stops);
 
-        
+
         vector<Vec2> patrol_stops1 = { Vec2(1200, 200), Vec2(1000, 200)};
         addMovingGuard1(1200, 200, patrol_stops1);
-        //addGuard1(100, 500);
-        addGuard1(400, 600);
+        addGuard1(100, 500);
+
+
     }
 
     void GamePlayController::generatePresentGuards() {
-        addGuard2(720, 320);
+       //   addGuard2(720, 320);
+
     }
 
     

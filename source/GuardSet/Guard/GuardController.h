@@ -10,7 +10,7 @@
 
 #include "GuardView.h"
 #include "GuardModel.h"
-#define DURATION 1.0f
+// #define DURATION 1.0f
 
 /**
  * A class communicating between the model and the view. It only
@@ -59,6 +59,10 @@ private:
 
     string _state_before_question;
 
+    bool _if_question_inSP;
+
+    Vec2 _static_pos;
+
 
     
 #pragma mark Main Methods
@@ -105,7 +109,8 @@ public:
         _id = id;
 
         _fixed_direction = 0;
-
+        _if_question_inSP = false;
+        _static_pos = position;
 
         _model = std::make_unique<GuardModel>(position, Size(100, 100), Color4::RED, _fixed_direction);
         _view = std::make_unique<GuardView>(position,Size(100, 100), Color4::RED, assets, actions);
@@ -130,6 +135,9 @@ public:
         _patrolMove = cugl::scene2::MoveTo::alloc();
         _doesPatrol = true;
         _is_question = false;
+        _if_question_inSP = false;
+
+        _static_pos = position;
 
         // just a placeholder
         _fixed_direction = 0;
@@ -154,7 +162,13 @@ public:
         _view->setPosition(position);
     }
 
+    Vec2 getStaticPosition() {
+        return _static_pos;
+    }
 
+    void setStaticPosition(Vec2 value) {
+        _static_pos = value;
+    }
 
     void setStateBeforeQuestion(string s) {
         _state_before_question = s;
@@ -162,6 +176,14 @@ public:
 
     string getStateBeforeQuestion() {
         return _state_before_question;
+    }
+
+    bool getIfQuestionInSP(){
+        return _if_question_inSP;
+    }
+
+    void setIfQuestionInSP(bool value) {
+        _if_question_inSP = value;
     }
 
 #pragma mark Update Chase Methods
@@ -278,7 +300,7 @@ public:
 
     }
 
-    void updateAnimation(Vec2 target, string state, int last_direction, string last_state, bool valid_target) {
+    void updateAnimation(Vec2 target, string state, int last_direction, string last_state, bool valid_target, string id) {
 
         int direction;
         if (!valid_target and state == "static") {
@@ -291,41 +313,48 @@ public:
             Vec2 pos = _view->nodePos();
             direction = calculateMappedAngle(pos.x, pos.y, target.x, target.y);
         }
-        _view->performAnimation(direction, state, last_direction, last_state);
+        _view->performAnimation(direction, state, last_direction, last_state, id);
+        _model->setDirection(direction);
 
 
     }
-    void lookAroundAnim() {
-        updateAnimation(Vec2(0,0), _state, _model->getDirection(), _prev_state, false);
+
+    void stopQuestionAnim(string id){
+        _view->stopQuestionAnim(id);
     }
-    void questionAnim() {
-        updateAnimation(Vec2(0,0), _state, _model->getDirection(), _prev_state, false);
+
+    void lookAroundAnim(string id) {
+        updateAnimation(Vec2(0,0), _state, _model->getDirection(), _prev_state, false, id);
+    }
+    void questionAnim(string id) {
+        updateAnimation(Vec2(0,0), _state, _model->getDirection(), _prev_state, false,id);
         // question animation
+        _view->startQuestionAnim(id);
     }
 
-    void staticGuardAnim() {
-        updateAnimation(Vec2(0,0), _state, _model->getDirection(), _prev_state, false);
+    void staticGuardAnim(string id) {
+        updateAnimation(Vec2(0,0), _state, _model->getDirection(), _prev_state, false, id);
     }
 
-    void chaseGuardAnim() {
-        updateAnimation(_chaseMove->getTarget(), _state, _model->getDirection(), _prev_state, true);
+    void chaseGuardAnim(string id) {
+        updateAnimation(_chaseMove->getTarget(), _state, _model->getDirection(), _prev_state, true, id);
     }
 
-    void patrolGuardAnim() {
-        updateAnimation(_patrolMove->getTarget(), _state, _model->getDirection(), _prev_state, true);
+    void patrolGuardAnim(string id) {
+        updateAnimation(_patrolMove->getTarget(), _state, _model->getDirection(), _prev_state, true, id);
     }
 
-    void returnGuardAnim() {
-        updateAnimation(_returnMove->getTarget(), _state, _model->getDirection(), _prev_state, true);
+    void returnGuardAnim(string id) {
+        updateAnimation(_returnMove->getTarget(), _state, _model->getDirection(), _prev_state, true, id);
     }
 
     void chaseChar(string actionName){
-        CULog("chasing");
+        // CULog("chasing");
         _view->performAction(actionName, _chaseMove);
     }
     
     void returnGuard(string actionName){
-        CULog("returning");
+        // CULog("returning");
         _view->performAction(actionName, _returnMove);
     }
     

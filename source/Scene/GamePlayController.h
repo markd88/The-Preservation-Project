@@ -163,7 +163,7 @@ public:
 //    }
     void addMovingGuard1(int w, int h, vector<Vec2> patrol_stops) {
         Vec2 gPos = Vec2(w,h);
-        _guardSetPast->add_this_moving(gPos, _scene, _assets, patrol_stops);
+        _guardSetPast->add_this_moving(gPos, _scene, _assets, patrol_stops );
     }
     
     void addGuard1(int w, int h) {

@@ -218,7 +218,7 @@ public:
         }
 
         // map the angle from 0 to 360 degrees to 0 to 7
-        CULog("%f", angleDegrees);
+     //    CULog("%f", angleDegrees);
         if (angleDegrees > 337.5 || angleDegrees < 22.5) {
             return 2;
         } else if (angleDegrees >= 22.5 && angleDegrees < 67.5){
