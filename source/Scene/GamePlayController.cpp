@@ -43,7 +43,7 @@ _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displ
     _other_scene->setSize(displaySize * 3);
 //    _scene->setSize(displaySize);
 //    _other_scene->setSize(displaySize);
-//    
+    
     _path = make_unique<PathController>();
     // initialize character, two maps, path
     
@@ -56,17 +56,17 @@ _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displ
     _pastWorldLevel->setTilemapTexture();
     _pastWorld = _pastWorldLevel->getWorld();
     _artifactSet = _pastWorldLevel->getItem();
-//    _artifactSet->addChildTo(_scene);
+    _wallSetPast = _pastWorldLevel->getWall();
 
     // Draw present world
     _presentWorldLevel = _assets->get<LevelModel>(LEVEL_ZERO_PRESENT_KEY);
-//    _presentWorldLevel = _assets->get<LevelModel>(LEVEL_ONE_PRESENT_KEY);
     if (_presentWorldLevel == nullptr) {
         CULog("Failed to import level!");
     }
     _presentWorldLevel->setAssets(_assets);
     _presentWorldLevel->setTilemapTexture();
     _presentWorld = _presentWorldLevel->getWorld();
+    _wallSetPresent = _presentWorldLevel->getWall();
     _presentWorld->updateColor(Color4::CLEAR);
     _pastWorld->updateColor(Color4::CLEAR);
     
@@ -196,9 +196,13 @@ void GamePlayController::init(){
 //    _artifactSet = _pastWorldLevel->getItem();
     _artifactSet->addChildTo(_scene);
     _artifactSet->setVisibility(true);
+    _wallSetPast->addChildTo(_scene);
+    _wallSetPast->setVisibility(true);
     
     _presentWorld->addChildTo(_other_scene);
     _presentWorld->setActive(false);
+    _wallSetPresent->addChildTo(_other_scene);
+    _wallSetPresent->setVisibility(false);
     
     auto presentEdges = _presentWorld->getEdges(_other_scene);
     generatePresentMat(_presentWorld->getVertices());
@@ -297,11 +301,12 @@ void GamePlayController::update(float dt){
             
             _presentWorld->setVisibility(true);
             _guardSetPresent->setVisbility(true);
+            _wallSetPresent->setVisibility(true);
 
             _pastWorld->setVisibility(false);
             _guardSetPast->setVisbility(false);
             _artifactSet->setVisibility(false);
-//            _resourceSet->setVisibility(false);
+            _wallSetPast->setVisibility(false);
             
             _character->removeChildFrom(_scene);
             _character->addChildTo(_other_scene);
@@ -313,9 +318,10 @@ void GamePlayController::update(float dt){
             _pastWorld->setVisibility(true);
             _guardSetPast->setVisbility(true);
             _artifactSet->setVisibility(true);
-//            _resourceSet->setVisibility(true);
+            _wallSetPast->setVisibility(true);
             
             _presentWorld->setActive(false);
+            _wallSetPresent->setVisibility(false);
 
             _activeMap = "pastWorld";
             

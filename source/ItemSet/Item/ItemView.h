@@ -97,6 +97,19 @@ public:
         _node->setVisible(visible);
     }
     
+    /**
+     *  Detect if this file contains a point
+     *
+     *  @param point, the position of the point
+     */
+    bool contains(Vec2 point){
+        Vec2 global_pos = _node->getWorldPosition();
+        Size s = _node->getSize();
+        bool hor = (point.x >= global_pos.x && point.x <= global_pos.x + s.width);
+        bool ver = (point.y >= global_pos.y && point.y <= global_pos.y + s.height);
+        return hor && ver;
+    }
+    
 };
 
 #endif /* ItemView_h */

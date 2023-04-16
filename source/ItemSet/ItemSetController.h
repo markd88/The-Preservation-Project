@@ -109,6 +109,16 @@ public:
             }
         }
     }
+    
+    bool inObstacle(Vec2 point){
+        unsigned int vecSize = _itemSet.size();
+        for(unsigned int i = 0; i < vecSize; i++) {
+            if(_itemSet[i] != nullptr && _itemSet[i]->isWall() && _itemSet[i]->contains(point)){
+                return true;
+            }
+        }
+        return false;
+    }
 };
 
 

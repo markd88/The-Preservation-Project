@@ -76,6 +76,15 @@ public:
     std::string getTextureKey() {
         return _model->getTextureKey();
     }
+    
+    /**
+     *  Detect if this file contains a point
+     *
+     *  @param point, the position of the point
+     */
+    bool contains(Vec2 point){
+        return _view->contains(point);
+    }
 
     
 #pragma mark Scene Methods
