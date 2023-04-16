@@ -88,28 +88,6 @@ public:
     //whether or not user is previewing
     bool _isPreviewing;
 
-    // two_world switch
-
-    // if two-world switch is in progress
-    bool _isSwitching;
-    // first half: collapse
-    std::shared_ptr<cugl::scene2::Animate> _world_switch_0;
-    // second half: expand
-    std::shared_ptr<cugl::scene2::Animate> _world_switch_1;
-
-    std::shared_ptr<cugl::scene2::SpriteNode>  _world_switch_node;
-
-    std::shared_ptr<cugl::scene2::ActionManager> _action_world_switch;
-
-
-    // guards
-    std::vector<std::vector<cugl::Vec2>> _pastMovingGuardsPos;
-    std::vector<cugl::Vec2> _pastStaticGuardsPos;
-
-    std::vector<std::vector<cugl::Vec2>> _presentMovingGuardsPos;
-    std::vector<cugl::Vec2> _presentStaticGuardsPos;
-
-
 #pragma mark Main Methods
 public:
     /**
@@ -166,24 +144,25 @@ public:
 //        Vec2 aPos = Vec2(w,h);
 //        _artifactSet->add_this(aPos, isResource, assets, textureKey);
 //    }
-    void addMovingGuard(int w, int h, vector<Vec2> patrol_stops, bool isPast) {
+    void addMovingGuard1(int w, int h, vector<Vec2> patrol_stops) {
         Vec2 gPos = Vec2(w,h);
-        if (isPast) {
-            _guardSetPast->add_this_moving(gPos, _scene, _assets, patrol_stops);
-        } else {
-            _guardSetPresent->add_this_moving(gPos, _other_scene, _assets, patrol_stops);
-        }
+        _guardSetPast->add_this_moving(gPos, _scene, _assets, patrol_stops);
     }
     
-    void addStaticGuard(int w, int h, bool isPast) {
+    void addGuard1(int w, int h) {
         Vec2 gPos = Vec2(w,h);
-        if (isPast) {
-            _guardSetPast->add_this(gPos, _scene, _assets);
-        } else {
-            _guardSetPresent->add_this(gPos, _other_scene, _assets);
-        }
+        _guardSetPast->add_this(gPos, _scene, _assets);
     }
     
+    void addMovingGuard2(int w, int h, vector<Vec2> patrol_stops) {
+        Vec2 gPos = Vec2(w,h);
+        _guardSetPresent->add_this_moving(gPos, _other_scene, _assets, patrol_stops);
+    }
+
+    void addGuard2(int w, int h) {
+        Vec2 gPos = Vec2(w,h);
+        _guardSetPresent->add_this(gPos, _other_scene, _assets);
+    }
     void generateArtifact();
     
     void generateResource();
@@ -233,8 +212,8 @@ public:
     }
     
     // called when scene becomes active or inactive
-    void generateMovingGuards(std::vector<std::vector<cugl::Vec2>> movingGuardsPos, bool isPast);
-    void generateStaticGuards(std::vector<Vec2> staticGuardsPos, bool isPast);
+    void generatePastGuards();
+    void generatePresentGuards();
 
 
 };

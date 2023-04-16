@@ -85,25 +85,11 @@ _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displ
     
     _guardSetPast = std::make_unique<GuardSetController>(_assets, _actions, _pastWorld, pastMatrix, _pastWorld->getNodes());
     _guardSetPresent = std::make_unique<GuardSetController>(_assets, _actions, _presentWorld, presentMatrix, _presentWorld->getNodes());
+    generatePastGuards();
+    generatePresentGuards();
     
-    // get guard positions
-    _pastMovingGuardsPos = _pastWorldLevel->getMovingGuardsPos();
-    _pastStaticGuardsPos = _pastWorldLevel->getStaticGuardsPos();
-    _presentMovingGuardsPos = _presentWorldLevel->getMovingGuardsPos();
-    _presentStaticGuardsPos = _presentWorldLevel->getStaticGuardsPos();
-
-    // generate guards in past world
-    generateMovingGuards(_pastMovingGuardsPos, true);
-    generateStaticGuards(_pastStaticGuardsPos, true);
-    
-    // generate guards in present world
-    generateMovingGuards(_presentMovingGuardsPos, false);
-    generateStaticGuards(_presentStaticGuardsPos, false);
-
 //    Vec2 start = Vec2(_scene->getSize().width *.85, _scene->getSize().height *.15);
-    
-//    Vec2 start = Vec2(1,1);
-    Vec2 start = _pastWorldLevel->getCharacterPos();
+    Vec2 start = Vec2(1,1);
 
     _character = make_unique<CharacterController>(start, _actions, _assets);
 
@@ -225,8 +211,7 @@ void GamePlayController::init(){
     _activeMap = "pastWorld";
     _template = 0;
     
-    Vec2 start = _pastWorldLevel->getCharacterPos();
-
+    Vec2 start = Vec2(0,0);
     _character = make_unique<CharacterController>(start, _actions, _assets);
     _character->addChildTo(_scene);
 
@@ -239,14 +224,8 @@ void GamePlayController::init(){
     _guardSetPast->clearSet();
     _guardSetPresent->clearSet();
     
-    // generate guards in past world
-    generateMovingGuards(_pastMovingGuardsPos, true);
-    generateStaticGuards(_pastStaticGuardsPos, true);
-    
-    // generate guards in present world
-    generateMovingGuards(_presentMovingGuardsPos, false);
-    generateStaticGuards(_presentStaticGuardsPos, false);
-
+    generatePastGuards();
+    generatePresentGuards();
     _guardSetPast->setVisbility(true);
     _guardSetPresent->setVisbility(false);
     
@@ -513,22 +492,20 @@ void GamePlayController::update(float dt){
 #pragma mark -
 #pragma mark Generation Helpers
 
-    void GamePlayController::generateMovingGuards(std::vector<std::vector<cugl::Vec2>> movingGuardsPos, bool isPast) {
+    void GamePlayController::generatePastGuards() {
+        vector<Vec2> patrol_stops = { Vec2(100, 500), Vec2(190, 500), Vec2(190, 400) }; //must be at least two stops
+        addMovingGuard1(100, 500, patrol_stops);
+//        vector<Vec2> patrol_stops = { Vec2(0, 600), Vec2(500, 600), Vec2(1000, 600) };
+//        addMovingGuard1(0, 600, patrol_stops);
         
-        for (int i = 0; i < movingGuardsPos.size(); i++) {
-            int startX = movingGuardsPos[i][0].x;
-            int startY = movingGuardsPos[i][0].y;
-            std::vector<cugl::Vec2> patrolPoints = movingGuardsPos[i];
-            addMovingGuard(startX, startY, patrolPoints, isPast);
-        }
+        vector<Vec2> patrol_stops1 = { Vec2(1200, 200), Vec2(1000, 200)};
+        addMovingGuard1(1200, 200, patrol_stops1);
+        //addGuard1(100, 500);
+        addGuard1(400, 600);
     }
 
-    void GamePlayController::generateStaticGuards(std::vector<Vec2> staticGuardsPos, bool isPast) {
-        for (int i = 0; i < staticGuardsPos.size(); i++) {
-            int x = staticGuardsPos[i].x;
-            int y = staticGuardsPos[i].y;
-            addStaticGuard(x, y, isPast);
-        }
+    void GamePlayController::generatePresentGuards() {
+        addGuard2(720, 320);
     }
 
     
