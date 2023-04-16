@@ -118,6 +118,12 @@ bool LevelModel::loadObject(const std::string type, int totHeight, const std::sh
     if (type == ARTIFACTS_FIELD || type == WALLS_FIELD) {
         return loadArtifact(json, totHeight);
     }
+    if (type == GUARD_FIELD) {
+        return loadGuard(json);
+    }
+    if (type == CHARACTER_FIELD) {
+        return loadCharacter(json);
+    }
     return false;
 }
 
@@ -191,6 +197,76 @@ bool LevelModel::loadArtifact(const std::shared_ptr<JsonValue>& json,  int totHe
     }
 
     success = success && x >= 0 && y >= 0;
+    return success;
+}
+
+
+/**
+* Loads character initial position
+*/
+bool LevelModel::loadCharacter(const std::shared_ptr<JsonValue>& json) {
+    bool success = true;
+    
+    std::string textureType = json->get("type")->asString();
+
+    int x = json->get("x")->asInt() - 50;
+    int y = 896 - json->get("y")->asInt() + 80;
+
+    _characterPos.set(x, y);
+    
+    return success;
+}
+
+/**
+* Loads a guard object
+*/
+bool LevelModel::loadGuard(const std::shared_ptr<JsonValue>& json) {
+    bool success = true;
+    
+    // in case old tileset is loaded
+    if (json->get("properties") == nullptr) {
+        return false;
+    }
+    
+    std::string textureType = json->get("type")->asString();
+    bool isStatic = json->get("properties")->get(0)->get("value")->asBool();
+    
+    if (isStatic) {
+        int x = json->get("x")->asInt();
+        int y = 896 - json->get("y")->asInt() + 40;
+        _staticGuardsPos.push_back(Vec2(x, y));
+    } else {
+        std::vector<Vec2> patrolPoints;
+        // parse input path with format x1,y1:x2,y2...
+        std::string inputPath = json->get("properties")->get(1)->get("value")->asString();
+        size_t start = 0;
+        size_t end = inputPath.find(':');
+
+        while (end != std::string::npos) {
+            Vec2 vec;
+            size_t comma = inputPath.find(',', start);
+            vec.x = std::stoi(inputPath.substr(start, comma - start));
+            vec.y = 896 - std::stoi(inputPath.substr(comma + 1, end - comma - 1)) + 40;
+            patrolPoints.push_back(vec);
+            start = end + 1;
+            end = inputPath.find(':', start);
+        }
+
+        Vec2 vec;
+        size_t comma = inputPath.find(',', start);
+        vec.x = std::stoi(inputPath.substr(start, comma - start));
+        vec.y = std::stoi(inputPath.substr(comma + 1));
+        patrolPoints.push_back(vec);
+
+        _movingGuardsPos.push_back(patrolPoints);
+        
+        // Print the vector of Vec2s
+        for (const auto& v : patrolPoints) {
+            std::cout << "(" << v.x << ", " << v.y << ")" << std::endl;
+        }
+
+    }
+
     return success;
 }
 
