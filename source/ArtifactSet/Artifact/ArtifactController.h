@@ -61,16 +61,6 @@ public:
         _view->setSize(size);
     }
     
-    /**
-     *  Updates the model and view with the color of this tile.
-     *
-     *  @param color The tile color
-     */
-    void updateColor(Color4 color) {
-        _view->setColor(color);
-    }
-    
-    
     Vec2 getNodePosition(){
         return _view->nodePos();
     }
