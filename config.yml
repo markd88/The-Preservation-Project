@@ -34,8 +34,6 @@ sources:                            # The list of the source code files
     - source/GuardSet/Guard/*.h
     - source/ArtifactSet/*.h
     - source/ArtifactSet/Artifact/*.h
-    - source/WallSet/*.h
-    - source/WallSet/Wall/*.h
     - source/Level/*.h
     - source/Level/*.cpp
 

@@ -1,22 +1,23 @@
 //
-//  ArtifactModel.h
+//  ItemModel.h
 //  Tilemap
 //
 //  Created by Hao Chen on 3/12/23.
 //
 
-#ifndef ArtifactModel_h
-#define ArtifactModel_h
+#ifndef ItemModel_h
+#define ItemModel_h
 
 #include <cugl/cugl.h>
 using namespace cugl;
 
-class ArtifactModel {
+class ItemModel {
 private:
     /** Center of the character */
     Vec2 _position;
     Size _size;
     bool _isResource;
+    bool _isWall;
     
     std::string _textureKey;
     int radius;
@@ -30,14 +31,15 @@ public:
     /**
      * Creates the model state.
      *
-     * @param position  The bottom left corner of the Artifact
-     * @param size      The width and height of a Artifact
-     * @param color     The Artifact color
+     * @param position  The bottom left corner of the Item
+     * @param size      The width and height of a Item
+     * @param color     The Item color
      */
-    ArtifactModel(Vec2 position, Size size, bool isResource, std::string textureKey){
+    ItemModel(Vec2 position, Size size, bool isResource, bool isWall, std::string textureKey){
         setPosition(position);
         setSize(size);
-        setType(isResource);
+        setResource(isResource);
+        setWall(isWall);
         setTextureKey(textureKey);
     }
     
@@ -53,7 +55,7 @@ public:
     }
 
     /**
-     *  Sets the position of the bottom left corner of the Artifact.
+     *  Sets the position of the bottom left corner of the Item.
      *
      *  @param position Bottom left corner of tile
      */
@@ -62,9 +64,9 @@ public:
     }
 
     /**
-     *  Sets the size of the Artifact.
+     *  Sets the size of the Item.
      *
-     *  @param size Width and height of an Artifact
+     *  @param size Width and height of an Item
      */
     void setSize(Size size) {
         _size = size;
@@ -73,14 +75,23 @@ public:
     bool isResource(){
         return _isResource;
     }
+    
+    bool isWall(){
+        return _isWall;
+    }
 
     /**
-     *  Sets the type of this item, artifact or resource.
+     *  Sets the type of this item, Item or resource.
      *
      *  @param isResource The type of the item
      */
-    void setType(bool isResource) {
+    void setResource(bool isResource) {
         _isResource = isResource;
+
+    }
+    
+    void setWall(bool isWall) {
+        _isWall = isWall;
 
     }
     
@@ -89,4 +100,4 @@ public:
     }
 };
 
-#endif /* artifactModel_h */
+#endif /* ItemModel_h */

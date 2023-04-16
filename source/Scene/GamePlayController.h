@@ -13,8 +13,7 @@ using namespace std;
 #include <Camera/CameraManager.h>
 #include <Camera/CameraMove.h>
 #include <GuardSet/GuardSetController.h>
-#include <ArtifactSet/ArtifactSetController.h>
-#include <WallSet/WallSetController.h>
+#include <ItemSet/ItemSetController.h>
 #include "LevelModel.h"
 
 class GamePlayController {
@@ -60,8 +59,9 @@ public:
     std::unique_ptr<GuardSetController> _guardSetPast;
     std::unique_ptr<GuardSetController> _guardSetPresent;
     
-    std::shared_ptr<ArtifactSetController> _artifactSet;
-    std::shared_ptr<ArtifactSetController> _resourceSet;
+    std::shared_ptr<ItemSetController> _artifactSet;
+    std::shared_ptr<ItemSetController> _resourceSet;
+    std::shared_ptr<ItemSetController> _wallSet;
     
     std::unique_ptr<PathController> _path;
     std::shared_ptr<InputController> _input = InputController::getInstance();
@@ -140,10 +140,10 @@ public:
 
 #pragma mark Generation Helpers
 //private:
-    /** Generates artifacts and guards in the primary world. */
-//    void addArtifact(int w, int h, bool isResource, const std::shared_ptr<cugl::AssetManager>& assets, std::string textureKey) {
+    /** Generates items and guards in the primary world. */
+//    void addItem(int w, int h, bool isResource, const std::shared_ptr<cugl::AssetManager>& assets, std::string textureKey) {
 //        Vec2 aPos = Vec2(w,h);
-//        _artifactSet->add_this(aPos, isResource, assets, textureKey);
+//        _ItemSet->add_this(aPos, isResource, assets, textureKey);
 //    }
     void addMovingGuard1(int w, int h, vector<Vec2> patrol_stops) {
         Vec2 gPos = Vec2(w,h);

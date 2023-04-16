@@ -426,13 +426,13 @@ void GamePlayController::update(float dt){
 #pragma mark Resource Collection Methods
     // if collect a resource
     if(_activeMap == "pastWorld"){
-        for(int i=0; i<_artifactSet->_artifactSet.size(); i++){
+        for(int i=0; i<_artifactSet->_itemSet.size(); i++){
             // detect collision
-            if(_character->contains(_artifactSet->_artifactSet[i]->getNodePosition())){
+            if(_character->contains(_artifactSet->_itemSet[i]->getNodePosition())){
                 // if close, should collect it
                 
                 // if resource
-                if(_artifactSet->_artifactSet[i]->isResource()){
+                if(_artifactSet->_itemSet[i]->isResource()){
                     _character->addRes();
                     // update panel
                     _res_label->setText(cugl::strtool::to_string(_character->getNumRes()));

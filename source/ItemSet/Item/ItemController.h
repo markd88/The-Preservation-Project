@@ -1,28 +1,28 @@
 //
-//  WallController.h
+//  ItemController.h
 //  Tilemap
 //
-//  Created by Hao Chen on 4/15/23.
+//  Created by Hao Chen on 3/12/23.
 //
 
-#ifndef WallController_h
-#define WallController_h
+#ifndef __ITEM_CONTROLLER_H__
+#define __ITEM_CONTROLLER_H__
 
-#include "WallModel.h"
-#include "WallView.h"
+#include "ItemModel.h"
+#include "ItemView.h"
 
 /**
  * A class communicating between the model and the view. It only
  * controls a single tile.
  */
-class WallController {
+class ItemController {
     
 #pragma mark Internal References
 private:
     /** Model reference */
-    std::unique_ptr<WallModel> _model;
+    std::unique_ptr<ItemModel> _model;
     /** View reference */
-    std::unique_ptr<WallView> _view;
+    std::unique_ptr<ItemView> _view;
 
     
 #pragma mark Main Methods
@@ -34,9 +34,9 @@ public:
      * @param size      The width and height of a tile
      * @param color     The tile color
      */
-    WallController(Vec2 position, float rot, Size size, const std::shared_ptr<cugl::AssetManager>& assets, std::string textureKey) {
-        _model = std::make_unique<WallModel>(position, size, textureKey);
-        _view = std::make_unique<WallView>(position, rot, size, assets, textureKey);
+    ItemController(Vec2 position, float rot, Size size, bool isResource, bool isWall, const std::shared_ptr<cugl::AssetManager>& assets, std::string textureKey) {
+        _model = std::make_unique<ItemModel>(position, size, isResource, isWall, textureKey);
+        _view = std::make_unique<ItemView>(position, rot, size, isResource, isWall, assets, textureKey);
     }
 
 #pragma mark Update Methods
@@ -61,22 +61,16 @@ public:
         _view->setSize(size);
     }
     
-    /**
-     *  Updates the model and view with the color of this tile.
-     *
-     *  @param color The tile color
-     */
-    void updateColor(Color4 color) {
-        _view->setColor(color);
-    }
-    
-    
     Vec2 getNodePosition(){
         return _view->nodePos();
     }
     
     bool isResource(){
         return _model->isResource();
+    }
+    
+    bool isWall(){
+        return _model->isWall();
     }
     
     std::string getTextureKey() {
@@ -116,4 +110,4 @@ public:
 public:
 };
 
-#endif /* WallController_h */
+#endif /* __ITEM_CONTROLLER_H__ */

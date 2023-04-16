@@ -31,6 +31,7 @@
 /** Artifact specific fields */
 #define ARTIFACTS_FIELD     "artifact"
 #define RESOURCE_FIELD      "resource-big"
+#define WALL_FIELD          "wall"
 
 /** Guard specific fields */
 #define MAIN_SOUND_FIELD    "main-sound"

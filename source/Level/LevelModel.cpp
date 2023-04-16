@@ -22,7 +22,8 @@ int totalHeight = 0;
 LevelModel::LevelModel(void) : Asset()
 {
     _world = std::make_unique<TilemapController>();
-    _item = std::make_shared<ArtifactSetController>();
+    _item = std::make_shared<ItemSetController>();
+    _wall = std::make_shared<ItemSetController>();
 }
 
 /**
@@ -113,10 +114,10 @@ bool LevelModel::loadObject(const std::string type, int totalHeight, const std::
         return loadTilemap(json);
     }
     if (type == WALLS_FIELD) {
-        return loadArtifact(json);
+        return loadItem(json);
     }
     if (type == ARTIFACTS_FIELD) {
-        return loadArtifact(json);
+        return loadItem(json);
     }
     return false;
 }
@@ -149,28 +150,28 @@ bool LevelModel::loadTilemap(const std::shared_ptr<JsonValue>& json) {
 /**
 * Loads a single wall object
 */
-bool LevelModel::loadWall(const std::shared_ptr<JsonValue>& json, int totalHeight) {
-    bool success = true;
-    std::string textureType = json->get("type")->asString();
-    
-    int width = json->get("height")->asInt();
-    int height = json->get("width")->asInt();
-    int x = json->get("x")->asInt();
-    int y = totalHeight - json->get("y")->asInt();
-    int rot = json->get("rotation")->asInt();
-    
-    Vec2 pos = Vec2 (x, y);
-    Size size = Size(width, height);
-    _item->add_this(pos, rot, size, false, _assets, textureType);
-
-    success = success && x >= 0 && y >= 0;
-    return success;
-}
+//bool LevelModel::loadWall(const std::shared_ptr<JsonValue>& json, int totalHeight) {
+//    bool success = true;
+//    std::string textureType = json->get("type")->asString();
+//
+//    int width = json->get("height")->asInt();
+//    int height = json->get("width")->asInt();
+//    int x = json->get("x")->asInt();
+//    int y = totalHeight - json->get("y")->asInt();
+//    int rot = json->get("rotation")->asInt();
+//
+//    Vec2 pos = Vec2 (x, y);
+//    Size size = Size(width, height);
+//    _item->add_this(pos, rot, size, false, _assets, textureType);
+//
+//    success = success && x >= 0 && y >= 0;
+//    return success;
+//}
 
 /**
-* Loads an artifact object
+* Loads an Item object
 */
-bool LevelModel::loadArtifact(const std::shared_ptr<JsonValue>& json) {
+bool LevelModel::loadItem(const std::shared_ptr<JsonValue>& json) {
     bool success = true;
     std::string textureType = json->get("type")->asString();
     
@@ -182,10 +183,12 @@ bool LevelModel::loadArtifact(const std::shared_ptr<JsonValue>& json) {
     
     Vec2 pos = Vec2 (x, y);
     Size size = Size(width, height);
-    if (textureType == RESOURCE_FIELD) {
-        _item->add_this(pos, rot, size, true, _assets, textureType);
+    if (textureType == WALL_FIELD) {
+        _wall->add_this(pos, rot, size, false, true, _assets, textureType);
+    } else if (textureType == RESOURCE_FIELD) {
+        _item->add_this(pos, rot, size, true, false, _assets, textureType);
     } else {
-        _item->add_this(pos, rot, size, false, _assets, textureType);
+        _item->add_this(pos, rot, size, false, false, _assets, textureType);
     }
 
     success = success && x >= 0 && y >= 0;
@@ -195,4 +198,5 @@ bool LevelModel::loadArtifact(const std::shared_ptr<JsonValue>& json) {
 void LevelModel::setTilemapTexture() {
     _world->setTexture(_assets);
     _item->setTexture(_assets);
+    _wall->setTexture(_assets);
 };
