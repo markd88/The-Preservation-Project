@@ -31,10 +31,9 @@ public:
      * @param size      The width and height of a Wall
      * @param color     The Wall color
      */
-    WallModel(Vec2 position, Size size, bool isResource, std::string textureKey){
+    WallModel(Vec2 position, Size size, std::string textureKey){
         setPosition(position);
         setSize(size);
-        setType(isResource);
         setTextureKey(textureKey);
     }
     
@@ -69,16 +68,6 @@ public:
     
     bool isResource(){
         return _isResource;
-    }
-
-    /**
-     *  Sets the type of this item, Wall or resource.
-     *
-     *  @param isResource The type of the item
-     */
-    void setType(bool isResource) {
-        _isResource = isResource;
-
     }
     
     void setTextureKey(std::string textureKey) {

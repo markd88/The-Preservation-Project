@@ -34,9 +34,9 @@ public:
      * @param size      The width and height of a tile
      * @param color     The tile color
      */
-    WallController(Vec2 position, float rot, Size size, bool isResource, const std::shared_ptr<cugl::AssetManager>& assets, std::string textureKey) {
-        _model = std::make_unique<WallModel>(position, size, isResource, textureKey);
-        _view = std::make_unique<WallView>(position, rot, size, isResource, assets, textureKey);
+    WallController(Vec2 position, float rot, Size size, const std::shared_ptr<cugl::AssetManager>& assets, std::string textureKey) {
+        _model = std::make_unique<WallModel>(position, size, textureKey);
+        _view = std::make_unique<WallView>(position, rot, size, assets, textureKey);
     }
 
 #pragma mark Update Methods

@@ -13,6 +13,7 @@
 #include <cugl/assets/CUAsset.h>
 #include <Tilemap/TilemapController.h>
 #include <ArtifactSet/ArtifactSetController.h>
+#include <WallSet/WallSetController.h>
 
 using namespace cugl;
 
@@ -31,6 +32,7 @@ using namespace cugl;
 class LevelModel : public Asset {
 protected:
     std::shared_ptr<TilemapController> _world;
+    std::shared_ptr<ArtifactSetController> _wall;
     std::shared_ptr<ArtifactSetController> _item;
 
     /** The AssetManager for the game mode */
@@ -59,9 +61,9 @@ protected:
      * @retain the wall
      * @return true if the wall was successfully loaded
      */
-    bool loadWall(const std::shared_ptr<JsonValue>& json);
-    bool loadTilemap(const std::shared_ptr<JsonValue>& json, int totHeight);
-    bool loadArtifact(const std::shared_ptr<JsonValue>& json, int totHeight);
+    bool loadWall(const std::shared_ptr<JsonValue>& json, int totalHeight);
+    bool loadTilemap(const std::shared_ptr<JsonValue>& json);
+    bool loadArtifact(const std::shared_ptr<JsonValue>& json);
     /**
      * Clears the root scene graph node for this level
      */

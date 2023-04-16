@@ -20,12 +20,12 @@ private:
 #pragma mark Main Functions
 public:
     /** contructor */
-    WallView(Vec2 position, float rot, Size size, bool isResource, const std::shared_ptr<cugl::AssetManager>& assets, std::string textureKey) {
+    WallView(Vec2 position, float rot, Size size, const std::shared_ptr<cugl::AssetManager>& assets, std::string textureKey) {
         _node = scene2::PolygonNode::alloc();
         _node->setAnchor(Vec2::ANCHOR_CENTER);
         _node->setAngle(-rot * M_PI/180);
         setPosition(position);
-//        setSize(size);
+        setSize(size);
     }
     
     ~WallView(){

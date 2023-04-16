@@ -50,10 +50,10 @@ public:
         std::shared_ptr<Texture> character  = assets->get<Texture>("character");
         _node = scene2::SpriteNode::allocWithSheet(character, 8, 8, 64); // SpriteNode for animation
         _node->setScale(0.8f); // Magic number to rescale asset
+        _node->setAnchor(Vec2(0.5, 0.25));
         _node->setPosition(position);
         _node->setRelativeColor(false);
         _node->setVisible(true);
-        _node->setAnchor(Vec2(0.5, 0.25));
 
 
 

@@ -39,17 +39,16 @@ _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displ
     // Allocate the camera manager
     _camManager = CameraManager::alloc();
     
-//    _scene->setSize(displaySize * 3);
-//    _other_scene->setSize(displaySize * 3);
-    _scene->setSize(displaySize);
-    _other_scene->setSize(displaySize);
-    
+    _scene->setSize(displaySize * 3);
+    _other_scene->setSize(displaySize * 3);
+//    _scene->setSize(displaySize);
+//    _other_scene->setSize(displaySize);
+//    
     _path = make_unique<PathController>();
     // initialize character, two maps, path
     
     // Draw past world
     _pastWorldLevel = _assets->get<LevelModel>(LEVEL_ZERO_PAST_KEY);
-//    _pastWorldLevel = _assets->get<LevelModel>(LEVEL_ONE_PAST_KEY);
     if (_pastWorldLevel == nullptr) {
         CULog("Failed to import level!");
     }
@@ -89,7 +88,7 @@ _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displ
     generatePresentGuards();
     
 //    Vec2 start = Vec2(_scene->getSize().width *.85, _scene->getSize().height *.15);
-    Vec2 start = Vec2(1,1);
+    Vec2 start = Vec2(0,0);
 
     _character = make_unique<CharacterController>(start, _actions, _assets);
 

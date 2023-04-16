@@ -14,6 +14,7 @@ using namespace std;
 #include <Camera/CameraMove.h>
 #include <GuardSet/GuardSetController.h>
 #include <ArtifactSet/ArtifactSetController.h>
+#include <WallSet/WallSetController.h>
 #include "LevelModel.h"
 
 class GamePlayController {

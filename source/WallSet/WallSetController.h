@@ -36,14 +36,8 @@ public:
 #pragma mark Update Methods
 public:
     
-//    void add_this(Vec2 aPos, const std::shared_ptr<cugl::AssetManager>& assets, bool isResource){
-//        Wall _Wall = std::make_unique<WallController>(aPos, assets, isResource);
-////        _Wall->addChildTo(s);
-//        _WallSet.push_back(std::move(_Wall));
-//    }
-    
-    void add_this(Vec2 aPos, float rot, Size size, bool isResource, const std::shared_ptr<cugl::AssetManager>& assets, std::string textureKey){
-        Wall _Wall = std::make_unique<WallController>(aPos, rot, size, isResource, assets, textureKey);
+    void add_this(Vec2 aPos, float rot, Size size, const std::shared_ptr<cugl::AssetManager>& assets, std::string textureKey){
+        Wall _Wall = std::make_unique<WallController>(aPos, rot, size, assets, textureKey);
         _WallSet.push_back(std::move(_Wall));
     }
     
