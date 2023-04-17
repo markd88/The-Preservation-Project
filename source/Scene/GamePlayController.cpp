@@ -495,6 +495,9 @@ void GamePlayController::update(float dt){
                 failTerminate();
                 break;
             }
+//            if(_obsSetPast->inObstacle(_guardSetPast->_guardSet[i]->getNodePosition())){
+//                // guard stop
+//            }
         }
     }
     

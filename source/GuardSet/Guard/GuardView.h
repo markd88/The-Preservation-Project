@@ -48,7 +48,7 @@ public:
 
         _node->setRelativeColor(false);
         _node->setVisible(true);
-        _node->setAnchor(Vec2::ANCHOR_CENTER);
+        _node->setAnchor(Vec2::ANCHOR_BOTTOM_LEFT);
         _node->setPosition(position);
 
 

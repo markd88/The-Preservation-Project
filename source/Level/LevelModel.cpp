@@ -113,10 +113,10 @@ bool LevelModel::loadObject(const std::string type, int totalHeight, const std::
     if (type == TILEMAP_FILED) {
         return loadTilemap(json);
     }
-    else if (type == WALLS_FIELD) {
+    if (type == WALLS_FIELD) {
         return loadWall(json);
     }
-    else if (type == ARTIFACTS_FIELD) {
+    if (type == ARTIFACTS_FIELD) {
         return loadItem(json);
     }
     if (type == GUARD_FIELD) {
@@ -212,8 +212,8 @@ bool LevelModel::loadCharacter(const std::shared_ptr<JsonValue>& json) {
     
     std::string textureType = json->get("type")->asString();
 
-    int x = json->get("x")->asInt() - 50;
-    int y = 896 - json->get("y")->asInt() + 80;
+    int x = json->get("x")->asInt(); // x pos
+    int y = totalHeight - json->get("y")->asInt(); // y pos
 
     _characterPos.set(x, y);
     
@@ -235,8 +235,8 @@ bool LevelModel::loadGuard(const std::shared_ptr<JsonValue>& json) {
     bool isStatic = json->get("properties")->get(0)->get("value")->asBool();
     
     if (isStatic) {
-        int x = json->get("x")->asInt();
-        int y = 896 - json->get("y")->asInt() + 40;
+        int x = json->get("x")->asInt(); // x pos
+        int y = totalHeight - json->get("y")->asInt(); // y pos
         _staticGuardsPos.push_back(Vec2(x, y));
     } else {
         std::vector<Vec2> patrolPoints;
@@ -249,7 +249,7 @@ bool LevelModel::loadGuard(const std::shared_ptr<JsonValue>& json) {
             Vec2 vec;
             size_t comma = inputPath.find(',', start);
             vec.x = std::stoi(inputPath.substr(start, comma - start));
-            vec.y = 896 - std::stoi(inputPath.substr(comma + 1, end - comma - 1)) + 40;
+            vec.y = totalHeight - std::stoi(inputPath.substr(comma + 1, end - comma - 1));
             patrolPoints.push_back(vec);
             start = end + 1;
             end = inputPath.find(':', start);
