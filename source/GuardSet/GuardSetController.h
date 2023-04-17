@@ -167,7 +167,7 @@ public:
 
             // static state
             if (_guardSet[i]->state == "static") {
-                CULog("static");
+           //     CULog("static");
                 if (visual_detection) {
                     _guardSet[i]->updatePrevState(_guardSet[i]->state);
                     _guardSet[i]->updateState("chaseD");
@@ -186,7 +186,7 @@ public:
 
             // question state
             else if (_guardSet[i]->state == "question") {
-                CULog("question");
+          //      CULog("question");
                 if (visual_detection) {
                     // chase immediately
                     _guardSet[i]->updatePrevState(_guardSet[i]->state);
@@ -200,7 +200,7 @@ public:
                 }
                 else if (acoustic_detection && elapsed_question.count() > 1) {
                     // chase in shortest path
-                    CULog("switch to chaseSP from question");
+              //      CULog("switch to chaseSP from question");
                     _guardSet[i]->stopQuestionAnim(id);
                     _guardSet[i]->updatePrevState(_guardSet[i]->state);
 
@@ -222,7 +222,7 @@ public:
                 else {
                     // return to the previous state
                     _guardSet[i]->updatePrevState(_guardSet[i]->state);
-                    CULog( " state before question: %s", _guardSet[i]->getStateBeforeQuestion().c_str());
+        //            CULog( " state before question: %s", _guardSet[i]->getStateBeforeQuestion().c_str());
                     _guardSet[i]->updateState(_guardSet[i]->getStateBeforeQuestion());
                     if (_guardSet[i]->getStateBeforeQuestion() == "question") {
                         last_time_question = now;
@@ -232,7 +232,7 @@ public:
             }
 
             else if (_guardSet[i]->state == "chaseD") {
-                CULog("chaseD");
+      //          CULog("chaseD");
                 //go to lookaround if no detection
                 if (!visual_detection){
                     _guardSet[i]->updatePrevState(_guardSet[i]->state);
@@ -246,9 +246,9 @@ public:
             }
 
             else if (_guardSet[i]->state == "chaseSP") {
-                CULog("chaseSP");
+       //         CULog("chaseSP");
                 if (visual_detection) {
-                    CULog("switch from chaseSP to chaseD");
+        //            CULog("switch from chaseSP to chaseD");
                     _guardSet[i]->updatePrevState(_guardSet[i]->state);
                     _guardSet[i]->updateState("chaseD");
                 }
@@ -272,7 +272,7 @@ public:
                             // continue
                         }
                         else {
-                            CULog("recalculate chaseSP");
+            //                CULog("recalculate chaseSP");
                             Vec2 pos = _guardSet[i]->getNodePosition();
                             _actions->remove(chaseSPAction);
                             _actions->remove("guard_animation");
@@ -305,7 +305,7 @@ public:
             }
 
             else if (_guardSet[i]->state == "lookaround") {
-                CULog("lookaround");
+           //     CULog("lookaround");
                 // maybe wider visual detection
                 if (visual_detection) {
                     _guardSet[i]->updatePrevState(_guardSet[i]->state);
@@ -339,10 +339,10 @@ public:
                      sp.pop_back();
                      sp.push_back(true_point);
 
-                    CULog("return path");
-                    for(int i=0; i < sp.size(); i++) {
-                        CULog( "x: %f, y: %f", sp.at(i).x, sp.at(i).y );
-                    }
+           //         CULog("return path");
+//                    for(int i=0; i < sp.size(); i++) {
+//                        CULog( "x: %f, y: %f", sp.at(i).x, sp.at(i).y );
+//                    }
 
                     _guardSet[i]->setReturnVec(sp);
 
@@ -354,7 +354,7 @@ public:
 
             //patrol state
             else if (_guardSet[i]->state == "patrol"){
-                CULog("patrol");
+            //    CULog("patrol");
                 //detection in patrol state = chase
                 if (visual_detection){
                     _guardSet[i]->updatePrevState(_guardSet[i]->state);
@@ -383,7 +383,7 @@ public:
 
             
             else if (_guardSet[i]->state == "return"){
-                CULog("return");
+        //        CULog("return");
                 if (visual_detection){
                     _guardSet[i]->updatePrevState(_guardSet[i]->state);
                     _guardSet[i]->updateState("chase");
@@ -505,7 +505,7 @@ public:
             else if (_guardSet[i]->state == "chaseSP"){
                 if (_actions->isActive(chaseSPAction)) {
                     // wait for it to finish
-                    CULog("in the process of chase SP");
+            //        CULog("in the process of chase SP");
                     _guardSet[i]->chaseGuardAnim(id);
                 }
 
@@ -513,7 +513,7 @@ public:
                     _guardSet[i]->updateChaseSPTarget(_guardSet[i]->chaseVec[0]);
                     _guardSet[i]->chaseChar(chaseSPAction);
                     _guardSet[i]->chaseGuardAnim(id);
-                    CULog("start chasing from %f  %f to %f  %f ", _guardSet[i]->getNodePosition().x, _guardSet[i]->getNodePosition().y,_guardSet[i]->chaseVec[0].x, _guardSet[i]->chaseVec[0].y );
+             //       CULog("start chasing from %f  %f to %f  %f ", _guardSet[i]->getNodePosition().x, _guardSet[i]->getNodePosition().y,_guardSet[i]->chaseVec[0].x, _guardSet[i]->chaseVec[0].y );
                     // erase from return vector
                     _guardSet[i]->eraseChaseSPVec();
                 }

@@ -155,7 +155,7 @@ public:
 
         if (_actions->isActive("guard_animation"+id) and (current_d != last_direction or state != last_state)) {
             _actions->remove("guard_animation"+id);
-            CULog("remove current animation, start a new one curent d:%d last d: %d  current state: %s   last state: %s", current_d, last_direction, state.c_str(), last_state.c_str());
+       //     CULog("remove current animation, start a new one curent d:%d last d: %d  current state: %s   last state: %s", current_d, last_direction, state.c_str(), last_state.c_str());
         }
 
         int direction;

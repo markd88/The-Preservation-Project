@@ -309,7 +309,7 @@ void GamePlayController::update(float dt){
     _world_switch_node->setPosition(_character->getNodePosition());
     if (_isSwitching && _action_world_switch->isActive("first_half")) {
         _action_world_switch->update(dt);
-        CULog("update first half");
+      //  CULog("update first half");
         return;
     }
     if (_isSwitching && !_action_world_switch->isActive("first_half") && !_action_world_switch->isActive("second_half")) {
