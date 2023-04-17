@@ -60,25 +60,25 @@ _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displ
     
     // Draw past world
     _pastWorldLevel = _assets->get<LevelModel>(LEVEL_ZERO_PAST_KEY);
-//    _pastWorldLevel = _assets->get<LevelModel>(LEVEL_ONE_PAST_KEY);
     if (_pastWorldLevel == nullptr) {
         CULog("Failed to import level!");
     }
     _pastWorldLevel->setAssets(_assets);
     _pastWorldLevel->setTilemapTexture();
     _pastWorld = _pastWorldLevel->getWorld();
+    _obsSetPast = _pastWorldLevel->getObs();
     _artifactSet = _pastWorldLevel->getItem();
 
 
     // Draw present world
     _presentWorldLevel = _assets->get<LevelModel>(LEVEL_ZERO_PRESENT_KEY);
-//    _presentWorldLevel = _assets->get<LevelModel>(LEVEL_ONE_PRESENT_KEY);
     if (_presentWorldLevel == nullptr) {
         CULog("Failed to import level!");
     }
     _presentWorldLevel->setAssets(_assets);
     _presentWorldLevel->setTilemapTexture();
     _presentWorld = _presentWorldLevel->getWorld();
+    _obsSetPresent = _presentWorldLevel->getObs();
     _presentWorld->updateColor(Color4::CLEAR);
     _pastWorld->updateColor(Color4::CLEAR);
     
@@ -113,7 +113,7 @@ _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displ
 
 //    Vec2 start = Vec2(_scene->getSize().width *.85, _scene->getSize().height *.15);
     
-//    Vec2 start = Vec2(1,1);
+//    Vec2 start = Vec2(0,0);
     Vec2 start = _pastWorldLevel->getCharacterPos();
 
     _character = make_unique<CharacterController>(start, _actions, _assets);
@@ -240,12 +240,19 @@ void GamePlayController::init(){
         addPastEdge(edges[i].first, edges[i].second);
     }
     
-
+    _artifactSet->clearSet();
+    _artifactSet = _pastWorldLevel->getItem();
     _artifactSet->addChildTo(_scene);
     _artifactSet->setVisibility(true);
     
+    
+    _obsSetPast->addChildTo(_scene);
+    _obsSetPast->setVisibility(true);
+    
     _presentWorld->addChildTo(_other_scene);
     _presentWorld->setActive(false);
+    _obsSetPresent->addChildTo(_other_scene);
+    _obsSetPresent->setVisibility(false);
     
     auto presentEdges = _presentWorld->getEdges(_other_scene);
     generatePresentMat(_presentWorld->getVertices());
@@ -297,7 +304,7 @@ void GamePlayController::init(){
     
     // reload initial label for n_res and n_art
     _res_label->setText("0");
-    _art_label->setText("0/3");
+    _art_label->setText("0/5");
     
     //_pastWorld->addPoints(_scene->getSize(), _scene);
     
@@ -388,7 +395,7 @@ void GamePlayController::update(float dt){
 
     _input->update(dt);
     // if pinch, switch world
-    bool cant_switch = ((_activeMap == "pastWorld" && _presentWorld->inObstacle(_character->getPosition())) || (_activeMap == "presentWorld" && _pastWorld->inObstacle(_character->getPosition())));
+    bool cant_switch = ((_activeMap == "pastWorld" && _obsSetPast->inObstacle(_character->getPosition())) || (_activeMap == "presentWorld" && _obsSetPresent->inObstacle(_character->getPosition())));
     
 
     cant_switch = cant_switch || (_character->getNumRes() == 0);
@@ -410,6 +417,45 @@ void GamePlayController::update(float dt){
         CULog("activate two world animation");
 
 
+        
+        if (_activeMap == "pastWorld") {
+            _activeMap = "presentWorld";
+            
+            _presentWorld->setVisibility(true);
+            _guardSetPresent->setVisbility(true);
+            _obsSetPresent->setVisibility(true);
+
+            _pastWorld->setVisibility(false);
+            _guardSetPast->setVisbility(false);
+            _artifactSet->setVisibility(false);
+            _obsSetPast->setVisibility(false);
+            
+            _character->removeChildFrom(_scene);
+            _character->addChildTo(_other_scene);
+            
+            // when move to the second world, minus 1 visually
+            _res_label->setText(cugl::strtool::to_string(_character->getNumRes()-1));
+        }
+        else {
+            _pastWorld->setVisibility(true);
+            _guardSetPast->setVisbility(true);
+            _artifactSet->setVisibility(true);
+            _obsSetPast->setVisibility(true);
+            
+            _presentWorld->setActive(false);
+            _obsSetPresent->setVisibility(false);
+
+            _activeMap = "pastWorld";
+            
+            _character->removeChildFrom(_other_scene);
+            _character->addChildTo(_scene);
+            
+            // when move to the second world, minus 1 in model
+            _character->useRes();
+        }
+        
+        // stop previous movement after switch world
+        _path->clearPath();
     }
 #pragma mark Pan Methods
 
@@ -466,11 +512,12 @@ void GamePlayController::update(float dt){
         if(_path->isInitiating == false){
             while(_path->farEnough(input_posi)){
                 Vec2 checkpoint = _path->getLastPos() + (input_posi - _path->getLastPos()) / _path->getLastPos().distance(input_posi) * _path->getSize();
-                if((_activeMap == "pastWorld" && _pastWorld->inObstacle(checkpoint)) || (_activeMap == "presentWorld" && _presentWorld->inObstacle(checkpoint))){
+
+                if((_activeMap == "pastWorld" && _obsSetPast->inObstacle(checkpoint)) || (_activeMap == "presentWorld" && _obsSetPresent->inObstacle(checkpoint))){
                     _path->setIsDrawing(false);
-                    // path_trace.clear();
                     return;
                 }
+                
                 else{
                     _path->addSegment(checkpoint, _scene);
                 }
@@ -512,13 +559,13 @@ void GamePlayController::update(float dt){
 #pragma mark Resource Collection Methods
     // if collect a resource
     if(_activeMap == "pastWorld"){
-        for(int i=0; i<_artifactSet->_artifactSet.size(); i++){
+        for(int i=0; i<_artifactSet->_itemSet.size(); i++){
             // detect collision
-            if(_character->contains(_artifactSet->_artifactSet[i]->getNodePosition())){
+            if(_character->contains(_artifactSet->_itemSet[i]->getNodePosition())){
                 // if close, should collect it
                 
                 // if resource
-                if(_artifactSet->_artifactSet[i]->isResource()){
+                if(_artifactSet->_itemSet[i]->isResource()){
                     AudioEngine::get()->play("NPC_flip", _collectResourceSound, false, _collectResourceSound->getVolume(), true);
                     _character->addRes();
                     // update panel
@@ -526,20 +573,21 @@ void GamePlayController::update(float dt){
                     CULog("resource");
                 }
                 // if artifact
-                else{
+                else if (_artifactSet->_itemSet[i]->isArtifact()){
                     AudioEngine::get()->play("arrowHit", _collectArtifactSound, false, _collectArtifactSound->getVolume(), true);
                     _character->addArt();
-                    _art_label->setText(cugl::strtool::to_string(_character->getNumArt()) + "/3");
+                    _art_label->setText(cugl::strtool::to_string(_character->getNumArt()) + "/5");
                 }
                 // make the artifact disappear and remove from set
                 _artifactSet->remove_this(i, _scene);
-                if(_character->getNumArt() == 10){
+                if(_character->getNumArt() == 5){
                     completeTerminate();
                 }
                 break;
             }
             
         }
+        
     }
 
 #pragma mark Guard Methods
@@ -552,6 +600,9 @@ void GamePlayController::update(float dt){
                 failTerminate();
                 break;
             }
+//            if(_obsSetPast->inObstacle(_guardSetPast->_guardSet[i]->getNodePosition())){
+//                // guard stop
+//            }
         }
     }
     

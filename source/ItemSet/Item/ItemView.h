@@ -1,34 +1,38 @@
 //
-//  WallView.h
+//  ItemView.h
 //  Tilemap
 //
-//  Created by Hao Chen on 4/15/23.
+//  Created by Hao Chen on 3/12/23.
 //
 
-#ifndef WallView_h
-#define WallView_h
+#ifndef ItemView_h
+#define ItemView_h
 
 #include <cugl/cugl.h>
 #include <math.h>
+//using namespace cugl;
 
-class WallView{
+class ItemView{
 private:
     /** Main character view */
     /** The node is attached to the root-scene*/
-    std::shared_ptr<scene2::PolygonNode> _node;
+//    std::shared_ptr<scene2::PolygonNode> _node;
+    std::shared_ptr<scene2::SceneNode> _node;
+    
     
 #pragma mark Main Functions
 public:
     /** contructor */
-    WallView(Vec2 position, float rot, Size size, bool isResource, const std::shared_ptr<cugl::AssetManager>& assets, std::string textureKey) {
+    ItemView(Vec2 position, float angle, Size size, bool isArtifact, bool isResource, bool isWall, const std::shared_ptr<cugl::AssetManager>& assets, std::string textureKey) {
+//        float scale = GAME_WIDTH/size.width;
+//        size *= scale;
         _node = scene2::PolygonNode::alloc();
-        _node->setAnchor(Vec2::ANCHOR_CENTER);
-        _node->setAngle(-rot * M_PI/180);
         setPosition(position);
+        setAngle(-angle * M_PI/180);
 //        setSize(size);
     }
     
-    ~WallView(){
+    ~ItemView(){
         auto parent = _node->getParent();
         if (parent != nullptr && _node != nullptr) {
             parent->removeChild(_node);
@@ -66,17 +70,24 @@ public:
         _node->setContentSize(size);
     }
     
-    void setColor(Color4 color){
-        _node->setColor(color);
+    void setAngle(float angle){
+        _node->setAngle(angle);
     }
     
     void setTexture(const std::shared_ptr<cugl::AssetManager>& assets, std::string textureKey) {
-        auto tileNode = scene2::SceneNode::alloc();
+        //        auto node = scene2::SceneNode::alloc();
+        Vec2 pos = nodePos();
+        float angle = _node->getAngle();
+//        Size size = _node->getSize();
         std::shared_ptr<Texture> texture  = assets->get<Texture>(textureKey);
-        tileNode = scene2::PolygonNode::allocWithTexture(texture);
-         
-        _node->addChild(tileNode);
+        _node = scene2::PolygonNode::allocWithTexture(texture);
+        _node->setAnchor(Vec2::ANCHOR_BOTTOM_LEFT);
+        setPosition(pos);
+        setAngle(angle);
+//        setSize(size);
+//        _node->addChild(node);
     }
+
     
     Vec2 nodePos(){
         return _node->getPosition();
@@ -86,6 +97,19 @@ public:
         _node->setVisible(visible);
     }
     
+    /**
+     *  Detect if this file contains a point
+     *
+     *  @param point, the position of the point
+     */
+    bool contains(Vec2 point){
+        Vec2 global_pos = _node->getWorldPosition();
+        Size s = _node->getSize();
+        bool hor = (point.x >= global_pos.x && point.x <= global_pos.x + s.width);
+        bool ver = (point.y >= global_pos.y && point.y <= global_pos.y + s.height);
+        return hor && ver;
+    }
+    
 };
 
-#endif /* WallView_h */
+#endif /* ItemView_h */

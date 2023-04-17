@@ -1,28 +1,28 @@
 //
-//  artifactController.h
+//  ItemController.h
 //  Tilemap
 //
 //  Created by Hao Chen on 3/12/23.
 //
 
-#ifndef __ARTIFACT_CONTROLLER_H__
-#define __ARTIFACT_CONTROLLER_H__
+#ifndef __ITEM_CONTROLLER_H__
+#define __ITEM_CONTROLLER_H__
 
-#include "ArtifactModel.h"
-#include "ArtifactView.h"
+#include "ItemModel.h"
+#include "ItemView.h"
 
 /**
  * A class communicating between the model and the view. It only
  * controls a single tile.
  */
-class ArtifactController {
+class ItemController {
     
 #pragma mark Internal References
 private:
     /** Model reference */
-    std::unique_ptr<ArtifactModel> _model;
+    std::unique_ptr<ItemModel> _model;
     /** View reference */
-    std::unique_ptr<ArtifactView> _view;
+    std::unique_ptr<ItemView> _view;
 
     
 #pragma mark Main Methods
@@ -34,9 +34,9 @@ public:
      * @param size      The width and height of a tile
      * @param color     The tile color
      */
-    ArtifactController(Vec2 position, float rot, Size size, bool isResource, const std::shared_ptr<cugl::AssetManager>& assets, std::string textureKey) {
-        _model = std::make_unique<ArtifactModel>(position, size, isResource, textureKey);
-        _view = std::make_unique<ArtifactView>(position, rot, size, isResource, assets, textureKey);
+    ItemController(Vec2 position, float rot, Size size, bool isArtifact, bool isResource, bool isObs, const std::shared_ptr<cugl::AssetManager>& assets, std::string textureKey) {
+        _model = std::make_unique<ItemModel>(position, size, isArtifact, isResource, isObs, textureKey);
+        _view = std::make_unique<ItemView>(position, rot, size, isArtifact, isResource, isObs, assets, textureKey);
     }
 
 #pragma mark Update Methods
@@ -61,26 +61,33 @@ public:
         _view->setSize(size);
     }
     
-    /**
-     *  Updates the model and view with the color of this tile.
-     *
-     *  @param color The tile color
-     */
-    void updateColor(Color4 color) {
-        _view->setColor(color);
-    }
-    
-    
     Vec2 getNodePosition(){
         return _view->nodePos();
+    }
+    
+    bool isArtifact(){
+        return _model->isArtifact();
     }
     
     bool isResource(){
         return _model->isResource();
     }
     
+    bool isObs(){
+        return _model->isObs();
+    }
+    
     std::string getTextureKey() {
         return _model->getTextureKey();
+    }
+    
+    /**
+     *  Detect if this file contains a point
+     *
+     *  @param point, the position of the point
+     */
+    bool contains(Vec2 point){
+        return _view->contains(point);
     }
 
     
@@ -116,4 +123,4 @@ public:
 public:
 };
 
-#endif /* __ARTIFACT_CONTROLLER_H__ */
+#endif /* __ITEM_CONTROLLER_H__ */

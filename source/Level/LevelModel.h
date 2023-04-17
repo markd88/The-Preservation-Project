@@ -12,8 +12,7 @@
 #include <cugl/cugl.h>
 #include <cugl/assets/CUAsset.h>
 #include <Tilemap/TilemapController.h>
-#include <ArtifactSet/ArtifactSetController.h>
-//#include <GuardSet/GuardSetController.h>
+#include <ItemSet/ItemSetController.h>
 
 using namespace cugl;
 
@@ -32,7 +31,8 @@ using namespace cugl;
 class LevelModel : public Asset {
 protected:
     std::shared_ptr<TilemapController> _world;
-    std::shared_ptr<ArtifactSetController> _item;
+    std::shared_ptr<ItemSetController> _obs;
+    std::shared_ptr<ItemSetController> _item;
 
     /** The AssetManager for the game mode */
     std::shared_ptr<cugl::AssetManager> _assets;
@@ -65,6 +65,8 @@ protected:
      * @retain the wall
      * @return true if the wall was successfully loaded
      */
+    bool loadTilemap(const std::shared_ptr<JsonValue>& json);
+    bool loadItem(const std::shared_ptr<JsonValue>& json);
     bool loadWall(const std::shared_ptr<JsonValue>& json);
     bool loadTilemap(const std::shared_ptr<JsonValue>& json, int totHeight);
     bool loadArtifact(const std::shared_ptr<JsonValue>& json, int totHeight);
@@ -109,7 +111,8 @@ public:
     
     /** Get world map */
     std::shared_ptr<TilemapController> getWorld() {return _world;};
-    std::shared_ptr<ArtifactSetController> getItem() {return _item;};
+    std::shared_ptr<ItemSetController> getItem() {return _item->copy();};
+    std::shared_ptr<ItemSetController> getObs() {return _obs;};    
     cugl::Vec2 getCharacterPos() {return _characterPos;};
     std::vector<std::vector<cugl::Vec2>> getMovingGuardsPos() {return _movingGuardsPos;};
     std::vector<cugl::Vec2> getStaticGuardsPos() {return _staticGuardsPos;};
@@ -175,6 +178,7 @@ public:
      * Destroys this level, releasing all resources.
      */
     virtual ~LevelModel(void);
+    
     
 };
 
