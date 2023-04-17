@@ -39,10 +39,10 @@ _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displ
     // Allocate the camera manager
     _camManager = CameraManager::alloc();
     
-    _scene->setSize(displaySize * 3);
-    _other_scene->setSize(displaySize * 3);
-//    _scene->setSize(displaySize);
-//    _other_scene->setSize(displaySize);
+//    _scene->setSize(displaySize * 3);
+//    _other_scene->setSize(displaySize * 3);
+    _scene->setSize(displaySize);
+    _other_scene->setSize(displaySize);
     
     _path = make_unique<PathController>();
     // initialize character, two maps, path
@@ -192,11 +192,8 @@ void GamePlayController::init(){
         addPastEdge(edges[i].first, edges[i].second);
     }
     
-    _pastWorldLevel = _assets->get<LevelModel>(LEVEL_ZERO_PAST_KEY);
-    _artifactSet->clearSet();
-    _pastWorldLevel->setAssets(_assets);
-    _pastWorldLevel->setTilemapTexture();
-    _artifactSet = _pastWorldLevel->getItem();
+//    _artifactSet->clearSet();
+//    _artifactSet = _pastWorldLevel->getItem();
     _artifactSet->addChildTo(_scene);
     _artifactSet->setVisibility(true);
     
@@ -254,7 +251,7 @@ void GamePlayController::init(){
     
     // reload initial label for n_res and n_art
     _res_label->setText("0");
-    _art_label->setText("0/3");
+    _art_label->setText("0/5");
     
     //_pastWorld->addPoints(_scene->getSize(), _scene);
     
@@ -453,11 +450,11 @@ void GamePlayController::update(float dt){
                 // if artifact
                 else if (_artifactSet->_itemSet[i]->isArtifact()){
                     _character->addArt();
-                    _art_label->setText(cugl::strtool::to_string(_character->getNumArt()) + "/3");
+                    _art_label->setText(cugl::strtool::to_string(_character->getNumArt()) + "/5");
                 }
                 // make the artifact disappear and remove from set
                 _artifactSet->remove_this(i, _scene);
-                if(_character->getNumArt() == 10){
+                if(_character->getNumArt() == 5){
                     completeTerminate();
                 }
                 break;
