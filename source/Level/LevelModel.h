@@ -111,7 +111,7 @@ public:
     
     /** Get world map */
     std::shared_ptr<TilemapController> getWorld() {return _world;};
-    std::shared_ptr<ItemSetController> getItem() {return _item;};
+    std::shared_ptr<ItemSetController> getItem() {return _item->copy();};
     std::shared_ptr<ItemSetController> getObs() {return _obs;};    
     cugl::Vec2 getCharacterPos() {return _characterPos;};
     std::vector<std::vector<cugl::Vec2>> getMovingGuardsPos() {return _movingGuardsPos;};
@@ -178,6 +178,7 @@ public:
      * Destroys this level, releasing all resources.
      */
     virtual ~LevelModel(void);
+    
     
 };
 

@@ -240,7 +240,8 @@ void GamePlayController::init(){
         addPastEdge(edges[i].first, edges[i].second);
     }
     
-
+    _artifactSet->clearSet();
+    _artifactSet = _pastWorldLevel->getItem();
     _artifactSet->addChildTo(_scene);
     _artifactSet->setVisibility(true);
     

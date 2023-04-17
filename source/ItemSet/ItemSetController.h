@@ -21,7 +21,7 @@ class ItemSetController {
 #pragma mark External References
 public:
     /** Tilemape is a vector list of tiles */
-    typedef std::unique_ptr<ItemController> Item;
+    typedef std::shared_ptr<ItemController> Item;
 //    Item _Item;
     typedef std::vector<Item> ItemSet;
     ItemSet _itemSet;
@@ -118,6 +118,12 @@ public:
             }
         }
         return false;
+    }
+    
+    std::shared_ptr<ItemSetController> copy() {
+        std::shared_ptr<ItemSetController> temp = std::make_shared<ItemSetController>();
+        temp->_itemSet = std::vector<Item>(this->_itemSet);
+        return temp;
     }
 };
 
