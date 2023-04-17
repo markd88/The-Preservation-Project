@@ -11,7 +11,11 @@ using namespace cugl;
 #define PHYSICS_SCALE 50
 /** This is adjusted by screen aspect ratio to get the height */
 #define SCENE_WIDTH 1024
-#define DURATION 0.8f
+#define ACTIONDURATION 0.08f
+#define ANIMDURATION 1f
+
+#define SWITCH_DURATION 1
+
 #define ACT_KEY  "current"
 
 GamePlayController::GamePlayController(const Size displaySize, std::shared_ptr<cugl::AssetManager>& assets ):
@@ -19,6 +23,13 @@ _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displ
     // Initialize the assetManager
     _assets = assets;
     
+    // load sound
+    _collectArtifactSound = assets->get<Sound>("arrowShoot");
+    _collectResourceSound = assets->get<Sound>("NPC_flip");
+    _switchSound = assets->get<Sound>("lovestruck");
+    _loseSound = assets->get<Sound>("win");
+    _winSound = assets->get<Sound>("lose");
+
     // load the level info
     
     _assets->load<LevelModel>(LEVEL_ZERO_PAST_KEY, LEVEL_ZERO_PAST_FILE);
@@ -35,12 +46,12 @@ _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displ
     
     // Allocate the manager and the actions
     _actions = cugl::scene2::ActionManager::alloc();
+    _action_world_switch = cugl::scene2::ActionManager::alloc();
     
     // Allocate the camera manager
     _camManager = CameraManager::alloc();
-    
-//    _scene->setSize(displaySize * 3);
-//    _other_scene->setSize(displaySize * 3);
+
+
     _scene->setSize(displaySize);
     _other_scene->setSize(displaySize);
     
@@ -57,6 +68,7 @@ _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displ
     _pastWorld = _pastWorldLevel->getWorld();
     _obsSetPast = _pastWorldLevel->getObs();
     _artifactSet = _pastWorldLevel->getItem();
+
 
     // Draw present world
     _presentWorldLevel = _assets->get<LevelModel>(LEVEL_ZERO_PRESENT_KEY);
@@ -106,6 +118,21 @@ _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displ
 
     _character = make_unique<CharacterController>(start, _actions, _assets);
 
+    // two-world switch animation initialization
+
+    std::shared_ptr<Texture> world_switch  = assets->get<Texture>("two_world_switch");
+    _world_switch_node = scene2::SpriteNode::allocWithSheet(world_switch, 5, 4, 20); // SpriteNode for two_world switch animation
+    // _world_switch_node->setScale(0.8f); // Magic number to rescale asset
+    _world_switch_node->setRelativeColor(false);
+    _world_switch_node->setVisible(true);
+    _world_switch_node->setFrame(19);
+
+    std::vector<int> d0 = {0,1,2,3,4,5,6,7,8};
+    _world_switch_0 = cugl::scene2::Animate::alloc(d0, SWITCH_DURATION);
+
+    std::vector<int> d1 = {9,10,11,12,13,14,15,16,17,18};
+    _world_switch_1 = cugl::scene2::Animate::alloc(d1, SWITCH_DURATION);
+
 
 
     // init the button
@@ -117,7 +144,6 @@ _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displ
     _reset_button->addListener([this](const std::string& name, bool down) {
         if (!down) {
 
-            // cout<<"reset"<<endl;
             this->init();
         }
     });
@@ -173,8 +199,8 @@ _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displ
     
     _moveTo = cugl::scene2::MoveTo::alloc();
     _moveCam = CameraMoveTo::alloc();
-    _moveCam->setDuration(DURATION);
-    _moveTo->setDuration(DURATION);
+    _moveCam->setDuration(ACTIONDURATION);
+    _moveTo->setDuration(ACTIONDURATION);
     
     init();
     
@@ -187,6 +213,7 @@ void GamePlayController::init(){
     
     // dispose all active actions
     _actions->dispose();
+    // _action_world_switch->dispose();
     _camManager->dispose();
     
     // remove everything first
@@ -199,15 +226,21 @@ void GamePlayController::init(){
     
     _pastWorld->addChildTo(_scene);
     _pastWorld->setVisibility(true);
-    
+
+
+    // for two world switch animation
+    _scene->addChild(_world_switch_node);
+    _isSwitching = false;
+
+
+
     auto edges = _pastWorld->getEdges(_scene);
     generatePastMat(_pastWorld->getVertices());
     for (int i = 0; i < edges.size(); i++){
         addPastEdge(edges[i].first, edges[i].second);
     }
     
-//    _artifactSet->clearSet();
-//    _artifactSet = _pastWorldLevel->getItem();
+
     _artifactSet->addChildTo(_scene);
     _artifactSet->setVisibility(true);
     
@@ -235,8 +268,6 @@ void GamePlayController::init(){
     _character = make_unique<CharacterController>(start, _actions, _assets);
     _character->addChildTo(_scene);
 
-
-//    _guardSet2->removeChildFrom(_scene);
     
     _guardSetPast = std::make_unique<GuardSetController>(_assets, _actions, _pastWorld, pastMatrix, _pastWorld->getNodes());
     _guardSetPresent = std::make_unique<GuardSetController>(_assets, _actions, _presentWorld, presentMatrix, _presentWorld->getNodes());
@@ -279,11 +310,71 @@ void GamePlayController::init(){
 }
 
 void GamePlayController::update(float dt){
+
     
     if(_fail_layer->getScene()!=nullptr || _complete_layer->getScene()!=nullptr){
         return;
     }
-    
+
+
+    //
+    _world_switch_node->setPosition(_character->getNodePosition());
+    if (_isSwitching && _action_world_switch->isActive("first_half")) {
+        _action_world_switch->update(dt);
+      //  CULog("update first half");
+        return;
+    }
+    if (_isSwitching && !_action_world_switch->isActive("first_half") && !_action_world_switch->isActive("second_half")) {
+
+        if (_activeMap == "pastWorld") {
+
+            _activeMap = "presentWorld";
+
+            _presentWorld->setVisibility(true);
+            _guardSetPresent->setVisbility(true);
+
+            _pastWorld->setVisibility(false);
+            _guardSetPast->setVisbility(false);
+            _artifactSet->setVisibility(false);
+
+
+            _character->removeChildFrom(_scene);
+            _character->addChildTo(_other_scene);
+
+            // when move to the second world, minus 1 visually
+            _res_label->setText(cugl::strtool::to_string(_character->getNumRes()-1));
+        }
+        else {
+            _pastWorld->setVisibility(true);
+            _guardSetPast->setVisbility(true);
+            _artifactSet->setVisibility(true);
+
+
+            _presentWorld->setActive(false);
+
+            _activeMap = "pastWorld";
+
+            _character->removeChildFrom(_other_scene);
+            _character->addChildTo(_scene);
+
+            // when move to the second world, minus 1 in model
+            _character->useRes();
+        }
+
+        // stop previous movement after switch world
+        _path->clearPath();
+        _action_world_switch->activate("second_half", _world_switch_1, _world_switch_node);
+        _isSwitching = false;
+        CULog("switch second half");
+        return;
+    }
+    if (_action_world_switch->isActive("second_half")) {
+        _action_world_switch->update(dt);
+        CULog("update second half");
+        return;
+    }
+
+
 #pragma mark Switch World Methods
     static auto last_time = std::chrono::steady_clock::now();
     // Calculate the time elapsed since the last call to pinch
@@ -315,9 +406,16 @@ void GamePlayController::update(float dt){
         _switchNode->setColor(Color4::GREEN);
     }
     if(elapsed.count() >= 0.5 && _input->getPinchDelta() != 0 && !cant_switch){
+        AudioEngine::get()->play("lovestruck", _switchSound, false, _switchSound->getVolume(), true);
+
         // if the character's position on the other world is obstacle, disable the switch
         last_time = now;
         // remove and add the child back so that the child is always on the top layer
+        _isSwitching = true;
+        _action_world_switch->activate("first_half", _world_switch_0, _world_switch_node);
+        CULog("activate two world animation");
+
+
         
         if (_activeMap == "pastWorld") {
             _activeMap = "presentWorld";
@@ -442,16 +540,20 @@ void GamePlayController::update(float dt){
         _path->removeFrom(_scene);
     }
     
-    if (_path->getPath().size() != 0 && !_actions->isActive("moving")  && !_actions->isActive("character_animation")){
+    if (_path->getPath().size() != 0 && !_actions->isActive("moving") ){
         _moveTo->setTarget(_path->getPath()[0]);
         _moveCam->setTarget(_path->getPath()[0]);
         _character->moveTo(_moveTo);
-        _character->updateAnimation(_path->getPath()[0]);
+        _character->updateLastDirection(_path->getPath()[0]);
         _camManager->activate("movingCam", _moveCam, _cam);
         _camManager->activate("movingOtherCam", _moveCam, _other_cam);
-        // path_trace.erase(path_trace.begin());
         _path->removeFirst(_scene);
     }
+
+    if (!_actions->isActive("moving") && _actions->isActive("character_animation")) {
+        _character->stopAnimation();
+    }
+
 
 #pragma mark Resource Collection Methods
     // if collect a resource
@@ -463,6 +565,7 @@ void GamePlayController::update(float dt){
                 
                 // if resource
                 if(_artifactSet->_itemSet[i]->isResource()){
+                    AudioEngine::get()->play("NPC_flip", _collectResourceSound, false, _collectResourceSound->getVolume(), true);
                     _character->addRes();
                     // update panel
                     _res_label->setText(cugl::strtool::to_string(_character->getNumRes()));
@@ -470,6 +573,7 @@ void GamePlayController::update(float dt){
                 }
                 // if artifact
                 else if (_artifactSet->_itemSet[i]->isArtifact()){
+                    AudioEngine::get()->play("arrowHit", _collectArtifactSound, false, _collectArtifactSound->getVolume(), true);
                     _character->addArt();
                     _art_label->setText(cugl::strtool::to_string(_character->getNumArt()) + "/5");
                 }

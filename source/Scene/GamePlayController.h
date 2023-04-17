@@ -111,6 +111,13 @@ public:
     std::vector<std::vector<cugl::Vec2>> _presentMovingGuardsPos;
     std::vector<cugl::Vec2> _presentStaticGuardsPos;
 
+    // sounds
+    std::shared_ptr<cugl::Sound> _collectArtifactSound;
+    std::shared_ptr<cugl::Sound> _collectResourceSound;
+    std::shared_ptr<cugl::Sound> _switchSound;
+    std::shared_ptr<cugl::Sound> _loseSound;
+    std::shared_ptr<cugl::Sound> _winSound;
+
 
 #pragma mark Main Methods
 public:
@@ -171,18 +178,18 @@ public:
     void addMovingGuard(int w, int h, vector<Vec2> patrol_stops, bool isPast) {
         Vec2 gPos = Vec2(w,h);
         if (isPast) {
-            _guardSetPast->add_this_moving(gPos, _scene, _assets, patrol_stops);
+            _guardSetPast->add_this_moving(gPos, _scene, _assets, patrol_stops, true);
         } else {
-            _guardSetPresent->add_this_moving(gPos, _other_scene, _assets, patrol_stops);
+            _guardSetPresent->add_this_moving(gPos, _other_scene, _assets, patrol_stops, false);
         }
     }
     
     void addStaticGuard(int w, int h, bool isPast) {
         Vec2 gPos = Vec2(w,h);
         if (isPast) {
-            _guardSetPast->add_this(gPos, _scene, _assets);
+            _guardSetPast->add_this(gPos, _scene, _assets, true);
         } else {
-            _guardSetPresent->add_this(gPos, _other_scene, _assets);
+            _guardSetPresent->add_this(gPos, _other_scene, _assets, false);
         }
     }
     
@@ -221,6 +228,7 @@ public:
     }
 
     void failTerminate(){
+        AudioEngine::get()->play("win", _winSound, false, _winSound->getVolume(), true);
         _scene->addChild(_fail_layer);
         _fail_layer->setPosition(_cam->getPosition());
         _fail_back_button->activate();
@@ -228,6 +236,7 @@ public:
     }
     
     void completeTerminate(){
+        AudioEngine::get()->play("lost", _loseSound, false, _loseSound->getVolume(), true);
         _scene->addChild(_complete_layer);
         _complete_layer->setPosition(_cam->getPosition());
         _complete_back_button->activate();
