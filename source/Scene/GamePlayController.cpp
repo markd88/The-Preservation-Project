@@ -417,7 +417,45 @@ void GamePlayController::update(float dt){
         CULog("activate two world animation");
 
 
+        
+        if (_activeMap == "pastWorld") {
+            _activeMap = "presentWorld";
+            
+            _presentWorld->setVisibility(true);
+            _guardSetPresent->setVisbility(true);
+            _obsSetPresent->setVisibility(true);
 
+            _pastWorld->setVisibility(false);
+            _guardSetPast->setVisbility(false);
+            _artifactSet->setVisibility(false);
+            _obsSetPast->setVisibility(false);
+            
+            _character->removeChildFrom(_scene);
+            _character->addChildTo(_other_scene);
+            
+            // when move to the second world, minus 1 visually
+            _res_label->setText(cugl::strtool::to_string(_character->getNumRes()-1));
+        }
+        else {
+            _pastWorld->setVisibility(true);
+            _guardSetPast->setVisbility(true);
+            _artifactSet->setVisibility(true);
+            _obsSetPast->setVisibility(true);
+            
+            _presentWorld->setActive(false);
+            _obsSetPresent->setVisibility(false);
+
+            _activeMap = "pastWorld";
+            
+            _character->removeChildFrom(_other_scene);
+            _character->addChildTo(_scene);
+            
+            // when move to the second world, minus 1 in model
+            _character->useRes();
+        }
+        
+        // stop previous movement after switch world
+        _path->clearPath();
     }
 #pragma mark Pan Methods
 
