@@ -280,7 +280,7 @@ void GamePlayController::update(float dt){
 
     _input->update(dt);
     // if pinch, switch world
-    bool cant_switch = ((_activeMap == "pastWorld" && _presentWorld->inObstacle(_character->getPosition())) || (_activeMap == "presentWorld" && _pastWorld->inObstacle(_character->getPosition())));
+    bool cant_switch = ((_activeMap == "pastWorld" && _obsSetPast->inObstacle(_character->getPosition())) || (_activeMap == "presentWorld" && _obsSetPresent->inObstacle(_character->getPosition())));
     
 
     cant_switch = cant_switch || (_character->getNumRes() == 0);
