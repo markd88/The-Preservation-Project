@@ -19,7 +19,6 @@
         "shadow": {
             "file":    "textures/Shadow.png"
         },
-<<<<<<< HEAD
         "enemy_past_moving_horizontal": {
             "file":     "textures/enemy_past_moving_horizontal.png"
         },
@@ -65,10 +64,9 @@
             "magfilter": "linear",
             "wrapS":     "clamp",
             "wrapT":     "clamp"
-=======
+        },
         "two_world_switch": {
             "file": "textures/spritesheet_switch_anim.png"
->>>>>>> parent of 03f2f33... Revert "Merge pull request #76 from markd88/cbeta-mark-guard"
         },
         "question_mark_anim" : {
             "file": "textures/questionmark.png"
