@@ -55,8 +55,8 @@ _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displ
     _pastWorldLevel->setAssets(_assets);
     _pastWorldLevel->setTilemapTexture();
     _pastWorld = _pastWorldLevel->getWorld();
-    _artifactSet = _pastWorldLevel->getItem();
     _obsSetPast = _pastWorldLevel->getObs();
+    _artifactSet = _pastWorldLevel->getItem();
 
     // Draw present world
     _presentWorldLevel = _assets->get<LevelModel>(LEVEL_ZERO_PRESENT_KEY);
@@ -192,10 +192,15 @@ void GamePlayController::init(){
         addPastEdge(edges[i].first, edges[i].second);
     }
     
-//    _artifactSet->clearSet();
-//    _artifactSet = _pastWorldLevel->getItem();
+    _pastWorldLevel = _assets->get<LevelModel>(LEVEL_ZERO_PAST_KEY);
+    _artifactSet->clearSet();
+    _pastWorldLevel->setAssets(_assets);
+    _pastWorldLevel->setTilemapTexture();
+    _artifactSet = _pastWorldLevel->getItem();
     _artifactSet->addChildTo(_scene);
     _artifactSet->setVisibility(true);
+    
+    
     _obsSetPast->addChildTo(_scene);
     _obsSetPast->setVisibility(true);
     
