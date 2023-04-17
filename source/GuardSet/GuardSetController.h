@@ -68,14 +68,14 @@ public:
 
 
     // add one guard
-    void add_this_moving(Vec2 gPos, Scene s, const std::shared_ptr<cugl::AssetManager>& assets, vector<Vec2> patrol_stops){
-        Guard _guard = std::make_unique<GuardController>(gPos, assets, patrol_stops, _actions, generateUniqueID());
+    void add_this_moving(Vec2 gPos, Scene s, const std::shared_ptr<cugl::AssetManager>& assets, vector<Vec2> patrol_stops, bool isPast){
+        Guard _guard = std::make_unique<GuardController>(gPos, assets, patrol_stops, _actions, generateUniqueID(), isPast);
         _guard->addChildTo(s);
         _guardSet.push_back(std::move(_guard));
     }
     
-    void add_this(Vec2 gPos, Scene s, const std::shared_ptr<cugl::AssetManager>& assets){
-        Guard _guard = std::make_unique<GuardController>(gPos, assets, _actions, generateUniqueID());
+    void add_this(Vec2 gPos, Scene s, const std::shared_ptr<cugl::AssetManager>& assets, bool isPast){
+        Guard _guard = std::make_unique<GuardController>(gPos, assets, _actions, generateUniqueID(), isPast);
         _guard->addChildTo(s);
         _guardSet.push_back(std::move(_guard));
     }
