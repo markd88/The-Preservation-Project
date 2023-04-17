@@ -19,6 +19,13 @@ _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displ
     // Initialize the assetManager
     _assets = assets;
     
+    // load sound
+    _collectArtifactSound = assets->get<Sound>("arrowShoot");
+    _collectResourceSound = assets->get<Sound>("NPC_flip");
+    _switchSound = assets->get<Sound>("lovestruck");
+    _loseSound = assets->get<Sound>("win");
+    _winSound = assets->get<Sound>("lose");
+
     // load the level info
     
     _assets->load<LevelModel>(LEVEL_ZERO_PAST_KEY, LEVEL_ZERO_PAST_FILE);
@@ -39,10 +46,10 @@ _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displ
     // Allocate the camera manager
     _camManager = CameraManager::alloc();
     
-//    _scene->setSize(displaySize * 3);
-//    _other_scene->setSize(displaySize * 3);
-    _scene->setSize(displaySize);
-    _other_scene->setSize(displaySize);
+    _scene->setSize(displaySize * 3);
+    _other_scene->setSize(displaySize * 3);
+//    _scene->setSize(displaySize);
+//    _other_scene->setSize(displaySize);
     
     _path = make_unique<PathController>();
     // initialize character, two maps, path
@@ -310,10 +317,12 @@ void GamePlayController::update(float dt){
         _switchNode->setColor(Color4::GREEN);
     }
     if(elapsed.count() >= 0.5 && _input->getPinchDelta() != 0 && !cant_switch){
+        AudioEngine::get()->play("lovestruck", _switchSound, false, _switchSound->getVolume(), true);
+
         // if the character's position on the other world is obstacle, disable the switch
         last_time = now;
         // remove and add the child back so that the child is always on the top layer
-        
+
         if (_activeMap == "pastWorld") {
             _activeMap = "presentWorld";
             
@@ -455,6 +464,7 @@ void GamePlayController::update(float dt){
                 
                 // if resource
                 if(_artifactSet->_artifactSet[i]->isResource()){
+                    AudioEngine::get()->play("NPC_flip", _collectResourceSound, false, _collectResourceSound->getVolume(), true);
                     _character->addRes();
                     // update panel
                     _res_label->setText(cugl::strtool::to_string(_character->getNumRes()));
@@ -462,6 +472,7 @@ void GamePlayController::update(float dt){
                 }
                 // if artifact
                 else{
+                    AudioEngine::get()->play("arrowHit", _collectArtifactSound, false, _collectArtifactSound->getVolume(), true);
                     _character->addArt();
                     _art_label->setText(cugl::strtool::to_string(_character->getNumArt()) + "/3");
                 }
