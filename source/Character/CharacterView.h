@@ -33,6 +33,9 @@ private:
     std::shared_ptr<cugl::scene2::Animate> _c_5;
     std::shared_ptr<cugl::scene2::Animate> _c_6;
     std::shared_ptr<cugl::scene2::Animate> _c_7;
+
+    // last direction
+    int _last_direction;
     
     
 #pragma mark Main Functions
@@ -40,7 +43,7 @@ public:
     /** contructor */
     CharacterView(Vec2 position, Size size, Color4 color, std::shared_ptr<cugl::scene2::ActionManager> actions, const std::shared_ptr<cugl::AssetManager>& assets){
 
-
+        _last_direction = 0;
         _actions = actions;
         // Get the image and add it to the node.
         float scale = GAME_WIDTH/size.width;
@@ -50,13 +53,13 @@ public:
         std::shared_ptr<Texture> character  = assets->get<Texture>("character");
         _node = scene2::SpriteNode::allocWithSheet(character, 8, 8, 64); // SpriteNode for animation
         _node->setScale(0.8f); // Magic number to rescale asset
-        _node->setPosition(position);
+
         _node->setRelativeColor(false);
         _node->setVisible(true);
         _node->setAnchor(Vec2(0.5, 0.25));
+        _node->setPosition(position);
 
-
-
+        _node->setFrame(16);
 
         std::shared_ptr<Texture> shadow = assets->get<Texture>("shadow");
         _shadow = scene2::PolygonNode::allocWithTexture(shadow);
@@ -173,7 +176,25 @@ public:
         _actions->activate("character_animation", animation, _node);
     }
 
-    
+    void stopAnimation() {
+        _actions->remove("character_animation");
+    }
+
+    void updateLastDirection(Vec2 target) {
+        Vec2 pos = _node->getPosition();
+        int d = calculateMappedAngle(pos.x, pos.y, target.x, target.y);
+
+        if (!_actions->isActive("character_animation")) {
+            updateAnimation(target);
+        } else if (_actions->isActive("character_animation") && d == _last_direction) {
+            // continue the animation
+        } else if (_actions->isActive("character_animation") && d != _last_direction) {
+            _actions->remove("character_animation");
+            updateAnimation(target);
+        }
+        _last_direction = d;
+    }
+
     Vec2 nodePos(){
         return _node->getPosition();
     }
@@ -197,7 +218,7 @@ public:
         }
 
         // map the angle from 0 to 360 degrees to 0 to 7
-        CULog("%f", angleDegrees);
+     //    CULog("%f", angleDegrees);
         if (angleDegrees > 337.5 || angleDegrees < 22.5) {
             return 2;
         } else if (angleDegrees >= 22.5 && angleDegrees < 67.5){

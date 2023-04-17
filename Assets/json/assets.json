@@ -42,8 +42,11 @@
         "character": {
             "file":     "textures/character.png"
         },
-        "guard": {
-            "file":     "textures/enemy.png"
+        "guard_past": {
+            "file":     "textures/spritesheet_guard_past.png"
+        },
+        "guard_present": {
+            "file": "textures/spritesheet_guard_present.png"
         },
         "shadow": {
             "file":    "textures/Shadow.png"
@@ -93,6 +96,12 @@
             "magfilter": "linear",
             "wrapS":     "clamp",
             "wrapT":     "clamp"
+        },
+        "two_world_switch": {
+            "file": "textures/spritesheet_switch_anim.png"
+        },
+        "question_mark_anim" : {
+            "file": "textures/questionmark.png"
         },
         "artifact-1": {
             "file":      "textures/artifact-1.png",
