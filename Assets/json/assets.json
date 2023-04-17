@@ -1,5 +1,37 @@
 {
-	"textures": {
+    "sounds" : {
+        "arrowHit" : {
+            "type": "sample",
+            "file": "sounds/arrowHit.ogg",
+            "volume": 0.5
+        },
+        "arrowShoot" : {
+            "type": "sample",
+            "file": "sounds/arrowShoot.ogg",
+            "volume": 0.5
+        },
+        "lose" : {
+            "type": "sample",
+            "file": "sounds/lose.ogg",
+            "volume": 0.5
+        },
+        "lovestruck" : {
+            "type": "sample",
+            "file": "sounds/lovestruck.ogg",
+            "volume": 0.8
+        },
+        "NPC_flip" : {
+            "type": "sample",
+            "file": "sounds/NPC_flip.ogg",
+            "volume": 0.8
+        },
+        "win" : {
+            "type": "sample",
+            "file": "sounds/win.ogg",
+            "volume": 0.8
+        }
+    },
+    "textures": {
         "reset": {
             "file":      "textures/reset-button.png",
             "minfilter": "linear",
