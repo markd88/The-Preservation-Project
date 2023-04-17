@@ -33,7 +33,12 @@
 #define RESOURCE_FIELD      "resource-big"
 #define WALL_FIELD          "wall"
 
+/** Character specific fields */
+#define CHARACTER_FIELD         "character"
+
 /** Guard specific fields */
+#define GUARD_FIELD         "guard"
+
 #define MAIN_SOUND_FIELD    "main-sound"
 #define LEFT_SOUND_FIELD    "left-sound"
 #define RIGHT_SOUND_FIELD   "right-sound"

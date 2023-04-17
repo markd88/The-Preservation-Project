@@ -36,6 +36,11 @@ protected:
 
     /** The AssetManager for the game mode */
     std::shared_ptr<cugl::AssetManager> _assets;
+    cugl::Vec2 _characterPos;
+//    std::shared_ptr<GuardSetController> _guardSetPast;
+    
+    std::vector<std::vector<cugl::Vec2>> _movingGuardsPos;
+    std::vector<cugl::Vec2> _staticGuardsPos;
 
 #pragma mark Internal Helper
     /**
@@ -63,6 +68,11 @@ protected:
     bool loadTilemap(const std::shared_ptr<JsonValue>& json);
     bool loadItem(const std::shared_ptr<JsonValue>& json);
     bool loadWall(const std::shared_ptr<JsonValue>& json);
+    bool loadTilemap(const std::shared_ptr<JsonValue>& json, int totHeight);
+    bool loadArtifact(const std::shared_ptr<JsonValue>& json, int totHeight);
+    bool loadCharacter(const std::shared_ptr<JsonValue>& json);
+    bool loadGuard(const std::shared_ptr<JsonValue>& json);
+
     /**
      * Clears the root scene graph node for this level
      */
@@ -102,7 +112,10 @@ public:
     /** Get world map */
     std::shared_ptr<TilemapController> getWorld() {return _world;};
     std::shared_ptr<ItemSetController> getItem() {return _item;};
-    std::shared_ptr<ItemSetController> getObs() {return _obs;};
+    std::shared_ptr<ItemSetController> getObs() {return _obs;};    
+    cugl::Vec2 getCharacterPos() {return _characterPos;};
+    std::vector<std::vector<cugl::Vec2>> getMovingGuardsPos() {return _movingGuardsPos;};
+    std::vector<cugl::Vec2> getStaticGuardsPos() {return _staticGuardsPos;};
 
 #pragma mark Drawing Methods
 
