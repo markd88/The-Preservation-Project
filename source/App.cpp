@@ -47,8 +47,8 @@ void App::onStartup() {
     
     // init the assetManager
     _assets->attach<Font>(FontLoader::alloc()->getHook());
-     _assets->attach<Texture>(TextureLoader::alloc()->getHook());
-    //_assets->attach<Sound>(SoundLoader::alloc()->getHook());
+    _assets->attach<Texture>(TextureLoader::alloc()->getHook());
+    _assets->attach<Sound>(SoundLoader::alloc()->getHook());
     _assets->attach<WidgetValue>(WidgetLoader::alloc()->getHook());
     _assets->attach<scene2::SceneNode>(Scene2Loader::alloc()->getHook());
     
@@ -88,6 +88,8 @@ void App::onStartup() {
     
     _loadingController->init(_assets);
     
+    AudioEngine::start();
+
     // parent call
     Application::onStartup();
 }
@@ -110,7 +112,38 @@ void App::onShutdown() {
     // Deactivate input
     Input::deactivate<Touchscreen>();
     
+    AudioEngine::stop();
     Application::onShutdown();
+}
+
+/**
+ * The method called when the application is suspended and put in the background.
+ *
+ * When this method is called, you should store any state that you do not
+ * want to be lost.  There is no guarantee that an application will return
+ * from the background; it may be terminated instead.
+ *
+ * If you are using audio, it is critical that you pause it on suspension.
+ * Otherwise, the audio thread may persist while the application is in
+ * the background.
+ */
+
+void App::onSuspend() {
+    AudioEngine::get()->pause();
+}
+
+/**
+ * The method called when the application resumes and put in the foreground.
+ *
+ * If you saved any state before going into the background, now is the time
+ * to restore it. This guarantees that the application looks the same as
+ * when it was suspended.
+ *
+ * If you are using audio, you should use this method to resume any audio
+ * paused before app suspension.
+ */
+void App::onResume() {
+    AudioEngine::get()->resume();
 }
 
 /**

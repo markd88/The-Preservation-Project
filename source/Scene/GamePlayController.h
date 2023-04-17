@@ -109,6 +109,13 @@ public:
     std::vector<std::vector<cugl::Vec2>> _presentMovingGuardsPos;
     std::vector<cugl::Vec2> _presentStaticGuardsPos;
 
+    // sounds
+    std::shared_ptr<cugl::Sound> _collectArtifactSound;
+    std::shared_ptr<cugl::Sound> _collectResourceSound;
+    std::shared_ptr<cugl::Sound> _switchSound;
+    std::shared_ptr<cugl::Sound> _loseSound;
+    std::shared_ptr<cugl::Sound> _winSound;
+
 
 #pragma mark Main Methods
 public:
@@ -219,6 +226,7 @@ public:
     }
 
     void failTerminate(){
+        AudioEngine::get()->play("win", _winSound, false, _winSound->getVolume(), true);
         _scene->addChild(_fail_layer);
         _fail_layer->setPosition(_cam->getPosition());
         _fail_back_button->activate();
@@ -226,6 +234,7 @@ public:
     }
     
     void completeTerminate(){
+        AudioEngine::get()->play("lost", _loseSound, false, _loseSound->getVolume(), true);
         _scene->addChild(_complete_layer);
         _complete_layer->setPosition(_cam->getPosition());
         _complete_back_button->activate();
