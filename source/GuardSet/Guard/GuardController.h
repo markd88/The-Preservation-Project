@@ -91,7 +91,7 @@ public:
      * @param color     The tile color
      */
     //static guard
-    GuardController(Vec2 position, const std::shared_ptr<cugl::AssetManager>& assets, std::shared_ptr<cugl::scene2::ActionManager> actions, int id)
+    GuardController(Vec2 position, const std::shared_ptr<cugl::AssetManager>& assets, std::shared_ptr<cugl::scene2::ActionManager> actions, int id, bool isPast)
     : id(_id), doesPatrol(_doesPatrol), returnVec(_returnVec), chaseVec(_chaseVec),state(_state), prev_state(_prev_state)
     {
         _state = "static";
@@ -113,11 +113,11 @@ public:
         _static_pos = position;
 
         _model = std::make_unique<GuardModel>(position, Size(100, 100), Color4::RED, _fixed_direction);
-        _view = std::make_unique<GuardView>(position,Size(100, 100), Color4::RED, assets, actions);
+        _view = std::make_unique<GuardView>(position,Size(100, 100), Color4::RED, assets, actions, isPast);
     }
     
     //moving guard
-    GuardController(Vec2 position, const std::shared_ptr<cugl::AssetManager>& assets, std::vector<Vec2> vec, std::shared_ptr<cugl::scene2::ActionManager> actions, int id) : id(_id), doesPatrol(_doesPatrol), returnVec(_returnVec), chaseVec(_chaseVec), state(_state), prev_state(_prev_state)
+    GuardController(Vec2 position, const std::shared_ptr<cugl::AssetManager>& assets, std::vector<Vec2> vec, std::shared_ptr<cugl::scene2::ActionManager> actions, int id, bool isPast) : id(_id), doesPatrol(_doesPatrol), returnVec(_returnVec), chaseVec(_chaseVec), state(_state), prev_state(_prev_state)
     {
         _state = "patrol";
         _prev_state = "patrol";
@@ -145,7 +145,7 @@ public:
         _id = id;
         // starting direction should from level editor
         _model = std::make_unique<GuardModel>(position, Size(100, 100), Color4::RED, 0);
-        _view = std::make_unique<GuardView>(position, Size(100, 100), Color4::RED, assets, actions);
+        _view = std::make_unique<GuardView>(position, Size(100, 100), Color4::RED, assets, actions, isPast);
     }
 
 #pragma mark Update Methods

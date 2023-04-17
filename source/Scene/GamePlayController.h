@@ -169,18 +169,18 @@ public:
     void addMovingGuard(int w, int h, vector<Vec2> patrol_stops, bool isPast) {
         Vec2 gPos = Vec2(w,h);
         if (isPast) {
-            _guardSetPast->add_this_moving(gPos, _scene, _assets, patrol_stops);
+            _guardSetPast->add_this_moving(gPos, _scene, _assets, patrol_stops, true);
         } else {
-            _guardSetPresent->add_this_moving(gPos, _other_scene, _assets, patrol_stops);
+            _guardSetPresent->add_this_moving(gPos, _other_scene, _assets, patrol_stops, false);
         }
     }
     
     void addStaticGuard(int w, int h, bool isPast) {
         Vec2 gPos = Vec2(w,h);
         if (isPast) {
-            _guardSetPast->add_this(gPos, _scene, _assets);
+            _guardSetPast->add_this(gPos, _scene, _assets, true);
         } else {
-            _guardSetPresent->add_this(gPos, _other_scene, _assets);
+            _guardSetPresent->add_this(gPos, _other_scene, _assets, false);
         }
     }
     
