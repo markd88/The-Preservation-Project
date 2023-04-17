@@ -75,6 +75,14 @@ public:
         _view->updateAnimation(pos);
     }
 
+    void stopAnimation() {
+        _view->stopAnimation();
+    }
+
+    void updateLastDirection(Vec2 pos){
+        _view->updateLastDirection(pos);
+    }
+
     Vec2 getNodePosition(){
         return _view->nodePos();
     }
