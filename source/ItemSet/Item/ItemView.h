@@ -23,7 +23,7 @@ private:
 #pragma mark Main Functions
 public:
     /** contructor */
-    ItemView(Vec2 position, float angle, Size size, bool isResource, bool isWall, const std::shared_ptr<cugl::AssetManager>& assets, std::string textureKey) {
+    ItemView(Vec2 position, float angle, Size size, bool isArtifact, bool isResource, bool isWall, const std::shared_ptr<cugl::AssetManager>& assets, std::string textureKey) {
 //        float scale = GAME_WIDTH/size.width;
 //        size *= scale;
         _node = scene2::PolygonNode::alloc();

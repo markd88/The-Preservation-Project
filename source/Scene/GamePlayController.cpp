@@ -56,7 +56,7 @@ _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displ
     _pastWorldLevel->setTilemapTexture();
     _pastWorld = _pastWorldLevel->getWorld();
     _artifactSet = _pastWorldLevel->getItem();
-    _wallSetPast = _pastWorldLevel->getWall();
+    _obsSetPast = _pastWorldLevel->getObs();
 
     // Draw present world
     _presentWorldLevel = _assets->get<LevelModel>(LEVEL_ZERO_PRESENT_KEY);
@@ -66,7 +66,7 @@ _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displ
     _presentWorldLevel->setAssets(_assets);
     _presentWorldLevel->setTilemapTexture();
     _presentWorld = _presentWorldLevel->getWorld();
-    _wallSetPresent = _presentWorldLevel->getWall();
+    _obsSetPresent = _presentWorldLevel->getObs();
     _presentWorld->updateColor(Color4::CLEAR);
     _pastWorld->updateColor(Color4::CLEAR);
     
@@ -196,13 +196,13 @@ void GamePlayController::init(){
 //    _artifactSet = _pastWorldLevel->getItem();
     _artifactSet->addChildTo(_scene);
     _artifactSet->setVisibility(true);
-    _wallSetPast->addChildTo(_scene);
-    _wallSetPast->setVisibility(true);
+    _obsSetPast->addChildTo(_scene);
+    _obsSetPast->setVisibility(true);
     
     _presentWorld->addChildTo(_other_scene);
     _presentWorld->setActive(false);
-    _wallSetPresent->addChildTo(_other_scene);
-    _wallSetPresent->setVisibility(false);
+    _obsSetPresent->addChildTo(_other_scene);
+    _obsSetPresent->setVisibility(false);
     
     auto presentEdges = _presentWorld->getEdges(_other_scene);
     generatePresentMat(_presentWorld->getVertices());
@@ -301,12 +301,12 @@ void GamePlayController::update(float dt){
             
             _presentWorld->setVisibility(true);
             _guardSetPresent->setVisbility(true);
-            _wallSetPresent->setVisibility(true);
+            _obsSetPresent->setVisibility(true);
 
             _pastWorld->setVisibility(false);
             _guardSetPast->setVisbility(false);
             _artifactSet->setVisibility(false);
-            _wallSetPast->setVisibility(false);
+            _obsSetPast->setVisibility(false);
             
             _character->removeChildFrom(_scene);
             _character->addChildTo(_other_scene);
@@ -318,10 +318,10 @@ void GamePlayController::update(float dt){
             _pastWorld->setVisibility(true);
             _guardSetPast->setVisbility(true);
             _artifactSet->setVisibility(true);
-            _wallSetPast->setVisibility(true);
+            _obsSetPast->setVisibility(true);
             
             _presentWorld->setActive(false);
-            _wallSetPresent->setVisibility(false);
+            _obsSetPresent->setVisibility(false);
 
             _activeMap = "pastWorld";
             
@@ -390,11 +390,12 @@ void GamePlayController::update(float dt){
         if(_path->isInitiating == false){
             while(_path->farEnough(input_posi)){
                 Vec2 checkpoint = _path->getLastPos() + (input_posi - _path->getLastPos()) / _path->getLastPos().distance(input_posi) * _path->getSize();
-                if((_activeMap == "pastWorld" && _pastWorld->inObstacle(checkpoint)) || (_activeMap == "presentWorld" && _presentWorld->inObstacle(checkpoint))){
+
+                if((_activeMap == "pastWorld" && _obsSetPast->inObstacle(checkpoint)) || (_activeMap == "presentWorld" && _obsSetPresent->inObstacle(checkpoint))){
                     _path->setIsDrawing(false);
-                    // path_trace.clear();
                     return;
                 }
+                
                 else{
                     _path->addSegment(checkpoint, _scene);
                 }
@@ -445,7 +446,7 @@ void GamePlayController::update(float dt){
                     CULog("resource");
                 }
                 // if artifact
-                else{
+                else if (_artifactSet->_itemSet[i]->isArtifact()){
                     _character->addArt();
                     _art_label->setText(cugl::strtool::to_string(_character->getNumArt()) + "/3");
                 }
@@ -458,6 +459,7 @@ void GamePlayController::update(float dt){
             }
             
         }
+        
     }
 
 #pragma mark Guard Methods

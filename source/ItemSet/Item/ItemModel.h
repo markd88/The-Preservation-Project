@@ -16,8 +16,9 @@ private:
     /** Center of the character */
     Vec2 _position;
     Size _size;
+    bool _isArtifact;
     bool _isResource;
-    bool _isWall;
+    bool _isObs;
     
     std::string _textureKey;
     int radius;
@@ -35,11 +36,12 @@ public:
      * @param size      The width and height of a Item
      * @param color     The Item color
      */
-    ItemModel(Vec2 position, Size size, bool isResource, bool isWall, std::string textureKey){
+    ItemModel(Vec2 position, Size size, bool isArtifact, bool isResource, bool isObs, std::string textureKey){
         setPosition(position);
         setSize(size);
+        setArtifact(isArtifact);
         setResource(isResource);
-        setWall(isWall);
+        setObs(isObs);
         setTextureKey(textureKey);
     }
     
@@ -72,12 +74,21 @@ public:
         _size = size;
     }
     
+    bool isArtifact(){
+        return _isArtifact;
+    }
+    
     bool isResource(){
         return _isResource;
     }
     
-    bool isWall(){
-        return _isWall;
+    bool isObs(){
+        return _isObs;
+    }
+    
+    void setArtifact(bool isArtifact) {
+        _isArtifact = isArtifact;
+
     }
 
     /**
@@ -90,8 +101,8 @@ public:
 
     }
     
-    void setWall(bool isWall) {
-        _isWall = isWall;
+    void setObs(bool isObs) {
+        _isObs = isObs;
 
     }
     

@@ -61,8 +61,8 @@ public:
     
     std::shared_ptr<ItemSetController> _artifactSet;
     std::shared_ptr<ItemSetController> _resourceSet;
-    std::shared_ptr<ItemSetController> _wallSetPast;
-    std::shared_ptr<ItemSetController> _wallSetPresent;
+    std::shared_ptr<ItemSetController> _obsSetPast;
+    std::shared_ptr<ItemSetController> _obsSetPresent;
     
     std::unique_ptr<PathController> _path;
     std::shared_ptr<InputController> _input = InputController::getInstance();

@@ -31,7 +31,7 @@ using namespace cugl;
 class LevelModel : public Asset {
 protected:
     std::shared_ptr<TilemapController> _world;
-    std::shared_ptr<ItemSetController> _wall;
+    std::shared_ptr<ItemSetController> _obs;
     std::shared_ptr<ItemSetController> _item;
 
     /** The AssetManager for the game mode */
@@ -60,9 +60,9 @@ protected:
      * @retain the wall
      * @return true if the wall was successfully loaded
      */
-//    bool loadWall(const std::shared_ptr<JsonValue>& json, int totalHeight);
     bool loadTilemap(const std::shared_ptr<JsonValue>& json);
     bool loadItem(const std::shared_ptr<JsonValue>& json);
+    bool loadWall(const std::shared_ptr<JsonValue>& json);
     /**
      * Clears the root scene graph node for this level
      */
@@ -102,7 +102,7 @@ public:
     /** Get world map */
     std::shared_ptr<TilemapController> getWorld() {return _world;};
     std::shared_ptr<ItemSetController> getItem() {return _item;};
-    std::shared_ptr<ItemSetController> getWall() {return _wall;};
+    std::shared_ptr<ItemSetController> getObs() {return _obs;};
 
 #pragma mark Drawing Methods
 

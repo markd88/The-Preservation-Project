@@ -34,9 +34,9 @@ public:
      * @param size      The width and height of a tile
      * @param color     The tile color
      */
-    ItemController(Vec2 position, float rot, Size size, bool isResource, bool isWall, const std::shared_ptr<cugl::AssetManager>& assets, std::string textureKey) {
-        _model = std::make_unique<ItemModel>(position, size, isResource, isWall, textureKey);
-        _view = std::make_unique<ItemView>(position, rot, size, isResource, isWall, assets, textureKey);
+    ItemController(Vec2 position, float rot, Size size, bool isArtifact, bool isResource, bool isObs, const std::shared_ptr<cugl::AssetManager>& assets, std::string textureKey) {
+        _model = std::make_unique<ItemModel>(position, size, isArtifact, isResource, isObs, textureKey);
+        _view = std::make_unique<ItemView>(position, rot, size, isArtifact, isResource, isObs, assets, textureKey);
     }
 
 #pragma mark Update Methods
@@ -65,12 +65,16 @@ public:
         return _view->nodePos();
     }
     
+    bool isArtifact(){
+        return _model->isArtifact();
+    }
+    
     bool isResource(){
         return _model->isResource();
     }
     
-    bool isWall(){
-        return _model->isWall();
+    bool isObs(){
+        return _model->isObs();
     }
     
     std::string getTextureKey() {

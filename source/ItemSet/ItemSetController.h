@@ -46,8 +46,8 @@ public:
 //        _ItemSet.push_back(std::move(_Item));
 //    }
     
-    void add_this(Vec2 aPos, float rot, Size size, bool isResource, bool isWall, const std::shared_ptr<cugl::AssetManager>& assets, std::string textureKey){
-        Item _item = std::make_unique<ItemController>(aPos, rot, size, isResource, isWall, assets, textureKey);
+    void add_this(Vec2 aPos, float rot, Size size, bool isArtifact, bool isResource, bool isWall, const std::shared_ptr<cugl::AssetManager>& assets, std::string textureKey){
+        Item _item = std::make_unique<ItemController>(aPos, rot, size, isArtifact, isResource, isWall, assets, textureKey);
         _itemSet.push_back(std::move(_item));
     }
     
@@ -113,7 +113,7 @@ public:
     bool inObstacle(Vec2 point){
         unsigned int vecSize = _itemSet.size();
         for(unsigned int i = 0; i < vecSize; i++) {
-            if(_itemSet[i] != nullptr && _itemSet[i]->isWall() && _itemSet[i]->contains(point)){
+            if(_itemSet[i] != nullptr && _itemSet[i]->isObs() && _itemSet[i]->contains(point)){
                 return true;
             }
         }
