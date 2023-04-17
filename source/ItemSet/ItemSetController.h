@@ -125,6 +125,15 @@ public:
         temp->_itemSet = std::vector<Item>(this->_itemSet);
         return temp;
     }
+    
+    bool lineInObstacle(Vec2 a, Vec2 b){
+        for(auto item: _itemSet){
+            if(item != nullptr && item->isObs() && item->containsLine(a,b)){
+                return true;
+            }
+        }
+        return false;
+    }
 };
 
 

@@ -119,6 +119,10 @@ public:
         _view->setVisibility(visible);
     }
     
+    bool containsLine(Vec2 a, Vec2 b){
+        return _view->containsLine(a, b);
+    }
+    
 #pragma mark Controller Methods
 public:
 };
