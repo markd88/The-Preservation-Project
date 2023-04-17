@@ -42,20 +42,20 @@ private:
 #pragma mark Main Functions
 public:
     /** contructor */
-    GuardView(Vec2 position, Size size, Color4 color, const std::shared_ptr<cugl::AssetManager>& assets, std::shared_ptr<cugl::scene2::ActionManager> actions) {
+    GuardView(Vec2 position, Size size, Color4 color, const std::shared_ptr<cugl::AssetManager>& assets, std::shared_ptr<cugl::scene2::ActionManager> actions, bool isPast) {
         // Get the image and add it to the node.
         _actions = actions;
         float scale = GAME_WIDTH/size.width;
         // size *= scale;
-//        string a;
-//        CULog("%s", if_present.c_str());
-//        if (if_present == "present") {
-//            a = "guard_present";
-//        }
-//        else{
-//            a = "guard_past";
-//        }
-        std::shared_ptr<Texture> guard  = assets->get<Texture>("guard_present");
+        string a;
+
+        if (isPast) {
+            a = "guard_past";
+        }
+        else{
+            a = "guard_present";
+        }
+        std::shared_ptr<Texture> guard  = assets->get<Texture>(a);
         _node = scene2::SpriteNode::allocWithSheet(guard, 16, 16, 256); // SpriteNode for animation
         _node->setScale(0.6f); // Magic number to rescale asset
 
