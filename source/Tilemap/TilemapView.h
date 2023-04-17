@@ -102,4 +102,7 @@ public:
         _node->setVisible(active);
     }
     
+    void setPriority(float p){
+        _node->setPriority(p);
+    }
 };

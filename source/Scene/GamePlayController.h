@@ -23,6 +23,11 @@ private:
     std::shared_ptr<cugl::Scene2> _scene;
     
     std::shared_ptr<cugl::Scene2> _other_scene;
+    
+    std::shared_ptr<cugl::scene2::OrderedNode> _ordered_root;
+    
+    std::shared_ptr<cugl::scene2::OrderedNode> _other_ordered_root;
+    
 
     /** The current tile map template (for regeneration) */
     int _template;
@@ -178,18 +183,18 @@ public:
     void addMovingGuard(int w, int h, vector<Vec2> patrol_stops, bool isPast) {
         Vec2 gPos = Vec2(w,h);
         if (isPast) {
-            _guardSetPast->add_this_moving(gPos, _scene, _assets, patrol_stops, true);
+            _guardSetPast->add_this_moving(gPos, _ordered_root, _assets, patrol_stops, true);
         } else {
-            _guardSetPresent->add_this_moving(gPos, _other_scene, _assets, patrol_stops, false);
+            _guardSetPresent->add_this_moving(gPos,_other_ordered_root, _assets, patrol_stops, false);
         }
     }
     
     void addStaticGuard(int w, int h, bool isPast) {
         Vec2 gPos = Vec2(w,h);
         if (isPast) {
-            _guardSetPast->add_this(gPos, _scene, _assets, true);
+            _guardSetPast->add_this(gPos, _ordered_root, _assets, true);
         } else {
-            _guardSetPresent->add_this(gPos, _other_scene, _assets, false);
+            _guardSetPresent->add_this(gPos, _other_ordered_root, _assets, false);
         }
     }
     
@@ -247,6 +252,20 @@ public:
     void generateMovingGuards(std::vector<std::vector<cugl::Vec2>> movingGuardsPos, bool isPast);
     void generateStaticGuards(std::vector<Vec2> staticGuardsPos, bool isPast);
 
+    
+    void updateRenderPriority(){
+        // both orderedRoot
+        //_pastWorld->setPriority(1000);
+        _artifactSet->updatePriority();
+        _obsSetPast->updatePriority();
+        _character->updatePriority();
+        _guardSetPast->updatePriority();
+        
+        
+        //_presentWorld->setPriority(1000);
+        _obsSetPresent->updatePriority();
+        _guardSetPresent->updatePriority();
+    }
 
 };
 

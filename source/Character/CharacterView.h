@@ -120,7 +120,7 @@ public:
      *
      * @param sceneNode The scenenode to add the view to
      */
-    void addChildTo(const std::shared_ptr<cugl::Scene2>& scene) {
+    void addChildTo(const std::shared_ptr<cugl::scene2::OrderedNode>& scene) {
         scene->addChild(_node);
     }
     
@@ -129,7 +129,7 @@ public:
      *
      * @param sceneNode The scenenode to remove the view from
      */
-    void removeChildFrom(const std::shared_ptr<cugl::Scene2>& scene) {
+    void removeChildFrom(const std::shared_ptr<cugl::scene2::OrderedNode>& scene) {
         scene->removeChild(_node);
     }
 
@@ -246,7 +246,9 @@ public:
 
     }
 
-
+    void updatePriority(){
+        _node->setPriority(_node->getPosition().y);
+    }
 
 
 };
