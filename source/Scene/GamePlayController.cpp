@@ -52,8 +52,8 @@ _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displ
     _camManager = CameraManager::alloc();
 
 
-    _scene->setSize(displaySize);
-    _other_scene->setSize(displaySize);
+    _scene->setSize(displaySize*1.5);
+    _other_scene->setSize(displaySize*1.5);
     
     _path = make_unique<PathController>();
     // initialize character, two maps, path
@@ -94,8 +94,8 @@ _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displ
         addPresentEdge(presentEdges[i].first, presentEdges[i].second);
     }
     
-    _guardSetPast = std::make_unique<GuardSetController>(_assets, _actions, _pastWorld, pastMatrix, _pastWorld->getNodes());
-    _guardSetPresent = std::make_unique<GuardSetController>(_assets, _actions, _presentWorld, presentMatrix, _presentWorld->getNodes());
+    _guardSetPast = std::make_unique<GuardSetController>(_assets, _actions, _pastWorld, _obsSetPast, pastMatrix, _pastWorld->getNodes());
+    _guardSetPresent = std::make_unique<GuardSetController>(_assets, _actions, _presentWorld, _obsSetPresent, presentMatrix, _presentWorld->getNodes());
     
     // get guard positions
     _pastMovingGuardsPos = _pastWorldLevel->getMovingGuardsPos();
@@ -270,8 +270,8 @@ void GamePlayController::init(){
     _character->addChildTo(_scene);
 
     
-    _guardSetPast = std::make_unique<GuardSetController>(_assets, _actions, _pastWorld, pastMatrix, _pastWorld->getNodes());
-    _guardSetPresent = std::make_unique<GuardSetController>(_assets, _actions, _presentWorld, presentMatrix, _presentWorld->getNodes());
+    _guardSetPast = std::make_unique<GuardSetController>(_assets, _actions, _pastWorld, _obsSetPast, pastMatrix, _pastWorld->getNodes());
+    _guardSetPresent = std::make_unique<GuardSetController>(_assets, _actions, _presentWorld, _obsSetPresent, presentMatrix, _presentWorld->getNodes());
     
     _guardSetPast->clearSet();
     _guardSetPresent->clearSet();
@@ -328,20 +328,20 @@ void GamePlayController::update(float dt){
     if (_isSwitching && !_action_world_switch->isActive("first_half") && !_action_world_switch->isActive("second_half")) {
 
         if (_activeMap == "pastWorld") {
-
             _activeMap = "presentWorld";
-
+            
             _presentWorld->setVisibility(true);
             _guardSetPresent->setVisbility(true);
+            _obsSetPresent->setVisibility(true);
 
             _pastWorld->setVisibility(false);
             _guardSetPast->setVisbility(false);
             _artifactSet->setVisibility(false);
-
-
+            _obsSetPast->setVisibility(false);
+            
             _character->removeChildFrom(_scene);
             _character->addChildTo(_other_scene);
-
+            
             // when move to the second world, minus 1 visually
             _res_label->setText(cugl::strtool::to_string(_character->getNumRes()-1));
         }
@@ -349,15 +349,16 @@ void GamePlayController::update(float dt){
             _pastWorld->setVisibility(true);
             _guardSetPast->setVisbility(true);
             _artifactSet->setVisibility(true);
-
-
+            _obsSetPast->setVisibility(true);
+            
             _presentWorld->setActive(false);
+            _obsSetPresent->setVisibility(false);
 
             _activeMap = "pastWorld";
-
+            
             _character->removeChildFrom(_other_scene);
             _character->addChildTo(_scene);
-
+            
             // when move to the second world, minus 1 in model
             _character->useRes();
         }
@@ -395,7 +396,7 @@ void GamePlayController::update(float dt){
 
     _input->update(dt);
     // if pinch, switch world
-    bool cant_switch = ((_activeMap == "pastWorld" && _obsSetPast->inObstacle(_character->getPosition())) || (_activeMap == "presentWorld" && _obsSetPresent->inObstacle(_character->getPosition())));
+    bool cant_switch = ((_activeMap == "pastWorld" && _obsSetPresent->inObstacle(_character->getPosition())) || (_activeMap == "presentWorld" && _obsSetPast->inObstacle(_character->getPosition())));
     
 
     cant_switch = cant_switch || (_character->getNumRes() == 0);
@@ -417,45 +418,6 @@ void GamePlayController::update(float dt){
         CULog("activate two world animation");
 
 
-        
-        if (_activeMap == "pastWorld") {
-            _activeMap = "presentWorld";
-            
-            _presentWorld->setVisibility(true);
-            _guardSetPresent->setVisbility(true);
-            _obsSetPresent->setVisibility(true);
-
-            _pastWorld->setVisibility(false);
-            _guardSetPast->setVisbility(false);
-            _artifactSet->setVisibility(false);
-            _obsSetPast->setVisibility(false);
-            
-            _character->removeChildFrom(_scene);
-            _character->addChildTo(_other_scene);
-            
-            // when move to the second world, minus 1 visually
-            _res_label->setText(cugl::strtool::to_string(_character->getNumRes()-1));
-        }
-        else {
-            _pastWorld->setVisibility(true);
-            _guardSetPast->setVisbility(true);
-            _artifactSet->setVisibility(true);
-            _obsSetPast->setVisibility(true);
-            
-            _presentWorld->setActive(false);
-            _obsSetPresent->setVisibility(false);
-
-            _activeMap = "pastWorld";
-            
-            _character->removeChildFrom(_other_scene);
-            _character->addChildTo(_scene);
-            
-            // when move to the second world, minus 1 in model
-            _character->useRes();
-        }
-        
-        // stop previous movement after switch world
-        _path->clearPath();
     }
 #pragma mark Pan Methods
 
@@ -484,7 +446,7 @@ void GamePlayController::update(float dt){
     
 #pragma mark Character Movement Methods
     else if(_input->didPress()){        // if press, determine if press on character
-        _isPreviewing = true;
+        
         Vec2 input_posi = _input->getPosition();
         input_posi = _scene->screenToWorldCoords(input_posi);
         
@@ -494,6 +456,9 @@ void GamePlayController::update(float dt){
             _path->setIsInitiating(true);
             _path->updateLastPos(_character->getPosition()); //change to a fixed location on the character
             _path->clearPath();
+        }
+        else{
+            _isPreviewing = true;
         }
     }
     

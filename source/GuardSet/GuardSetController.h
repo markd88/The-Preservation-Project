@@ -10,6 +10,7 @@
 #include "Guard/GuardView.h"
 #include "Guard/GuardController.h"
 #include <Tilemap/TilemapController.h>
+#include <ItemSet/ItemSetController.h>
 
 using namespace std;
 #include <cmath>
@@ -39,6 +40,8 @@ public:
     
     std::shared_ptr<TilemapController> _world;
     
+    std::shared_ptr<ItemSetController> _items;
+    
     /**adjacency matrix*/
     bool** _adjMatrix;
     
@@ -52,11 +55,13 @@ public:
 #pragma mark Main Methods
 public:
     
-    GuardSetController(const std::shared_ptr<cugl::AssetManager>& assets, std::shared_ptr<cugl::scene2::ActionManager> actions, std::shared_ptr<TilemapController> world, bool** adjMatrix, std::unordered_map<int, Vec2> nodes)
+    GuardSetController(const std::shared_ptr<cugl::AssetManager>& assets, std::shared_ptr<cugl::scene2::ActionManager> actions, std::shared_ptr<TilemapController> world, std::shared_ptr<ItemSetController> items,
+        bool** adjMatrix, std::unordered_map<int, Vec2> nodes)
     {
         _adjMatrix = adjMatrix;
         _nodes = nodes;
         _world = world;
+        _items = items;
         _actions = actions;
         std::vector<Guard> _guardSet;
         
@@ -154,11 +159,12 @@ public:
             }
             bool visual_detection = false;
             if (distance < 300 and _world->isActive() and insideVisionCone){
-                visual_detection = !_world->lineInObstacle(guardPos,_charPos);
+                // visual_detection = !_world->lineInObstacle(guardPos,_charPos);
+                visual_detection = !_items->lineInObstacle(guardPos, _charPos);
             }
 
             bool acoustic_detection = false;
-            if (distance < 280 and _world->isActive()) {
+            if (distance < 150 and _world->isActive()) {
                 acoustic_detection = true;
             }
 

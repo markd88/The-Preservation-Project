@@ -103,13 +103,43 @@ public:
      *  @param point, the position of the point
      */
     bool contains(Vec2 point){
-        Vec2 global_pos = _node->getWorldPosition();
+        Vec2 global_pos = _node->getPosition();
         Size s = _node->getSize();
         bool hor = (point.x >= global_pos.x && point.x <= global_pos.x + s.width);
         bool ver = (point.y >= global_pos.y && point.y <= global_pos.y + s.height);
         return hor && ver;
     }
     
+    
+    bool containsLine(Vec2 a, Vec2 b){
+        
+        if (contains(a) or contains(b)){
+            return true;
+        }
+    
+        Vec2 pos = _node->getWorldPosition();
+        Size s = _node->getSize();
+        float rx = pos.x;
+        float ry = pos.y;
+        float rw = s.width;
+        float rh = s.height;
+        bool left = lineLine(a.x,a.y, b.x, b.y, rx, ry, rx, ry + rh);
+        bool right = lineLine(a.x,a.y, b.x, b.y, rx + rw, ry, rx + rw, ry + rh);
+        bool top = lineLine(a.x,a.y, b.x, b.y, rx, ry + rh, rx + rw, ry + rh);
+        bool bottom = lineLine(a.x,a.y,b.x,b.y, rx, ry, rx+rw, ry);
+        
+        return (left or right or top or bottom);
+         
+    }
+    
+    bool lineLine(float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4) {
+        // calculate the distance to intersection point
+        float uA = ((x4-x3)*(y1-y3) - (y4-y3)*(x1-x3)) / ((y4-y3)*(x2-x1) - (x4-x3)*(y2-y1));
+        float uB = ((x2-x1)*(y1-y3) - (y2-y1)*(x1-x3)) / ((y4-y3)*(x2-x1) - (x4-x3)*(y2-y1));
+        
+        // if uA and uB are between 0-1, lines are colliding
+        return (uA >= 0 && uA <= 1 && uB >= 0 && uB <= 1);
+    }
 };
 
 #endif /* ItemView_h */
