@@ -98,7 +98,7 @@ public:
      *
      * @param node The scenenode to add the view to
      */
-    void addChildTo(std::shared_ptr<cugl::Scene2> node) {
+    void addChildTo(std::shared_ptr<cugl::scene2::OrderedNode>& node) {
         _view->addChildTo(node);
     }
     
@@ -107,7 +107,7 @@ public:
      *
      * @param node The scenenode to remove the view from
      */
-    void removeChildFrom(std::shared_ptr<cugl::Scene2> node) {
+    void removeChildFrom(std::shared_ptr<cugl::scene2::OrderedNode>& node) {
         _view->removeChildFrom(node);
     }
     
@@ -121,6 +121,11 @@ public:
     
     bool containsLine(Vec2 a, Vec2 b){
         return _view->containsLine(a, b);
+    }
+    
+    
+    void updatePriority(){
+        return _view->updatePriority();
     }
     
 #pragma mark Controller Methods

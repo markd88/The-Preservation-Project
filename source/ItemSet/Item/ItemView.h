@@ -46,7 +46,7 @@ public:
      *
      * @param sceneNode The scenenode to add the view to
      */
-    void addChildTo(const std::shared_ptr<cugl::Scene2>& scene) {
+    void addChildTo(const std::shared_ptr<cugl::scene2::OrderedNode>& scene) {
         scene->addChild(_node);
     }
     
@@ -55,7 +55,7 @@ public:
      *
      * @param sceneNode The scenenode to remove the view from
      */
-    void removeChildFrom(const std::shared_ptr<cugl::Scene2>& scene) {
+    void removeChildFrom(const std::shared_ptr<cugl::scene2::OrderedNode>& scene) {
         scene->removeChild(_node);
     }
 
@@ -139,6 +139,11 @@ public:
         
         // if uA and uB are between 0-1, lines are colliding
         return (uA >= 0 && uA <= 1 && uB >= 0 && uB <= 1);
+    }
+    
+    // update priority based on its y coor
+    void updatePriority(){
+        _node->setPriority(_node->getPosition().y);
     }
 };
 

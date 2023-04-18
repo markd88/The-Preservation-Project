@@ -448,6 +448,11 @@ public:
         
         
     }
+    
+    // set priority in ordered_root
+    void setPriority(float p){
+        _view->setPriority(p);
+    }
 };
 
 //}

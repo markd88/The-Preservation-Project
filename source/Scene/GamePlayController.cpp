@@ -21,6 +21,13 @@ using namespace cugl;
 GamePlayController::GamePlayController(const Size displaySize, std::shared_ptr<cugl::AssetManager>& assets ):
 _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displaySize)) {
     // Initialize the assetManager
+    
+    
+    _ordered_root = cugl::scene2::OrderedNode::allocWithOrder(cugl::scene2::OrderedNode::Order::DESCEND);
+    
+    
+    _other_ordered_root = cugl::scene2::OrderedNode::allocWithOrder(cugl::scene2::OrderedNode::Order::DESCEND);
+
     _assets = assets;
     
     // load sound
@@ -208,7 +215,7 @@ _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displ
 
 
 
-// init some assets when restart
+// init assets and all scenegraph when restart
 void GamePlayController::init(){
     
     // dispose all active actions
@@ -218,17 +225,25 @@ void GamePlayController::init(){
     
     // remove everything first
     _scene->removeAllChildren();
-
-    _reset_button->activate();
+    _ordered_root->removeAllChildren();
 
     _other_scene->removeAllChildren();
-
+    _other_ordered_root->removeAllChildren();
     
     _pastWorld->addChildTo(_scene);
+    _scene->addChild(_ordered_root);
+    
+    _presentWorld->addChildTo(_other_scene);
+    _presentWorld->setActive(false);
+    _other_scene->addChild(_other_ordered_root);
+    
+    
+    //_pastWorld->addChildTo(_ordered_root);
     _pastWorld->setVisibility(true);
 
 
     // for two world switch animation
+    //_scene->addChild(_world_switch_node);
     _scene->addChild(_world_switch_node);
     _isSwitching = false;
 
@@ -242,16 +257,14 @@ void GamePlayController::init(){
     
     _artifactSet->clearSet();
     _artifactSet = _pastWorldLevel->getItem();
-    _artifactSet->addChildTo(_scene);
+    _artifactSet->addChildTo(_ordered_root);
     _artifactSet->setVisibility(true);
     
     
-    _obsSetPast->addChildTo(_scene);
+    _obsSetPast->addChildTo(_ordered_root);
     _obsSetPast->setVisibility(true);
     
-    _presentWorld->addChildTo(_other_scene);
-    _presentWorld->setActive(false);
-    _obsSetPresent->addChildTo(_other_scene);
+    _obsSetPresent->addChildTo(_other_ordered_root);
     _obsSetPresent->setVisibility(false);
     
     auto presentEdges = _presentWorld->getEdges(_other_scene);
@@ -267,8 +280,8 @@ void GamePlayController::init(){
     Vec2 start = _pastWorldLevel->getCharacterPos();
 
     _character = make_unique<CharacterController>(start, _actions, _assets);
-    _character->addChildTo(_scene);
-
+    //_character->addChildTo(_scene);
+    _character->addChildTo(_ordered_root);
     
     _guardSetPast = std::make_unique<GuardSetController>(_assets, _actions, _pastWorld, _obsSetPast, pastMatrix, _pastWorld->getNodes());
     _guardSetPresent = std::make_unique<GuardSetController>(_assets, _actions, _presentWorld, _obsSetPresent, presentMatrix, _presentWorld->getNodes());
@@ -276,6 +289,7 @@ void GamePlayController::init(){
     _guardSetPast->clearSet();
     _guardSetPresent->clearSet();
     
+    // all guards are init in _guardSet
     // generate guards in past world
     generateMovingGuards(_pastMovingGuardsPos, true);
     generateStaticGuards(_pastStaticGuardsPos, true);
@@ -290,7 +304,9 @@ void GamePlayController::init(){
     _path = make_unique<PathController>();
     path_trace = {};
     
+    _reset_button->activate();
     _scene->addChild(_button_layer);
+    //_ordered_root->addChild(_button_layer);
     
     Vec2 cPos = _character->getPosition();
     _cam->setPosition(Vec3(cPos.x,cPos.y,0));
@@ -339,8 +355,8 @@ void GamePlayController::update(float dt){
             _artifactSet->setVisibility(false);
             _obsSetPast->setVisibility(false);
             
-            _character->removeChildFrom(_scene);
-            _character->addChildTo(_other_scene);
+            _character->removeChildFrom(_ordered_root);
+            _character->addChildTo(_other_ordered_root);
             
             // when move to the second world, minus 1 visually
             _res_label->setText(cugl::strtool::to_string(_character->getNumRes()-1));
@@ -356,8 +372,8 @@ void GamePlayController::update(float dt){
 
             _activeMap = "pastWorld";
             
-            _character->removeChildFrom(_other_scene);
-            _character->addChildTo(_scene);
+            _character->removeChildFrom(_other_ordered_root);
+            _character->addChildTo(_ordered_root);
             
             // when move to the second world, minus 1 in model
             _character->useRes();
@@ -544,7 +560,7 @@ void GamePlayController::update(float dt){
                     _art_label->setText(cugl::strtool::to_string(_character->getNumArt()) + "/5");
                 }
                 // make the artifact disappear and remove from set
-                _artifactSet->remove_this(i, _scene);
+                _artifactSet->remove_this(i, _ordered_root);
                 if(_character->getNumArt() == 5){
                     completeTerminate();
                 }
@@ -556,8 +572,8 @@ void GamePlayController::update(float dt){
     }
 
 #pragma mark Guard Methods
-    _guardSetPast->patrol(_character->getNodePosition(), _scene, _character->getAngle());
-    _guardSetPresent->patrol(_character->getNodePosition(), _other_scene, _character->getAngle());
+    _guardSetPast->patrol(_character->getNodePosition(), _character->getAngle());
+    _guardSetPresent->patrol(_character->getNodePosition(), _character->getAngle());
     // if collide with guard
     if(_activeMap == "pastWorld"){
         for(int i=0; i<_guardSetPast->_guardSet.size(); i++){
@@ -586,6 +602,10 @@ void GamePlayController::update(float dt){
     
     // the camera is moving smoothly, but the UI only set its movement per frame
     _button_layer->setPosition(_cam->getPosition() - Vec2(900, 70));
+    
+    
+    // update render priority
+    updateRenderPriority();
 }
     
     
