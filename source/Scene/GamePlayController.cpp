@@ -356,8 +356,8 @@ void GamePlayController::update(float dt){
             
             _presentWorld->setVisibility(true);
             _guardSetPresent->setVisbility(true);
-            _obsSetPresent->setVisibility(true);
-//            _wallSetPresent->setVisibility(true);
+//            _obsSetPresent->setVisibility(true);
+            _wallSetPresent->setVisibility(true);
 
             _pastWorld->setVisibility(false);
             _guardSetPast->setVisbility(false);
