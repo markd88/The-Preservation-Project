@@ -1,6 +1,6 @@
 ---
-name:   Tilemap Viewer              # The application display name
-short:  Tilemap                     # A shortened name for reference
+name:   The Preservation Project             # The application display name
+short:  TPP                     # A shortened name for reference
 appid:  edu.cornell.gdiac.code3     # Application identifier for Mac, iOS, Android
 suffix: G78B13A9
 
