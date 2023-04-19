@@ -242,16 +242,10 @@ bool LevelModel::loadGuard(const std::shared_ptr<JsonValue>& json) {
         Vec2 vec;
         size_t comma = inputPath.find(',', start);
         vec.x = std::stoi(inputPath.substr(start, comma - start));
-        vec.y = std::stoi(inputPath.substr(comma + 1));
+        vec.y = totalHeight - std::stoi(inputPath.substr(comma + 1));
         patrolPoints.push_back(vec);
 
         _movingGuardsPos.push_back(patrolPoints);
-        
-        // Print the vector of Vec2s
-        for (const auto& v : patrolPoints) {
-            std::cout << "(" << v.x << ", " << v.y << ")" << std::endl;
-        }
-
     }
 
     return success;
