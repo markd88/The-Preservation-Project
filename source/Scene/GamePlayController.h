@@ -68,6 +68,8 @@ public:
     std::shared_ptr<ItemSetController> _resourceSet;
     std::shared_ptr<ItemSetController> _obsSetPast;
     std::shared_ptr<ItemSetController> _obsSetPresent;
+    std::shared_ptr<ItemSetController> _wallSetPast;
+    std::shared_ptr<ItemSetController> _wallSetPresent;
     
     std::unique_ptr<PathController> _path;
     std::shared_ptr<InputController> _input = InputController::getInstance();
@@ -258,12 +260,14 @@ public:
         //_pastWorld->setPriority(1000);
         _artifactSet->updatePriority();
         _obsSetPast->updatePriority();
+        _wallSetPast->updatePriority();
         _character->updatePriority();
         _guardSetPast->updatePriority();
         
         
         //_presentWorld->setPriority(1000);
         _obsSetPresent->updatePriority();
+        _wallSetPresent->updatePriority();
         _guardSetPresent->updatePriority();
     }
 
