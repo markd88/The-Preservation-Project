@@ -26,12 +26,12 @@
 #define TILEMAP_FILED       "tilemap"
 
 /** Wall specific fields */
-#define WALLS_FIELD         "wall"
+#define WALL_FIELD          "wall"
+#define OBS_FIELD           "obs"
 
 /** Artifact specific fields */
-#define ARTIFACTS_FIELD     "artifact"
+#define ITEM_FIELD          "item"
 #define RESOURCE_FIELD      "resource-big"
-#define WALL_FIELD          "wall"
 
 /** Character specific fields */
 #define CHARACTER_FIELD         "character"

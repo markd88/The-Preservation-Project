@@ -207,6 +207,13 @@
             "wrapS":     "clamp",
             "wrapT":     "clamp"
         },
+        "collision_detection3": {
+            "file":      "textures/collision_detection3.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS":     "clamp",
+            "wrapT":     "clamp"
+        },
         "tile_present_grass_shadow_slopepos": {
             "file":      "textures/tile_present_grass_shadow_slopepos.png",
             "minfilter": "linear",
@@ -228,8 +235,15 @@
             "wrapS":     "clamp",
             "wrapT":     "clamp"
         },
-        "past_roof": {
-            "file":      "textures/past_roof.png",
+        "past_roof_L": {
+            "file":      "textures/past_roof_L.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS":     "clamp",
+            "wrapT":     "clamp"
+        },
+        "past_roof_R": {
+            "file":      "textures/past_roof_R.png",
             "minfilter": "linear",
             "magfilter": "linear",
             "wrapS":     "clamp",
@@ -602,6 +616,13 @@
         },
         "deco_past_cabinet_side_L": {
             "file":      "textures/deco_past_cabinet_side_L.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS":     "clamp",
+            "wrapT":     "clamp"
+        },
+        "deco_past_cabinet_front": {
+            "file":      "textures/deco_past_cabinet_front.png",
             "minfilter": "linear",
             "magfilter": "linear",
             "wrapS":     "clamp",
