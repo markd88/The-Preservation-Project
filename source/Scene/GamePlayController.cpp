@@ -508,7 +508,7 @@ void GamePlayController::update(float dt){
 
                 if((_activeMap == "pastWorld" && _obsSetPast->inObstacle(checkpoint)) || (_activeMap == "presentWorld" && _obsSetPresent->inObstacle(checkpoint))){
                     _path->setIsDrawing(false);
-                    return;
+                    break;
                 }
                 
                 else{
