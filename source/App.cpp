@@ -1,6 +1,6 @@
 //
-//  TMApp.cpp
-//  TileMap Lab
+//  TPPApp.cpp
+//  TPP
 //
 //  This is the header for the custom application. It is necessary so that
 //  main.cpp can access your custom class. That is handled by a separate
