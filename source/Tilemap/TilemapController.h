@@ -310,7 +310,7 @@ public:
                 if (hitObs == false){
                     edges.push_back(std::make_pair(i, i+1));
                 }
-                
+                /*
                 Spline2 spline = Spline2(a, b);
                 splinePather.set(&spline);
                 splinePather.calculate();
@@ -330,7 +330,7 @@ public:
                 else{
                     polyNode->setColor(Color4::RED);
                 }
-                 
+                 */
                  
             }
             
@@ -347,7 +347,7 @@ public:
             if (hitObs == false){
                 edges.push_back(std::make_pair(i, i + numPerRow));
             }
-            
+            /*
             Spline2 spline = Spline2(a, b);
             splinePather.set(&spline);
             splinePather.calculate();
@@ -368,7 +368,7 @@ public:
                 polyNode->setColor(Color4::RED);
             }
             scene->addChild(polyNode);
-             
+             */
              
             
         }
