@@ -2351,7 +2351,11 @@
                  "id":210,
                  "name":"",
                  "properties":[
-                     {},
+                        {
+                         "name":"direction",
+                         "type":"int",
+                         "value":0
+                        },
                         {
                          "name":"isStatic",
                          "type":"bool",
@@ -2370,7 +2374,6 @@
                  "id":211,
                  "name":"",
                  "properties":[
-                     {},
                         {
                          "name":"isStatic",
                          "type":"bool",
@@ -2394,7 +2397,6 @@
                  "id":213,
                  "name":"",
                  "properties":[
-                     {},
                         {
                          "name":"isStatic",
                          "type":"bool",
@@ -2418,7 +2420,6 @@
                  "id":215,
                  "name":"",
                  "properties":[
-                     {},
                         {
                          "name":"isStatic",
                          "type":"bool",
@@ -2442,7 +2443,6 @@
                  "id":218,
                  "name":"",
                  "properties":[
-                     {},
                         {
                          "name":"isStatic",
                          "type":"bool",
