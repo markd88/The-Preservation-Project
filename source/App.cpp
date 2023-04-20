@@ -224,8 +224,12 @@ void App::update(float timestep) {
                     _gameplayController = make_shared<GamePlayController>(size, _assets);
                 }
                 else{
+                    _gameplayController->loadLevel();
                     _gameplayController->init();
                 }
+//                Size size = getDisplaySize();
+//                size *= GAME_WIDTH/size.width;
+//                _gameplayController = make_shared<GamePlayController>(size, _assets);
                 curScene = GAMEPLAY;
                 break;
         }

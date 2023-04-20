@@ -37,10 +37,10 @@ _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displ
     _loseSound = assets->get<Sound>("win");
     _winSound = assets->get<Sound>("lose");
 
-    // load the level info
+
     
-    _assets->load<LevelModel>(LEVEL_ONE_PAST_KEY, LEVEL_ONE_PAST_FILE);
-    _assets->load<LevelModel>(LEVEL_ONE_PRESENT_KEY, LEVEL_ONE_PRESENT_FILE);
+    
+    
     
     
     // Initialize the scene to a locked width
@@ -67,68 +67,12 @@ _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displ
     _path = make_unique<PathController>();
     // initialize character, two maps, path
     
-    // Draw past world
-    _pastWorldLevel = _assets->get<LevelModel>(LEVEL_ONE_PAST_KEY);
-    if (_pastWorldLevel == nullptr) {
-        CULog("Failed to import level!");
-    }
-    _pastWorldLevel->setAssets(_assets);
-    _pastWorldLevel->setTilemapTexture();
-    _pastWorld = _pastWorldLevel->getWorld();
-    _obsSetPast = _pastWorldLevel->getObs();
-    _wallSetPast = _pastWorldLevel->getWall();
-    _artifactSet = _pastWorldLevel->getItem();
-
-
-    // Draw present world
-    _presentWorldLevel = _assets->get<LevelModel>(LEVEL_ONE_PRESENT_KEY);
-    if (_presentWorldLevel == nullptr) {
-        CULog("Failed to import level!");
-    }
-    _presentWorldLevel->setAssets(_assets);
-    _presentWorldLevel->setTilemapTexture();
-    _presentWorld = _presentWorldLevel->getWorld();
-    _obsSetPresent = _presentWorldLevel->getObs();
-    _wallSetPresent = _presentWorldLevel->getWall();
-    _presentWorld->updateColor(Color4::CLEAR);
-    _pastWorld->updateColor(Color4::CLEAR);
     
-    auto pastEdges = _pastWorld->getEdges(_scene);
-    generatePastMat(_pastWorld->getVertices());
-    for (int i = 0; i < pastEdges.size(); i++){
-        addPastEdge(pastEdges[i].first, pastEdges[i].second);
-    }
     
-    auto presentEdges = _presentWorld->getEdges(_other_scene);
-    generatePresentMat(_presentWorld->getVertices());
-    for (int i = 0; i < presentEdges.size(); i++){
-        addPresentEdge(presentEdges[i].first, presentEdges[i].second);
-    }
     
-    _guardSetPast = std::make_unique<GuardSetController>(_assets, _actions, _pastWorld, _obsSetPast, pastMatrix, _pastWorld->getNodes());
-    _guardSetPresent = std::make_unique<GuardSetController>(_assets, _actions, _presentWorld, _obsSetPresent, presentMatrix, _presentWorld->getNodes());
     
-    // get guard positions
-    _pastMovingGuardsPos = _pastWorldLevel->getMovingGuardsPos();
-    _pastStaticGuardsPos = _pastWorldLevel->getStaticGuardsPos();
-    _presentMovingGuardsPos = _presentWorldLevel->getMovingGuardsPos();
-    _presentStaticGuardsPos = _presentWorldLevel->getStaticGuardsPos();
-
-    // generate guards in past world
-    generateMovingGuards(_pastMovingGuardsPos, true);
-    generateStaticGuards(_pastStaticGuardsPos, true);
     
-    // generate guards in present world
-    generateMovingGuards(_presentMovingGuardsPos, false);
-    generateStaticGuards(_presentStaticGuardsPos, false);
-
-//    Vec2 start = Vec2(_scene->getSize().width *.85, _scene->getSize().height *.15);
     
-//    Vec2 start = Vec2(0,0);
-    Vec2 start = _pastWorldLevel->getCharacterPos();
-
-    _character = make_unique<CharacterController>(start, _actions, _assets);
-
     // two-world switch animation initialization
 
     std::shared_ptr<Texture> world_switch  = assets->get<Texture>("two_world_switch");
@@ -213,9 +157,91 @@ _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displ
     _moveCam->setDuration(ACTIONDURATION);
     _moveTo->setDuration(ACTIONDURATION);
     
+    
+    
+    loadLevel();
     init();
     
 }
+
+
+void GamePlayController::loadLevel(){
+    string pastFile = "tileset/levels/level-" + std::to_string(level) + "/level-" + std::to_string(level) + "-past.json";
+    string pastKey = "level-" + std::to_string(level) + "-past";
+    string presentFile = "tileset/levels/level-" + std::to_string(level) + "/level-" + std::to_string(level) + "-present.json";
+    string presentKey = "level-" + std::to_string(level) + "-present";
+    
+    _assets->load<LevelModel>(pastKey, pastFile);
+    _assets->load<LevelModel>(presentKey, presentFile);
+    
+    
+    // Draw past world
+    _pastWorldLevel = _assets->get<LevelModel>(pastKey);
+    if (_pastWorldLevel == nullptr) {
+        CULog("Failed to import level!");
+    }
+    _pastWorldLevel->setAssets(_assets);
+    _pastWorldLevel->setTilemapTexture();
+    _pastWorld = _pastWorldLevel->getWorld();
+    _obsSetPast = _pastWorldLevel->getObs();
+    _wallSetPast = _pastWorldLevel->getWall();
+    _artifactSet = _pastWorldLevel->getItem();
+
+
+    // Draw present world
+    _presentWorldLevel = _assets->get<LevelModel>(presentKey);
+    if (_presentWorldLevel == nullptr) {
+        CULog("Failed to import level!");
+    }
+    _presentWorldLevel->setAssets(_assets);
+    _presentWorldLevel->setTilemapTexture();
+    _presentWorld = _presentWorldLevel->getWorld();
+    _obsSetPresent = _presentWorldLevel->getObs();
+    _wallSetPresent = _presentWorldLevel->getWall();
+    _presentWorld->updateColor(Color4::CLEAR);
+    _pastWorld->updateColor(Color4::CLEAR);
+    
+    
+    auto pastEdges = _pastWorld->getEdges(_scene);
+    generatePastMat(_pastWorld->getVertices());
+    for (int i = 0; i < pastEdges.size(); i++){
+        addPastEdge(pastEdges[i].first, pastEdges[i].second);
+    }
+    
+    auto presentEdges = _presentWorld->getEdges(_other_scene);
+    generatePresentMat(_presentWorld->getVertices());
+    for (int i = 0; i < presentEdges.size(); i++){
+        addPresentEdge(presentEdges[i].first, presentEdges[i].second);
+    }
+    
+    _guardSetPast = std::make_unique<GuardSetController>(_assets, _actions, _pastWorld, _obsSetPast, pastMatrix, _pastWorld->getNodes());
+    _guardSetPresent = std::make_unique<GuardSetController>(_assets, _actions, _presentWorld, _obsSetPresent, presentMatrix, _presentWorld->getNodes());
+    
+    // get guard positions
+    _pastMovingGuardsPos = _pastWorldLevel->getMovingGuardsPos();
+    _pastStaticGuardsPos = _pastWorldLevel->getStaticGuardsPos();
+    _presentMovingGuardsPos = _presentWorldLevel->getMovingGuardsPos();
+    _presentStaticGuardsPos = _presentWorldLevel->getStaticGuardsPos();
+
+    // generate guards in past world
+    generateMovingGuards(_pastMovingGuardsPos, true);
+    generateStaticGuards(_pastStaticGuardsPos, true);
+    
+    // generate guards in present world
+    generateMovingGuards(_presentMovingGuardsPos, false);
+    generateStaticGuards(_presentStaticGuardsPos, false);
+
+//    Vec2 start = Vec2(_scene->getSize().width *.85, _scene->getSize().height *.15);
+    
+//    Vec2 start = Vec2(0,0);
+    Vec2 start = _pastWorldLevel->getCharacterPos();
+
+    _character = make_unique<CharacterController>(start, _actions, _assets);
+
+    
+}
+
+
 
 
 
@@ -392,7 +418,7 @@ void GamePlayController::update(float dt){
         }
 
         // stop previous movement after switch world
-        _path->clearPath();
+        _path->clearPath(_scene);
         _action_world_switch->activate("second_half", _world_switch_1, _world_switch_node);
         _isSwitching = false;
         CULog("switch second half");
@@ -483,7 +509,7 @@ void GamePlayController::update(float dt){
             _path->setIsDrawing(true);
             _path->setIsInitiating(true);
             _path->updateLastPos(_character->getPosition()); //change to a fixed location on the character
-            _path->clearPath();
+            _path->clearPath(_scene);
         }
         else{
             _isPreviewing = true;
@@ -531,7 +557,7 @@ void GamePlayController::update(float dt){
         input_posi = _scene->screenToWorldCoords(input_posi);
         _path->setIsDrawing(false);
         // path_trace = _path->getPath();
-        _path->removeFrom(_scene);
+         // _path->removeFrom(_scene);
     }
     
     if (_path->getPath().size() != 0 && !_actions->isActive("moving") ){
