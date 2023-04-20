@@ -113,10 +113,10 @@ public:
 
     // guards
     std::vector<std::vector<cugl::Vec2>> _pastMovingGuardsPos;
-    std::vector<cugl::Vec2> _pastStaticGuardsPos;
+    std::vector<std::vector<int>> _pastStaticGuardsPos;
 
     std::vector<std::vector<cugl::Vec2>> _presentMovingGuardsPos;
-    std::vector<cugl::Vec2> _presentStaticGuardsPos;
+    std::vector<std::vector<int>> _presentStaticGuardsPos;
 
     // sounds
     std::shared_ptr<cugl::Sound> _collectArtifactSound;
@@ -191,12 +191,12 @@ public:
         }
     }
     
-    void addStaticGuard(int w, int h, bool isPast) {
+    void addStaticGuard(int w, int h, int dir, bool isPast) {
         Vec2 gPos = Vec2(w,h);
         if (isPast) {
-            _guardSetPast->add_this(gPos, _ordered_root, _assets, true);
+            _guardSetPast->add_this(gPos, _ordered_root, _assets, true, dir);
         } else {
-            _guardSetPresent->add_this(gPos, _other_ordered_root, _assets, false);
+            _guardSetPresent->add_this(gPos, _other_ordered_root, _assets, false, dir);
         }
     }
     
@@ -252,7 +252,7 @@ public:
     
     // called when scene becomes active or inactive
     void generateMovingGuards(std::vector<std::vector<cugl::Vec2>> movingGuardsPos, bool isPast);
-    void generateStaticGuards(std::vector<Vec2> staticGuardsPos, bool isPast);
+    void generateStaticGuards(std::vector<std::vector<int>> staticGuardsPos, bool isPast);
 
     
     void updateRenderPriority(){

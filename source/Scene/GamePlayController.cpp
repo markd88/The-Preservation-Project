@@ -637,11 +637,12 @@ void GamePlayController::update(float dt){
         }
     }
 
-    void GamePlayController::generateStaticGuards(std::vector<Vec2> staticGuardsPos, bool isPast) {
+    void GamePlayController::generateStaticGuards(std::vector<std::vector<int>> staticGuardsPos, bool isPast) {
         for (int i = 0; i < staticGuardsPos.size(); i++) {
-            int x = staticGuardsPos[i].x;
-            int y = staticGuardsPos[i].y;
-            addStaticGuard(x, y, isPast);
+            int x = staticGuardsPos[i][0];
+            int y = staticGuardsPos[i][1];
+            int dir = staticGuardsPos[i][2];
+            addStaticGuard(x, y, dir, isPast);
         }
     }
 
