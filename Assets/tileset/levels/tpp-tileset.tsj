@@ -8,7 +8,7 @@
  "margin":0,
  "name":"tileset",
  "spacing":0,
- "tilecount":62,
+ "tilecount":63,
  "tiledversion":"1.10.0",
  "tileheight":256,
  "tiles":[
@@ -113,6 +113,11 @@
          "imageheight":128,
          "imagewidth":128,
          "properties":[
+                {
+                 "name":"direction",
+                 "type":"int",
+                 "value":1
+                }, 
                 {
                  "name":"isStatic",
                  "type":"bool",
@@ -462,6 +467,13 @@
          "imageheight":64,
          "imagewidth":64,
          "type":"collision_detection3"
+        }, 
+        {
+         "id":67,
+         "image":"The-Preservation-Project\/Assets\/textures\/tile_present_wall_top2.png",
+         "imageheight":128,
+         "imagewidth":128,
+         "type":"tile_present_wall_top2"
         }],
  "tilewidth":256,
  "type":"tileset",

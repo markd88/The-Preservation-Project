@@ -1755,6 +1755,7 @@
                  "id":156,
                  "name":"",
                  "properties":[
+                     {},
                         {
                          "name":"isStatic",
                          "type":"bool",
@@ -1773,6 +1774,7 @@
                  "id":157,
                  "name":"",
                  "properties":[
+                     {},
                         {
                          "name":"isStatic",
                          "type":"bool",
@@ -1791,6 +1793,7 @@
                  "id":158,
                  "name":"",
                  "properties":[
+                     {},
                         {
                          "name":"isStatic",
                          "type":"bool",
@@ -1814,6 +1817,7 @@
                  "id":163,
                  "name":"",
                  "properties":[
+                     {},
                         {
                          "name":"isStatic",
                          "type":"bool",
@@ -1837,6 +1841,7 @@
                  "id":164,
                  "name":"",
                  "properties":[
+                     {},
                         {
                          "name":"isStatic",
                          "type":"bool",
