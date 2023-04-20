@@ -18,18 +18,23 @@ private:
     /** The node is attached to the root-scene*/
 //    std::shared_ptr<scene2::PolygonNode> _node;
     std::shared_ptr<scene2::SceneNode> _node;
-    
+    bool _isArtifact;
+    bool _isResource;
+    bool _isObs;
     
 #pragma mark Main Functions
 public:
     /** contructor */
-    ItemView(Vec2 position, float angle, Size size, bool isArtifact, bool isResource, bool isWall, const std::shared_ptr<cugl::AssetManager>& assets, std::string textureKey) {
+    ItemView(Vec2 position, float angle, Size size, bool isArtifact, bool isResource, bool isObs, const std::shared_ptr<cugl::AssetManager>& assets, std::string textureKey) {
 //        float scale = GAME_WIDTH/size.width;
 //        size *= scale;
         _node = scene2::PolygonNode::alloc();
         setPosition(position);
-        setAngle(-angle * M_PI/180);
 //        setSize(size);
+//        setAngle(-angle * M_PI/180);
+        _isArtifact = isArtifact;
+        _isResource = isResource;
+        _isObs = isObs;
     }
     
     ~ItemView(){
@@ -46,7 +51,7 @@ public:
      *
      * @param sceneNode The scenenode to add the view to
      */
-    void addChildTo(const std::shared_ptr<cugl::Scene2>& scene) {
+    void addChildTo(const std::shared_ptr<cugl::scene2::OrderedNode>& scene) {
         scene->addChild(_node);
     }
     
@@ -55,7 +60,7 @@ public:
      *
      * @param sceneNode The scenenode to remove the view from
      */
-    void removeChildFrom(const std::shared_ptr<cugl::Scene2>& scene) {
+    void removeChildFrom(const std::shared_ptr<cugl::scene2::OrderedNode>& scene) {
         scene->removeChild(_node);
     }
 
@@ -77,15 +82,19 @@ public:
     void setTexture(const std::shared_ptr<cugl::AssetManager>& assets, std::string textureKey) {
         //        auto node = scene2::SceneNode::alloc();
         Vec2 pos = nodePos();
-        float angle = _node->getAngle();
-//        Size size = _node->getSize();
+        Size size = _node->getSize();
         std::shared_ptr<Texture> texture  = assets->get<Texture>(textureKey);
         _node = scene2::PolygonNode::allocWithTexture(texture);
-        _node->setAnchor(Vec2::ANCHOR_BOTTOM_LEFT);
-        setPosition(pos);
-        setAngle(angle);
-//        setSize(size);
-//        _node->addChild(node);
+        if (_isArtifact || _isResource) {
+            _node->setAnchor(Vec2::ANCHOR_CENTER);
+            setPosition(pos + _node->getSize()/2);
+        } else {
+            _node->setAnchor(Vec2::ANCHOR_BOTTOM_LEFT);
+            setPosition(pos);
+        }
+        if (_isObs) {
+            setVisibility(false);
+        }
     }
 
     
@@ -103,7 +112,7 @@ public:
      *  @param point, the position of the point
      */
     bool contains(Vec2 point){
-        Vec2 global_pos = _node->getPosition();
+        Vec2 global_pos = _node->getWorldPosition();
         Size s = _node->getSize();
         bool hor = (point.x >= global_pos.x && point.x <= global_pos.x + s.width);
         bool ver = (point.y >= global_pos.y && point.y <= global_pos.y + s.height);
@@ -139,6 +148,11 @@ public:
         
         // if uA and uB are between 0-1, lines are colliding
         return (uA >= 0 && uA <= 1 && uB >= 0 && uB <= 1);
+    }
+    
+    // update priority based on its y coor
+    void updatePriority(){
+        _node->setPriority(_node->getPosition().y);
     }
 };
 

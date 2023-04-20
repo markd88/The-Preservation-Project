@@ -26,12 +26,12 @@
 #define TILEMAP_FILED       "tilemap"
 
 /** Wall specific fields */
-#define WALLS_FIELD         "wall"
+#define WALL_FIELD          "wall"
+#define OBS_FIELD           "obs"
 
 /** Artifact specific fields */
-#define ARTIFACTS_FIELD     "artifact"
+#define ITEM_FIELD          "item"
 #define RESOURCE_FIELD      "resource-big"
-#define WALL_FIELD          "wall"
 
 /** Character specific fields */
 #define CHARACTER_FIELD         "character"
@@ -44,16 +44,26 @@
 #define RIGHT_SOUND_FIELD   "right-sound"
 
 /** The source for level files */
-#define LEVEL_ZERO_PAST_FILE      "tileset/levels/level-0-past/level-0-past.json"
-#define LEVEL_ZERO_PRESENT_FILE      "tileset/levels/level-0-present/level-0-present.json"
-//#define LEVEL_ZERO_PRESENT_FILE      "tileset/levels/test.json"
-#define LEVEL_ONE_PAST_FILE      "tileset/levels/level-1-past/level-1-past.json"
-#define LEVEL_ONE_PRESENT_FILE      "tileset/levels/level-1-present/level-1-present.json"
+#define LEVEL_ONE_PAST_FILE      "tileset/levels/level-1/level-1-past.json"
+#define LEVEL_ONE_PRESENT_FILE      "tileset/levels/level-1/level-1-present.json"
+
+#define LEVEL_TWO_PAST_FILE      "tileset/levels/level-2/level-2-past.json"
+#define LEVEL_TWO_PRESENT_FILE      "tileset/levels/level-2/level-2-present.json"
+
+#define LEVEL_THREE_PAST_FILE      "tileset/levels/level-3/level-3-past.json"
+#define LEVEL_THREE_PRESENT_FILE      "tileset/levels/level-3/level-3-present.json"
+
+#define LEVEL_FOUR_PAST_FILE      "tileset/levels/level-4/level-4-past.json"
+#define LEVEL_FOUR_PRESENT_FILE      "tileset/levels/level-4/level-4-present.json"
 
 /** The key for loaded levels */
-#define LEVEL_ZERO_PAST_KEY       "level-0-past"
-#define LEVEL_ZERO_PRESENT_KEY       "level-0-present"
 #define LEVEL_ONE_PAST_KEY       "level-1-past"
 #define LEVEL_ONE_PRESENT_KEY       "level-1-present"
+#define LEVEL_TWO_PAST_KEY       "level-2-past"
+#define LEVEL_TWO_PRESENT_KEY       "level-2-present"
+#define LEVEL_THREE_PAST_KEY       "level-3-past"
+#define LEVEL_THREE_PRESENT_KEY       "level-3-present"
+#define LEVEL_FOUR_PAST_KEY       "level-4-past"
+#define LEVEL_FOUR_PRESENT_KEY       "level-4-present"
 
 #endif /* LevelConstants_h */

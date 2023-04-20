@@ -23,6 +23,13 @@ GamePlayController::GamePlayController(const Size displaySize, std::shared_ptr<c
 _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displaySize)) {
         
     // Initialize the assetManager
+    
+    
+    _ordered_root = cugl::scene2::OrderedNode::allocWithOrder(cugl::scene2::OrderedNode::Order::DESCEND);
+    
+    
+    _other_ordered_root = cugl::scene2::OrderedNode::allocWithOrder(cugl::scene2::OrderedNode::Order::DESCEND);
+
     _assets = assets;
     _displaySize = displaySize;
     // load sound
@@ -33,9 +40,9 @@ _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displ
     _winSound = assets->get<Sound>("lose");
 
     // load the level info
-    _assets->load<LevelModel>(LEVEL_ZERO_PAST_KEY, LEVEL_ZERO_PAST_FILE);
-    _assets->load<LevelModel>(LEVEL_ZERO_PRESENT_KEY, LEVEL_ZERO_PRESENT_FILE);
-    
+
+    _assets->load<LevelModel>(LEVEL_ONE_PAST_KEY, LEVEL_ONE_PAST_FILE);
+    _assets->load<LevelModel>(LEVEL_ONE_PRESENT_KEY, LEVEL_ONE_PRESENT_FILE);
     
     // Initialize the scene to a locked width
     Size dimen = Application::get()->getDisplaySize();
@@ -51,14 +58,16 @@ _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displ
     
     // Allocate the camera manager
     _camManager = CameraManager::alloc();
-    _scene->setSize(displaySize*1.5);
-    _other_scene->setSize(displaySize*1.5);
+    _scene->setSize(displaySize*3);
+    _other_scene->setSize(displaySize*3);
+//    _scene->setSize(displaySize *3);
+//    _other_scene->setSize(displaySize *3);
     
     _path = make_unique<PathController>();
     // initialize character, two maps, path
     
     // Draw past world
-    _pastWorldLevel = _assets->get<LevelModel>(LEVEL_ZERO_PAST_KEY);
+    _pastWorldLevel = _assets->get<LevelModel>(LEVEL_ONE_PAST_KEY);
     if (_pastWorldLevel == nullptr) {
         CULog("Failed to import level!");
     }
@@ -66,10 +75,11 @@ _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displ
     _pastWorldLevel->setTilemapTexture();
     _pastWorld = _pastWorldLevel->getWorld();
     _obsSetPast = _pastWorldLevel->getObs();
+    _wallSetPast = _pastWorldLevel->getWall();
     _artifactSet = _pastWorldLevel->getItem();
 
     // Draw present world
-    _presentWorldLevel = _assets->get<LevelModel>(LEVEL_ZERO_PRESENT_KEY);
+    _presentWorldLevel = _assets->get<LevelModel>(LEVEL_ONE_PRESENT_KEY);
     if (_presentWorldLevel == nullptr) {
         CULog("Failed to import level!");
     }
@@ -77,8 +87,11 @@ _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displ
     _presentWorldLevel->setTilemapTexture();
     _presentWorld = _presentWorldLevel->getWorld();
     _obsSetPresent = _presentWorldLevel->getObs();
-    //_presentWorld->updateColor(Color4::CLEAR);
-    //_pastWorld->updateColor(Color4::CLEAR);
+
+    _wallSetPresent = _presentWorldLevel->getWall();
+    _presentWorld->updateColor(Color4::CLEAR);
+    _pastWorld->updateColor(Color4::CLEAR);
+
     
     //render target for preview
     _previewNode = cugl::scene2::PolygonNode::alloc();
@@ -211,7 +224,7 @@ _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displ
 
 
 
-// init some assets when restart
+// init assets and all scenegraph when restart
 void GamePlayController::init(){
     
     // dispose all active actions
@@ -221,17 +234,29 @@ void GamePlayController::init(){
     
     // remove everything first
     _scene->removeAllChildren();
-
-    _reset_button->activate();
+    _ordered_root->removeAllChildren();
 
     _other_scene->removeAllChildren();
+
     _scene2texture->removeAllChildren();
+
+    _other_ordered_root->removeAllChildren();
+
     
     _pastWorld->addChildTo(_scene);
+    _scene->addChild(_ordered_root);
+    
+    _presentWorld->addChildTo(_other_scene);
+    _presentWorld->setActive(false);
+    _other_scene->addChild(_other_ordered_root);
+    
+    
+    //_pastWorld->addChildTo(_ordered_root);
     _pastWorld->setVisibility(true);
 
 
     // for two world switch animation
+    //_scene->addChild(_world_switch_node);
     _scene->addChild(_world_switch_node);
     _isSwitching = false;
 
@@ -244,18 +269,19 @@ void GamePlayController::init(){
     
     _artifactSet->clearSet();
     _artifactSet = _pastWorldLevel->getItem();
-    _artifactSet->addChildTo(_scene);
+    _artifactSet->addChildTo(_ordered_root);
     _artifactSet->setVisibility(true);
     
     
-    _obsSetPast->addChildTo(_scene);
-    _obsSetPast->setVisibility(true);
+    _obsSetPast->addChildTo(_ordered_root);
+//    _obsSetPast->setVisibility(true);
+    _wallSetPast->addChildTo(_ordered_root);
+
+    _obsSetPresent->addChildTo(_other_ordered_root);
     
-    _presentWorld->addChildTo(_other_scene);
-    _presentWorld->setVisibility(true);
-    _presentWorld->setActive(false);
-    _obsSetPresent->addChildTo(_other_scene);
-    _obsSetPresent->setVisibility(true);
+    _wallSetPresent->addChildTo(_other_ordered_root);
+    
+
     
     auto presentEdges = _presentWorld->getEdges(_other_scene, _obsSetPresent);
     generatePresentMat(_presentWorld->getVertices());
@@ -264,13 +290,15 @@ void GamePlayController::init(){
     }
     
     _activeMap = "pastWorld";
+    _pastWorld->setActive(true);
+    _presentWorld->setActive(false);
     _template = 0;
     
     Vec2 start = _pastWorldLevel->getCharacterPos();
 
     _character = make_unique<CharacterController>(start, _actions, _assets);
-    _character->addChildTo(_scene);
-
+    //_character->addChildTo(_scene);
+    _character->addChildTo(_ordered_root);
     
     _guardSetPast = std::make_unique<GuardSetController>(_assets, _actions, _pastWorld, _obsSetPast, pastMatrix, _pastWorld->getNodes());
     _guardSetPresent = std::make_unique<GuardSetController>(_assets, _actions, _presentWorld, _obsSetPresent, presentMatrix, _presentWorld->getNodes());
@@ -278,6 +306,7 @@ void GamePlayController::init(){
     _guardSetPast->clearSet();
     _guardSetPresent->clearSet();
     
+    // all guards are init in _guardSet
     // generate guards in past world
     generateMovingGuards(_pastMovingGuardsPos, true);
     generateStaticGuards(_pastStaticGuardsPos, true);
@@ -292,7 +321,9 @@ void GamePlayController::init(){
     _path = make_unique<PathController>();
     path_trace = {};
     
+    _reset_button->activate();
     _scene->addChild(_button_layer);
+    //_ordered_root->addChild(_button_layer);
     
     Vec2 cPos = _character->getPosition();
     _cam->setPosition(Vec3(cPos.x,cPos.y,0));
@@ -332,24 +363,36 @@ void GamePlayController::update(float dt){
 
         if (_activeMap == "pastWorld") {
             _activeMap = "presentWorld";
-            _character->removeChildFrom(_scene);
-            _character->addChildTo(_other_scene);
+            _pastWorld->setActive(false);
+            _presentWorld->setActive(true);
+            
             _other_cam->setPosition(_cam->getPosition());
             _other_cam->update();
             _scene->removeChild(_button_layer);
             _other_scene->addChild(_button_layer);
+            
+            _character->removeChildFrom(_ordered_root);
+            _character->addChildTo(_other_ordered_root);
+            
+
             // when move to the second world, minus 1 visually
             _res_label->setText(cugl::strtool::to_string(_character->getNumRes()-1));
             
         }
         else {
+
             _activeMap = "pastWorld";
-            _character->removeChildFrom(_other_scene);
-            _character->addChildTo(_scene);
+            _pastWorld->setActive(true);
+            _presentWorld->setActive(false);
             _cam->setPosition(_other_cam->getPosition());
             _cam->update();
             _other_scene->removeChild(_button_layer);
             _scene->addChild(_button_layer);
+
+            
+            _character->removeChildFrom(_other_ordered_root);
+            _character->addChildTo(_ordered_root);
+
             // when move to the second world, minus 1 in model
             _character->useRes();
         }
@@ -400,7 +443,7 @@ void GamePlayController::update(float dt){
         _switchNode->setColor(Color4::GREEN);
     }
     if(elapsed.count() >= 0.5 && _input->getPinchDelta() != 0 && !cant_switch){
-        AudioEngine::get()->play("lovestruck", _switchSound, false, _switchSound->getVolume(), true);
+        //AudioEngine::get()->play("lovestruck", _switchSound, false, _switchSound->getVolume(), true);
 
         // if the character's position on the other world is obstacle, disable the switch
         last_time = now;
@@ -475,7 +518,7 @@ void GamePlayController::update(float dt){
 
                 if((_activeMap == "pastWorld" && _obsSetPast->inObstacle(checkpoint)) || (_activeMap == "presentWorld" && _obsSetPresent->inObstacle(checkpoint))){
                     _path->setIsDrawing(false);
-                    return;
+                    break;
                 }
                 
                 else{
@@ -576,8 +619,12 @@ void GamePlayController::update(float dt){
     
     else if (_isPreviewing){
         Vec2 input_posi = _input->getPosition();
-        
-        input_posi = _scene->screenToWorldCoords(input_posi);
+        if (_activeMap == "pastWorld"){
+            input_posi = _scene->screenToWorldCoords(input_posi);
+        }
+        else {
+            input_posi = _other_scene->screenToWorldCoords(input_posi);
+        }
         
         auto poly =  _pastWorld->getNode()->getPolygon();
         
@@ -606,10 +653,13 @@ void GamePlayController::update(float dt){
         
         if (_activeMap == "pastWorld"){
             _camManager->activate("movingCam", _moveCam, _cam);
+            _path->removeFirst(_scene);
         }else{
             _camManager->activate("movingOtherCam", _moveCam, _other_cam);
+            _path->removeFirst(_other_scene);
         }
-        _path->removeFirst(_scene);
+        
+        
         
     }
 
@@ -628,7 +678,7 @@ void GamePlayController::update(float dt){
                 
                 // if resource
                 if(_artifactSet->_itemSet[i]->isResource()){
-                    AudioEngine::get()->play("NPC_flip", _collectResourceSound, false, _collectResourceSound->getVolume(), true);
+                    //AudioEngine::get()->play("NPC_flip", _collectResourceSound, false, _collectResourceSound->getVolume(), true);
                     _character->addRes();
                     // update panel
                     _res_label->setText(cugl::strtool::to_string(_character->getNumRes()));
@@ -636,12 +686,12 @@ void GamePlayController::update(float dt){
                 }
                 // if artifact
                 else if (_artifactSet->_itemSet[i]->isArtifact()){
-                    AudioEngine::get()->play("arrowHit", _collectArtifactSound, false, _collectArtifactSound->getVolume(), true);
+                    //AudioEngine::get()->play("arrowHit", _collectArtifactSound, false, _collectArtifactSound->getVolume(), true);
                     _character->addArt();
                     _art_label->setText(cugl::strtool::to_string(_character->getNumArt()) + "/5");
                 }
                 // make the artifact disappear and remove from set
-                _artifactSet->remove_this(i, _scene);
+                _artifactSet->remove_this(i, _ordered_root);
                 if(_character->getNumArt() == 5){
                     completeTerminate();
                 }
@@ -653,8 +703,8 @@ void GamePlayController::update(float dt){
     }
 
 #pragma mark Guard Methods
-    _guardSetPast->patrol(_character->getNodePosition(), _scene, _character->getAngle());
-    _guardSetPresent->patrol(_character->getNodePosition(), _other_scene, _character->getAngle());
+    _guardSetPast->patrol(_character->getNodePosition(), _character->getAngle());
+    _guardSetPresent->patrol(_character->getNodePosition(), _character->getAngle());
     // if collide with guard
     if(_activeMap == "pastWorld"){
         for(int i=0; i<_guardSetPast->_guardSet.size(); i++){
@@ -682,7 +732,15 @@ void GamePlayController::update(float dt){
     _camManager->update(dt);
     
     // the camera is moving smoothly, but the UI only set its movement per frame
-    _button_layer->setPosition(_cam->getPosition() - Vec2(900, 70));
+    if (_activeMap == "pastWorld"){
+        _button_layer->setPosition(_cam->getPosition() - Vec2(900, 70));
+    }else{
+        _button_layer->setPosition(_other_cam->getPosition() - Vec2(900, 70));
+    }
+    
+    
+    // update render priority
+    updateRenderPriority();
 }
     
     

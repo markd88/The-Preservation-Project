@@ -8,7 +8,7 @@
  "margin":0,
  "name":"tileset",
  "spacing":0,
- "tilecount":57,
+ "tilecount":63,
  "tiledversion":"1.10.0",
  "tileheight":256,
  "tiles":[
@@ -18,70 +18,70 @@
          "imageheight":69,
          "imagewidth":128,
          "type":"deco_past_cabinet_front"
-        },
+        }, 
         {
          "id":1,
          "image":"The-Preservation-Project\/Assets\/textures\/deco_past_cabinet_side_L.png",
          "imageheight":128,
          "imagewidth":64,
          "type":"deco_past_cabinet_side_L"
-        },
+        }, 
         {
          "id":2,
          "image":"The-Preservation-Project\/Assets\/textures\/deco_past_cabinet_side_R.png",
          "imageheight":128,
          "imagewidth":64,
          "type":"deco_past_cabinet_side_R"
-        },
+        }, 
         {
          "id":3,
          "image":"The-Preservation-Project\/Assets\/textures\/deco_past_chair_back.png",
          "imageheight":64,
          "imagewidth":64,
          "type":"deco_past_chair_back"
-        },
+        }, 
         {
          "id":4,
          "image":"The-Preservation-Project\/Assets\/textures\/deco_past_chair_front.png",
          "imageheight":76,
          "imagewidth":64,
          "type":"deco_past_chair_front"
-        },
+        }, 
         {
          "id":5,
          "image":"The-Preservation-Project\/Assets\/textures\/deco_past_chair_side_L.png",
          "imageheight":89,
          "imagewidth":64,
          "type":"deco_past_chair_side_L"
-        },
+        }, 
         {
          "id":6,
          "image":"The-Preservation-Project\/Assets\/textures\/deco_past_chair_side_R.png",
          "imageheight":88,
          "imagewidth":64,
          "type":"deco_past_chair_side_R"
-        },
+        }, 
         {
          "id":7,
          "image":"The-Preservation-Project\/Assets\/textures\/deco_past_table_front.png",
          "imageheight":78,
          "imagewidth":128,
          "type":"deco_past_table_front"
-        },
+        }, 
         {
          "id":8,
          "image":"The-Preservation-Project\/Assets\/textures\/deco_past_table_side.png",
          "imageheight":128,
          "imagewidth":64,
          "type":"deco_past_table_side"
-        },
+        }, 
         {
          "id":9,
          "image":"The-Preservation-Project\/Assets\/textures\/deco_past_vase_FORTABLE.png",
          "imageheight":64,
          "imagewidth":64,
          "type":"deco_past_vase_FORTABLE"
-        },
+        }, 
         {
          "id":10,
          "image":"The-Preservation-Project\/Assets\/textures\/enemy_past_moving_horizontal.png",
@@ -92,21 +92,21 @@
                  "name":"isStatic",
                  "type":"bool",
                  "value":false
-                },
+                }, 
                 {
                  "name":"path",
                  "type":"string",
                  "value":""
                 }],
          "type":"enemy_past_moving_horizontal"
-        },
+        }, 
         {
          "id":11,
          "image":"The-Preservation-Project\/Assets\/textures\/enemy_past_moving_vertical.png",
          "imageheight":128,
          "imagewidth":128,
          "type":"enemy_past_moving_vertical"
-        },
+        }, 
         {
          "id":12,
          "image":"The-Preservation-Project\/Assets\/textures\/enemy_past_static.png",
@@ -114,319 +114,366 @@
          "imagewidth":128,
          "properties":[
                 {
+                 "name":"direction",
+                 "type":"int",
+                 "value":1
+                }, 
+                {
                  "name":"isStatic",
                  "type":"bool",
                  "value":true
                 }],
          "type":"enemy_past_static"
-        },
+        }, 
         {
          "id":13,
          "image":"The-Preservation-Project\/Assets\/textures\/enemy_present_moving_horizontal.png",
          "imageheight":128,
          "imagewidth":128,
          "type":"enemy_present_moving_horizontal"
-        },
+        }, 
         {
          "id":14,
          "image":"The-Preservation-Project\/Assets\/textures\/enemy_present_moving_vertical.png",
          "imageheight":128,
          "imagewidth":128,
          "type":"enemy_present_moving_vertical"
-        },
+        }, 
         {
          "id":15,
          "image":"The-Preservation-Project\/Assets\/textures\/enemy_present_static.png",
          "imageheight":128,
          "imagewidth":128,
          "type":"enemy_present_static"
-        },
+        }, 
         {
          "id":16,
          "image":"The-Preservation-Project\/Assets\/textures\/past_roof.png",
          "imageheight":60,
          "imagewidth":128,
          "type":"past_roof"
-        },
+        }, 
         {
          "id":17,
          "image":"The-Preservation-Project\/Assets\/textures\/tile_past_floor_column_left.png",
          "imageheight":128,
          "imagewidth":128,
          "type":"tile_past_floor_column_left"
-        },
+        }, 
         {
          "id":18,
          "image":"The-Preservation-Project\/Assets\/textures\/tile_past_floor_column_right.png",
          "imageheight":128,
          "imagewidth":128,
          "type":"tile_past_floor_column_right"
-        },
+        }, 
         {
          "id":19,
          "image":"The-Preservation-Project\/Assets\/textures\/tile_past_floor_stone1.png",
          "imageheight":128,
          "imagewidth":128,
          "type":"tile_past_floor_stone1"
-        },
+        }, 
         {
          "id":20,
          "image":"The-Preservation-Project\/Assets\/textures\/tile_past_floor_stone2.png",
          "imageheight":128,
          "imagewidth":128,
          "type":"tile_past_floor_stone2"
-        },
+        }, 
         {
          "id":21,
          "image":"The-Preservation-Project\/Assets\/textures\/tile_past_floor_stone3.png",
          "imageheight":128,
          "imagewidth":128,
          "type":"tile_past_floor_stone3"
-        },
+        }, 
         {
          "id":22,
          "image":"The-Preservation-Project\/Assets\/textures\/tile_past_wall_column_left_window.png",
          "imageheight":128,
          "imagewidth":128,
          "type":"tile_past_wall_column_left_window"
-        },
+        }, 
         {
          "id":23,
          "image":"The-Preservation-Project\/Assets\/textures\/tile_past_wall_column_right_window.png",
          "imageheight":128,
          "imagewidth":128,
          "type":"tile_past_wall_column_right_window"
-        },
+        }, 
         {
          "id":24,
          "image":"The-Preservation-Project\/Assets\/textures\/tile_past_wall_window.png",
          "imageheight":128,
          "imagewidth":128,
          "type":"tile_past_wall_window"
-        },
+        }, 
         {
          "id":25,
          "image":"The-Preservation-Project\/Assets\/textures\/tile_past_wall1.png",
          "imageheight":128,
          "imagewidth":128,
          "type":"tile_past_wall1"
-        },
+        }, 
         {
          "id":26,
          "image":"The-Preservation-Project\/Assets\/textures\/tile_past_wall2.png",
          "imageheight":128,
          "imagewidth":128,
          "type":"tile_past_wall2"
-        },
+        }, 
         {
          "id":27,
          "image":"The-Preservation-Project\/Assets\/textures\/tile_past_wall3.png",
          "imageheight":128,
          "imagewidth":128,
          "type":"tile_past_wall3"
-        },
+        }, 
         {
          "id":28,
          "image":"The-Preservation-Project\/Assets\/textures\/tile_present_grass_s_half_rock.png",
          "imageheight":128,
          "imagewidth":128,
          "type":"tile_present_grass_s_half_rock"
-        },
+        }, 
         {
          "id":29,
          "image":"The-Preservation-Project\/Assets\/textures\/tile_present_grass_s_rock.png",
          "imageheight":128,
          "imagewidth":128,
          "type":"tile_present_grass_s_rock"
-        },
+        }, 
         {
          "id":30,
          "image":"The-Preservation-Project\/Assets\/textures\/tile_present_grass_s_slopepos_rock.png",
          "imageheight":128,
          "imagewidth":128,
          "type":"tile_present_grass_s_slopepos_rock"
-        },
+        }, 
         {
          "id":31,
          "image":"The-Preservation-Project\/Assets\/textures\/tile_present_grass_shadow_slopeneg.png",
          "imageheight":128,
          "imagewidth":128,
          "type":"tile_present_grass_shadow_slopeneg"
-        },
+        }, 
         {
          "id":32,
          "image":"The-Preservation-Project\/Assets\/textures\/tile_present_grass_shadow_slopepos.png",
          "imageheight":128,
          "imagewidth":128,
          "type":"tile_present_grass_shadow_slopepos"
-        },
+        }, 
         {
          "id":33,
          "image":"The-Preservation-Project\/Assets\/textures\/tile_present_grass_shadow.png",
          "imageheight":128,
          "imagewidth":128,
          "type":"tile_present_grass_shadow"
-        },
+        }, 
         {
          "id":34,
          "image":"The-Preservation-Project\/Assets\/textures\/tile_present_grass1.png",
          "imageheight":128,
          "imagewidth":128,
          "type":"tile_present_grass1"
-        },
+        }, 
         {
          "id":35,
          "image":"The-Preservation-Project\/Assets\/textures\/tile_present_grass2.png",
          "imageheight":128,
          "imagewidth":128,
          "type":"tile_present_grass2"
-        },
+        }, 
         {
          "id":36,
          "image":"The-Preservation-Project\/Assets\/textures\/tile_present_grass3.png",
          "imageheight":128,
          "imagewidth":128,
          "type":"tile_present_grass3"
-        },
+        }, 
         {
          "id":37,
          "image":"The-Preservation-Project\/Assets\/textures\/tile_present_obstacle_shaded_block.png",
          "imageheight":256,
          "imagewidth":256,
          "type":"tile_present_obstacle_shaded_block"
-        },
+        }, 
         {
          "id":38,
          "image":"The-Preservation-Project\/Assets\/textures\/tile_present_obstacle_stone.png",
          "imageheight":256,
          "imagewidth":256,
          "type":"tile_present_obstacle_stone"
-        },
+        }, 
         {
          "id":39,
          "image":"The-Preservation-Project\/Assets\/textures\/tile_present_obstacle_sun_block.png",
          "imageheight":256,
          "imagewidth":256,
          "type":"tile_present_obstacle_sun_block"
-        },
+        }, 
         {
          "id":40,
          "image":"The-Preservation-Project\/Assets\/textures\/tile_present_side_wall.png",
          "imageheight":128,
          "imagewidth":29,
          "type":"tile_present_side_wall"
-        },
+        }, 
         {
          "id":41,
          "image":"The-Preservation-Project\/Assets\/textures\/tile_present_stones1.png",
          "imageheight":128,
          "imagewidth":128,
          "type":"tile_present_stones1"
-        },
+        }, 
         {
          "id":42,
          "image":"The-Preservation-Project\/Assets\/textures\/tile_present_stones2.png",
          "imageheight":128,
          "imagewidth":128,
          "type":"tile_present_stones2"
-        },
+        }, 
         {
          "id":43,
          "image":"The-Preservation-Project\/Assets\/textures\/tile_present_stones3.png",
          "imageheight":128,
          "imagewidth":128,
          "type":"tile_present_stones3"
-        },
+        }, 
         {
          "id":44,
          "image":"The-Preservation-Project\/Assets\/textures\/tile_present_wall_half.png",
          "imageheight":128,
          "imagewidth":128,
          "type":"tile_present_wall_half"
-        },
+        }, 
         {
          "id":45,
          "image":"The-Preservation-Project\/Assets\/textures\/tile_present_wall_side.png",
          "imageheight":128,
          "imagewidth":44,
          "type":"tile_present_wall_side"
-        },
+        }, 
         {
          "id":46,
          "image":"The-Preservation-Project\/Assets\/textures\/tile_present_wall_slopepos.png",
          "imageheight":128,
          "imagewidth":128,
          "type":"tile_present_wall_slopepos"
-        },
+        }, 
         {
          "id":47,
          "image":"The-Preservation-Project\/Assets\/textures\/tile_present_wall.png",
          "imageheight":128,
          "imagewidth":128,
          "type":"tile_present_wall"
-        },
+        }, 
         {
          "id":48,
          "image":"The-Preservation-Project\/Assets\/textures\/tile_present_wall2.png",
          "imageheight":128,
          "imagewidth":128,
          "type":"tile_present_wall2"
-        },
+        }, 
         {
          "id":49,
          "image":"The-Preservation-Project\/Assets\/textures\/tile_present_wall3.png",
          "imageheight":128,
          "imagewidth":128,
          "type":"tile_present_wall3"
-        },
+        }, 
         {
          "id":50,
          "image":"The-Preservation-Project\/Assets\/textures\/tile_present_wall4.png",
          "imageheight":128,
          "imagewidth":128,
          "type":"tile_present_wall4"
-        },
+        }, 
         {
          "id":51,
          "image":"The-Preservation-Project\/Assets\/textures\/artifact-1-big.png",
          "imageheight":128,
          "imagewidth":128,
          "type":"artifact-1-big"
-        },
+        }, 
         {
          "id":52,
-         "image":"The-Preservation-Project\/Assets\/textures\/character.png",
+         "image":"The-Preservation-Project\/Assets\/textures\/character copy.png",
          "imageheight":128,
          "imagewidth":128,
          "type":"character"
-        },
+        }, 
         {
          "id":53,
          "image":"The-Preservation-Project\/Assets\/textures\/artifact-2-big.png",
          "imageheight":128,
          "imagewidth":128,
          "type":"artifact-2-big"
-        },
+        }, 
         {
          "id":54,
          "image":"The-Preservation-Project\/Assets\/textures\/artifact-3-big.png",
          "imageheight":128,
          "imagewidth":128,
          "type":"artifact-3-big"
-        },
+        }, 
         {
          "id":55,
          "image":"The-Preservation-Project\/Assets\/textures\/artifact-4-big.png",
          "imageheight":128,
          "imagewidth":128,
          "type":"artifact-4-big"
-        },
+        }, 
         {
          "id":56,
          "image":"The-Preservation-Project\/Assets\/textures\/resource-big.png",
          "imageheight":128,
          "imagewidth":128,
          "type":"resource-big"
+        }, 
+        {
+         "id":61,
+         "image":"The-Preservation-Project\/Assets\/textures\/past_roof_L.png",
+         "imageheight":128,
+         "imagewidth":60,
+         "type":"past_roof_L"
+        }, 
+        {
+         "id":62,
+         "image":"The-Preservation-Project\/Assets\/textures\/past_roof_R.png",
+         "imageheight":128,
+         "imagewidth":60,
+         "type":"past_roof_R"
+        }, 
+        {
+         "id":63,
+         "image":"The-Preservation-Project\/Assets\/textures\/collision_detection1.png",
+         "imageheight":64,
+         "imagewidth":128,
+         "type":"collision_detection1"
+        }, 
+        {
+         "id":64,
+         "image":"The-Preservation-Project\/Assets\/textures\/collision_detection2.png",
+         "imageheight":128,
+         "imagewidth":64,
+         "type":"collision_detection2"
+        }, 
+        {
+         "id":65,
+         "image":"The-Preservation-Project\/Assets\/textures\/collision_detection3.png",
+         "imageheight":64,
+         "imagewidth":64,
+         "type":"collision_detection3"
+        }, 
+        {
+         "id":67,
+         "image":"The-Preservation-Project\/Assets\/textures\/tile_present_wall_top2.png",
+         "imageheight":128,
+         "imagewidth":128,
+         "type":"tile_present_wall_top2"
         }],
  "tilewidth":256,
  "type":"tileset",

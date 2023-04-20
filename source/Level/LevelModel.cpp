@@ -24,6 +24,7 @@ LevelModel::LevelModel(void) : Asset()
     _world = std::make_unique<TilemapController>();
     _item = std::make_shared<ItemSetController>();
     _obs = std::make_shared<ItemSetController>();
+    _wall = std::make_shared<ItemSetController>();
 }
 
 /**
@@ -113,11 +114,8 @@ bool LevelModel::loadObject(const std::string type, int totalHeight, const std::
     if (type == TILEMAP_FILED) {
         return loadTilemap(json);
     }
-    if (type == WALLS_FIELD) {
-        return loadWall(json);
-    }
-    if (type == ARTIFACTS_FIELD) {
-        return loadItem(json);
+    if (type == ITEM_FIELD || type == OBS_FIELD || type == WALL_FIELD) {
+        return loadItem(json, type);
     }
     if (type == GUARD_FIELD) {
         return loadGuard(json);
@@ -152,33 +150,10 @@ bool LevelModel::loadTilemap(const std::shared_ptr<JsonValue>& json) {
     return success;
 }
 
-
-/**
-* Loads a single wall object
-*/
-bool LevelModel::loadWall(const std::shared_ptr<JsonValue>& json) {
-    bool success = true;
-    std::string textureType = json->get("type")->asString();
-    
-    int width = json->get("height")->asInt();
-    int height = json->get("width")->asInt();
-    int x = json->get("x")->asInt(); // x pos
-    int y = totalHeight - json->get("y")->asInt(); // totalHeight - yHeight
-    int rot = json->get("rotation")->asInt();
-    
-    Vec2 pos = Vec2 (x, y);
-    Size size = Size(width, height);
-    // isArtifact = false, isResource = false, isObs = TRUE
-    _obs->add_this(pos, rot, size, false, false, true, _assets, textureType);
-
-    success = success && x >= 0 && y >= 0;
-    return success;
-}
-
 /**
 * Loads an Item object
 */
-bool LevelModel::loadItem(const std::shared_ptr<JsonValue>& json) {
+bool LevelModel::loadItem(const std::shared_ptr<JsonValue>& json, const std::string type) {
     bool success = true;
     std::string textureType = json->get("type")->asString();
     
@@ -190,13 +165,22 @@ bool LevelModel::loadItem(const std::shared_ptr<JsonValue>& json) {
     
     Vec2 pos = Vec2 (x, y);
     Size size = Size(width, height);
-    // isArtifact, isResource, isObs
-    if (textureType == RESOURCE_FIELD) {
-        // isArtifact = false, isResource = TRUE, isObs = false
-        _item->add_this(pos, rot, size, false, true, false, _assets, textureType);
-    } else {
-        // isArtifact = TRUE, isResource = false, isObs = false
-        _item->add_this(pos, rot, size, true, false, false, _assets, textureType);
+    if (type == WALL_FIELD) {
+        // isArtifact = false, isResource = false, isObs = false
+        _wall->add_this(pos, rot, size, false, false, false, _assets, textureType);
+    }
+    if (type == OBS_FIELD) {
+        // isArtifact = false, isResource = false, isObs = TRUE
+        _obs->add_this(pos, rot, size, false, false, true, _assets, textureType);
+    }
+    if (type == ITEM_FIELD) {
+        if (textureType == RESOURCE_FIELD) {
+            // isArtifact = false, isResource = TRUE, isObs = false
+            _item->add_this(pos, rot, size, false, true, false, _assets, textureType);
+        } else {
+            // isArtifact = TRUE, isResource = false, isObs = false
+            _item->add_this(pos, rot, size, true, false, false, _assets, textureType);
+        }
     }
 
     success = success && x >= 0 && y >= 0;
@@ -232,7 +216,7 @@ bool LevelModel::loadGuard(const std::shared_ptr<JsonValue>& json) {
     }
     
     std::string textureType = json->get("type")->asString();
-    bool isStatic = json->get("properties")->get(0)->get("value")->asBool();
+    bool isStatic = json->get("properties")->get(1)->get("value")->asBool();
     
     if (isStatic) {
         int x = json->get("x")->asInt(); // x pos
@@ -258,16 +242,10 @@ bool LevelModel::loadGuard(const std::shared_ptr<JsonValue>& json) {
         Vec2 vec;
         size_t comma = inputPath.find(',', start);
         vec.x = std::stoi(inputPath.substr(start, comma - start));
-        vec.y = std::stoi(inputPath.substr(comma + 1));
+        vec.y = totalHeight - std::stoi(inputPath.substr(comma + 1));
         patrolPoints.push_back(vec);
 
         _movingGuardsPos.push_back(patrolPoints);
-        
-        // Print the vector of Vec2s
-        for (const auto& v : patrolPoints) {
-            std::cout << "(" << v.x << ", " << v.y << ")" << std::endl;
-        }
-
     }
 
     return success;
@@ -277,4 +255,5 @@ void LevelModel::setTilemapTexture() {
     _world->setTexture(_assets);
     _item->setTexture(_assets);
     _obs->setTexture(_assets);
+    _wall->setTexture(_assets);
 };

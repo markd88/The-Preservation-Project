@@ -123,9 +123,11 @@ public:
         Spline2 spline = Spline2(_model->lastPos, pos);
         Vec2 point = _model->lastPos.getMidpoint(pos);
         _model->addToPath(point);
-        if (_model->Path.size() % 2 == 0){
-            _view->addToPathLines(spline, point, scene);
-        }
+        // not going to work now because the path size will change when drawing the path
+//        if (_model->Path.size() % 2 == 0){
+//            _view->addToPathLines(spline, point, scene);
+//        }
+        _view->addToPathLines(spline, point, scene);
         updateLastPos(pos);
     }
     
@@ -145,7 +147,7 @@ public:
     // remove first segment in both model and view
     void removeFirst(const std::shared_ptr<cugl::Scene2>& scene){
         _model->removeFirst();
-        // _view->removeFirst(scene);
+        _view->removeFirst(scene);
     }
     
     

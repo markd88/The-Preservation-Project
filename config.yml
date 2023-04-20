@@ -1,6 +1,6 @@
 ---
-name:   Tilemap Viewer              # The application display name
-short:  Tilemap                     # A shortened name for reference
+name:   The Preservation Project             # The application display name
+short:  TPP                     # A shortened name for reference
 appid:  edu.cornell.gdiac.code3     # Application identifier for Mac, iOS, Android
 suffix: G78B13A9
 
@@ -32,8 +32,8 @@ sources:                            # The list of the source code files
     - source/Camera/*.h
     - source/GuardSet/*.h
     - source/GuardSet/Guard/*.h
-    - source/ArtifactSet/*.h
-    - source/ArtifactSet/Artifact/*.h
+    - source/ItemSet/*.h
+    - source/ItemSet/Item/*.h
     - source/Level/*.h
     - source/Level/*.cpp
 

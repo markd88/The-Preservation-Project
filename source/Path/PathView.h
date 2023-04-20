@@ -18,6 +18,8 @@ private:
     std::vector<std::shared_ptr<scene2::PolygonNode>> _pathLines;
     Color4 _color;
     int _size;
+    // attach to scene one by the other
+    bool _inScene = true;
     
 public:
     PathView(std::vector<std::shared_ptr<scene2::PolygonNode>> pathLines, Color4 color, int size){
@@ -43,8 +45,8 @@ public:
         polyNode->setPosition(pos);
         polyNode->setColor(_color);
         _pathLines.push_back(polyNode);
-        scene->addChild(polyNode);
-        
+        if(_inScene)scene->addChild(polyNode);
+        _inScene = !_inScene;
     }
     
     void setColor(Color4 color){
@@ -61,15 +63,17 @@ public:
     
     void removeChildren(const std::shared_ptr<cugl::Scene2>& scene){
         for (int i = 0; i < _pathLines.size(); i++){
-            scene->removeChild(_pathLines[i]);
+            if(_pathLines[i]->getScene())scene->removeChild(_pathLines[i]);
         }
         _pathLines.clear();
     }
     
-//    void removeFirst(const std::shared_ptr<cugl::Scene2>& scene){
-//        scene->removeChild(_pathLines[0]);
-//        _pathLines.erase(_pathLines.begin());
-//    }
+    void removeFirst(const std::shared_ptr<cugl::Scene2>& scene){
+        if(_pathLines.size() > 0){
+            if(_pathLines[0]->getScene()) scene->removeChild(_pathLines[0]);
+            _pathLines.erase(_pathLines.begin());
+        }
+    }
     
 };
 

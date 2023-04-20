@@ -38,6 +38,7 @@ public:
         this->_node = scene2::PolygonNode::alloc();
         _node->setAnchor(Vec2::ANCHOR_BOTTOM_LEFT);
         _node->setRelativeColor(false);
+        // _node->setPriority(10000);
         setPosition(position);
         setSize(size);
 //        setTextureKey(textureKey);

@@ -32,6 +32,7 @@ class LevelModel : public Asset {
 protected:
     std::shared_ptr<TilemapController> _world;
     std::shared_ptr<ItemSetController> _obs;
+    std::shared_ptr<ItemSetController> _wall;
     std::shared_ptr<ItemSetController> _item;
 
     /** The AssetManager for the game mode */
@@ -52,7 +53,7 @@ protected:
     *
     * @return true if the object was successfully loaded
     */
-    bool loadObject(const std::string type, int totHeight, const std::shared_ptr<JsonValue>& json);
+    bool loadObject(const std::string type, int totalHeight, const std::shared_ptr<JsonValue>& json);
 
     /**
      * Loads a single wall object
@@ -66,10 +67,8 @@ protected:
      * @return true if the wall was successfully loaded
      */
     bool loadTilemap(const std::shared_ptr<JsonValue>& json);
-    bool loadItem(const std::shared_ptr<JsonValue>& json);
-    bool loadWall(const std::shared_ptr<JsonValue>& json);
-    bool loadTilemap(const std::shared_ptr<JsonValue>& json, int totHeight);
-    bool loadArtifact(const std::shared_ptr<JsonValue>& json, int totHeight);
+    bool loadItem(const std::shared_ptr<JsonValue>& json, const std::string type);
+    bool load(const std::shared_ptr<JsonValue>& json);
     bool loadCharacter(const std::shared_ptr<JsonValue>& json);
     bool loadGuard(const std::shared_ptr<JsonValue>& json);
 
@@ -112,7 +111,8 @@ public:
     /** Get world map */
     std::shared_ptr<TilemapController> getWorld() {return _world;};
     std::shared_ptr<ItemSetController> getItem() {return _item->copy();};
-    std::shared_ptr<ItemSetController> getObs() {return _obs;};    
+    std::shared_ptr<ItemSetController> getObs() {return _obs;};
+    std::shared_ptr<ItemSetController> getWall() {return _wall;};
     cugl::Vec2 getCharacterPos() {return _characterPos;};
     std::vector<std::vector<cugl::Vec2>> getMovingGuardsPos() {return _movingGuardsPos;};
     std::vector<cugl::Vec2> getStaticGuardsPos() {return _staticGuardsPos;};

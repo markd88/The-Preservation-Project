@@ -53,13 +53,13 @@ public:
     
 
     // idx is the idx of this item in this vec
-    void remove_this(int idx, Scene s){
+    void remove_this(int idx, std::shared_ptr<cugl::scene2::OrderedNode>& s){
         _itemSet[idx]->removeChildFrom(s);
         _itemSet.erase(_itemSet.begin() + idx);
     }
 
     
-    void addChildTo (Scene s) {
+    void addChildTo (std::shared_ptr<cugl::scene2::OrderedNode>& s) {
         unsigned int vecSize = _itemSet.size();
         // run for loop from 0 to vecSize
         for(unsigned int i = 0; i < vecSize; i++) {
@@ -67,7 +67,7 @@ public:
         }
     }
     
-    void removeChildFrom (Scene s) {
+    void removeChildFrom (std::shared_ptr<cugl::scene2::OrderedNode>& s) {
         unsigned int vecSize = _itemSet.size();
         // run for loop from 0 to vecSize
         for(unsigned int i = 0; i < vecSize; i++) {
@@ -133,6 +133,14 @@ public:
             }
         }
         return false;
+    }
+    
+    // update the prio
+    void updatePriority(){
+        // update every item's priority
+        for(auto item : _itemSet){
+            item->updatePriority();
+        }
     }
 };
 

@@ -1,6 +1,6 @@
 //
-//  TMApp.cpp
-//  TileMap Lab
+//  TPPApp.cpp
+//  TPP
 //
 //  This is the header for the custom application. It is necessary so that
 //  main.cpp can access your custom class. That is handled by a separate
@@ -57,8 +57,8 @@ void App::onStartup() {
     // load gameplay assets
     _assets->loadDirectoryAsync("json/assets.json", nullptr);
 //    // load level files
-    _assets->loadAsync<LevelModel>(LEVEL_ZERO_PAST_KEY, LEVEL_ZERO_PAST_FILE, nullptr);
-    _assets->loadAsync<LevelModel>(LEVEL_ZERO_PRESENT_KEY, LEVEL_ZERO_PRESENT_FILE, nullptr);
+    _assets->loadAsync<LevelModel>(LEVEL_ONE_PAST_KEY, LEVEL_ONE_PAST_FILE, nullptr);
+    _assets->loadAsync<LevelModel>(LEVEL_ONE_PRESENT_KEY, LEVEL_ONE_PRESENT_FILE, nullptr);
 //    _assets->loadAsync<LevelModel>(LEVEL_ONE_PAST_KEY, LEVEL_ONE_PAST_FILE, nullptr);
 //    _assets->loadAsync<LevelModel>(LEVEL_ONE_PRESENT_KEY, LEVEL_ONE_PRESENT_FILE, nullptr);
 
