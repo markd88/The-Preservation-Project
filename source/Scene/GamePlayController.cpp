@@ -39,8 +39,8 @@ _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displ
 
     // load the level info
     
-    _assets->load<LevelModel>(LEVEL_ZERO_PAST_KEY, LEVEL_ZERO_PAST_FILE);
-    _assets->load<LevelModel>(LEVEL_ZERO_PRESENT_KEY, LEVEL_ZERO_PRESENT_FILE);
+    _assets->load<LevelModel>(LEVEL_ONE_PAST_KEY, LEVEL_ONE_PAST_FILE);
+    _assets->load<LevelModel>(LEVEL_ONE_PRESENT_KEY, LEVEL_ONE_PRESENT_FILE);
     
     
     // Initialize the scene to a locked width
@@ -68,7 +68,7 @@ _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displ
     // initialize character, two maps, path
     
     // Draw past world
-    _pastWorldLevel = _assets->get<LevelModel>(LEVEL_ZERO_PAST_KEY);
+    _pastWorldLevel = _assets->get<LevelModel>(LEVEL_ONE_PAST_KEY);
     if (_pastWorldLevel == nullptr) {
         CULog("Failed to import level!");
     }
@@ -81,7 +81,7 @@ _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displ
 
 
     // Draw present world
-    _presentWorldLevel = _assets->get<LevelModel>(LEVEL_ZERO_PRESENT_KEY);
+    _presentWorldLevel = _assets->get<LevelModel>(LEVEL_ONE_PRESENT_KEY);
     if (_presentWorldLevel == nullptr) {
         CULog("Failed to import level!");
     }

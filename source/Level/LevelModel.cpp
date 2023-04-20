@@ -216,7 +216,7 @@ bool LevelModel::loadGuard(const std::shared_ptr<JsonValue>& json) {
     }
     
     std::string textureType = json->get("type")->asString();
-    bool isStatic = json->get("properties")->get(0)->get("value")->asBool();
+    bool isStatic = json->get("properties")->get(1)->get("value")->asBool();
     
     if (isStatic) {
         int x = json->get("x")->asInt(); // x pos

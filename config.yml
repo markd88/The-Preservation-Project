@@ -32,8 +32,8 @@ sources:                            # The list of the source code files
     - source/Camera/*.h
     - source/GuardSet/*.h
     - source/GuardSet/Guard/*.h
-    - source/ArtifactSet/*.h
-    - source/ArtifactSet/Artifact/*.h
+    - source/ItemSet/*.h
+    - source/ItemSet/Item/*.h
     - source/Level/*.h
     - source/Level/*.cpp
 
