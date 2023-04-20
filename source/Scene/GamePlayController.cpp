@@ -39,8 +39,8 @@ _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displ
 
     // load the level info
     
-    _assets->load<LevelModel>(LEVEL_ONE_PAST_KEY, LEVEL_ONE_PAST_FILE);
-    _assets->load<LevelModel>(LEVEL_ONE_PRESENT_KEY, LEVEL_ONE_PRESENT_FILE);
+    _assets->load<LevelModel>(LEVEL_THREE_PAST_KEY, LEVEL_THREE_PAST_FILE);
+    _assets->load<LevelModel>(LEVEL_THREE_PRESENT_KEY, LEVEL_THREE_PRESENT_FILE);
     
     
     // Initialize the scene to a locked width
@@ -68,7 +68,7 @@ _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displ
     // initialize character, two maps, path
     
     // Draw past world
-    _pastWorldLevel = _assets->get<LevelModel>(LEVEL_ONE_PAST_KEY);
+    _pastWorldLevel = _assets->get<LevelModel>(LEVEL_THREE_PAST_KEY);
     if (_pastWorldLevel == nullptr) {
         CULog("Failed to import level!");
     }
@@ -81,7 +81,7 @@ _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displ
 
 
     // Draw present world
-    _presentWorldLevel = _assets->get<LevelModel>(LEVEL_ONE_PRESENT_KEY);
+    _presentWorldLevel = _assets->get<LevelModel>(LEVEL_THREE_PRESENT_KEY);
     if (_presentWorldLevel == nullptr) {
         CULog("Failed to import level!");
     }
@@ -573,7 +573,7 @@ void GamePlayController::update(float dt){
                 }
                 // make the artifact disappear and remove from set
                 _artifactSet->remove_this(i, _ordered_root);
-                if(_character->getNumArt() == 5){
+                if(_character->getNumArt() == _artifactSet->artifactNum()){
                     completeTerminate();
                 }
                 break;

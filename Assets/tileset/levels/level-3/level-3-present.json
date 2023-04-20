@@ -1758,7 +1758,7 @@
                         {
                          "name":"direction",
                          "type":"int",
-                         "value":0
+                         "value":4
                         },
                         {
                          "name":"isStatic",
@@ -1781,7 +1781,7 @@
                         {
                          "name":"direction",
                          "type":"int",
-                         "value":0
+                         "value":4
                         },
                         {
                          "name":"isStatic",

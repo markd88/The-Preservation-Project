@@ -135,6 +135,17 @@ public:
         return false;
     }
     
+    
+    int artifactNum(){
+        int count;
+        for(auto item: _itemSet){
+            if(item->isArtifact()){
+                count +=1;
+            }
+        }
+        return count;
+    }
+    
     // update the prio
     void updatePriority(){
         // update every item's priority
