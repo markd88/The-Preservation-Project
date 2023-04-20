@@ -33,13 +33,7 @@ sources:                            # The list of the source code files
     - source/GuardSet/*.h
     - source/GuardSet/Guard/*.h
     - source/ItemSet/*.h
-<<<<<<< HEAD
-    - source/ItemSet/*.cpp
     - source/ItemSet/Item/*.h
-    - source/ItemSet/Item/*/cpp
-=======
-    - source/ItemSet/Item/*.h
->>>>>>> cbeta
     - source/Level/*.h
     - source/Level/*.cpp
 

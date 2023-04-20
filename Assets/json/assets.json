@@ -460,6 +460,16 @@
             "wrapS":     "clamp",
             "wrapT":     "clamp"
         },
+        "tile_present_wall_top2": {
+            "file":      "textures/tile_present_wall_top2.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS":     "clamp",
+            "wrapT":     "clamp"
+        },
+        "tile_present_wall_top3": {
+            "file":      "textures/tile_present_wall_top3.png"
+        },
         "tile_present_wall_half": {
             "file":      "textures/tile_present_wall_half.png",
             "minfilter": "linear",
