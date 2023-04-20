@@ -50,8 +50,8 @@ public:
         std::vector<std::shared_ptr<scene2::PolygonNode>> pathLines;
         _isDrawing = false;
         _isInitiating = false;
-        _model = std::make_unique<PathModel>(Color4::BLACK, 8, Vec2::ZERO, Path);
-        _view = std::make_unique<PathView>(pathLines, Color4::BLACK, 8);
+        _model = std::make_unique<PathModel>(Color4::BLACK, 16, Vec2::ZERO, Path);
+        _view = std::make_unique<PathView>(pathLines, Color4::BLACK, 16);
     }
     
 #pragma mark Update Methods
