@@ -130,7 +130,7 @@ public:
     }
     
     void patrol(Vec2 _charPos, float char_angle){
-
+      
         static auto last_time_question = std::chrono::steady_clock::now();
         static auto last_time_lookaround = std::chrono::steady_clock::now();
         static auto start_question_inSP = std::chrono::steady_clock::now();
