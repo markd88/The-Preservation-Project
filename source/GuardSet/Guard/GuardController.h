@@ -100,7 +100,6 @@ public:
         _chaseVec = {};
         _chaseMove = cugl::scene2::MoveTo::alloc();
         _chaseMove->setDuration(DURATION);
-        _goingTo = 0;
         
         _returnMove = cugl::scene2::MoveTo::alloc();
         _returnMove->setDuration(DURATION);
@@ -290,9 +289,7 @@ public:
         float speed = 53;
         float distance = getNodePosition().distance(_patrol_stops[_goingTo]);
         float duration = distance / speed;
-    
-        //std::cout<<"guardID: "<<_id<<"goingTo: "<<_goingTo<<"\n";
-
+        
         //move guard
         _patrolMove->setDuration(duration);
         _patrolMove->setTarget(_patrol_stops[_goingTo]);

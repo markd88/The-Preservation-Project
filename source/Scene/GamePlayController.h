@@ -87,7 +87,6 @@ public:
     /**manager to process camera actions**/
     std::shared_ptr<CameraManager> _camManager;
     std::shared_ptr<CameraMoveTo> _moveCam;
-    std::shared_ptr<CameraMoveTo> _moveOtherCam;
     
     string _activeMap;
 
@@ -95,15 +94,8 @@ public:
     std::shared_ptr<LevelModel> _pastWorldLevel;
     std::shared_ptr<LevelModel> _presentWorldLevel;
     
-    //preview variables
+    //whether or not user is previewing
     bool _isPreviewing;
-    std::shared_ptr<scene2::PolygonNode> _previewNode;
-    std::shared_ptr<cugl::Texture> _texture;
-    std::shared_ptr<cugl::Scene2Texture> _scene2texture;
-    Size _displaySize;
-    static std::chrono::steady_clock::time_point last_time_pressed;
-    bool can_preview;
-    
 
     // two_world switch
 
