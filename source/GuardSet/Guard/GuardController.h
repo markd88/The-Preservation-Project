@@ -55,7 +55,7 @@ private:
     // if the guard is in question state
     bool _is_question;
     // fixed direction for static guard
-    int _fixed_direction;
+    int _staticDir;
 
     string _state_before_question;
 
@@ -91,7 +91,7 @@ public:
      * @param color     The tile color
      */
     //static guard
-    GuardController(Vec2 position, const std::shared_ptr<cugl::AssetManager>& assets, std::shared_ptr<cugl::scene2::ActionManager> actions, int id, bool isPast)
+    GuardController(Vec2 position, const std::shared_ptr<cugl::AssetManager>& assets, std::shared_ptr<cugl::scene2::ActionManager> actions, int id, bool isPast, int dir)
     : id(_id), doesPatrol(_doesPatrol), returnVec(_returnVec), chaseVec(_chaseVec),state(_state), prev_state(_prev_state)
     {
         _state = "static";
@@ -108,11 +108,11 @@ public:
         _doesPatrol = false;
         _id = id;
 
-        _fixed_direction = 0;
+        _staticDir = dir;
         _if_question_inSP = false;
         _static_pos = position;
 
-        _model = std::make_unique<GuardModel>(position, Size(100, 100), Color4::RED, _fixed_direction);
+        _model = std::make_unique<GuardModel>(position, Size(100, 100), Color4::RED, _staticDir);
         _view = std::make_unique<GuardView>(position,Size(100, 100), Color4::RED, assets, actions, isPast);
     }
     
@@ -140,7 +140,7 @@ public:
         _static_pos = position;
 
         // just a placeholder
-        _fixed_direction = 0;
+        _staticDir = 0;
 
         _id = id;
         // starting direction should from level editor
@@ -304,7 +304,7 @@ public:
 
         int direction;
         if (!valid_target and state == "static") {
-            direction = _fixed_direction;
+            direction = _staticDir;
         }
         else if (!valid_target and state == "question") {
             direction = last_direction;
