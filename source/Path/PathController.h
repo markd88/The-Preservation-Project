@@ -81,8 +81,10 @@ public:
     }
     
     // now only remove from scene
-    void clearPath(){
+    void clearPath(const std::shared_ptr<cugl::Scene2>& scene){
         _model->clearPath();
+        _view->removeChildren(scene);
+        
     }
     
     void removeFrom(const std::shared_ptr<cugl::Scene2>& scene){

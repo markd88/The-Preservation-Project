@@ -140,10 +140,14 @@ public:
     GamePlayController(const Size displaySize, /** The asset manager for this game mode. */
                        std::shared_ptr<cugl::AssetManager>& assets);
     
+    
+    void loadLevel();
+    
     /**
      * Init the GameplayScene when start, mostly do scenegraph arrangement
      */
     void init();
+    
     
     /**
      * Responds to the keyboard commands.
