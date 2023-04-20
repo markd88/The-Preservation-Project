@@ -370,7 +370,6 @@ void GamePlayController::update(float dt){
             _other_cam->update();
             _scene->removeChild(_button_layer);
             _other_scene->addChild(_button_layer);
-            
             _character->removeChildFrom(_ordered_root);
             _character->addChildTo(_other_ordered_root);
             
@@ -380,7 +379,6 @@ void GamePlayController::update(float dt){
             
         }
         else {
-
             _activeMap = "pastWorld";
             _pastWorld->setActive(true);
             _presentWorld->setActive(false);
@@ -411,14 +409,11 @@ void GamePlayController::update(float dt){
     }
 
     static auto last_time = std::chrono::steady_clock::now();
-    static auto last_time_pressed = std::chrono::steady_clock::now();
 
     // Calculate the time elapsed since the last call to pinch
     auto now = std::chrono::steady_clock::now();
     auto elapsed = std::chrono::duration_cast<std::chrono::seconds>(now - last_time);
-    auto touch_held = std::chrono::duration_cast<std::chrono::seconds>(now - last_time_pressed);
     
-
     // codes to determine if buttons should be activated
     if(_fail_layer->getScene() == nullptr){
         _fail_back_button->deactivate();
@@ -453,30 +448,6 @@ void GamePlayController::update(float dt){
         CULog("activate two world animation");
 
     }
-#pragma mark Pan Methods
-
-    else if (!_input->getPanDelta().isZero() && _path->getPath().size() == 0) {
-        Vec2 delta = _input->getPanDelta();
-
-        // init camera action
-        _moveCam = CameraMoveTo::alloc();
-        
-        // pan move with the center of the camera view
-        Vec2 pos = _cam->getPosition() - delta;
-        if (pos.distance(_character->getNodePosition()) < 150){
-            _moveCam->setTarget(_cam->getPosition() - delta);
-            _camManager->activate("movingCam", _moveCam, _cam);
-        }
-    }
-    
-    else if (_input->didPan() && _path->getPath().size() == 0){
-        _moveCam = CameraMoveTo::alloc();
-        _moveCam->setDuration(1.25);
-        // pan move with the center of the camera view
-        _moveCam->setTarget(_character->getNodePosition());
-        auto fcn = EasingFunction::alloc(EasingFunction::Type::BACK_OUT);
-        _camManager->activate("movingCam", _moveCam, _cam, fcn);
-    }
     
 #pragma mark Character Movement Methods
     else if(_input->didPress()){        // if press, determine if press on character
@@ -486,7 +457,7 @@ void GamePlayController::update(float dt){
         }else{
             input_posi = _other_scene->screenToWorldCoords(input_posi);
         }
-        
+        auto r = _pastWorld->getNode()->getSize();
         if(_character->contains(input_posi)){
             // create path
             _path->setIsDrawing(true);
@@ -494,8 +465,37 @@ void GamePlayController::update(float dt){
             _path->updateLastPos(_character->getPosition()); //change to a fixed location on the character
             _path->clearPath();
         }
-        
+        else if (input_posi.x - PREVIEW_RADIUS > 0 and input_posi.x < r.width - PREVIEW_RADIUS and
+                 input_posi.y > 0 and input_posi.y < r.height - PREVIEW_RADIUS*2 and !_isSwitching){
+            //initialize preview
+            _isPreviewing = true;
+            if (_activeMap == "pastWorld"){
+                auto _children = _other_scene->getChildren();
+                for (int i = 0; i < _children.size(); i++){
+                    auto tempChild = _children[i];
+                    _other_scene->removeChild(_children[i]);
+                    _scene2texture->addChild(tempChild);
+                }
+                _texture = _scene2texture->getTexture();
+                _previewNode->setTexture(_texture);
+                _previewNode->setVisible(false);
+                _scene->addChildWithName(_previewNode, "preview");
+            }
+            else{
+                auto _children = _scene->getChildren();
+                for (int i = 0; i < _children.size(); i++){
+                    auto tempChild = _children[i];
+                    _scene->removeChild(_children[i]);
+                    _scene2texture->addChild(tempChild);
+                }
+                _texture = _scene2texture->getTexture();
+                _previewNode->setTexture(_texture);
+                _previewNode->setVisible(false);
+                _other_scene->addChildWithName(_previewNode, "preview");
+            }
+        }
     }
+    
     else if (_input->isDown() && _path->isDrawing){
         
         Vec2 input_posi = _input->getPosition();
@@ -531,61 +531,9 @@ void GamePlayController::update(float dt){
             }
         }
     }
-    
-    if (!_input->isDown()){
-        last_time_pressed = now;
-    }
 
 #pragma mark Preview Methods
-    
-    
-    if (touch_held.count() > 1.5 and _isPreviewing == false){
-        
-        //set up preview
-        Vec2 input_posi = _input->getPosition();
-        
-        input_posi = _scene->screenToWorldCoords(input_posi);
-        auto r = _pastWorld->getNode()->getSize();
-        if (input_posi.x < 100 or input_posi.x > r.width - 100 or
-            input_posi.y < 100 or input_posi.y > r.height - 100){
-            _isPreviewing = false;
-        }
-        else {
-            _isPreviewing = true;
-        }
-                
-        last_time_pressed = now;
-        
-        if (_isPreviewing){
-            if (_activeMap == "pastWorld"){
-                auto _children = _other_scene->getChildren();
-                for (int i = 0; i < _children.size(); i++){
-                    auto tempChild = _children[i];
-                    _other_scene->removeChild(_children[i]);
-                    _scene2texture->addChild(tempChild);
-                }
-                _texture = _scene2texture->getTexture();
-                _previewNode->setTexture(_texture);
-                
-                _scene->addChildWithName(_previewNode, "preview");
-            }
-            else{
-                auto _children = _scene->getChildren();
-                for (int i = 0; i < _children.size(); i++){
-                    auto tempChild = _children[i];
-                    _scene->removeChild(_children[i]);
-                    _scene2texture->addChild(tempChild);
-                }
-                _texture = _scene2texture->getTexture();
-                _previewNode->setTexture(_texture);
-                
-                _other_scene->addChildWithName(_previewNode, "preview");
-            }
-        }
-    }
-    
-    else if(_input->didRelease()){
-        last_time_pressed = now;
+    if(_input->didRelease() or _isSwitching){
         _isPreviewing = false;
         _path->setIsDrawing(false);
         // path_trace = _path->getPath();
@@ -597,7 +545,6 @@ void GamePlayController::update(float dt){
         
         //finish previewing
         if (_activeMap == "pastWorld"){
-           
             auto _children = _scene2texture->getChildren();
             for (int i = 0; i < _children.size(); i++){
                 auto tempChild = _children[i];
@@ -618,31 +565,34 @@ void GamePlayController::update(float dt){
     }
     
     else if (_isPreviewing){
+        
         Vec2 input_posi = _input->getPosition();
+        _previewNode->setVisible(true);
         if (_activeMap == "pastWorld"){
             input_posi = _scene->screenToWorldCoords(input_posi);
         }
         else {
             input_posi = _other_scene->screenToWorldCoords(input_posi);
         }
-        
-        auto poly =  _pastWorld->getNode()->getPolygon();
-        
         auto r = _pastWorld->getNode()->getSize();
         
         if (input_posi.x - PREVIEW_RADIUS < 0 or input_posi.x > r.width - PREVIEW_RADIUS or
             input_posi.y < 0 or input_posi.y > r.height - PREVIEW_RADIUS*2){
-            
+            //input position is not in valid position
         }
         else {
             _previewNode->setAnchor(Vec2::ANCHOR_CENTER);
             PolyFactory polyFact = PolyFactory();
-            Poly2 circle = polyFact.makeCircle(input_posi + Vec2(0,PREVIEW_RADIUS), PREVIEW_RADIUS);
+            Poly2 circle = polyFact.makeCircle(input_posi + Vec2(0, PREVIEW_RADIUS), PREVIEW_RADIUS);
             _previewNode->setPolygon(circle);
             _previewNode->setPosition(input_posi + Vec2(0,PREVIEW_RADIUS));
         }
-        
+                
     }
+    
+    
+    
+#pragma mark Path Methods
     
     if (_path->getPath().size() != 0 && !_actions->isActive("moving") ){
         
@@ -658,7 +608,6 @@ void GamePlayController::update(float dt){
             _camManager->activate("movingOtherCam", _moveCam, _other_cam);
             _path->removeFirst(_other_scene);
         }
-        
         
         
     }
@@ -777,6 +726,7 @@ void GamePlayController::update(float dt){
         if (_activeMap == "pastWorld"){
             _scene->render(batch);
         }
+        
         else{
             _other_scene->render(batch);
         }
@@ -784,8 +734,6 @@ void GamePlayController::update(float dt){
         if (_isPreviewing){
             _scene2texture->render(batch);
         }
-        
-         
         
     }
     
