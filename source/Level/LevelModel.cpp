@@ -216,33 +216,51 @@ bool LevelModel::loadGuard(const std::shared_ptr<JsonValue>& json) {
     }
     
     std::string textureType = json->get("type")->asString();
-    bool isStatic = json->get("properties")->get(1)->get("value")->asBool();
+    bool isStatic;
+    int staticDir;
+    std::string movingPath;
+    
+    auto properties = json->get("properties");
+    for (auto i = 0; i < properties->size(); i++) {
+        if (properties->get(i)->get("name")->asString() == "isStatic") {
+            isStatic = properties->get(i)->get("value")->asBool();
+        }
+        else if (properties->get(i)->get("name")->asString() == "direction") {
+            staticDir = properties->get(i)->get("value")->asInt();
+        }
+        else if (properties->get(i)->get("name")->asString() == "path") {
+            movingPath = properties->get(i)->get("value")->asString();
+        }
+    }
     
     if (isStatic) {
         int x = json->get("x")->asInt(); // x pos
         int y = totalHeight - json->get("y")->asInt(); // y pos
-        _staticGuardsPos.push_back(Vec2(x, y));
+        std::vector<int> staticGuard;
+        staticGuard.push_back(x);
+        staticGuard.push_back(y);
+        staticGuard.push_back(staticDir);
+        _staticGuardsPos.push_back(staticGuard);
     } else {
         std::vector<Vec2> patrolPoints;
         // parse input path with format x1,y1:x2,y2...
-        std::string inputPath = json->get("properties")->get(1)->get("value")->asString();
         size_t start = 0;
-        size_t end = inputPath.find(':');
+        size_t end = movingPath.find(':');
 
         while (end != std::string::npos) {
             Vec2 vec;
-            size_t comma = inputPath.find(',', start);
-            vec.x = std::stoi(inputPath.substr(start, comma - start));
-            vec.y = totalHeight - std::stoi(inputPath.substr(comma + 1, end - comma - 1));
+            size_t comma = movingPath.find(',', start);
+            vec.x = std::stoi(movingPath.substr(start, comma - start));
+            vec.y = totalHeight - std::stoi(movingPath.substr(comma + 1, end - comma - 1));
             patrolPoints.push_back(vec);
             start = end + 1;
-            end = inputPath.find(':', start);
+            end = movingPath.find(':', start);
         }
 
         Vec2 vec;
-        size_t comma = inputPath.find(',', start);
-        vec.x = std::stoi(inputPath.substr(start, comma - start));
-        vec.y = totalHeight - std::stoi(inputPath.substr(comma + 1));
+        size_t comma = movingPath.find(',', start);
+        vec.x = std::stoi(movingPath.substr(start, comma - start));
+        vec.y = totalHeight - std::stoi(movingPath.substr(comma + 1));
         patrolPoints.push_back(vec);
 
         _movingGuardsPos.push_back(patrolPoints);

@@ -127,10 +127,11 @@ public:
 
     void stopQuestionAnim(string id){
         _actions->remove("question"+id);
+        _question_node->setVisible(false);
     }
 
     void startQuestionAnim(string id) {
-        if (_actions->isActive("question")) {
+        if (_actions->isActive("question"+id)) {
             // let it finish
         }
         else {

@@ -71,6 +71,13 @@ public:
         _view->moveTo(action);
     }
 
+    void updateShadow(){
+        Vec2 pos = _view->getCharPos();
+        _view->setPosition(pos);
+    }
+
+
+
     void updateAnimation(Vec2 pos) {
         _view->updateAnimation(pos);
     }

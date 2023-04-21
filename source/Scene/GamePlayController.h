@@ -87,7 +87,6 @@ public:
     /**manager to process camera actions**/
     std::shared_ptr<CameraManager> _camManager;
     std::shared_ptr<CameraMoveTo> _moveCam;
-    std::shared_ptr<CameraMoveTo> _moveOtherCam;
     
     string _activeMap;
 
@@ -97,13 +96,9 @@ public:
     
     //preview variables
     bool _isPreviewing;
-    std::shared_ptr<scene2::PolygonNode> _previewNode;
-    std::shared_ptr<cugl::Texture> _texture;
-    std::shared_ptr<cugl::Scene2Texture> _scene2texture;
-    Size _displaySize;
-    static std::chrono::steady_clock::time_point last_time_pressed;
-    bool can_preview;
-    
+    std::shared_ptr<cugl::scene2::PolygonNode> _previewNode;
+    std::shared_ptr<Scene2Texture> _scene2texture;
+    std::shared_ptr<Texture> _texture;
 
     // two_world switch
 
@@ -121,10 +116,10 @@ public:
 
     // guards
     std::vector<std::vector<cugl::Vec2>> _pastMovingGuardsPos;
-    std::vector<cugl::Vec2> _pastStaticGuardsPos;
+    std::vector<std::vector<int>> _pastStaticGuardsPos;
 
     std::vector<std::vector<cugl::Vec2>> _presentMovingGuardsPos;
-    std::vector<cugl::Vec2> _presentStaticGuardsPos;
+    std::vector<std::vector<int>> _presentStaticGuardsPos;
 
     // sounds
     std::shared_ptr<cugl::Sound> _collectArtifactSound;
@@ -148,10 +143,14 @@ public:
     GamePlayController(const Size displaySize, /** The asset manager for this game mode. */
                        std::shared_ptr<cugl::AssetManager>& assets);
     
+    
+    void loadLevel();
+    
     /**
      * Init the GameplayScene when start, mostly do scenegraph arrangement
      */
     void init();
+    
     
     /**
      * Responds to the keyboard commands.
@@ -199,12 +198,12 @@ public:
         }
     }
     
-    void addStaticGuard(int w, int h, bool isPast) {
+    void addStaticGuard(int w, int h, int dir, bool isPast) {
         Vec2 gPos = Vec2(w,h);
         if (isPast) {
-            _guardSetPast->add_this(gPos, _ordered_root, _assets, true);
+            _guardSetPast->add_this(gPos, _ordered_root, _assets, true, dir);
         } else {
-            _guardSetPresent->add_this(gPos, _other_ordered_root, _assets, false);
+            _guardSetPresent->add_this(gPos, _other_ordered_root, _assets, false, dir);
         }
     }
     
@@ -260,7 +259,7 @@ public:
     
     // called when scene becomes active or inactive
     void generateMovingGuards(std::vector<std::vector<cugl::Vec2>> movingGuardsPos, bool isPast);
-    void generateStaticGuards(std::vector<Vec2> staticGuardsPos, bool isPast);
+    void generateStaticGuards(std::vector<std::vector<int>> staticGuardsPos, bool isPast);
 
     
     void updateRenderPriority(){

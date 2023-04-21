@@ -79,8 +79,8 @@ public:
         _guardSet.push_back(std::move(_guard));
     }
     
-    void add_this(Vec2 gPos, std::shared_ptr<cugl::scene2::OrderedNode> s, const std::shared_ptr<cugl::AssetManager>& assets, bool isPast){
-        Guard _guard = std::make_unique<GuardController>(gPos, assets, _actions, generateUniqueID(), isPast);
+    void add_this(Vec2 gPos, std::shared_ptr<cugl::scene2::OrderedNode> s, const std::shared_ptr<cugl::AssetManager>& assets, bool isPast, int dir){
+        Guard _guard = std::make_unique<GuardController>(gPos, assets, _actions, generateUniqueID(), isPast, dir);
         _guard->addChildTo(s);
         _guardSet.push_back(std::move(_guard));
     }
@@ -130,7 +130,7 @@ public:
     }
     
     void patrol(Vec2 _charPos, float char_angle){
-      
+
         static auto last_time_question = std::chrono::steady_clock::now();
         static auto last_time_lookaround = std::chrono::steady_clock::now();
         static auto start_question_inSP = std::chrono::steady_clock::now();
