@@ -53,6 +53,7 @@ public:
     std::shared_ptr<cugl::scene2::Button> _complete_again_button;
     std::shared_ptr<cugl::scene2::Button> _fail_back_button;
     std::shared_ptr<cugl::scene2::Button> _fail_again_button;
+    std::shared_ptr<cugl::scene2::Button> _back_arrow;
     
     
     
@@ -141,10 +142,14 @@ public:
     GamePlayController(const Size displaySize, /** The asset manager for this game mode. */
                        std::shared_ptr<cugl::AssetManager>& assets);
     
+    
+    void loadLevel();
+    
     /**
      * Init the GameplayScene when start, mostly do scenegraph arrangement
      */
     void init();
+    
     
     /**
      * Responds to the keyboard commands.
@@ -170,6 +175,7 @@ public:
         // only handle when active is false
         // otherwise go init
         _reset_button->deactivate();
+        _back_arrow->deactivate();
         _fail_back_button->deactivate();
         _fail_again_button->deactivate();
         _complete_back_button->deactivate();

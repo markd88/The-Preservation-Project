@@ -61,17 +61,17 @@ public:
 
         _node->setFrame(16);
 
-        std::shared_ptr<Texture> shadow = assets->get<Texture>("shadow");
-        _shadow = scene2::PolygonNode::allocWithTexture(shadow);
-        _shadow->setScale(0.2f);
-        _shadow->setAnchor(0,0);
-        _shadow->setPosition(_node->getPosition());
-        _shadow->setRelativeColor(false);
-        _shadow->setVisible(true);
-
-
-
-        _node->addChildWithName(_shadow, "shadow");
+//        std::shared_ptr<Texture> shadow = assets->get<Texture>("shadow");
+//        _shadow = scene2::PolygonNode::allocWithTexture(shadow);
+//        _shadow->setScale(0.2f);
+//        _shadow->setAnchor(0,0);
+//        _shadow->setPosition(_node->getPosition());
+//        _shadow->setRelativeColor(false);
+//        _shadow->setVisible(true);
+//
+//
+//
+//        _node->addChildWithName(_shadow, "shadow");
 
 
 
