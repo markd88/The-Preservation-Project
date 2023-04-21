@@ -53,6 +53,7 @@ public:
     std::shared_ptr<cugl::scene2::Button> _complete_again_button;
     std::shared_ptr<cugl::scene2::Button> _fail_back_button;
     std::shared_ptr<cugl::scene2::Button> _fail_again_button;
+    std::shared_ptr<cugl::scene2::Button> _back_arrow;
     
     
     
@@ -173,6 +174,7 @@ public:
         // only handle when active is false
         // otherwise go init
         _reset_button->deactivate();
+        _back_arrow->deactivate();
         _fail_back_button->deactivate();
         _fail_again_button->deactivate();
         _complete_back_button->deactivate();

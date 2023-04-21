@@ -39,6 +39,13 @@
             "wrapS":     "clamp",
             "wrapT":     "clamp"
         },
+        "back_arrow": {
+            "file":      "textures/menu-back.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS":     "clamp",
+            "wrapT":     "clamp"
+        },
         "character": {
             "file":     "textures/character.png"
         },
@@ -820,7 +827,32 @@
                          "x_anchor" : "center",
                          "y_anchor" : "middle",
                          "y_offset" : 120,
-                         "x_offset" : -150,
+                         "x_offset" : -120,
+                         "absolute" : true
+                     }
+                 },
+                 "back-arrow"  : {
+                     "type"   : "Button",
+                     "data"   : {
+                         "upnode"   : "up",
+                         "visible"  : true,
+                         "pushsize" : true,
+                         "anchor"   : [0.5,0.5],
+                         "scale"    : 0.68
+                     },
+                     "children" : {
+                         "up"       : {
+                             "type"   : "Image",
+                             "data"   : {
+                                 "texture"  : "back_arrow"
+                             }
+                         }
+                     },
+                     "layout" : {
+                         "x_anchor" : "center",
+                         "y_anchor" : "middle",
+                         "y_offset" : 120,
+                         "x_offset" : -280,
                          "absolute" : true
                      }
                  },
@@ -838,7 +870,7 @@
                         "x_anchor" : "center",
                         "y_anchor" : "middle",
                         "y_offset" : 120,
-                        "x_offset" : 80,
+                        "x_offset" : 110,
                         "absolute" : true
                     }
                 },
@@ -860,7 +892,7 @@
                          "x_anchor" : "center",
                          "y_anchor" : "middle",
                          "y_offset" : 120,
-                         "x_offset" : 70,
+                         "x_offset" : 100,
                          "absolute" : true
                      }
                  },
@@ -882,7 +914,7 @@
                          "x_anchor" : "center",
                          "y_anchor" : "middle",
                          "y_offset" : 120,
-                         "x_offset" : 180,
+                         "x_offset" : 210,
                          "absolute" : true
                      }
                  }
@@ -901,7 +933,7 @@
                         "x_anchor" : "center",
                         "y_anchor" : "middle",
                         "y_offset" : 120,
-                        "x_offset" : 270,
+                        "x_offset" : 300,
                         "absolute" : true
                     }
                 }

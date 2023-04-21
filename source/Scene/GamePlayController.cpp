@@ -104,6 +104,18 @@ _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displ
     });
     _reset_button->activate();
     
+    
+    _back_arrow = std::dynamic_pointer_cast<scene2::Button>(assets->get<scene2::SceneNode>("button_back-arrow"));
+    
+    _back_arrow->addListener([this](const std::string& name, bool down) {
+        if (!down) {
+            // cout<<"fail_back"<<endl;
+            nextScene = MENU;
+        }
+    });
+    
+    _back_arrow->activate();
+    
     // load label for n_res and n_art
     _res_label  = std::dynamic_pointer_cast<scene2::Label>(assets->get<scene2::SceneNode>("button_resources"));
     
@@ -149,6 +161,8 @@ _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displ
         }
     });
 
+    
+    
     // add switch indicator
     _switchNode = _assets->get<scene2::SceneNode>("button_switch");
     
@@ -339,6 +353,7 @@ void GamePlayController::init(){
     path_trace = {};
     
     _reset_button->activate();
+    _back_arrow->activate();
     _scene->addChild(_button_layer);
     //_ordered_root->addChild(_button_layer);
     
