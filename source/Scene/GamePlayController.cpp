@@ -36,12 +36,6 @@ _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displ
     _switchSound = assets->get<Sound>("lovestruck");
     _loseSound = assets->get<Sound>("win");
     _winSound = assets->get<Sound>("lose");
-
-
-    
-    
-    
-    
     
     // Initialize the scene to a locked width
     Size dimen = Application::get()->getDisplaySize();
@@ -67,14 +61,7 @@ _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displ
     _path = make_unique<PathController>();
     // initialize character, two maps, path
     
-    
-    
-    
-    
-    
-    
     // two-world switch animation initialization
-
     std::shared_ptr<Texture> world_switch  = assets->get<Texture>("two_world_switch");
     _world_switch_node = scene2::SpriteNode::allocWithSheet(world_switch, 5, 4, 20); // SpriteNode for two_world switch animation
     // _world_switch_node->setScale(0.8f); // Magic number to rescale asset
@@ -200,7 +187,7 @@ void GamePlayController::loadLevel(){
     _obsSetPast = _pastWorldLevel->getObs();
     _wallSetPast = _pastWorldLevel->getWall();
     _artifactSet = _pastWorldLevel->getItem();
-
+    artNum = _artifactSet->getArtNum();
 
     // Draw present world
     _presentWorldLevel = _assets->get<LevelModel>(presentKey);
