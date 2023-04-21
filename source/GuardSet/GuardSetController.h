@@ -136,7 +136,7 @@ public:
         static auto start_question_inSP = std::chrono::steady_clock::now();
         // Calculate the time elapsed since the last call to pinch
         auto now = std::chrono::steady_clock::now();
-        auto elapsed_question = std::chrono::duration_cast<std::chrono::seconds>(now - last_time_question);
+        auto elapsed_question = std::chrono::duration_cast<std::chrono::milliseconds>(now - last_time_question);
         auto elapsed_lookaround = std::chrono::duration_cast<std::chrono::seconds>(now - last_time_lookaround);
         auto elapsed_question_inSP = std::chrono::duration_cast<std::chrono::seconds>(now - start_question_inSP);
         for (int i = 0; i < _guardSet.size(); i++){
@@ -199,12 +199,12 @@ public:
                     _guardSet[i]->stopQuestionAnim(id);
                     _guardSet[i]->updateState("chaseD");
                 }
-                else if (acoustic_detection && elapsed_question.count() <= 1 ) {
+                else if (acoustic_detection && elapsed_question.count() <= 1000 ) {
                     // keep question
                     // CULog("question");
                     _guardSet[i]->updatePrevState(_guardSet[i]->state);
                 }
-                else if (acoustic_detection && elapsed_question.count() > 1) {
+                else if (acoustic_detection && elapsed_question.count() > 1000) {
                     // chase in shortest path
               //      CULog("switch to chaseSP from question");
                     _guardSet[i]->stopQuestionAnim(id);
@@ -274,7 +274,7 @@ public:
                         start_question_inSP = now;
                     }
                     else{
-                        if (elapsed_question_inSP.count() <= 5) {
+                        if (elapsed_question_inSP.count() <= 2) {
                             // continue
                         }
                         else {
@@ -420,7 +420,12 @@ public:
             }
 
 
-            
+        auto elapsed_question = std::chrono::duration_cast<std::chrono::milliseconds>(now - last_time_question);
+        auto elapsed_lookaround = std::chrono::duration_cast<std::chrono::seconds>(now - last_time_lookaround);
+        auto elapsed_question_inSP = std::chrono::duration_cast<std::chrono::seconds>(now - start_question_inSP);
+
+        // CULog("%d", elapsed_question);
+
 #pragma mark Guard action according to state
 
 
@@ -440,7 +445,7 @@ public:
                 _actions->remove(chaseSPAction);
                 _actions->remove(chaseDAction);
                 _guardSet[i]->updatePosition(pos);
-                _guardSet[i]->questionAnim(id);
+                _guardSet[i]->questionAnim(id, elapsed_question.count());
             }
             else if (_guardSet[i]->state == "lookaround") {
                 Vec2 pos = _guardSet[i]->getNodePosition();
