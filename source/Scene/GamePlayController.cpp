@@ -185,6 +185,8 @@ void GamePlayController::loadLevel(){
     string presentFile = "tileset/levels/level-" + std::to_string(level) + "/level-" + std::to_string(level) + "-present.json";
     string presentKey = "level-" + std::to_string(level) + "-present";
     
+    _assets->unload<LevelModel>(pastKey);
+    _assets->unload<LevelModel>(presentKey);
     _assets->load<LevelModel>(pastKey, pastFile);
     _assets->load<LevelModel>(presentKey, presentFile);
     
