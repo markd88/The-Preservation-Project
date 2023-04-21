@@ -326,10 +326,10 @@ public:
     void lookAroundAnim(string id) {
         updateAnimation(Vec2(0,0), _state, _model->getDirection(), _prev_state, false, id);
     }
-    void questionAnim(string id) {
+    void questionAnim(string id, float time) {
         updateAnimation(Vec2(0,0), _state, _model->getDirection(), _prev_state, false,id);
         // question animation
-        _view->startQuestionAnim(id);
+        _view->startQuestionAnim(id, time);
     }
 
     void staticGuardAnim(string id) {
@@ -350,6 +350,7 @@ public:
 
     void chaseChar(string actionName){
         // CULog("chasing");
+        updateChaseSpeed(0.5);
         _view->performAction(actionName, _chaseMove);
     }
     
