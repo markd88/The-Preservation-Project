@@ -52,7 +52,7 @@ _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displ
     _camManager = CameraManager::alloc();
 
 
-    _scene->setSize(displaySize*3);
+    _scene->setSize(displaySize*1.5);
     _other_scene->setSize(displaySize*1.5);
     
     _previewNode = cugl::scene2::PolygonNode::alloc();
@@ -147,12 +147,10 @@ _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displ
     _moveCam->setDuration(ACTIONDURATION);
     _moveTo->setDuration(ACTIONDURATION);
     
-    
     loadLevel();
     init();
     
 }
-
 
 void GamePlayController::loadLevel(){
     string pastFile = "tileset/levels/level-" + std::to_string(level) + "/level-" + std::to_string(level) + "-past.json";
@@ -229,10 +227,6 @@ void GamePlayController::loadLevel(){
 
     
 }
-
-
-
-
 
 // init assets and all scenegraph when restart
 void GamePlayController::init(){
@@ -320,9 +314,7 @@ void GamePlayController::init(){
     generateMovingGuards(_presentMovingGuardsPos, false);
     generateStaticGuards(_presentStaticGuardsPos, false);
 
-    _guardSetPast->setVisbility(true);
-    _guardSetPresent->setVisbility(false);
-    
+
     _path = make_unique<PathController>();
     path_trace = {};
     
@@ -703,7 +695,11 @@ void GamePlayController::update(float dt){
     _camManager->update(dt);
     
     // the camera is moving smoothly, but the UI only set its movement per frame
-    _button_layer->setPosition(_cam->getPosition() - Vec2(900, 70));
+    if (_activeMap == "pastWorld"){
+        _button_layer->setPosition(_cam->getPosition() - Vec2(900, 70));
+    }else{
+        _button_layer->setPosition(_other_cam->getPosition() - Vec2(900, 70));
+    }
     
     
     // update render priority

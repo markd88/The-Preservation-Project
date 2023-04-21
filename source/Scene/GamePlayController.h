@@ -243,16 +243,26 @@ public:
 
     void failTerminate(){
         AudioEngine::get()->play("win", _winSound, false, _winSound->getVolume(), true);
-        _scene->addChild(_fail_layer);
-        _fail_layer->setPosition(_cam->getPosition());
+        if (_activeMap == "pastWorld"){
+            _scene->addChild(_fail_layer);
+            _fail_layer->setPosition(_cam->getPosition());
+        } else{
+            _other_scene->addChild(_fail_layer);
+            _fail_layer->setPosition(_other_cam->getPosition());
+        }
         _fail_back_button->activate();
         _fail_again_button->activate();
     }
     
     void completeTerminate(){
         AudioEngine::get()->play("lost", _loseSound, false, _loseSound->getVolume(), true);
-        _scene->addChild(_complete_layer);
-        _complete_layer->setPosition(_cam->getPosition());
+        if (_activeMap == "pastWorld"){
+            _scene->addChild(_complete_layer);
+            _complete_layer->setPosition(_cam->getPosition());
+        }else{
+            _other_scene->addChild(_complete_layer);
+            _complete_layer->setPosition(_other_cam->getPosition());
+        }
         _complete_back_button->activate();
         _complete_again_button->activate();
     }

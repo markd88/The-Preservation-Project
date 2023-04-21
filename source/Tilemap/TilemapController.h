@@ -309,7 +309,7 @@ public:
                 if (hitObs == false){
                     edges.push_back(std::make_pair(i, i+1));
                 }
-                
+                /*
                 Spline2 spline = Spline2(a, b);
                 splinePather.set(&spline);
                 splinePather.calculate();
@@ -322,7 +322,7 @@ public:
                 polyNode->setPolygon(line);
                 polyNode->setPosition(a.getMidpoint(b));
                 scene->addChild(polyNode);
-                 
+                 */
                  
             }
             
@@ -339,7 +339,7 @@ public:
             if (hitObs == false){
                 edges.push_back(std::make_pair(i, i + numPerRow));
             }
-            
+            /*
             Spline2 spline = Spline2(a, b);
             splinePather.set(&spline);
             splinePather.calculate();
@@ -353,7 +353,7 @@ public:
         
             polyNode->setPosition(a.getMidpoint(b));
             scene->addChild(polyNode);
-             
+             */
             
         }
         
@@ -371,83 +371,6 @@ public:
         return _nodes;
     }
     
-    void addPoints1(const std::shared_ptr<cugl::Scene2>& scene){
-        
-        auto origin = scene2::PolygonNode::alloc();
-        std::unordered_map<int, Vec2> nodes;
-        int count = 0;
-        int x = _model->dimensions.x;
-        
-        for(auto& tile_vec : _tilemap){
-            for(auto& tile : tile_vec){
-                origin = scene2::PolygonNode::alloc();
-                origin->setPolygon(Rect(10, 10, 10, 10));
-                int i = tile->getPosition().x;
-                int j = tile->getPosition().y;
-                origin->setPosition(Vec2(i,j));
-                origin->setColor(Color4::RED);
-                scene->addChild(origin);
-                nodes[count] = Vec2(i,j);
-                count += 1;
-            }
-                
-        }
-                
-        SplinePather splinePather = SplinePather();
-        SimpleExtruder extruder = SimpleExtruder();
-        
-        for (int i = 0; i < count - 1; i++){
-            if ((i + 1) % x != 0){
-                Vec2 a = nodes[i];
-                Vec2 b = nodes[i + 1];
-                bool hitObs = lineInObstacle(a, b);
-                Spline2 spline = Spline2(a, b);
-                splinePather.set(&spline);
-                splinePather.calculate();
-                
-                extruder.set(splinePather.getPath());
-                extruder.calculate(1);
-                Poly2 line = extruder.getPolygon();
-                
-                std::shared_ptr<scene2::PolygonNode> polyNode= scene2::PolygonNode::alloc();
-                polyNode->setPolygon(line);
-                if (hitObs){
-                    polyNode->setColor(Color4::BLUE);
-                }else{
-                    polyNode->setColor(Color4::GREEN);
-                }
-                polyNode->setPosition(a.getMidpoint(b));
-                scene->addChild(polyNode);
-            }
-            
-        }
-        for (int i = 0; i < count - x; i++){
-            
-                Vec2 a = nodes[i];
-                Vec2 b = nodes[i + x];
-                bool hitObs = lineInObstacle(a, b);
-                Spline2 spline = Spline2(a, b);
-                splinePather.set(&spline);
-                splinePather.calculate();
-                
-                extruder.set(splinePather.getPath());
-                extruder.calculate(1);
-                Poly2 line = extruder.getPolygon();
-                
-                std::shared_ptr<scene2::PolygonNode> polyNode= scene2::PolygonNode::alloc();
-                polyNode->setPolygon(line);
-                if (hitObs){
-                    polyNode->setColor(Color4::BLUE);
-                }else{
-                    polyNode->setColor(Color4::GREEN);
-                }
-                polyNode->setPosition(a.getMidpoint(b));
-                scene->addChild(polyNode);
-            
-        }
-        
-        
-    }
     
     // set priority in ordered_root
     void setPriority(float p){
