@@ -53,6 +53,7 @@ public:
     std::shared_ptr<cugl::scene2::Button> _complete_again_button;
     std::shared_ptr<cugl::scene2::Button> _fail_back_button;
     std::shared_ptr<cugl::scene2::Button> _fail_again_button;
+    std::shared_ptr<cugl::scene2::Button> _back_arrow;
     
     
     
@@ -64,6 +65,7 @@ public:
     std::unique_ptr<GuardSetController> _guardSetPast;
     std::unique_ptr<GuardSetController> _guardSetPresent;
     
+    int artNum;
     std::shared_ptr<ItemSetController> _artifactSet;
     std::shared_ptr<ItemSetController> _resourceSet;
     std::shared_ptr<ItemSetController> _obsSetPast;
@@ -176,6 +178,7 @@ public:
         // only handle when active is false
         // otherwise go init
         _reset_button->deactivate();
+        _back_arrow->deactivate();
         _fail_back_button->deactivate();
         _fail_again_button->deactivate();
         _complete_back_button->deactivate();

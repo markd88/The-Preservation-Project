@@ -144,8 +144,8 @@ public:
 
         _id = id;
         // starting direction should from level editor
-        _model = std::make_unique<GuardModel>(position, Size(100, 100), Color4::RED, 0);
-        _view = std::make_unique<GuardView>(position, Size(100, 100), Color4::RED, assets, actions, isPast);
+        _model = std::make_unique<GuardModel>(position, Size(128, 128), Color4::RED, 0);
+        _view = std::make_unique<GuardView>(position, Size(128, 128), Color4::RED, assets, actions, isPast);
     }
 
 #pragma mark Update Methods
@@ -326,10 +326,10 @@ public:
     void lookAroundAnim(string id) {
         updateAnimation(Vec2(0,0), _state, _model->getDirection(), _prev_state, false, id);
     }
-    void questionAnim(string id) {
+    void questionAnim(string id, float time) {
         updateAnimation(Vec2(0,0), _state, _model->getDirection(), _prev_state, false,id);
         // question animation
-        _view->startQuestionAnim(id);
+        _view->startQuestionAnim(id, time);
     }
 
     void staticGuardAnim(string id) {
@@ -350,6 +350,7 @@ public:
 
     void chaseChar(string actionName){
         // CULog("chasing");
+        updateChaseSpeed(0.5);
         _view->performAction(actionName, _chaseMove);
     }
     

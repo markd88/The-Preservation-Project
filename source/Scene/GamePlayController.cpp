@@ -24,7 +24,6 @@ _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displ
     
     _ordered_root = cugl::scene2::OrderedNode::allocWithOrder(cugl::scene2::OrderedNode::Order::DESCEND);
     
-    
     _other_ordered_root = cugl::scene2::OrderedNode::allocWithOrder(cugl::scene2::OrderedNode::Order::DESCEND);
 
     _assets = assets;
@@ -51,7 +50,7 @@ _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displ
     // Allocate the camera manager
     _camManager = CameraManager::alloc();
 
-    _scene->setSize(displaySize*3);
+    _scene->setSize(displaySize*1.5);
     _other_scene->setSize(displaySize*1.5);
     
     _previewNode = cugl::scene2::PolygonNode::alloc();
@@ -63,7 +62,6 @@ _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displ
     // initialize character, two maps, path
     
     // two-world switch animation initialization
-
     std::shared_ptr<Texture> world_switch  = assets->get<Texture>("two_world_switch");
     _world_switch_node = scene2::SpriteNode::allocWithSheet(world_switch, 5, 4, 20); // SpriteNode for two_world switch animation
     // _world_switch_node->setScale(0.8f); // Magic number to rescale asset
@@ -76,8 +74,6 @@ _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displ
 
     std::vector<int> d1 = {9,10,11,12,13,14,15,16,17,18};
     _world_switch_1 = cugl::scene2::Animate::alloc(d1, SWITCH_DURATION);
-
-
 
     // init the button
     _button_layer = _assets->get<scene2::SceneNode>("button");
@@ -92,6 +88,18 @@ _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displ
         }
     });
     _reset_button->activate();
+    
+    
+    _back_arrow = std::dynamic_pointer_cast<scene2::Button>(assets->get<scene2::SceneNode>("button_back-arrow"));
+    
+    _back_arrow->addListener([this](const std::string& name, bool down) {
+        if (!down) {
+            // cout<<"fail_back"<<endl;
+            nextScene = MENU;
+        }
+    });
+    
+    _back_arrow->activate();
     
     // load label for n_res and n_art
     _res_label  = std::dynamic_pointer_cast<scene2::Label>(assets->get<scene2::SceneNode>("button_resources"));
@@ -138,6 +146,8 @@ _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displ
         }
     });
 
+    
+    
     // add switch indicator
     _switchNode = _assets->get<scene2::SceneNode>("button_switch");
     
@@ -174,7 +184,7 @@ void GamePlayController::loadLevel(){
     _obsSetPast = _pastWorldLevel->getObs();
     _wallSetPast = _pastWorldLevel->getWall();
     _artifactSet = _pastWorldLevel->getItem();
-
+    artNum = _artifactSet->getArtNum();
 
     // Draw present world
     _presentWorldLevel = _assets->get<LevelModel>(presentKey);
@@ -186,9 +196,8 @@ void GamePlayController::loadLevel(){
     _presentWorld = _presentWorldLevel->getWorld();
     _obsSetPresent = _presentWorldLevel->getObs();
     _wallSetPresent = _presentWorldLevel->getWall();
-    _presentWorld->updateColor(Color4::CLEAR);
-    _pastWorld->updateColor(Color4::CLEAR);
-    
+    //_presentWorld->updateColor(Color4::CLEAR);
+    //_pastWorld->updateColor(Color4::CLEAR);
     
     auto pastEdges = _pastWorld->getEdges(_scene, _obsSetPast);
     generatePastMat(_pastWorld->getVertices());
@@ -266,12 +275,11 @@ void GamePlayController::init(){
     _artifactSet->addChildTo(_ordered_root);
     
     _obsSetPast->addChildTo(_ordered_root);
-//    _obsSetPast->setVisibility(true);
     _wallSetPast->addChildTo(_ordered_root);
     
     _obsSetPresent->addChildTo(_other_ordered_root);
     _wallSetPresent->addChildTo(_other_ordered_root);
-    
+    _obsSetPresent->setVisibility(true);
     auto presentEdges = _presentWorld->getEdges(_other_scene, _obsSetPresent);
     generatePresentMat(_presentWorld->getVertices());
     for (int i = 0; i < presentEdges.size(); i++){
@@ -309,6 +317,7 @@ void GamePlayController::init(){
     path_trace = {};
     
     _reset_button->activate();
+    _back_arrow->activate();
     _scene->addChild(_button_layer);
     //_ordered_root->addChild(_button_layer);
     
@@ -324,7 +333,9 @@ void GamePlayController::init(){
     
     // reload initial label for n_res and n_art
     _res_label->setText("0");
-    _art_label->setText("0/5");
+    
+    std::string num = std::to_string(artNum);
+    _art_label->setText("0/"+num);
     
     //_pastWorld->addPoints(_scene->getSize(), _scene);
     
@@ -356,8 +367,10 @@ void GamePlayController::update(float dt){
             _other_cam->update();
             _scene->removeChild(_button_layer);
             _other_scene->addChild(_button_layer);
+
             _character->removeChildFrom(_ordered_root);
             _character->addChildTo(_other_ordered_root);
+            
             
             // when move to the second world, minus 1 visually
             _res_label->setText(cugl::strtool::to_string(_character->getNumRes()-1));
@@ -617,7 +630,6 @@ void GamePlayController::update(float dt){
     if (!_actions->isActive("moving") && _actions->isActive("character_animation")) {
         _character->stopAnimation();
     }
-    _character->updateShadow();
 
 
 #pragma mark Resource Collection Methods
@@ -627,7 +639,6 @@ void GamePlayController::update(float dt){
             // detect collision
             if(_character->contains(_artifactSet->_itemSet[i]->getNodePosition())){
                 // if close, should collect it
-                
                 // if resource
                 if(_artifactSet->_itemSet[i]->isResource()){
                     AudioEngine::get()->play("NPC_flip", _collectResourceSound, false, _collectResourceSound->getVolume(), true);
@@ -640,11 +651,12 @@ void GamePlayController::update(float dt){
                 else if (_artifactSet->_itemSet[i]->isArtifact()){
                     AudioEngine::get()->play("arrowHit", _collectArtifactSound, false, _collectArtifactSound->getVolume(), true);
                     _character->addArt();
-                    _art_label->setText(cugl::strtool::to_string(_character->getNumArt()) + "/5");
+                    std::string num = std::to_string(artNum);
+                    _art_label->setText(cugl::strtool::to_string(_character->getNumArt()) + "/" +num);
                 }
                 // make the artifact disappear and remove from set
                 _artifactSet->remove_this(i, _ordered_root);
-                if(_character->getNumArt() == 5){
+                if(_character->getNumArt() == artNum){
                     completeTerminate();
                 }
                 break;
