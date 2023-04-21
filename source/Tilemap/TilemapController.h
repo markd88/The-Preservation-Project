@@ -284,17 +284,20 @@ public:
         int count = 0;
         
         int width = _model->dimensions.x * _model->tileSize.width;
+        int height = _model->dimensions.y * _model->tileSize.height;
         int edgeLength = width / 30;
         
-        int numPerRow = (width/edgeLength) + 1;
+        int numPerRow = 0;
         
-        auto& start = _tilemap[0][0];
-        Vec2 startPos = start->getPosition() + Vec2(0, start->getSize().y);
+        Vec2 startPos = Vec2(0, height);
         
         for (int j = startPos.y; j > 0; j -= edgeLength){
             for (int i = startPos.x; i < startPos.x + width; i += edgeLength){
                 nodes[count] = Vec2(i,j);
                 count += 1;
+                if (j == startPos.y){
+                    numPerRow += 1;
+                }
             }
         }
         
@@ -310,7 +313,7 @@ public:
                 if (hitObs == false){
                     edges.push_back(std::make_pair(i, i+1));
                 }
-                /*
+                
                 Spline2 spline = Spline2(a, b);
                 splinePather.set(&spline);
                 splinePather.calculate();
@@ -326,8 +329,7 @@ public:
                 }
                 polyNode->setPosition(a.getMidpoint(b));
                 scene->addChild(polyNode);
-                 */
-                 
+    
                  
             }
             
@@ -344,7 +346,7 @@ public:
             if (hitObs == false){
                 edges.push_back(std::make_pair(i, i + numPerRow));
             }
-            /*
+            
             Spline2 spline = Spline2(a, b);
             splinePather.set(&spline);
             splinePather.calculate();
@@ -360,7 +362,6 @@ public:
             }
             polyNode->setPosition(a.getMidpoint(b));
             scene->addChild(polyNode);
-             */
              
             
         }

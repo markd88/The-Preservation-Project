@@ -51,12 +51,12 @@ _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displ
     // Allocate the camera manager
     _camManager = CameraManager::alloc();
 
-    _scene->setSize(displaySize*1.5);
+    _scene->setSize(displaySize*3);
     _other_scene->setSize(displaySize*1.5);
     
     _previewNode = cugl::scene2::PolygonNode::alloc();
-    _scene2texture = Scene2Texture::alloc(displaySize*1.5);
-//    _scene->setSize(displaySize *3);
+    _scene2texture = Scene2Texture::alloc(displaySize*5);
+//    _scene->setSize(displaySize *3)
 //    _other_scene->setSize(displaySize *3);
     
     _path = make_unique<PathController>();
@@ -157,6 +157,8 @@ void GamePlayController::loadLevel(){
     string presentFile = "tileset/levels/level-" + std::to_string(level) + "/level-" + std::to_string(level) + "-present.json";
     string presentKey = "level-" + std::to_string(level) + "-present";
     
+    _assets->unload<LevelModel>(pastKey);
+    _assets->unload<LevelModel>(presentKey);
     _assets->load<LevelModel>(pastKey, pastFile);
     _assets->load<LevelModel>(presentKey, presentFile);
     
