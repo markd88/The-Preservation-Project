@@ -96,8 +96,11 @@ public:
     std::shared_ptr<LevelModel> _pastWorldLevel;
     std::shared_ptr<LevelModel> _presentWorldLevel;
     
-    //whether or not user is previewing
+    //preview variables
     bool _isPreviewing;
+    std::shared_ptr<cugl::scene2::PolygonNode> _previewNode;
+    std::shared_ptr<Scene2Texture> _scene2texture;
+    std::shared_ptr<Texture> _texture;
 
     // two_world switch
 
@@ -243,16 +246,26 @@ public:
 
     void failTerminate(){
         AudioEngine::get()->play("win", _winSound, false, _winSound->getVolume(), true);
-        _scene->addChild(_fail_layer);
-        _fail_layer->setPosition(_cam->getPosition());
+        if (_activeMap == "pastWorld"){
+            _scene->addChild(_fail_layer);
+            _fail_layer->setPosition(_cam->getPosition());
+        } else{
+            _other_scene->addChild(_fail_layer);
+            _fail_layer->setPosition(_other_cam->getPosition());
+        }
         _fail_back_button->activate();
         _fail_again_button->activate();
     }
     
     void completeTerminate(){
         AudioEngine::get()->play("lost", _loseSound, false, _loseSound->getVolume(), true);
-        _scene->addChild(_complete_layer);
-        _complete_layer->setPosition(_cam->getPosition());
+        if (_activeMap == "pastWorld"){
+            _scene->addChild(_complete_layer);
+            _complete_layer->setPosition(_cam->getPosition());
+        }else{
+            _other_scene->addChild(_complete_layer);
+            _complete_layer->setPosition(_other_cam->getPosition());
+        }
         _complete_back_button->activate();
         _complete_again_button->activate();
     }

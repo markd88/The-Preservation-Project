@@ -5,6 +5,7 @@
 #include "TilemapView.h"
 // This is NOT in the same directory
 #include <Tile/TileController.h>
+#include <ItemSet/ItemSetController.h>
 #include <memory>
 
 //namespace MVC {
@@ -277,23 +278,26 @@ public:
         _model->setActive(active);
     }
     
-    std::vector<std::pair<int,int>> getEdges(const std::shared_ptr<cugl::Scene2>& scene){
+    std::vector<std::pair<int,int>> getEdges(const std::shared_ptr<cugl::Scene2>& scene, std::shared_ptr<ItemSetController> obsSet){
         std::unordered_map<int, Vec2> nodes;
         std::vector<std::pair<int,int>> edges;
         int count = 0;
         
         int width = _model->dimensions.x * _model->tileSize.width;
+        int height = _model->dimensions.y * _model->tileSize.height;
         int edgeLength = width / 30;
         
-        int numPerRow = (width/edgeLength) + 1;
+        int numPerRow = 0;
         
-        auto& start = _tilemap[0][0];
-        Vec2 startPos = start->getPosition() + Vec2(0, start->getSize().y);
+        Vec2 startPos = Vec2(0, height);
         
         for (int j = startPos.y; j > 0; j -= edgeLength){
             for (int i = startPos.x; i < startPos.x + width; i += edgeLength){
                 nodes[count] = Vec2(i,j);
                 count += 1;
+                if (j == startPos.y){
+                    numPerRow += 1;
+                }
             }
         }
         
@@ -304,7 +308,7 @@ public:
             if ( (i+1) % (numPerRow) != 0){
                 Vec2 a = nodes[i];
                 Vec2 b = nodes[i + 1];
-                bool hitObs = lineInObstacle(a, b);
+                bool hitObs = obsSet->lineInObstacle(a, b);
                 
                 if (hitObs == false){
                     edges.push_back(std::make_pair(i, i+1));
@@ -320,9 +324,12 @@ public:
                 
                 std::shared_ptr<scene2::PolygonNode> polyNode= scene2::PolygonNode::alloc();
                 polyNode->setPolygon(line);
+                if (hitObs){
+                    polyNode->setColor(Color4::RED);
+                }
                 polyNode->setPosition(a.getMidpoint(b));
                 scene->addChild(polyNode);
-                 */
+                */
                  
             }
             
@@ -334,7 +341,7 @@ public:
             
             Vec2 a = nodes[i];
             Vec2 b = nodes[i + numPerRow];
-            bool hitObs = lineInObstacle(a, b);
+            bool hitObs = obsSet->lineInObstacle(a, b);
             
             if (hitObs == false){
                 edges.push_back(std::make_pair(i, i + numPerRow));
@@ -350,10 +357,12 @@ public:
             
             std::shared_ptr<scene2::PolygonNode> polyNode= scene2::PolygonNode::alloc();
             polyNode->setPolygon(line);
-        
+            if (hitObs){
+                polyNode->setColor(Color4::RED);
+            }
             polyNode->setPosition(a.getMidpoint(b));
             scene->addChild(polyNode);
-             */
+            */
             
         }
         
@@ -371,83 +380,6 @@ public:
         return _nodes;
     }
     
-    void addPoints1(const std::shared_ptr<cugl::Scene2>& scene){
-        
-        auto origin = scene2::PolygonNode::alloc();
-        std::unordered_map<int, Vec2> nodes;
-        int count = 0;
-        int x = _model->dimensions.x;
-        
-        for(auto& tile_vec : _tilemap){
-            for(auto& tile : tile_vec){
-                origin = scene2::PolygonNode::alloc();
-                origin->setPolygon(Rect(10, 10, 10, 10));
-                int i = tile->getPosition().x;
-                int j = tile->getPosition().y;
-                origin->setPosition(Vec2(i,j));
-                origin->setColor(Color4::RED);
-                scene->addChild(origin);
-                nodes[count] = Vec2(i,j);
-                count += 1;
-            }
-                
-        }
-                
-        SplinePather splinePather = SplinePather();
-        SimpleExtruder extruder = SimpleExtruder();
-        
-        for (int i = 0; i < count - 1; i++){
-            if ((i + 1) % x != 0){
-                Vec2 a = nodes[i];
-                Vec2 b = nodes[i + 1];
-                bool hitObs = lineInObstacle(a, b);
-                Spline2 spline = Spline2(a, b);
-                splinePather.set(&spline);
-                splinePather.calculate();
-                
-                extruder.set(splinePather.getPath());
-                extruder.calculate(1);
-                Poly2 line = extruder.getPolygon();
-                
-                std::shared_ptr<scene2::PolygonNode> polyNode= scene2::PolygonNode::alloc();
-                polyNode->setPolygon(line);
-                if (hitObs){
-                    polyNode->setColor(Color4::BLUE);
-                }else{
-                    polyNode->setColor(Color4::GREEN);
-                }
-                polyNode->setPosition(a.getMidpoint(b));
-                scene->addChild(polyNode);
-            }
-            
-        }
-        for (int i = 0; i < count - x; i++){
-            
-                Vec2 a = nodes[i];
-                Vec2 b = nodes[i + x];
-                bool hitObs = lineInObstacle(a, b);
-                Spline2 spline = Spline2(a, b);
-                splinePather.set(&spline);
-                splinePather.calculate();
-                
-                extruder.set(splinePather.getPath());
-                extruder.calculate(1);
-                Poly2 line = extruder.getPolygon();
-                
-                std::shared_ptr<scene2::PolygonNode> polyNode= scene2::PolygonNode::alloc();
-                polyNode->setPolygon(line);
-                if (hitObs){
-                    polyNode->setColor(Color4::BLUE);
-                }else{
-                    polyNode->setColor(Color4::GREEN);
-                }
-                polyNode->setPosition(a.getMidpoint(b));
-                scene->addChild(polyNode);
-            
-        }
-        
-        
-    }
     
     // set priority in ordered_root
     void setPriority(float p){
