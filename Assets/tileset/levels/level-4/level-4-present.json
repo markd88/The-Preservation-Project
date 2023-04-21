@@ -1820,7 +1820,7 @@
         {
          "draworder":"topdown",
          "id":3,
-         "name":"wall",
+         "name":"obs",
          "objects":[
                 {
                  "gid":68,
@@ -2185,7 +2185,7 @@
             
                 {
                  "gid":38,
-                 "height":256,
+                 "height":180,
                  "id":205,
                  "name":"",
                  "rotation":0,
@@ -2197,7 +2197,7 @@
                 }, 
                 {
                  "gid":38,
-                 "height":256,
+                 "height":180,
                  "id":206,
                  "name":"",
                  "rotation":0,
@@ -2320,7 +2320,7 @@
         {
          "draworder":"topdown",
          "id":5,
-         "name":"obs",
+         "name":"useless",
          "objects":[
                 {
                  "gid":66,

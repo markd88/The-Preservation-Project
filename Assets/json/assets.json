@@ -491,8 +491,22 @@
             "wrapS":     "clamp",
             "wrapT":     "clamp"
         },
+        "tile_present_walls": {
+            "file":      "textures/tile_present_wall.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS":     "clamp",
+            "wrapT":     "clamp"
+        },
         "tile_present_wall": {
             "file":      "textures/tile_present_wall.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS":     "clamp",
+            "wrapT":     "clamp"
+        },
+        "tile_present_wall1": {
+            "file":      "textures/tile_present_wall1.png",
             "minfilter": "linear",
             "magfilter": "linear",
             "wrapS":     "clamp",

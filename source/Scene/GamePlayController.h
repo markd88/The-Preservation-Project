@@ -64,6 +64,7 @@ public:
     std::unique_ptr<GuardSetController> _guardSetPast;
     std::unique_ptr<GuardSetController> _guardSetPresent;
     
+    int artNum;
     std::shared_ptr<ItemSetController> _artifactSet;
     std::shared_ptr<ItemSetController> _resourceSet;
     std::shared_ptr<ItemSetController> _obsSetPast;

@@ -39,8 +39,8 @@ _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displ
 
     // load the level info
     
-    _assets->load<LevelModel>(LEVEL_THREE_PAST_KEY, LEVEL_THREE_PAST_FILE);
-    _assets->load<LevelModel>(LEVEL_THREE_PRESENT_KEY, LEVEL_THREE_PRESENT_FILE);
+    _assets->load<LevelModel>(LEVEL_ONE_PAST_KEY, LEVEL_ONE_PAST_FILE);
+    _assets->load<LevelModel>(LEVEL_ONE_PRESENT_KEY, LEVEL_ONE_PRESENT_FILE);
     
     
     // Initialize the scene to a locked width
@@ -68,7 +68,7 @@ _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displ
     // initialize character, two maps, path
     
     // Draw past world
-    _pastWorldLevel = _assets->get<LevelModel>(LEVEL_THREE_PAST_KEY);
+    _pastWorldLevel = _assets->get<LevelModel>(LEVEL_ONE_PAST_KEY);
     if (_pastWorldLevel == nullptr) {
         CULog("Failed to import level!");
     }
@@ -78,10 +78,10 @@ _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displ
     _obsSetPast = _pastWorldLevel->getObs();
     _wallSetPast = _pastWorldLevel->getWall();
     _artifactSet = _pastWorldLevel->getItem();
-
+    artNum = _artifactSet->getArtNum();
 
     // Draw present world
-    _presentWorldLevel = _assets->get<LevelModel>(LEVEL_THREE_PRESENT_KEY);
+    _presentWorldLevel = _assets->get<LevelModel>(LEVEL_ONE_PRESENT_KEY);
     if (_presentWorldLevel == nullptr) {
         CULog("Failed to import level!");
     }
@@ -328,7 +328,9 @@ void GamePlayController::init(){
     
     // reload initial label for n_res and n_art
     _res_label->setText("0");
-    _art_label->setText("0/5");
+    
+    std::string num = std::to_string(artNum);
+    _art_label->setText("0/"+num);
     
     //_pastWorld->addPoints(_scene->getSize(), _scene);
     
@@ -356,7 +358,7 @@ void GamePlayController::update(float dt){
             
             _presentWorld->setVisibility(true);
             _guardSetPresent->setVisbility(true);
-//            _obsSetPresent->setVisibility(true);
+            _obsSetPresent->setVisibility(true);
             _wallSetPresent->setVisibility(true);
 
             _pastWorld->setVisibility(false);
@@ -556,7 +558,6 @@ void GamePlayController::update(float dt){
             // detect collision
             if(_character->contains(_artifactSet->_itemSet[i]->getNodePosition())){
                 // if close, should collect it
-                
                 // if resource
                 if(_artifactSet->_itemSet[i]->isResource()){
                     AudioEngine::get()->play("NPC_flip", _collectResourceSound, false, _collectResourceSound->getVolume(), true);
@@ -569,11 +570,12 @@ void GamePlayController::update(float dt){
                 else if (_artifactSet->_itemSet[i]->isArtifact()){
                     AudioEngine::get()->play("arrowHit", _collectArtifactSound, false, _collectArtifactSound->getVolume(), true);
                     _character->addArt();
-                    _art_label->setText(cugl::strtool::to_string(_character->getNumArt()) + "/5");
+                    std::string num = std::to_string(artNum);
+                    _art_label->setText(cugl::strtool::to_string(_character->getNumArt()) + "/" +num);
                 }
                 // make the artifact disappear and remove from set
                 _artifactSet->remove_this(i, _ordered_root);
-                if(_character->getNumArt() == _artifactSet->artifactNum()){
+                if(_character->getNumArt() == artNum){
                     completeTerminate();
                 }
                 break;

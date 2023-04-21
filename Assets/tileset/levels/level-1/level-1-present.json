@@ -979,7 +979,7 @@
         {
          "draworder":"topdown",
          "id":3,
-         "name":"wall",
+         "name":"obs",
          "objects":[
                 {
                  "gid":49,
@@ -1043,7 +1043,7 @@
                 }, 
                 {
                  "gid":40,
-                 "height":256,
+                 "height":180,
                  "id":89,
                  "name":"",
                  "rotation":0,
@@ -1055,7 +1055,7 @@
                 }, 
                 {
                  "gid":40,
-                 "height":256,
+                 "height":180,
                  "id":90,
                  "name":"",
                  "rotation":0,
@@ -1067,7 +1067,7 @@
                 }, 
                 {
                  "gid":40,
-                 "height":256,
+                 "height":180,
                  "id":91,
                  "name":"",
                  "rotation":0,
@@ -1215,7 +1215,7 @@
         {
          "draworder":"topdown",
          "id":5,
-         "name":"obs",
+         "name":"useless",
          "objects":[
                 {
                  "gid":66,

@@ -27,6 +27,8 @@ public:
     ItemSet _itemSet;
     typedef std::shared_ptr<cugl::Scene2> Scene;
     
+    int artCount;
+    
 #pragma mark Methods
 public:
 //    ItemSetController(const std::shared_ptr<cugl::AssetManager>& assets) {
@@ -134,16 +136,15 @@ public:
         }
         return false;
     }
+
     
-    
-    int artifactNum(){
-        int count;
+    const int getArtNum(){
         for(auto item: _itemSet){
             if(item->isArtifact()){
-                count +=1;
+                artCount +=1;
             }
         }
-        return count;
+        return artCount;
     }
     
     // update the prio
