@@ -313,7 +313,7 @@ public:
                 if (hitObs == false){
                     edges.push_back(std::make_pair(i, i+1));
                 }
-                
+                /*
                 Spline2 spline = Spline2(a, b);
                 splinePather.set(&spline);
                 splinePather.calculate();
@@ -329,7 +329,7 @@ public:
                 }
                 polyNode->setPosition(a.getMidpoint(b));
                 scene->addChild(polyNode);
-    
+                */
                  
             }
             
@@ -346,7 +346,7 @@ public:
             if (hitObs == false){
                 edges.push_back(std::make_pair(i, i + numPerRow));
             }
-            
+            /*
             Spline2 spline = Spline2(a, b);
             splinePather.set(&spline);
             splinePather.calculate();
@@ -362,7 +362,7 @@ public:
             }
             polyNode->setPosition(a.getMidpoint(b));
             scene->addChild(polyNode);
-             
+            */
             
         }
         
