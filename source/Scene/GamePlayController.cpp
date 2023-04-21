@@ -370,6 +370,9 @@ void GamePlayController::update(float dt){
 
             _character->removeChildFrom(_ordered_root);
             _character->addChildTo(_other_ordered_root);
+
+            _scene->removeChild(_world_switch_node);
+            _other_scene->addChild(_world_switch_node);
             
             
             // when move to the second world, minus 1 visually
@@ -386,6 +389,9 @@ void GamePlayController::update(float dt){
 
             _character->removeChildFrom(_other_ordered_root);
             _character->addChildTo(_ordered_root);
+
+            _other_scene->removeChild(_world_switch_node);
+            _scene->addChild((_world_switch_node));
             
             // when move to the second world, minus 1 in model
             _character->useRes();
