@@ -61,8 +61,8 @@ public:
 
         _node->setRelativeColor(false);
         _node->setVisible(true);
-        _node->setAnchor(Vec2::ANCHOR_BOTTOM_LEFT);
-        _node->setPosition(position);
+        _node->setAnchor(Vec2::ANCHOR_CENTER);
+        _node->setPosition(position + _node->getSize()/2);
 
 
         std::shared_ptr<Texture> question = assets->get<Texture>("question_mark_anim");
@@ -118,6 +118,10 @@ public:
 
     Vec2 nodePos(){
         return _node->getPosition();
+    }
+    
+    Size nodeSize() {
+        return _node->getSize();
     }
     
     void performAction(string actionName, const std::shared_ptr<cugl::scene2::MoveTo>& action){

@@ -144,8 +144,8 @@ public:
 
         _id = id;
         // starting direction should from level editor
-        _model = std::make_unique<GuardModel>(position, Size(100, 100), Color4::RED, 0);
-        _view = std::make_unique<GuardView>(position, Size(100, 100), Color4::RED, assets, actions, isPast);
+        _model = std::make_unique<GuardModel>(position, Size(128, 128), Color4::RED, 0);
+        _view = std::make_unique<GuardView>(position, Size(128, 128), Color4::RED, assets, actions, isPast);
     }
 
 #pragma mark Update Methods
