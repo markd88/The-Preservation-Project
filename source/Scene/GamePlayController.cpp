@@ -573,7 +573,6 @@ void GamePlayController::update(float dt){
     if (!_actions->isActive("moving") && _actions->isActive("character_animation")) {
         _character->stopAnimation();
     }
-    _character->updateShadow();
 
 
 #pragma mark Resource Collection Methods

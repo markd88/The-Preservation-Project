@@ -18,10 +18,7 @@ class CharacterView{
 private:
     /** Main character view */
     /** The node is attached to the root-scene*/
-    std::shared_ptr<cugl::scene2::PolygonNode> _node;
-
-
-    std::shared_ptr<cugl::scene2::SpriteNode>  _char;
+    std::shared_ptr<cugl::scene2::SpriteNode>  _node;
 
     std::shared_ptr<cugl::scene2::PolygonNode>  _shadow;
     
@@ -52,37 +49,31 @@ public:
         float scale = GAME_WIDTH/size.width;
         size *= scale;
         
-        _node = scene2::PolygonNode::alloc();
-        _node->setRelativeColor(false);
-        _node->setVisible(true);
-        _node->setAnchor(Vec2::ANCHOR_BOTTOM_LEFT);
-        _node->setPosition(Vec2(0,0));
-
 
         std::shared_ptr<Texture> character  = assets->get<Texture>("character");
+        _node = scene2::SpriteNode::allocWithSheet(character, 8, 8, 64); // SpriteNode for animation
+        _node->setScale(0.8f); // Magic number to rescale asset
 
-        _char = scene2::SpriteNode::allocWithSheet(character, 8, 8, 64); // SpriteNode for animation
-        _char->setScale(0.8f); // Magic number to rescale asset
-        _char->setRelativeColor(false);
-        _char->setVisible(true);
-        _char->setAnchor(Vec2(0.5, 0.25));
-        _char->setPosition(position);
+        _node->setRelativeColor(false);
+        _node->setVisible(true);
+        _node->setAnchor(Vec2(0.5, 0.25));
+        _node->setPosition(position);
 
-        _char->setFrame(16);
+        _node->setFrame(16);
 
         std::shared_ptr<Texture> shadow = assets->get<Texture>("shadow");
         _shadow = scene2::PolygonNode::allocWithTexture(shadow);
-
-        // _shadow->setAnchor(Vec2(0.5,0.5));
-        _shadow->setScale(0.15f);
-        _shadow->setPosition(_char->getPosition());
+        _shadow->setScale(0.2f);
+        _shadow->setAnchor(0,0);
+        _shadow->setPosition(_node->getPosition());
         _shadow->setRelativeColor(false);
         _shadow->setVisible(true);
 
 
 
         _node->addChildWithName(_shadow, "shadow");
-        _node->addChildWithName(_char, "character");
+
+
 
 
 
@@ -144,28 +135,19 @@ public:
 
 #pragma mark Setters
 public:
-
-
-    Vec2 getCharPos(){
-        return _char->getPosition();
-    };
-
-
     void setPosition(Vec2 position){
-        _char->setPosition(position);
-        _shadow->setPosition(position);
+        _node->setPosition(position);
     }
     
     void moveTo(const std::shared_ptr<cugl::scene2::MoveTo>& action){
         //auto fcn = EasingFunction::alloc(EasingFunction::Type::ELASTIC_IN_OUT);
-        _actions->activate("moving", action, _char);
-
+        _actions->activate("moving", action, _node);
     }
 
     void updateAnimation(Vec2 target) {
 
         std::shared_ptr<cugl::scene2::Animate> animation = _c_0;
-        Vec2 pos = _char->getPosition();
+        Vec2 pos = _node->getPosition();
         int d = calculateMappedAngle(pos.x, pos.y, target.x, target.y);
 
         if (d == 0) {
@@ -191,7 +173,7 @@ public:
             animation = _c_7;
         }
 
-        _actions->activate("character_animation", animation, _char);
+        _actions->activate("character_animation", animation, _node);
     }
 
     void stopAnimation() {
@@ -199,7 +181,7 @@ public:
     }
 
     void updateLastDirection(Vec2 target) {
-        Vec2 pos = _char->getPosition();
+        Vec2 pos = _node->getPosition();
         int d = calculateMappedAngle(pos.x, pos.y, target.x, target.y);
 
         if (!_actions->isActive("character_animation")) {
@@ -214,11 +196,11 @@ public:
     }
 
     Vec2 nodePos(){
-        return _char->getPosition();
+        return _node->getPosition();
     }
     
     float getAngle(){
-        return _char->getAngle();
+        return _node->getAngle();
     }
 
     int calculateMappedAngle(float x1, float y1, float x2, float y2)
