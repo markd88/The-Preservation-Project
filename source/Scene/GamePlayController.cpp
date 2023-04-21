@@ -51,7 +51,6 @@ _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displ
     // Allocate the camera manager
     _camManager = CameraManager::alloc();
 
-
     _scene->setSize(displaySize*1.5);
     _other_scene->setSize(displaySize*1.5);
     
@@ -189,13 +188,13 @@ void GamePlayController::loadLevel(){
     _pastWorld->updateColor(Color4::CLEAR);
     
     
-    auto pastEdges = _pastWorld->getEdges(_scene);
+    auto pastEdges = _pastWorld->getEdges(_scene, _obsSetPast);
     generatePastMat(_pastWorld->getVertices());
     for (int i = 0; i < pastEdges.size(); i++){
         addPastEdge(pastEdges[i].first, pastEdges[i].second);
     }
     
-    auto presentEdges = _presentWorld->getEdges(_other_scene);
+    auto presentEdges = _presentWorld->getEdges(_other_scene, _obsSetPresent);
     generatePresentMat(_presentWorld->getVertices());
     for (int i = 0; i < presentEdges.size(); i++){
         addPresentEdge(presentEdges[i].first, presentEdges[i].second);
@@ -239,29 +238,22 @@ void GamePlayController::init(){
     // remove everything first
     _scene->removeAllChildren();
     _ordered_root->removeAllChildren();
-
+    _scene2texture->removeAllChildren();
     _other_scene->removeAllChildren();
     _other_ordered_root->removeAllChildren();
     
     _pastWorld->addChildTo(_scene);
     _scene->addChild(_ordered_root);
-    _scene2texture->removeAllChildren();
+    
     _presentWorld->addChildTo(_other_scene);
     _other_scene->addChild(_other_ordered_root);
-    
-    
-    //_pastWorld->addChildTo(_ordered_root);
-    _pastWorld->setVisibility(true);
-
 
     // for two world switch animation
     //_scene->addChild(_world_switch_node);
     _scene->addChild(_world_switch_node);
     _isSwitching = false;
 
-
-
-    auto edges = _pastWorld->getEdges(_scene);
+    auto edges = _pastWorld->getEdges(_scene, _obsSetPast);
     generatePastMat(_pastWorld->getVertices());
     for (int i = 0; i < edges.size(); i++){
         addPastEdge(edges[i].first, edges[i].second);
@@ -270,23 +262,19 @@ void GamePlayController::init(){
     _artifactSet->clearSet();
     _artifactSet = _pastWorldLevel->getItem();
     _artifactSet->addChildTo(_ordered_root);
-    _artifactSet->setVisibility(true);
-    
     
     _obsSetPast->addChildTo(_ordered_root);
 //    _obsSetPast->setVisibility(true);
     _wallSetPast->addChildTo(_ordered_root);
-    _wallSetPast->setVisibility(true);
     
     _obsSetPresent->addChildTo(_other_ordered_root);
     _wallSetPresent->addChildTo(_other_ordered_root);
     
-    auto presentEdges = _presentWorld->getEdges(_other_scene);
+    auto presentEdges = _presentWorld->getEdges(_other_scene, _obsSetPresent);
     generatePresentMat(_presentWorld->getVertices());
     for (int i = 0; i < presentEdges.size(); i++){
         addPresentEdge(presentEdges[i].first, presentEdges[i].second);
     }
-    
     
     _activeMap = "pastWorld";
     _pastWorld->setActive(true);
@@ -601,7 +589,6 @@ void GamePlayController::update(float dt){
             _previewNode->setPolygon(circle);
             _previewNode->setPosition(input_posi + Vec2(0,PREVIEW_RADIUS));
         }
-                
 
     }
     
@@ -748,6 +735,7 @@ void GamePlayController::update(float dt){
         }
         
         if (_isPreviewing){
+            //_scene2texture->getCamera()->setPosition(_cam->getPosition());
             _scene2texture->render(batch);
         }
         

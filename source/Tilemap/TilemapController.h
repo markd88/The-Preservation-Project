@@ -5,6 +5,7 @@
 #include "TilemapView.h"
 // This is NOT in the same directory
 #include <Tile/TileController.h>
+#include <ItemSet/ItemSetController.h>
 #include <memory>
 
 //namespace MVC {
@@ -277,7 +278,7 @@ public:
         _model->setActive(active);
     }
     
-    std::vector<std::pair<int,int>> getEdges(const std::shared_ptr<cugl::Scene2>& scene){
+    std::vector<std::pair<int,int>> getEdges(const std::shared_ptr<cugl::Scene2>& scene, std::shared_ptr<ItemSetController> obsSet){
         std::unordered_map<int, Vec2> nodes;
         std::vector<std::pair<int,int>> edges;
         int count = 0;
@@ -304,7 +305,7 @@ public:
             if ( (i+1) % (numPerRow) != 0){
                 Vec2 a = nodes[i];
                 Vec2 b = nodes[i + 1];
-                bool hitObs = lineInObstacle(a, b);
+                bool hitObs = obsSet->lineInObstacle(a, b);
                 
                 if (hitObs == false){
                     edges.push_back(std::make_pair(i, i+1));
@@ -320,9 +321,13 @@ public:
                 
                 std::shared_ptr<scene2::PolygonNode> polyNode= scene2::PolygonNode::alloc();
                 polyNode->setPolygon(line);
+                if (hitObs){
+                    polyNode->setColor(Color4::RED);
+                }
                 polyNode->setPosition(a.getMidpoint(b));
                 scene->addChild(polyNode);
                  */
+                 
                  
             }
             
@@ -334,7 +339,7 @@ public:
             
             Vec2 a = nodes[i];
             Vec2 b = nodes[i + numPerRow];
-            bool hitObs = lineInObstacle(a, b);
+            bool hitObs = obsSet->lineInObstacle(a, b);
             
             if (hitObs == false){
                 edges.push_back(std::make_pair(i, i + numPerRow));
@@ -350,10 +355,13 @@ public:
             
             std::shared_ptr<scene2::PolygonNode> polyNode= scene2::PolygonNode::alloc();
             polyNode->setPolygon(line);
-        
+            if (hitObs){
+                polyNode->setColor(Color4::RED);
+            }
             polyNode->setPosition(a.getMidpoint(b));
             scene->addChild(polyNode);
              */
+             
             
         }
         
