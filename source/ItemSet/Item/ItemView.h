@@ -26,11 +26,8 @@ private:
 public:
     /** contructor */
     ItemView(Vec2 position, float angle, Size size, bool isArtifact, bool isResource, bool isObs, const std::shared_ptr<cugl::AssetManager>& assets, std::string textureKey) {
-//        float scale = GAME_WIDTH/size.width;
-//        size *= scale;
         _node = scene2::PolygonNode::alloc();
         setPosition(position);
-//        setSize(size);
 //        setAngle(-angle * M_PI/180);
         _isArtifact = isArtifact;
         _isResource = isResource;
@@ -82,12 +79,11 @@ public:
     void setTexture(const std::shared_ptr<cugl::AssetManager>& assets, std::string textureKey) {
         //        auto node = scene2::SceneNode::alloc();
         Vec2 pos = nodePos();
-        Size size = _node->getSize();
         std::shared_ptr<Texture> texture  = assets->get<Texture>(textureKey);
         _node = scene2::PolygonNode::allocWithTexture(texture);
         if (_isArtifact || _isResource) {
             _node->setAnchor(Vec2::ANCHOR_CENTER);
-            setPosition(pos + _node->getSize()/2);
+            setPosition(pos + Vec2(64,64));
         } else {
             _node->setAnchor(Vec2::ANCHOR_BOTTOM_LEFT);
             setPosition(pos);

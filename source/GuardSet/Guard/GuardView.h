@@ -61,8 +61,8 @@ public:
 
         _node->setRelativeColor(false);
         _node->setVisible(true);
-        _node->setAnchor(Vec2::ANCHOR_BOTTOM_LEFT);
-        _node->setPosition(position);
+        _node->setAnchor(Vec2::ANCHOR_CENTER);
+        _node->setPosition(position + _node->getSize()/2);
 
 
         std::shared_ptr<Texture> question = assets->get<Texture>("question_mark_anim");
@@ -120,33 +120,48 @@ public:
         return _node->getPosition();
     }
     
+    Size nodeSize() {
+        return _node->getSize();
+    }
+    
     void performAction(string actionName, const std::shared_ptr<cugl::scene2::MoveTo>& action){
         _actions->activate(actionName, action, _node);
         _question_node->setVisible(false);
     }
 
     void stopQuestionAnim(string id){
-        _actions->remove("question"+id);
+        // _actions->remove("question"+id);
         _question_node->setVisible(false);
     }
 
-    void startQuestionAnim(string id) {
-        if (_actions->isActive("question"+id)) {
-            // let it finish
+//    void startQuestionAnim(string id) {
+//        if (_actions->isActive("question"+id)) {
+//            // let it finish
+//        }
+//        else {
+//            std::vector<int> frames;
+//            for(int ii = 1 ; ii < 8; ii++) {
+//                frames.push_back(ii);
+//            }
+//            frames.push_back(0);
+//
+//            std::shared_ptr<cugl::scene2::Animate> animation = cugl::scene2::Animate::alloc(frames, 1.0f);
+//            _question_node->setVisible(true);
+//            _actions->activate("question"+id, animation, _question_node);
+//
+//        }
+//    }
+//
+    void startQuestionAnim(string id, float time){
+        _question_node->setVisible(true);
+        // CULog("%s  %f", id.c_str(), time);
+        int num_frame = (time * 8) / 1000;
+        if (num_frame == 8) {
+            num_frame = 7;
         }
-        else {
-            std::vector<int> frames;
-            for(int ii = 1 ; ii < 8; ii++) {
-                frames.push_back(ii);
-            }
-            frames.push_back(0);
-
-            std::shared_ptr<cugl::scene2::Animate> animation = cugl::scene2::Animate::alloc(frames, 1.0f);
-            _question_node->setVisible(true);
-            _actions->activate("question"+id, animation, _question_node);
-
-        }
+        _question_node->setFrame(num_frame);
     }
+
     void performAnimation(int current_d, string state, int last_direction, string last_state, string id) {
         //CULog("%d", d);
         if (_actions->isActive("guard_animation"+id) and current_d == last_direction and state == last_state) {
