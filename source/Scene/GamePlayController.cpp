@@ -24,7 +24,6 @@ _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displ
     
     _ordered_root = cugl::scene2::OrderedNode::allocWithOrder(cugl::scene2::OrderedNode::Order::DESCEND);
     
-    
     _other_ordered_root = cugl::scene2::OrderedNode::allocWithOrder(cugl::scene2::OrderedNode::Order::DESCEND);
 
     _assets = assets;
@@ -75,8 +74,6 @@ _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displ
 
     std::vector<int> d1 = {9,10,11,12,13,14,15,16,17,18};
     _world_switch_1 = cugl::scene2::Animate::alloc(d1, SWITCH_DURATION);
-
-
 
     // init the button
     _button_layer = _assets->get<scene2::SceneNode>("button");
@@ -199,9 +196,8 @@ void GamePlayController::loadLevel(){
     _presentWorld = _presentWorldLevel->getWorld();
     _obsSetPresent = _presentWorldLevel->getObs();
     _wallSetPresent = _presentWorldLevel->getWall();
-    _presentWorld->updateColor(Color4::CLEAR);
-    _pastWorld->updateColor(Color4::CLEAR);
-    
+    //_presentWorld->updateColor(Color4::CLEAR);
+    //_pastWorld->updateColor(Color4::CLEAR);
     
     auto pastEdges = _pastWorld->getEdges(_scene, _obsSetPast);
     generatePastMat(_pastWorld->getVertices());
@@ -283,7 +279,7 @@ void GamePlayController::init(){
     
     _obsSetPresent->addChildTo(_other_ordered_root);
     _wallSetPresent->addChildTo(_other_ordered_root);
-    
+    _obsSetPresent->setVisibility(true);
     auto presentEdges = _presentWorld->getEdges(_other_scene, _obsSetPresent);
     generatePresentMat(_presentWorld->getVertices());
     for (int i = 0; i < presentEdges.size(); i++){
@@ -367,19 +363,6 @@ void GamePlayController::update(float dt){
             _pastWorld->setActive(false);
             _presentWorld->setActive(true);
             
-
-//            _presentWorld->setVisibility(true);
-//            _guardSetPresent->setVisbility(true);
-//            _obsSetPresent->setVisibility(true);
-//            _wallSetPresent->setVisibility(true);
-//
-//            _pastWorld->setVisibility(false);
-//            _guardSetPast->setVisbility(false);
-//            _artifactSet->setVisibility(false);
-//            _obsSetPast->setVisibility(false);
-//            _wallSetPast->setVisibility(false);
-//
-
             _other_cam->setPosition(_cam->getPosition());
             _other_cam->update();
             _scene->removeChild(_button_layer);
@@ -387,6 +370,10 @@ void GamePlayController::update(float dt){
 
             _character->removeChildFrom(_ordered_root);
             _character->addChildTo(_other_ordered_root);
+
+            _scene->removeChild(_world_switch_node);
+            _other_scene->addChild(_world_switch_node);
+            
             
             // when move to the second world, minus 1 visually
             _res_label->setText(cugl::strtool::to_string(_character->getNumRes()-1));
@@ -402,6 +389,9 @@ void GamePlayController::update(float dt){
 
             _character->removeChildFrom(_other_ordered_root);
             _character->addChildTo(_ordered_root);
+
+            _other_scene->removeChild(_world_switch_node);
+            _scene->addChild((_world_switch_node));
             
             // when move to the second world, minus 1 in model
             _character->useRes();
@@ -569,10 +559,12 @@ void GamePlayController::update(float dt){
         _path->setIsDrawing(false);
         // path_trace = _path->getPath();
 
-        if (_activeMap == "pastWorld"){
-            _path->removeFrom(_scene);
-        }else{
-            _path->removeFrom(_other_scene);
+        if(_isSwitching){
+            if (_activeMap == "pastWorld"){
+                _path->removeFrom(_scene);
+            }else{
+                _path->removeFrom(_other_scene);
+            }
         }
         
         //finish previewing
