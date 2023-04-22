@@ -559,10 +559,12 @@ void GamePlayController::update(float dt){
         _path->setIsDrawing(false);
         // path_trace = _path->getPath();
 
-        if (_activeMap == "pastWorld"){
-            _path->removeFrom(_scene);
-        }else{
-            _path->removeFrom(_other_scene);
+        if(_isSwitching){
+            if (_activeMap == "pastWorld"){
+                _path->removeFrom(_scene);
+            }else{
+                _path->removeFrom(_other_scene);
+            }
         }
         
         //finish previewing
