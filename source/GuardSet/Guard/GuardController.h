@@ -350,7 +350,7 @@ public:
 
     void chaseChar(string actionName){
         // CULog("chasing");
-        updateChaseSpeed(0.5);
+        updateChaseSpeed(0.45);
         _view->performAction(actionName, _chaseMove);
     }
     
