@@ -13,7 +13,7 @@ using namespace cugl;
 #define SCENE_WIDTH 1024
 #define ACTIONDURATION 0.08f
 #define ANIMDURATION 1f
-
+#define PREVIEW_RADIUS 150
 #define SWITCH_DURATION 1
 
 #define ACT_KEY  "current"
@@ -21,7 +21,6 @@ using namespace cugl;
 GamePlayController::GamePlayController(const Size displaySize, std::shared_ptr<cugl::AssetManager>& assets ):
 _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displaySize)) {
     // Initialize the assetManager
-    
     
     _ordered_root = cugl::scene2::OrderedNode::allocWithOrder(cugl::scene2::OrderedNode::Order::DESCEND);
     
@@ -52,10 +51,12 @@ _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displ
     // Allocate the camera manager
     _camManager = CameraManager::alloc();
 
-
     _scene->setSize(displaySize*1.5);
     _other_scene->setSize(displaySize*1.5);
-//    _scene->setSize(displaySize *3);
+    
+    _previewNode = cugl::scene2::PolygonNode::alloc();
+    _scene2texture = Scene2Texture::alloc(displaySize*5);
+//    _scene->setSize(displaySize *3)
 //    _other_scene->setSize(displaySize *3);
     
     _path = make_unique<PathController>();
@@ -158,13 +159,10 @@ _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displ
     _moveCam->setDuration(ACTIONDURATION);
     _moveTo->setDuration(ACTIONDURATION);
     
-    
-    
     loadLevel();
     init();
     
 }
-
 
 void GamePlayController::loadLevel(){
     string pastFile = "tileset/levels/level-" + std::to_string(level) + "/level-" + std::to_string(level) + "-past.json";
@@ -205,13 +203,13 @@ void GamePlayController::loadLevel(){
     _pastWorld->updateColor(Color4::CLEAR);
     
     
-    auto pastEdges = _pastWorld->getEdges(_scene);
+    auto pastEdges = _pastWorld->getEdges(_scene, _obsSetPast);
     generatePastMat(_pastWorld->getVertices());
     for (int i = 0; i < pastEdges.size(); i++){
         addPastEdge(pastEdges[i].first, pastEdges[i].second);
     }
     
-    auto presentEdges = _presentWorld->getEdges(_other_scene);
+    auto presentEdges = _presentWorld->getEdges(_other_scene, _obsSetPresent);
     generatePresentMat(_presentWorld->getVertices());
     for (int i = 0; i < presentEdges.size(); i++){
         addPresentEdge(presentEdges[i].first, presentEdges[i].second);
@@ -244,10 +242,6 @@ void GamePlayController::loadLevel(){
     
 }
 
-
-
-
-
 // init assets and all scenegraph when restart
 void GamePlayController::init(){
     
@@ -259,7 +253,7 @@ void GamePlayController::init(){
     // remove everything first
     _scene->removeAllChildren();
     _ordered_root->removeAllChildren();
-
+    _scene2texture->removeAllChildren();
     _other_scene->removeAllChildren();
     _other_ordered_root->removeAllChildren();
     
@@ -267,22 +261,14 @@ void GamePlayController::init(){
     _scene->addChild(_ordered_root);
     
     _presentWorld->addChildTo(_other_scene);
-    _presentWorld->setActive(false);
     _other_scene->addChild(_other_ordered_root);
-    
-    
-    //_pastWorld->addChildTo(_ordered_root);
-    _pastWorld->setVisibility(true);
-
 
     // for two world switch animation
     //_scene->addChild(_world_switch_node);
     _scene->addChild(_world_switch_node);
     _isSwitching = false;
 
-
-
-    auto edges = _pastWorld->getEdges(_scene);
+    auto edges = _pastWorld->getEdges(_scene, _obsSetPast);
     generatePastMat(_pastWorld->getVertices());
     for (int i = 0; i < edges.size(); i++){
         addPastEdge(edges[i].first, edges[i].second);
@@ -291,27 +277,22 @@ void GamePlayController::init(){
     _artifactSet->clearSet();
     _artifactSet = _pastWorldLevel->getItem();
     _artifactSet->addChildTo(_ordered_root);
-    _artifactSet->setVisibility(true);
-    
     
     _obsSetPast->addChildTo(_ordered_root);
-//    _obsSetPast->setVisibility(true);
     _wallSetPast->addChildTo(_ordered_root);
-    _wallSetPast->setVisibility(true);
     
     _obsSetPresent->addChildTo(_other_ordered_root);
-    _obsSetPresent->setVisibility(false);
     _wallSetPresent->addChildTo(_other_ordered_root);
-    _wallSetPresent->setVisibility(false);
     
-    auto presentEdges = _presentWorld->getEdges(_other_scene);
+    auto presentEdges = _presentWorld->getEdges(_other_scene, _obsSetPresent);
     generatePresentMat(_presentWorld->getVertices());
     for (int i = 0; i < presentEdges.size(); i++){
         addPresentEdge(presentEdges[i].first, presentEdges[i].second);
     }
     
-    
     _activeMap = "pastWorld";
+    _pastWorld->setActive(true);
+    _presentWorld->setActive(false);
     _template = 0;
     
     Vec2 start = _pastWorldLevel->getCharacterPos();
@@ -335,9 +316,7 @@ void GamePlayController::init(){
     generateMovingGuards(_presentMovingGuardsPos, false);
     generateStaticGuards(_presentStaticGuardsPos, false);
 
-    _guardSetPast->setVisbility(true);
-    _guardSetPresent->setVisbility(false);
-    
+
     _path = make_unique<PathController>();
     path_trace = {};
     
@@ -385,18 +364,27 @@ void GamePlayController::update(float dt){
 
         if (_activeMap == "pastWorld") {
             _activeMap = "presentWorld";
+            _pastWorld->setActive(false);
+            _presentWorld->setActive(true);
             
-            _presentWorld->setVisibility(true);
-            _guardSetPresent->setVisbility(true);
-            _obsSetPresent->setVisibility(true);
-            _wallSetPresent->setVisibility(true);
 
-            _pastWorld->setVisibility(false);
-            _guardSetPast->setVisbility(false);
-            _artifactSet->setVisibility(false);
-            _obsSetPast->setVisibility(false);
-            _wallSetPast->setVisibility(false);
-            
+//            _presentWorld->setVisibility(true);
+//            _guardSetPresent->setVisbility(true);
+//            _obsSetPresent->setVisibility(true);
+//            _wallSetPresent->setVisibility(true);
+//
+//            _pastWorld->setVisibility(false);
+//            _guardSetPast->setVisbility(false);
+//            _artifactSet->setVisibility(false);
+//            _obsSetPast->setVisibility(false);
+//            _wallSetPast->setVisibility(false);
+//
+
+            _other_cam->setPosition(_cam->getPosition());
+            _other_cam->update();
+            _scene->removeChild(_button_layer);
+            _other_scene->addChild(_button_layer);
+
             _character->removeChildFrom(_ordered_root);
             _character->addChildTo(_other_ordered_root);
             
@@ -404,18 +392,14 @@ void GamePlayController::update(float dt){
             _res_label->setText(cugl::strtool::to_string(_character->getNumRes()-1));
         }
         else {
-            _pastWorld->setVisibility(true);
-            _guardSetPast->setVisbility(true);
-            _artifactSet->setVisibility(true);
-//            _obsSetPast->setVisibility(true);
-            _wallSetPast->setVisibility(true);
-            
-            _presentWorld->setActive(false);
-            _obsSetPresent->setVisibility(false);
-            _wallSetPresent->setVisibility(false);
-
             _activeMap = "pastWorld";
-            
+            _pastWorld->setActive(true);
+            _presentWorld->setActive(false);
+            _cam->setPosition(_other_cam->getPosition());
+            _cam->update();
+            _other_scene->removeChild(_button_layer);
+            _scene->addChild(_button_layer);
+
             _character->removeChildFrom(_other_ordered_root);
             _character->addChildTo(_ordered_root);
             
@@ -437,11 +421,14 @@ void GamePlayController::update(float dt){
     }
 
 
+
 #pragma mark Switch World Methods
     static auto last_time = std::chrono::steady_clock::now();
     // Calculate the time elapsed since the last call to pinch
     auto now = std::chrono::steady_clock::now();
     auto elapsed = std::chrono::duration_cast<std::chrono::seconds>(now - last_time);
+
+
 
     // codes to determine if buttons should be activated
     if(_fail_layer->getScene() == nullptr){
@@ -479,57 +466,76 @@ void GamePlayController::update(float dt){
 
 
     }
-#pragma mark Pan Methods
-
-    else if (!_input->getPanDelta().isZero() && _path->getPath().size() == 0) {
-        Vec2 delta = _input->getPanDelta();
-
-        // init camera action
-        _moveCam = CameraMoveTo::alloc();
-        
-        // pan move with the center of the camera view
-        Vec2 pos = _cam->getPosition() - delta;
-        if (pos.distance(_character->getNodePosition()) < 150){
-            _moveCam->setTarget(_cam->getPosition() - delta);
-            _camManager->activate("movingCam", _moveCam, _cam);
-        }
-    }
-    
-    else if (_input->didPan() && _path->getPath().size() == 0){
-        _moveCam = CameraMoveTo::alloc();
-        _moveCam->setDuration(1.25);
-        // pan move with the center of the camera view
-        _moveCam->setTarget(_character->getNodePosition());
-        auto fcn = EasingFunction::alloc(EasingFunction::Type::BACK_OUT);
-        _camManager->activate("movingCam", _moveCam, _cam, fcn);
-    }
     
 #pragma mark Character Movement Methods
     else if(_input->didPress()){        // if press, determine if press on character
         
         Vec2 input_posi = _input->getPosition();
-        input_posi = _scene->screenToWorldCoords(input_posi);
-        
+
+        if (_activeMap == "pastWorld"){
+            input_posi = _scene->screenToWorldCoords(input_posi);
+        }else{
+            input_posi = _other_scene->screenToWorldCoords(input_posi);
+        }
+        auto r = _pastWorld->getNode()->getSize();
+
         if(_character->contains(input_posi)){
             // create path
             _path->setIsDrawing(true);
             _path->setIsInitiating(true);
             _path->updateLastPos(_character->getPosition()); //change to a fixed location on the character
-            _path->clearPath(_scene);
+            if (_activeMap == "pastWorld"){
+                _path->clearPath(_scene);
+            }else{
+                _path->clearPath(_other_scene);
+            }
+            
         }
-        else{
+
+        else if (input_posi.x - PREVIEW_RADIUS > 0 and input_posi.x < r.width - PREVIEW_RADIUS and
+                 input_posi.y > 0 and input_posi.y < r.height - PREVIEW_RADIUS*2 and !_isSwitching){
+            //initialize preview
             _isPreviewing = true;
+            if (_activeMap == "pastWorld"){
+                auto _children = _other_scene->getChildren();
+                for (int i = 0; i < _children.size(); i++){
+                    auto tempChild = _children[i];
+                    _other_scene->removeChild(_children[i]);
+                    _scene2texture->addChild(tempChild);
+                }
+                _texture = _scene2texture->getTexture();
+                _previewNode->setTexture(_texture);
+                _previewNode->setVisible(false);
+                _scene->addChildWithName(_previewNode, "preview");
+            }
+            else{
+                auto _children = _scene->getChildren();
+                for (int i = 0; i < _children.size(); i++){
+                    auto tempChild = _children[i];
+                    _scene->removeChild(_children[i]);
+                    _scene2texture->addChild(tempChild);
+                }
+                _texture = _scene2texture->getTexture();
+                _previewNode->setTexture(_texture);
+                _previewNode->setVisible(false);
+                _other_scene->addChildWithName(_previewNode, "preview");
+            }
         }
     }
     
     else if (_input->isDown() && _path->isDrawing){
         
         Vec2 input_posi = _input->getPosition();
-        input_posi = _scene->screenToWorldCoords(input_posi);
+        if (_activeMap == "pastWorld"){
+            input_posi = _scene->screenToWorldCoords(input_posi);
+        }else{
+            input_posi = _other_scene->screenToWorldCoords(input_posi);
+        }
         // if input still within the character
         if(_path->isInitiating){
             // if input leaves out of the character's radius, draw the initial segments
             if (!_character->contains(input_posi)){
+                
                 _path->setIsInitiating(false);
             }
         }
@@ -544,36 +550,97 @@ void GamePlayController::update(float dt){
                 }
                 
                 else{
-                    _path->addSegment(checkpoint, _scene);
+                    if (_activeMap == "pastWorld"){
+                        _path->addSegment(checkpoint, _scene);
+                    }else{
+                        _path->addSegment(checkpoint, _other_scene);
+                    }
                 }
             }
         }
     }
-    
-    else if(_input->isDown() and _isPreviewing){
-        Vec2 input_posi = _input->getPosition();
-        input_posi = _scene->screenToWorldCoords(input_posi);
-        _pastWorld->makePreview(input_posi);
-    }
-    
-    else if(_input->didRelease()){
+
+
+#pragma mark Preview Methods
+    if(_input->didRelease() or _isSwitching){
+
         _isPreviewing = false;
-        _pastWorld->removePreview();
-        Vec2 input_posi = _input->getPosition();
-        input_posi = _scene->screenToWorldCoords(input_posi);
+       
         _path->setIsDrawing(false);
         // path_trace = _path->getPath();
-         // _path->removeFrom(_scene);
+
+        if (_activeMap == "pastWorld"){
+            _path->removeFrom(_scene);
+        }else{
+            _path->removeFrom(_other_scene);
+        }
+        
+        //finish previewing
+        if (_activeMap == "pastWorld"){
+            auto _children = _scene2texture->getChildren();
+            for (int i = 0; i < _children.size(); i++){
+                auto tempChild = _children[i];
+                _scene2texture->removeChild(_children[i]);
+                _other_scene->addChild(tempChild);
+            }
+            _scene->removeChildByName("preview");
+        }
+        else{
+            auto _children = _scene2texture->getChildren();
+            for (int i = 0; i < _children.size(); i++){
+                auto tempChild = _children[i];
+                _scene2texture->removeChild(_children[i]);
+                _scene->addChild(tempChild);
+            }
+            _other_scene->removeChildByName("preview");
+        }
     }
+    
+    else if (_isPreviewing){
+        
+        Vec2 input_posi = _input->getPosition();
+        _previewNode->setVisible(true);
+        if (_activeMap == "pastWorld"){
+            input_posi = _scene->screenToWorldCoords(input_posi);
+        }
+        else {
+            input_posi = _other_scene->screenToWorldCoords(input_posi);
+        }
+        
+        auto r = _pastWorld->getNode()->getSize();
+        
+        if (input_posi.x - PREVIEW_RADIUS < 0 or input_posi.x > r.width - PREVIEW_RADIUS or
+            input_posi.y < 0 or input_posi.y > r.height - PREVIEW_RADIUS*2){
+            //input position is not in valid position
+        }
+        else {
+            _previewNode->setAnchor(Vec2::ANCHOR_CENTER);
+            PolyFactory polyFact = PolyFactory();
+            Poly2 circle = polyFact.makeCircle(input_posi + Vec2(0, PREVIEW_RADIUS), PREVIEW_RADIUS);
+            _previewNode->setPolygon(circle);
+            _previewNode->setPosition(input_posi + Vec2(0,PREVIEW_RADIUS));
+        }
+
+    }
+    
+    
+    
+#pragma mark Path Methods
     
     if (_path->getPath().size() != 0 && !_actions->isActive("moving") ){
         _moveTo->setTarget(_path->getPath()[0]);
         _moveCam->setTarget(_path->getPath()[0]);
         _character->moveTo(_moveTo);
         _character->updateLastDirection(_path->getPath()[0]);
-        _camManager->activate("movingCam", _moveCam, _cam);
-        _camManager->activate("movingOtherCam", _moveCam, _other_cam);
-        _path->removeFirst(_scene);
+
+        if (_activeMap == "pastWorld"){
+            _camManager->activate("movingCam", _moveCam, _cam);
+            _path->removeFirst(_scene);
+        }else{
+            _camManager->activate("movingOtherCam", _moveCam, _other_cam);
+            _path->removeFirst(_other_scene);
+        }
+        
     }
 
     if (!_actions->isActive("moving") && _actions->isActive("character_animation")) {
@@ -645,7 +712,11 @@ void GamePlayController::update(float dt){
     _camManager->update(dt);
     
     // the camera is moving smoothly, but the UI only set its movement per frame
-    _button_layer->setPosition(_cam->getPosition() - Vec2(900, 70));
+    if (_activeMap == "pastWorld"){
+        _button_layer->setPosition(_cam->getPosition() - Vec2(900, 70));
+    }else{
+        _button_layer->setPosition(_other_cam->getPosition() - Vec2(900, 70));
+    }
     
     
     // update render priority
@@ -684,7 +755,20 @@ void GamePlayController::update(float dt){
 
     
     void GamePlayController::render(std::shared_ptr<SpriteBatch>& batch){
-        _other_scene->render(batch);
-        _scene->render(batch);
+
+        if (_activeMap == "pastWorld"){
+            _scene->render(batch);
+        }
+        
+        else{
+            _other_scene->render(batch);
+        }
+        
+        if (_isPreviewing){
+            //_scene2texture->getCamera()->setPosition(_cam->getPosition());
+            _scene2texture->render(batch);
+        }
+        
+
     }
     
