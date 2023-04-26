@@ -534,11 +534,19 @@ void GamePlayController::update(float dt){
             while(_path->farEnough(input_posi)){
                 Vec2 checkpoint = _path->getLastPos() + (input_posi - _path->getLastPos()) / _path->getLastPos().distance(input_posi) * _path->getSize();
 
+                // TODO:: Need to add the logic so that the path won't go outside the map
+                // get map's info
+                Vec2 worldSize = _pastWorld->getSize();
+                bool withinMap = (checkpoint.x >= 0) && (checkpoint.x <= worldSize.x) && (checkpoint.y >= 0) && (checkpoint.y <= worldSize.y);
+                
                 if((_activeMap == "pastWorld" && _obsSetPast->inObstacle(checkpoint)) || (_activeMap == "presentWorld" && _obsSetPresent->inObstacle(checkpoint))){
                     _path->setIsDrawing(false);
                     break;
                 }
-                
+                else if(!withinMap){
+                    _path->setIsDrawing(false);
+                    break;
+                }
                 else{
                     if (_activeMap == "pastWorld"){
                         _path->addSegment(checkpoint, _scene);

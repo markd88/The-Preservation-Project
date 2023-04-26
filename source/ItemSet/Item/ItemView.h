@@ -110,8 +110,10 @@ public:
     bool contains(Vec2 point){
         Vec2 global_pos = _node->getWorldPosition();
         Size s = _node->getSize();
-        bool hor = (point.x >= global_pos.x && point.x <= global_pos.x + s.width);
-        bool ver = (point.y >= global_pos.y && point.y <= global_pos.y + s.height);
+        // Add a offset so that character & guard don't go too close to wall
+        int offset = 15;
+        bool hor = (point.x >= global_pos.x - offset && point.x <= global_pos.x + s.width + offset);
+        bool ver = (point.y >= global_pos.y - offset && point.y <= global_pos.y + s.height + offset);
         return hor && ver;
     }
     
