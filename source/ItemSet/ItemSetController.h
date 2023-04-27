@@ -139,6 +139,7 @@ public:
 
     
     const int getArtNum(){
+        artCount = 0;
         for(auto item: _itemSet){
             if(item->isArtifact()){
                 artCount +=1;

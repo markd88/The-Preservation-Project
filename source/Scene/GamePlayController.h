@@ -45,15 +45,18 @@ public:
     std::shared_ptr<cugl::scene2::SceneNode> _button_layer;
     std::shared_ptr<cugl::scene2::SceneNode> _complete_layer;
     std::shared_ptr<cugl::scene2::SceneNode> _fail_layer;
+    std::shared_ptr<cugl::scene2::SceneNode> _pause_layer;
     std::shared_ptr<cugl::scene2::SceneNode> _switchNode;
     
     // all buttons
-    std::shared_ptr<cugl::scene2::Button> _reset_button;
     std::shared_ptr<cugl::scene2::Button> _complete_back_button;
-    std::shared_ptr<cugl::scene2::Button> _complete_again_button;
+    std::shared_ptr<cugl::scene2::Button> _complete_next_button;
     std::shared_ptr<cugl::scene2::Button> _fail_back_button;
     std::shared_ptr<cugl::scene2::Button> _fail_again_button;
-    std::shared_ptr<cugl::scene2::Button> _back_arrow;
+    std::shared_ptr<cugl::scene2::Button> _pause_button;
+    std::shared_ptr<cugl::scene2::Button> _pause_resume;
+    std::shared_ptr<cugl::scene2::Button> _pause_restart;
+    std::shared_ptr<cugl::scene2::Button> _pause_exit;
     
     
     
@@ -177,12 +180,14 @@ public:
     void setActive(bool active){
         // only handle when active is false
         // otherwise go init
-        _reset_button->deactivate();
-        _back_arrow->deactivate();
         _fail_back_button->deactivate();
         _fail_again_button->deactivate();
         _complete_back_button->deactivate();
-        _complete_again_button->deactivate();
+        _complete_next_button->deactivate();
+        _pause_button->deactivate();
+        _pause_resume->deactivate();
+        _pause_restart->deactivate();
+        _pause_exit->deactivate();
     }
 
 #pragma mark Generation Helpers
@@ -267,7 +272,20 @@ public:
             _complete_layer->setPosition(_other_cam->getPosition());
         }
         _complete_back_button->activate();
-        _complete_again_button->activate();
+        _complete_next_button->activate();
+    }
+    
+    void pauseOn(){
+        if (_activeMap == "pastWorld"){
+            _scene->addChild(_pause_layer);
+            _pause_layer->setPosition(_cam->getPosition());
+        }else{
+            _other_scene->addChild(_pause_layer);
+            _pause_layer->setPosition(_other_cam->getPosition());
+        }
+        _pause_resume->activate();
+        _pause_restart->activate();
+        _pause_exit->activate();
     }
     
     // called when scene becomes active or inactive

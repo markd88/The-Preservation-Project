@@ -20,7 +20,7 @@ using namespace cugl;
 
 GamePlayController::GamePlayController(const Size displaySize, std::shared_ptr<cugl::AssetManager>& assets ):
 _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displaySize)) {
-    // Initialize the assetManager
+    // Initialize the assetManage
     
     _ordered_root = cugl::scene2::OrderedNode::allocWithOrder(cugl::scene2::OrderedNode::Order::DESCEND);
     
@@ -80,40 +80,64 @@ _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displ
     _button_layer->setContentSize(dimen);
     _button_layer->doLayout(); // This rearranges the children to fit the screen
     
-    _reset_button = std::dynamic_pointer_cast<scene2::Button>(assets->get<scene2::SceneNode>("button_reset"));
-    _reset_button->addListener([this](const std::string& name, bool down) {
+    
+    // add Win/lose panel
+    _pause_layer = _assets->get<scene2::SceneNode>("pause");
+    _pause_resume = std::dynamic_pointer_cast<scene2::Button>(assets->get<scene2::SceneNode>("pause_resume"));
+    
+    _pause_resume->addListener([this](const std::string& name, bool down) {
         if (!down) {
-
-            this->init();
+            // back to game
+            auto s = _pause_layer->getScene();
+            s->removeChild(_pause_layer);
         }
     });
-    _reset_button->activate();
     
+    _pause_restart = std::dynamic_pointer_cast<scene2::Button>(assets->get<scene2::SceneNode>("pause_restart"));
     
-    _back_arrow = std::dynamic_pointer_cast<scene2::Button>(assets->get<scene2::SceneNode>("button_back-arrow"));
-    
-    _back_arrow->addListener([this](const std::string& name, bool down) {
+    _pause_restart->addListener([this](const std::string& name, bool down) {
         if (!down) {
-            // cout<<"fail_back"<<endl;
+            // restart the game
+            init();
+        }
+    });
+    
+    _pause_exit = std::dynamic_pointer_cast<scene2::Button>(assets->get<scene2::SceneNode>("pause_exit"));
+    
+    _pause_exit->addListener([this](const std::string& name, bool down) {
+        if (!down) {
+            // back to menu
             nextScene = MENU;
         }
     });
     
-    _back_arrow->activate();
+    // add pause button
     
+    _pause_button = std::dynamic_pointer_cast<scene2::Button>(assets->get<scene2::SceneNode>("button_pause-button"));
+    _pause_button->addListener([this](const std::string& name, bool down) {
+        if (!down) {
+            // TODO:: activate the pause window
+            pauseOn();
+        }
+    });
+    
+    _pause_button->activate();
+    
+
     // load label for n_res and n_art
-    _res_label  = std::dynamic_pointer_cast<scene2::Label>(assets->get<scene2::SceneNode>("button_resources"));
+    _res_label  = std::dynamic_pointer_cast<scene2::Label>(assets->get<scene2::SceneNode>("button_panel_resources"));
     
-    _art_label  = std::dynamic_pointer_cast<scene2::Label>(assets->get<scene2::SceneNode>("button_progress"));
+    _art_label  = std::dynamic_pointer_cast<scene2::Label>(assets->get<scene2::SceneNode>("button_panel_progress"));
+    
     
     // add Win/lose panel
     _complete_layer = _assets->get<scene2::SceneNode>("complete");
-    _complete_again_button = std::dynamic_pointer_cast<scene2::Button>(assets->get<scene2::SceneNode>("complete_again"));
+    _complete_next_button = std::dynamic_pointer_cast<scene2::Button>(assets->get<scene2::SceneNode>("complete_next"));
     
-    _complete_again_button->addListener([this](const std::string& name, bool down) {
+    _complete_next_button->addListener([this](const std::string& name, bool down) {
         if (!down) {
-            // cout<<"complete_again"<<endl;
-            this->init();
+            // go to next level
+            nextLevel = true;
         }
     });
     
@@ -121,7 +145,6 @@ _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displ
     
     _complete_back_button->addListener([this](const std::string& name, bool down) {
         if (!down) {
-            // cout<<"complete_back"<<endl;
             nextScene = MENU;
         }
     });
@@ -132,7 +155,6 @@ _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displ
     
     _fail_again_button->addListener([this](const std::string& name, bool down) {
         if (!down) {
-            // cout<<"fail_again"<<endl;
             this->init();
         }
     });
@@ -141,12 +163,10 @@ _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displ
     
     _fail_back_button->addListener([this](const std::string& name, bool down) {
         if (!down) {
-            // cout<<"fail_back"<<endl;
             nextScene = MENU;
         }
     });
 
-    
     
     // add switch indicator
     _switchNode = _assets->get<scene2::SceneNode>("button_switch");
@@ -235,7 +255,9 @@ void GamePlayController::loadLevel(){
 
     _character = make_unique<CharacterController>(start, _actions, _assets);
 
-    
+    // change label with level
+    auto pause_label  = std::dynamic_pointer_cast<scene2::Label>(_assets->get<scene2::SceneNode>("pause_title"));
+    pause_label->setText("Mission " + to_string(level));
 }
 
 // init assets and all scenegraph when restart
@@ -316,8 +338,9 @@ void GamePlayController::init(){
     _path = make_unique<PathController>();
     path_trace = {};
     
-    _reset_button->activate();
-    _back_arrow->activate();
+    _pause_button->activate();
+    
+    
     _scene->addChild(_button_layer);
     //_ordered_root->addChild(_button_layer);
     
@@ -339,12 +362,12 @@ void GamePlayController::init(){
     
     //_pastWorld->addPoints(_scene->getSize(), _scene);
     
+    
 }
 
 void GamePlayController::update(float dt){
 
-    
-    if(_fail_layer->getScene()!=nullptr || _complete_layer->getScene()!=nullptr){
+    if(_fail_layer->getScene() != nullptr || _complete_layer->getScene() != nullptr || _pause_layer->getScene() != nullptr){
         return;
     }
 
@@ -427,7 +450,12 @@ void GamePlayController::update(float dt){
     }
     if(_complete_layer->getScene() == nullptr){
         _complete_back_button->deactivate();
-        _complete_again_button->deactivate();
+        _complete_next_button->deactivate();
+    }
+    if(_pause_layer->getScene() == nullptr){
+        _pause_exit->deactivate();
+        _pause_resume->deactivate();
+        _pause_restart->deactivate();
     }
     
 

@@ -32,19 +32,26 @@
         }
     },
     "textures": {
+        "pause_button": {
+            "file":      "textures/pause_button.png"
+        },
+        "pause_background": {
+            "file":      "textures/pause_menu_background.png"
+        },
+        "pause_restart": {
+            "file":      "textures/pause_menu_restart_button.png"
+        },
+        "pause_resume": {
+            "file":      "textures/pause_menu_resume_button.png"
+        },
+        "pause_exit": {
+            "file":      "textures/pause_menu_exit_button.png"
+        },
         "reset": {
-            "file":      "textures/reset-button.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS":     "clamp",
-            "wrapT":     "clamp"
+            "file":      "textures/reset-button.png"
         },
         "back_arrow": {
-            "file":      "textures/menu-back.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS":     "clamp",
-            "wrapT":     "clamp"
+            "file":      "textures/menu-back.png"
         },
         "character": {
             "file":     "textures/character.png"
@@ -77,32 +84,16 @@
             "file":     "textures/enemy_present_static.png"
         },
         "artifact-1-big": {
-            "file":      "textures/artifact-1-big.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS":     "clamp",
-            "wrapT":     "clamp"
+            "file":      "textures/artifact-1-big.png"
         },
         "artifact-2-big": {
-            "file":      "textures/artifact-2-big.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS":     "clamp",
-            "wrapT":     "clamp"
+            "file":      "textures/artifact-2-big.png"
         },
         "artifact-3-big": {
-            "file":      "textures/artifact-3-big.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS":     "clamp",
-            "wrapT":     "clamp"
+            "file":      "textures/artifact-3-big.png"
         },
         "artifact-4-big": {
-            "file":      "textures/artifact-4-big.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS":     "clamp",
-            "wrapT":     "clamp"
+            "file":      "textures/artifact-4-big.png"
         },
         "two_world_switch": {
             "file": "textures/spritesheet_switch_anim.png"
@@ -111,39 +102,19 @@
             "file": "textures/questionmark.png"
         },
         "artifact-1": {
-            "file":      "textures/artifact-1.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS":     "clamp",
-            "wrapT":     "clamp"
+            "file":      "textures/artifact-1.png"
         },
         "artifact-2": {
-            "file":      "textures/artifact-2.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS":     "clamp",
-            "wrapT":     "clamp"
+            "file":      "textures/artifact-2.png"
         },
         "artifact-3": {
-            "file":      "textures/artifact-3.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS":     "clamp",
-            "wrapT":     "clamp"
+            "file":      "textures/artifact-3.png"
         },
         "artifact-4": {
-            "file":      "textures/artifact-4.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS":     "clamp",
-            "wrapT":     "clamp"
+            "file":      "textures/artifact-4.png"
         },
         "artifact-5": {
-            "file":      "textures/artifact-5.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS":     "clamp",
-            "wrapT":     "clamp"
+            "file":      "textures/artifact-5.png"
         },
         "resource-big": {
             "file":     "textures/resource-big.png"
@@ -152,200 +123,91 @@
             "file":     "textures/resource.png"
         },
         "panel": {
-            "file":      "textures/panel.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS":     "clamp",
-            "wrapT":     "clamp"
+            "file":      "textures/panel.png"
         },
         "complete": {
-            "file":      "textures/mission-complete.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS":     "clamp",
-            "wrapT":     "clamp"
+            "file":      "textures/mission-complete.png"
         },
         "fail": {
-            "file":      "textures/mission-fail.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS":     "clamp",
-            "wrapT":     "clamp"
+            "file":      "textures/mission-fail.png"
         },
         "again": {
-            "file":      "textures/try-again.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS":     "clamp",
-            "wrapT":     "clamp"
+            "file":      "textures/mission_failed_restart_button.png"
         },
         "back": {
-            "file":      "textures/back.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS":     "clamp",
-            "wrapT":     "clamp"
+            "file":      "textures/mission_failed_complete_exit_button.png"
+        },
+        "next": {
+            "file":      "textures/mission_complete_next_button.png"
         },
         "background": {
-            "file":      "textures/back.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS":     "clamp",
-            "wrapT":     "clamp"
+            "file":      "textures/back.png"
         },
         "switch": {
-            "file":      "textures/switch.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS":     "clamp",
-            "wrapT":     "clamp"
+            "file":      "textures/switch.png"
         },
         "switch-not": {
-            "file":      "textures/switch-not.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS":     "clamp",
-            "wrapT":     "clamp"
+            "file":      "textures/switch-not.png"
         },
         "blue": {
-            "file":      "textures/blue.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS":     "clamp",
-            "wrapT":     "clamp"
+            "file":      "textures/blue.png"
         },
         "collision_detection3": {
-            "file":      "textures/collision_detection3.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS":     "clamp",
-            "wrapT":     "clamp"
+            "file":      "textures/collision_detection3.png"
         },
         "tile_present_grass_shadow_slopepos": {
-            "file":      "textures/tile_present_grass_shadow_slopepos.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS":     "clamp",
-            "wrapT":     "clamp"
+            "file":      "textures/tile_present_grass_shadow_slopepos.png"
         },
         "Shadow": {
-            "file":      "textures/Shadow.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS":     "clamp",
-            "wrapT":     "clamp"
+            "file":      "textures/Shadow.png"
         },
         "past_cast_light 1": {
-            "file":      "textures/past_cast_light 1.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS":     "clamp",
-            "wrapT":     "clamp"
+            "file":      "textures/past_cast_light 1.png"
         },
         "past_roof_L": {
-            "file":      "textures/past_roof_L.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS":     "clamp",
-            "wrapT":     "clamp"
+            "file":      "textures/past_roof_L.png"
         },
         "past_roof_R": {
-            "file":      "textures/past_roof_R.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS":     "clamp",
-            "wrapT":     "clamp"
+            "file":      "textures/past_roof_R.png"
         },
         "tile_past_floor_stone1": {
-            "file":      "textures/tile_past_floor_stone1.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS":     "clamp",
-            "wrapT":     "clamp"
+            "file":      "textures/tile_past_floor_stone1.png"
         },
         "tile_past_floor_stone2": {
-            "file":      "textures/tile_past_floor_stone2.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS":     "clamp",
-            "wrapT":     "clamp"
+            "file":      "textures/tile_past_floor_stone2.png"
         },
         "tile_past_floor_stone3": {
-            "file":      "textures/tile_past_floor_stone3.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS":     "clamp",
-            "wrapT":     "clamp"
+            "file":      "textures/tile_past_floor_stone3.png"
         },
         "tile_past_floor_column_left": {
-            "file":      "textures/tile_past_floor_column_left.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS":     "clamp",
-            "wrapT":     "clamp"
+            "file":      "textures/tile_past_floor_column_left.png"
         },
         "tile_past_floor_column_right": {
-            "file":      "textures/tile_past_floor_column_right.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS":     "clamp",
-            "wrapT":     "clamp"
+            "file":      "textures/tile_past_floor_column_right.png"
         },
         "tile_past_floor_windowleft": {
-            "file":      "textures/tile_past_floor_windowleft.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS":     "clamp",
-            "wrapT":     "clamp"
+            "file":      "textures/tile_past_floor_windowleft.png"
         },
         "tile_past_floor_windowright": {
-            "file":      "textures/tile_past_floor_windowright.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS":     "clamp",
-            "wrapT":     "clamp"
+            "file":      "textures/tile_past_floor_windowright.png"
         },
         "tile_past_floor1": {
-            "file":      "textures/tile_past_floor1.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS":     "clamp",
-            "wrapT":     "clamp"
+            "file":      "textures/tile_past_floor1.png"
         },
         "tile_past_floor2": {
-            "file":      "textures/tile_past_floor2.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS":     "clamp",
-            "wrapT":     "clamp"
+            "file":      "textures/tile_past_floor2.png"
         },
         "tile_past_floor3": {
-            "file":      "textures/tile_past_floor3.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS":     "clamp",
-            "wrapT":     "clamp"
+            "file":      "textures/tile_past_floor3.png"
         },
         "tile_past_roof": {
-            "file":      "textures/tile_past_roof.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS":     "clamp",
-            "wrapT":     "clamp"
+            "file":      "textures/tile_past_roof.png"
         },
         "tile_past_wall_windowcenter": {
-            "file":      "textures/tile_past_wall_windowcenter.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS":     "clamp",
-            "wrapT":     "clamp"
+            "file":      "textures/tile_past_wall_windowcenter.png"
         },
         "tile_past_wall_windowleft": {
-            "file":      "textures/tile_past_wall_windowleft.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS":     "clamp",
-            "wrapT":     "clamp"
+            "file":      "textures/tile_past_wall_windowleft.png"
         },
         "tile_past_wall_windowright": {
             "file":      "textures/tile_past_wall_windowright.png",
@@ -668,12 +530,138 @@
         "sans": {
             "file":     "fonts/Roboto-Bold.ttf",
             "size":     24
+        },
+        "courier":{
+            "file":     "fonts/CourierPrime-Bold.ttf",
+            "size":     150
         }
 	},
     "widgets": {
 
     },
     "scene2s": {
+        
+        "pause"  : {
+            "type"   : "Image",
+            "format"    : {
+                "type" : "Anchored"
+            },
+            "data"   : {
+                "texture"  : "pause_background",
+                "anchor"   : [0.5,0.5],
+                "scale"    : 0.4
+            },
+            "layout" : {
+                "x_anchor" : "center",
+                "y_anchor" : "middle",
+                "y_offset" : 0,
+                "x_offset" : 0,
+                "absolute" : true
+            },
+            "children"  : {
+                "title"  : {
+                    "type"   : "Label",
+                    "format" : {
+                        "type" : "Anchored"
+                    },
+                    "data"   : {
+                        "font"       : "courier",
+                        "text"       : "Mission X",
+                        "foreground" : [206, 144, 23, 255],
+                        "anchor"     : [0.5, 0.5],
+                        "halign"     : "center",
+                        "valign"     : "middle",
+                        "scale"    : 1.3
+                    },
+                    "layout" : {
+                        "x_anchor" : "center",
+                        "y_anchor" : "middle",
+                        "y_offset" : 400,
+                        "x_offset" : 0,
+                        "absolute" : true
+                    }
+                },
+                "exit"  : {
+                    "type"   : "Button",
+                    "data"   : {
+                        "upnode"   : "up",
+                        "visible"  : true,
+                        "pushsize" : true,
+                        "anchor"   : [0.5,0.5],
+                        "scale"    : 1.5
+                    },
+                    "children" : {
+                        "up"       : {
+                            "type"   : "Image",
+                            "data"   : {
+                                "texture"  : "pause_exit"
+                            }
+                        }
+                    },
+                    "layout" : {
+                        "x_anchor" : "center",
+                        "y_anchor" : "middle",
+                        "y_offset" : -500,
+                        "x_offset" : 800,
+                        "absolute" : true
+                    }
+                },
+                "resume"  : {
+                    "type"   : "Button",
+                    "data"   : {
+                        "upnode"   : "up",
+                        "visible"  : true,
+                        "pushsize" : true,
+                        "anchor"   : [0.5,0.5],
+                        "scale"    : 1
+                    },
+                    "children" : {
+                        "up"       : {
+                            "type"   : "Image",
+                            "data"   : {
+                                "texture"  : "pause_resume"
+                            }
+                        }
+                    },
+                    "layout" : {
+                        "x_anchor" : "center",
+                        "y_anchor" : "middle",
+                        "y_offset" : 200,
+                        "x_offset" : 0,
+                        "absolute" : true
+                    }
+                },
+                "restart"  : {
+                    "type"   : "Button",
+                    "data"   : {
+                        "upnode"   : "up",
+                        "visible"  : true,
+                        "pushsize" : true,
+                        "anchor"   : [0.5,0.5],
+                        "scale"    : 1
+                    },
+                    "children" : {
+                        "up"       : {
+                            "type"   : "Image",
+                            "data"   : {
+                                "texture"  : "pause_restart"
+                            }
+                        }
+                    },
+                    "layout" : {
+                        "x_anchor" : "center",
+                        "y_anchor" : "middle",
+                        "y_offset" : -50,
+                        "x_offset" : 0,
+                        "absolute" : true
+                    }
+                }
+            }
+        },
+        
+        
+        
+        
         "complete"  : {
             "type"   : "Image",
             "format"    : {
@@ -682,7 +670,7 @@
             "data"   : {
                 "texture"  : "complete",
                 "anchor"   : [0.5,0.5],
-                "scale"    : 0.75
+                "scale"    : 1
             },
             "layout" : {
                 "x_anchor" : "center",
@@ -699,7 +687,7 @@
                         "visible"  : true,
                         "pushsize" : true,
                         "anchor"   : [0.5,0.5],
-                        "scale"    : 0.2
+                        "scale"    : 1.5
                     },
                     "children" : {
                         "up"       : {
@@ -712,33 +700,33 @@
                     "layout" : {
                         "x_anchor" : "center",
                         "y_anchor" : "middle",
-                        "y_offset" : -55,
-                        "x_offset" : -65,
+                        "y_offset" : -150,
+                        "x_offset" : -150,
                         "absolute" : true
                     }
                 },
-                "again"  : {
+                "next"  : {
                     "type"   : "Button",
                     "data"   : {
                         "upnode"   : "up",
                         "visible"  : true,
                         "pushsize" : true,
                         "anchor"   : [0.5,0.5],
-                        "scale"    : 0.32
+                        "scale"    : 1.6
                     },
                     "children" : {
                         "up"       : {
                             "type"   : "Image",
                             "data"   : {
-                                "texture"  : "again"
+                                "texture"  : "next"
                             }
                         }
                     },
                     "layout" : {
                         "x_anchor" : "center",
                         "y_anchor" : "middle",
-                        "y_offset" : -55,
-                        "x_offset" : 85,
+                        "y_offset" : -150,
+                        "x_offset" : 150,
                         "absolute" : true
                     }
                 }
@@ -752,7 +740,7 @@
             "data"   : {
                 "texture"  : "fail",
                 "anchor"   : [0.5,0.5],
-                "scale"    : 0.75
+                "scale"    : 1
             },
             "layout" : {
                 "x_anchor" : "center",
@@ -769,7 +757,7 @@
                         "visible"  : true,
                         "pushsize" : true,
                         "anchor"   : [0.5,0.5],
-                        "scale"    : 0.2
+                        "scale"    : 0.25
                     },
                     "children" : {
                         "up"       : {
@@ -782,8 +770,8 @@
                     "layout" : {
                         "x_anchor" : "center",
                         "y_anchor" : "middle",
-                        "y_offset" : -55,
-                        "x_offset" : -65,
+                        "y_offset" : -150,
+                        "x_offset" : -150,
                         "absolute" : true
                     }
                 },
@@ -794,7 +782,7 @@
                         "visible"  : true,
                         "pushsize" : true,
                         "anchor"   : [0.5,0.5],
-                        "scale"    : 0.32
+                        "scale"    : 0.25
                     },
                     "children" : {
                         "up"       : {
@@ -807,8 +795,8 @@
                     "layout" : {
                         "x_anchor" : "center",
                         "y_anchor" : "middle",
-                        "y_offset" : -55,
-                        "x_offset" : 85,
+                        "y_offset" : -150,
+                        "x_offset" : 150,
                         "absolute" : true
                     }
                 }
@@ -820,56 +808,32 @@
                 "type" : "Anchored"
             },
             "children"  : {
-                 "reset"  : {
-                     "type"   : "Button",
-                     "data"   : {
-                         "upnode"   : "up",
-                         "visible"  : true,
-                         "pushsize" : true,
-                         "anchor"   : [0.5,0.5],
-                         "scale"    : 0.27
-                     },
-                     "children" : {
-                         "up"       : {
-                             "type"   : "Image",
-                             "data"   : {
-                                 "texture"  : "reset"
-                             }
-                         }
-                     },
-                     "layout" : {
-                         "x_anchor" : "center",
-                         "y_anchor" : "middle",
-                         "y_offset" : 120,
-                         "x_offset" : -120,
-                         "absolute" : true
-                     }
-                 },
-                 "back-arrow"  : {
-                     "type"   : "Button",
-                     "data"   : {
-                         "upnode"   : "up",
-                         "visible"  : true,
-                         "pushsize" : true,
-                         "anchor"   : [0.5,0.5],
-                         "scale"    : 0.68
-                     },
-                     "children" : {
-                         "up"       : {
-                             "type"   : "Image",
-                             "data"   : {
-                                 "texture"  : "back_arrow"
-                             }
-                         }
-                     },
-                     "layout" : {
-                         "x_anchor" : "center",
-                         "y_anchor" : "middle",
-                         "y_offset" : 120,
-                         "x_offset" : -280,
-                         "absolute" : true
-                     }
-                 },
+                "pause-button"  : {
+                    "type"   : "Button",
+                    "data"   : {
+                        "upnode"   : "up",
+                        "visible"  : true,
+                        "pushsize" : true,
+                        "anchor"   : [0.5,0.5],
+                        "scale"    : 0.15
+                    },
+                    "children" : {
+                        "up"       : {
+                            "type"   : "Image",
+                            "data"   : {
+                                "texture"  : "pause_button"
+                            }
+                        }
+                    },
+                    "layout" : {
+                        "x_anchor" : "center",
+                        "y_anchor" : "middle",
+                        "y_offset" : 120,
+                        "x_offset" : 1000,
+                        "absolute" : true
+                    }
+                },
+
                  "panel":{
                     "type"   : "Image",
                     "format"    : {
@@ -884,55 +848,58 @@
                         "x_anchor" : "center",
                         "y_anchor" : "middle",
                         "y_offset" : 120,
-                        "x_offset" : 110,
+                        "x_offset" : -200,
                         "absolute" : true
+                    },
+                    "children": {
+                        "progress"  : {
+                            "type"   : "Label",
+                            "format" : {
+                                "type" : "Anchored"
+                            },
+                            "data"   : {
+                                "font"       : "sans",
+                                "text"       : "0/4",
+                                "foreground" : [0, 0, 0, 255],
+                                "anchor"     : [0.5, 0.5],
+                                "halign"     : "center",
+                                "valign"     : "middle",
+                                "scale"    : 3
+                            },
+                            "layout" : {
+                                "x_anchor" : "center",
+                                "y_anchor" : "middle",
+                                "y_offset" : 0,
+                                "x_offset" : -50,
+                                "absolute" : true
+                            }
+                        },
+                        
+                        "resources"  : {
+                            "type"   : "Label",
+                            "format" : {
+                                "type" : "Anchored"
+                            },
+                            "data"   : {
+                                "font"       : "sans",
+                                "text"       : "0",
+                                "foreground" : [0, 0, 0, 255],
+                                "anchor"     : [0.5, 0.5],
+                                "halign"     : "center",
+                                "valign"     : "middle",
+                                "scale"    : 3
+                            },
+                            "layout" : {
+                                "x_anchor" : "center",
+                                "y_anchor" : "middle",
+                                "y_offset" : 0,
+                                "x_offset" : 200,
+                                "absolute" : true
+                            }
+                        }
                     }
                 },
-                 "progress"  : {
-                     "type"   : "Label",
-                     "format" : {
-                         "type" : "Anchored"
-                     },
-                     "data"   : {
-                         "font"       : "sans",
-                         "text"       : "0/4",
-                         "foreground" : [0, 0, 0, 255],
-                         "anchor"     : [0.5, 0.5],
-                         "halign"     : "center",
-                         "valign"     : "middle",
-                         "scale"    : 1.3
-                     },
-                     "layout" : {
-                         "x_anchor" : "center",
-                         "y_anchor" : "middle",
-                         "y_offset" : 120,
-                         "x_offset" : 100,
-                         "absolute" : true
-                     }
-                 },
-                 "resources"  : {
-                     "type"   : "Label",
-                     "format" : {
-                         "type" : "Anchored"
-                     },
-                     "data"   : {
-                         "font"       : "sans",
-                         "text"       : "0",
-                         "foreground" : [0, 0, 0, 255],
-                         "anchor"     : [0.5, 0.5],
-                         "halign"     : "center",
-                         "valign"     : "middle",
-                         "scale"    : 1.3
-                     },
-                     "layout" : {
-                         "x_anchor" : "center",
-                         "y_anchor" : "middle",
-                         "y_offset" : 120,
-                         "x_offset" : 210,
-                         "absolute" : true
-                     }
-                 }
-                 ,
+                 
                  "switch":{
                     "type"   : "Image",
                     "format"    : {
@@ -947,7 +914,7 @@
                         "x_anchor" : "center",
                         "y_anchor" : "middle",
                         "y_offset" : 120,
-                        "x_offset" : 300,
+                        "x_offset" : 0,
                         "absolute" : true
                     }
                 }
