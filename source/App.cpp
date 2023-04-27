@@ -56,6 +56,9 @@ void App::onStartup() {
 
     // load gameplay assets
     _assets->loadDirectoryAsync("json/assets.json", nullptr);
+    
+    // load saved game data
+    _savedGame->load<LevelModel>(presentKey, presentFile);
 
     // Create a sprite batch (and background color) to render the scene
     _batch = SpriteBatch::alloc();

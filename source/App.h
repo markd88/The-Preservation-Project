@@ -50,8 +50,7 @@ protected:
     /** Whether or not we have finished loading all assets */
     bool _loaded;
     
-    
-    
+    std::unordered_map<int, bool> _levels;
     
     
 public:
