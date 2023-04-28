@@ -69,18 +69,8 @@ bool SavedGameModel:: preload(const std::shared_ptr<cugl::JsonValue>& json) {
         CUAssertLog(false, "Failed to load level file");
         return false;
     }
-    
-    // Get each object in each layer
-//    for (int i = 0; i < json->get("layers")->size(); i++) {
-//        // Get the objects per layer
-//        auto objects = json->get("layers")->get(i)->get("objects");
-//        std::string type = json->get("layers")->get(i)->get("name")->asString();
-//        for (int j = 0; j < objects->size(); j++) {
-//            // For each object, determine what it is and load it
-//            loadObject(type, totalHeight, objects->get(j));
-//        }
-//    }
-
+    _highestLevel = json->get("highestLevel")->asInt();
+    std::cout<<"_highestLevel: "<<_highestLevel<<std::endl;
     return true;
 }
 
@@ -96,12 +86,3 @@ void SavedGameModel::unload() {
 
 #pragma mark -
 #pragma mark Individual Loaders
-
-/**
-* Loads character initial position
-*/
-bool SavedGameModel::loadSavedGame(const std::shared_ptr<JsonValue>& json) {
-    bool success = true;
-    _currentLevel = json->get("currentLevel")->asInt();
-    return success;
-}

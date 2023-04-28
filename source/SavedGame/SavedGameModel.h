@@ -15,7 +15,7 @@ using namespace cugl;
 
 class SavedGameModel : public Asset {
 protected:
-    int _currentLevel;
+    int _highestLevel;
 
 #pragma mark Internal Helper
     /**
@@ -40,8 +40,8 @@ protected:
      * @retain the wall
      * @return true if the wall was successfully loaded
      */
-    bool loadTilemap(const std::shared_ptr<JsonValue>& json);
-    bool loadSavedGame(const std::shared_ptr<JsonValue>& json);
+    bool loadCurrentLevel(const std::shared_ptr<JsonValue>& json);
+//    bool loadSetting(const std::shared_ptr<JsonValue>& json);
 
     /**
      * Clears the root scene graph node for this level
@@ -79,10 +79,7 @@ public:
 
 #pragma mark Model Access
     
-    /** Get world map */
-//    std::shared_ptr<TilemapController> getWorld() {return _world;};
-//    cugl::Vec2 getCharacterPos() {return _characterPos;};
-    int getCurrentLevel() {return _currentLevel;};
+    int getCurrentLevel() {return _highestLevel;};
 
 #pragma mark -
 #pragma mark Asset Loading

@@ -53,6 +53,7 @@ void App::onStartup() {
     _assets->attach<scene2::SceneNode>(Scene2Loader::alloc()->getHook());
     
     _assets->attach<LevelModel>(GenericLoader<LevelModel>::alloc()->getHook());
+    _assets->attach<SavedGameModel>(GenericLoader<SavedGameModel>::alloc()->getHook());
 
     // load gameplay assets
     _assets->loadDirectoryAsync("json/assets.json", nullptr);
