@@ -15,7 +15,7 @@ using namespace cugl;
 #define ANIMDURATION 1f
 #define PREVIEW_RADIUS 150
 #define SWITCH_DURATION 1
-
+#define CAMERA_BOUNDS 200
 #define ACT_KEY  "current"
 
 GamePlayController::GamePlayController(const Size displaySize, std::shared_ptr<cugl::AssetManager>& assets ):
@@ -374,6 +374,20 @@ void GamePlayController::init(){
     //_ordered_root->addChild(_button_layer);
     
     Vec2 cPos = _character->getPosition();
+    
+    Size mapSize = _pastWorld->getSize();
+    if (cPos.x < CAMERA_BOUNDS){
+        cPos.x = CAMERA_BOUNDS;
+    }else if (cPos.x > mapSize.width - CAMERA_BOUNDS){
+        cPos.x = mapSize.width - CAMERA_BOUNDS;
+    }
+
+    if (cPos.y < CAMERA_BOUNDS){
+        cPos.y = CAMERA_BOUNDS;
+    }
+    else if (cPos.y > mapSize.height-CAMERA_BOUNDS){
+        cPos.y = mapSize.height-CAMERA_BOUNDS;
+    }
     _cam->setPosition(Vec3(cPos.x,cPos.y,0));
     _other_cam->setPosition(Vec3(cPos.x,cPos.y,0));
     
