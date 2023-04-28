@@ -15,7 +15,8 @@ using namespace cugl;
 #define ANIMDURATION 1f
 #define PREVIEW_RADIUS 150
 #define SWITCH_DURATION 1
-
+#define CAMERA_BOUNDS_X 400
+#define CAMERA_BOUNDS_Y 200
 #define ACT_KEY  "current"
 
 GamePlayController::GamePlayController(const Size displaySize, std::shared_ptr<cugl::AssetManager>& assets ):
@@ -374,6 +375,20 @@ void GamePlayController::init(){
     //_ordered_root->addChild(_button_layer);
     
     Vec2 cPos = _character->getPosition();
+    
+    Size mapSize = _pastWorld->getSize();
+    if (cPos.x < CAMERA_BOUNDS_X){
+        cPos.x = CAMERA_BOUNDS_X;
+    }else if (cPos.x > mapSize.width - CAMERA_BOUNDS_X){
+        cPos.x = mapSize.width - CAMERA_BOUNDS_X;
+    }
+
+    if (cPos.y < CAMERA_BOUNDS_Y){
+        cPos.y = CAMERA_BOUNDS_Y;
+    }
+    else if (cPos.y > mapSize.height-CAMERA_BOUNDS_Y){
+        cPos.y = mapSize.height-CAMERA_BOUNDS_Y;
+    }
     _cam->setPosition(Vec3(cPos.x,cPos.y,0));
     _other_cam->setPosition(Vec3(cPos.x,cPos.y,0));
     
@@ -518,6 +533,7 @@ void GamePlayController::update(float dt){
         }
         auto r = _pastWorld->getNode()->getSize();
 
+        
         if(_character->contains(input_posi)){
             // create path
             _path->setIsDrawing(true);
@@ -528,7 +544,6 @@ void GamePlayController::update(float dt){
 //            }else{
 //                _path->clearPath(_other_scene);
 //            }
-            
         }
 
         else if (input_posi.x - PREVIEW_RADIUS > 0 and input_posi.x < r.width - PREVIEW_RADIUS and
@@ -664,17 +679,24 @@ void GamePlayController::update(float dt){
         
         auto r = _pastWorld->getNode()->getSize();
         
-        if (input_posi.x - PREVIEW_RADIUS < 0 or input_posi.x > r.width - PREVIEW_RADIUS or
-            input_posi.y < 0 or input_posi.y > r.height - PREVIEW_RADIUS*2){
-            //input position is not in valid position
+        if (input_posi.x - PREVIEW_RADIUS < 0){
+            input_posi.x = PREVIEW_RADIUS;
+        }else if(input_posi.x > r.width - PREVIEW_RADIUS){
+            input_posi.x = r.width - PREVIEW_RADIUS;
         }
-        else {
-            _previewNode->setAnchor(Vec2::ANCHOR_CENTER);
-            PolyFactory polyFact = PolyFactory();
-            Poly2 circle = polyFact.makeCircle(input_posi + Vec2(0, PREVIEW_RADIUS), PREVIEW_RADIUS);
-            _previewNode->setPolygon(circle);
-            _previewNode->setPosition(input_posi + Vec2(0,PREVIEW_RADIUS));
+        
+        if (input_posi.y < 0){
+            input_posi.y  = 0;
+        }else if (input_posi.y > r.height - PREVIEW_RADIUS*2){
+            input_posi.y = r.height - PREVIEW_RADIUS*2;
         }
+        
+        _previewNode->setAnchor(Vec2::ANCHOR_CENTER);
+        PolyFactory polyFact = PolyFactory();
+        Poly2 circle = polyFact.makeCircle(input_posi + Vec2(0, PREVIEW_RADIUS), PREVIEW_RADIUS);
+        _previewNode->setPolygon(circle);
+        _previewNode->setPosition(input_posi + Vec2(0,PREVIEW_RADIUS));
+    
 
     }
     
@@ -684,10 +706,26 @@ void GamePlayController::update(float dt){
     
     if (_path->getPath().size() != 0 && !_actions->isActive("moving") ){
         _moveTo->setTarget(_path->getPath()[0]);
-        _moveCam->setTarget(_path->getPath()[0]);
         _character->moveTo(_moveTo);
         _character->updateLastDirection(_path->getPath()[0]);
+        
+        Vec2 camTar = _path->getPath()[0];
+        Size mapSize = _pastWorld->getSize();
+        
+        if (camTar.x < CAMERA_BOUNDS_X){
+            camTar.x = CAMERA_BOUNDS_X;
+        }else if (camTar.x > mapSize.width - CAMERA_BOUNDS_X){
+            camTar.x = mapSize.width - CAMERA_BOUNDS_X;
+        }
 
+        if (camTar.y < CAMERA_BOUNDS_Y){
+            camTar.y = CAMERA_BOUNDS_Y;
+        }
+        else if (camTar.y > mapSize.height-CAMERA_BOUNDS_Y){
+            camTar.y = mapSize.height-CAMERA_BOUNDS_Y;
+        }
+        
+        _moveCam->setTarget(camTar);
         if (_activeMap == "pastWorld"){
             _camManager->activate("movingCam", _moveCam, _cam);
             _path->removeFirst(_scene);
