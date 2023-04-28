@@ -179,6 +179,7 @@ void App::update(float timestep) {
                 _loadingController->update(timestep);
                 break;
             case MENU:
+                
                 _menuController->update(timestep);
                 break;
             case GAMEPLAY:
