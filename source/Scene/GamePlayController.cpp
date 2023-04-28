@@ -519,12 +519,12 @@ void GamePlayController::update(float dt){
             // create path
             _path->setIsDrawing(true);
             _path->setIsInitiating(true);
-            _path->updateLastPos(_character->getPosition()); //change to a fixed location on the character
-            if (_activeMap == "pastWorld"){
-                _path->clearPath(_scene);
-            }else{
-                _path->clearPath(_other_scene);
-            }
+//            _path->updateLastPos(_character->getPosition()); //change to a fixed location on the character
+//            if (_activeMap == "pastWorld"){
+//                _path->clearPath(_scene);
+//            }else{
+//                _path->clearPath(_other_scene);
+//            }
             
         }
 
@@ -573,6 +573,12 @@ void GamePlayController::update(float dt){
             if (!_character->contains(input_posi)){
                 
                 _path->setIsInitiating(false);
+                _path->updateLastPos(_character->getPosition()); //change to a fixed location on the character
+                if (_activeMap == "pastWorld"){
+                    _path->clearPath(_scene);
+                }else{
+                    _path->clearPath(_other_scene);
+                }
             }
         }
         
