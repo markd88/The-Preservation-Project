@@ -19,4 +19,7 @@ extern ActiveScene curScene;
 
 // menu tells which level the user picked
 extern int level;
+
+
+extern bool nextLevel;
 #endif
