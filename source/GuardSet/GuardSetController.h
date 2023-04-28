@@ -460,6 +460,9 @@ public:
                 if (_actions->isActive(returnAction)) {
                     // let it finish
                 }
+                else if (_guardSet[i]->returnVec.empty()) {
+                    // finish returning
+                }
                 else {
                     _guardSet[i]->updateReturnTarget(_guardSet[i]->returnVec[0]);
                     _guardSet[i]->returnGuard(returnAction);

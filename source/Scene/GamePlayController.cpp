@@ -403,7 +403,10 @@ void GamePlayController::init(){
 void GamePlayController::update(float dt){
 
     if(_fail_layer->getScene() != nullptr || _complete_layer->getScene() != nullptr || _pause_layer->getScene() != nullptr){
+        _pause_button->deactivate();
         return;
+    }else{
+        _pause_button->activate();
     }
 
 
