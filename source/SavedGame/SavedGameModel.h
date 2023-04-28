@@ -79,7 +79,7 @@ public:
 
 #pragma mark Model Access
     
-    int getCurrentLevel() {return _highestLevel;};
+    int getHighestLevel() {return _highestLevel;};
 
 #pragma mark -
 #pragma mark Asset Loading

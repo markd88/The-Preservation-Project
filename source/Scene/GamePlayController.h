@@ -15,7 +15,6 @@ using namespace std;
 #include <GuardSet/GuardSetController.h>
 #include <ItemSet/ItemSetController.h>
 #include "LevelModel.h"
-#include "SavedGameModel.h"
 
 class GamePlayController {
 #pragma mark Internal References
@@ -97,8 +96,6 @@ public:
     std::shared_ptr<LevelModel> _pastWorldLevel;
     std::shared_ptr<LevelModel> _presentWorldLevel;
     
-    std::shared_ptr<SavedGameModel> _savedGame;
-
     //preview variables
     bool _isPreviewing;
     std::shared_ptr<cugl::scene2::PolygonNode> _previewNode;

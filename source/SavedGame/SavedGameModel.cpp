@@ -70,7 +70,6 @@ bool SavedGameModel:: preload(const std::shared_ptr<cugl::JsonValue>& json) {
         return false;
     }
     _highestLevel = json->get("highestLevel")->asInt();
-    std::cout<<"_highestLevel: "<<_highestLevel<<std::endl;
     return true;
 }
 
