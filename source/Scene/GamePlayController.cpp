@@ -675,17 +675,24 @@ void GamePlayController::update(float dt){
         
         auto r = _pastWorld->getNode()->getSize();
         
-        if (input_posi.x - PREVIEW_RADIUS < 0 or input_posi.x > r.width - PREVIEW_RADIUS or
-            input_posi.y < 0 or input_posi.y > r.height - PREVIEW_RADIUS*2){
-            //input position is not in valid position
+        if (input_posi.x - PREVIEW_RADIUS < 0){
+            input_posi.x = PREVIEW_RADIUS;
+        }else if(input_posi.x > r.width - PREVIEW_RADIUS){
+            input_posi.x = r.width - PREVIEW_RADIUS;
         }
-        else {
-            _previewNode->setAnchor(Vec2::ANCHOR_CENTER);
-            PolyFactory polyFact = PolyFactory();
-            Poly2 circle = polyFact.makeCircle(input_posi + Vec2(0, PREVIEW_RADIUS), PREVIEW_RADIUS);
-            _previewNode->setPolygon(circle);
-            _previewNode->setPosition(input_posi + Vec2(0,PREVIEW_RADIUS));
+        
+        if (input_posi.y < 0){
+            input_posi.y  = 0;
+        }else if (input_posi.y > r.height - PREVIEW_RADIUS*2){
+            input_posi.y = r.height - PREVIEW_RADIUS*2;
         }
+        
+        _previewNode->setAnchor(Vec2::ANCHOR_CENTER);
+        PolyFactory polyFact = PolyFactory();
+        Poly2 circle = polyFact.makeCircle(input_posi + Vec2(0, PREVIEW_RADIUS), PREVIEW_RADIUS);
+        _previewNode->setPolygon(circle);
+        _previewNode->setPosition(input_posi + Vec2(0,PREVIEW_RADIUS));
+    
 
     }
     
@@ -695,10 +702,26 @@ void GamePlayController::update(float dt){
     
     if (_path->getPath().size() != 0 && !_actions->isActive("moving") ){
         _moveTo->setTarget(_path->getPath()[0]);
-        _moveCam->setTarget(_path->getPath()[0]);
         _character->moveTo(_moveTo);
         _character->updateLastDirection(_path->getPath()[0]);
+        
+        Vec2 camTar = _path->getPath()[0];
+        Size mapSize = _pastWorld->getSize();
+        
+        if (camTar.x < CAMERA_BOUNDS){
+            camTar.x = CAMERA_BOUNDS;
+        }else if (camTar.x > mapSize.width - CAMERA_BOUNDS){
+            camTar.x = mapSize.width - CAMERA_BOUNDS;
+        }
 
+        if (camTar.y < CAMERA_BOUNDS){
+            camTar.y = CAMERA_BOUNDS;
+        }
+        else if (camTar.y > mapSize.height-CAMERA_BOUNDS){
+            camTar.y = mapSize.height-CAMERA_BOUNDS;
+        }
+        
+        _moveCam->setTarget(camTar);
         if (_activeMap == "pastWorld"){
             _camManager->activate("movingCam", _moveCam, _cam);
             _path->removeFirst(_scene);
