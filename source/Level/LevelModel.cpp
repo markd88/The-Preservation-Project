@@ -58,6 +58,7 @@ void LevelModel::clearRootNode() {
  */
 bool LevelModel::preload(const std::string& file) {
     std::shared_ptr<JsonReader> reader = JsonReader::allocWithAsset(file);
+    CULog("reading json...");
     return preload(reader->readJson());
 }
 

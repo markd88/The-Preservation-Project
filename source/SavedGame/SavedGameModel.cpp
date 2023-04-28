@@ -51,6 +51,7 @@ void SavedGameModel::clearRootNode() {
  */
 bool SavedGameModel::preload(const std::string& file) {
     std::shared_ptr<JsonReader> reader = JsonReader::allocWithAsset(file);
+    CULog("SavedGameModel...preload...");
     return preload(reader->readJson());
 }
 
