@@ -133,6 +133,9 @@ public:
     std::shared_ptr<cugl::Sound> _switchSound;
     std::shared_ptr<cugl::Sound> _loseSound;
     std::shared_ptr<cugl::Sound> _winSound;
+    // music
+    std::shared_ptr<cugl::Sound> _pastMusic;
+    std::shared_ptr<cugl::Sound> _presentMusic;
 
 
 #pragma mark Main Methods

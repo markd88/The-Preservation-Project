@@ -32,13 +32,6 @@ private:
 
 
 
-
-
-
-
-
-
-
 #pragma mark Main Functions
 public:
     /** contructor */

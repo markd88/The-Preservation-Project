@@ -29,6 +29,16 @@
             "type": "sample",
             "file": "sounds/win.ogg",
             "volume": 0.8
+        },
+        "past" : {
+            "type": "sample",
+            "file": "sounds/past.wav",
+            "volume": 0.5
+        },
+        "present" : {
+            "type": "sample",
+            "file": "sounds/present.wav",
+            "volume": 0.5
         }
     },
     "textures": {
