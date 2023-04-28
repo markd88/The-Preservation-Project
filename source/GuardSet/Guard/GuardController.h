@@ -110,10 +110,13 @@ public:
 
         _staticDir = dir;
         _if_question_inSP = false;
-        _static_pos = position;
 
-        _model = std::make_unique<GuardModel>(position, Size(100, 100), Color4::RED, _staticDir);
+        // dont move the relative position!!!
         _view = std::make_unique<GuardView>(position,Size(100, 100), Color4::RED, assets, actions, isPast);
+        _model = std::make_unique<GuardModel>(_view->nodePos(), Size(100, 100), Color4::RED, _staticDir);
+        _static_pos = _view->nodePos();
+        // dont move the relative position!!!
+
     }
     
     //moving guard
@@ -124,7 +127,7 @@ public:
         _goingTo = 0;
         _returnVec = {};
         _chaseVec = {};
-        _patrol_stops = vec;
+
 
         _chaseMove = cugl::scene2::MoveTo::alloc();
         _chaseMove->setDuration(DURATION);
@@ -137,15 +140,25 @@ public:
         _is_question = false;
         _if_question_inSP = false;
 
-        _static_pos = position;
 
         // just a placeholder
         _staticDir = 0;
 
         _id = id;
         // starting direction should from level editor
-        _model = std::make_unique<GuardModel>(position, Size(128, 128), Color4::RED, 0);
+
+
+        // dont move the relative position!!!
         _view = std::make_unique<GuardView>(position, Size(128, 128), Color4::RED, assets, actions, isPast);
+        _model = std::make_unique<GuardModel>(_view->nodePos(), Size(128, 128), Color4::RED, 0);
+
+        _patrol_stops = vec;
+        unsigned int vecSize = vec.size();
+        for(unsigned int i = 0; i < vecSize; i++) {
+            _patrol_stops[i]  = _patrol_stops[i] + (_view->nodeSize() / 2);
+        }
+        _static_pos = _view->nodePos();
+        // dont move the relative position!!!
     }
 
 #pragma mark Update Methods

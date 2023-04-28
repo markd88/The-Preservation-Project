@@ -65,6 +65,7 @@ public:
         _node->setPosition(position + _node->getSize()/2);
 
 
+
         std::shared_ptr<Texture> question = assets->get<Texture>("question_mark_anim");
         _question_node = scene2::SpriteNode::allocWithSheet(question, 1,8,8);
         _question_node->setVisible(false);
