@@ -171,7 +171,12 @@ void GamePlayController::loadLevel(){
     _assets->unload<LevelModel>(presentKey);
     _assets->load<LevelModel>(pastKey, pastFile);
     _assets->load<LevelModel>(presentKey, presentFile);
-    
+
+    // load saved game data
+    string savedGameKey = "savedGame";
+    _assets->unload<SavedGameModel>(savedGameKey);
+    _assets->load<SavedGameModel>(savedGameKey, "json/savedGame.json");
+    _savedGame = _assets->get<SavedGameModel>(savedGameKey);
     
     // Draw past world
     _pastWorldLevel = _assets->get<LevelModel>(pastKey);

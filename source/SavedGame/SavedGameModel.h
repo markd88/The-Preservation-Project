@@ -1,18 +1,21 @@
 //
-//  SavedGameModel.h
+//  SavedGameModel.hpp
 //  The Preservation Project
 //
 //  Created by Ann Zhou on 4/27/23.
 //
+#include <stdio.h>
+#include <cugl/cugl.h>
+#include <cugl/assets/CUAsset.h>
 
 #ifndef SavedGameModel_h
 #define SavedGameModel_h
 
+using namespace cugl;
+
 class SavedGameModel : public Asset {
 protected:
-    std::vector<std::vector<cugl::Vec2>> _movingGuardsPos;
-    std::vector<std::vector<int>> _staticGuardsPos;
-
+    int _currentLevel;
 
 #pragma mark Internal Helper
     /**
@@ -24,7 +27,7 @@ protected:
     *
     * @return true if the object was successfully loaded
     */
-    bool loadObject(const std::string type, int totalHeight, const std::shared_ptr<JsonValue>& json);
+    bool loadObject(const std::shared_ptr<JsonValue>& json);
 
     /**
      * Loads a single wall object
@@ -38,10 +41,7 @@ protected:
      * @return true if the wall was successfully loaded
      */
     bool loadTilemap(const std::shared_ptr<JsonValue>& json);
-    bool loadItem(const std::shared_ptr<JsonValue>& json, const std::string type);
-    bool load(const std::shared_ptr<JsonValue>& json);
-    bool loadCharacter(const std::shared_ptr<JsonValue>& json);
-    bool loadGuard(const std::shared_ptr<JsonValue>& json);
+    bool loadSavedGame(const std::shared_ptr<JsonValue>& json);
 
     /**
      * Clears the root scene graph node for this level
@@ -80,24 +80,9 @@ public:
 #pragma mark Model Access
     
     /** Get world map */
-    std::shared_ptr<TilemapController> getWorld() {return _world;};
-    std::shared_ptr<ItemSetController> getItem() {return _item->copy();};
-    std::shared_ptr<ItemSetController> getObs() {return _obs;};
-    std::shared_ptr<ItemSetController> getWall() {return _wall;};
-    cugl::Vec2 getCharacterPos() {return _characterPos;};
-    std::vector<std::vector<cugl::Vec2>> getMovingGuardsPos() {return _movingGuardsPos;};
-    std::vector<std::vector<int>> getStaticGuardsPos() {return _staticGuardsPos;};
-
-#pragma mark Drawing Methods
-
-    /**
-     * Sets the loaded assets for this game level
-     *
-     * @param assets the loaded assets for this game level
-     */
-    void setAssets(const std::shared_ptr<AssetManager>& assets) { _assets = assets;  }
-    
-    void setTilemapTexture();
+//    std::shared_ptr<TilemapController> getWorld() {return _world;};
+//    cugl::Vec2 getCharacterPos() {return _characterPos;};
+    int getCurrentLevel() {return _currentLevel;};
 
 #pragma mark -
 #pragma mark Asset Loading
