@@ -15,7 +15,8 @@ using namespace cugl;
 #define ANIMDURATION 1f
 #define PREVIEW_RADIUS 150
 #define SWITCH_DURATION 1
-#define CAMERA_BOUNDS 200
+#define CAMERA_BOUNDS_X 400
+#define CAMERA_BOUNDS_Y 200
 #define ACT_KEY  "current"
 
 GamePlayController::GamePlayController(const Size displaySize, std::shared_ptr<cugl::AssetManager>& assets ):
@@ -376,17 +377,17 @@ void GamePlayController::init(){
     Vec2 cPos = _character->getPosition();
     
     Size mapSize = _pastWorld->getSize();
-    if (cPos.x < CAMERA_BOUNDS){
-        cPos.x = CAMERA_BOUNDS;
-    }else if (cPos.x > mapSize.width - CAMERA_BOUNDS){
-        cPos.x = mapSize.width - CAMERA_BOUNDS;
+    if (cPos.x < CAMERA_BOUNDS_X){
+        cPos.x = CAMERA_BOUNDS_X;
+    }else if (cPos.x > mapSize.width - CAMERA_BOUNDS_X){
+        cPos.x = mapSize.width - CAMERA_BOUNDS_X;
     }
 
-    if (cPos.y < CAMERA_BOUNDS){
-        cPos.y = CAMERA_BOUNDS;
+    if (cPos.y < CAMERA_BOUNDS_Y){
+        cPos.y = CAMERA_BOUNDS_Y;
     }
-    else if (cPos.y > mapSize.height-CAMERA_BOUNDS){
-        cPos.y = mapSize.height-CAMERA_BOUNDS;
+    else if (cPos.y > mapSize.height-CAMERA_BOUNDS_Y){
+        cPos.y = mapSize.height-CAMERA_BOUNDS_Y;
     }
     _cam->setPosition(Vec3(cPos.x,cPos.y,0));
     _other_cam->setPosition(Vec3(cPos.x,cPos.y,0));
@@ -532,6 +533,7 @@ void GamePlayController::update(float dt){
         }
         auto r = _pastWorld->getNode()->getSize();
 
+        
         if(_character->contains(input_posi)){
             // create path
             _path->setIsDrawing(true);
@@ -542,7 +544,6 @@ void GamePlayController::update(float dt){
 //            }else{
 //                _path->clearPath(_other_scene);
 //            }
-            
         }
 
         else if (input_posi.x - PREVIEW_RADIUS > 0 and input_posi.x < r.width - PREVIEW_RADIUS and
@@ -711,17 +712,17 @@ void GamePlayController::update(float dt){
         Vec2 camTar = _path->getPath()[0];
         Size mapSize = _pastWorld->getSize();
         
-        if (camTar.x < CAMERA_BOUNDS){
-            camTar.x = CAMERA_BOUNDS;
-        }else if (camTar.x > mapSize.width - CAMERA_BOUNDS){
-            camTar.x = mapSize.width - CAMERA_BOUNDS;
+        if (camTar.x < CAMERA_BOUNDS_X){
+            camTar.x = CAMERA_BOUNDS_X;
+        }else if (camTar.x > mapSize.width - CAMERA_BOUNDS_X){
+            camTar.x = mapSize.width - CAMERA_BOUNDS_X;
         }
 
-        if (camTar.y < CAMERA_BOUNDS){
-            camTar.y = CAMERA_BOUNDS;
+        if (camTar.y < CAMERA_BOUNDS_Y){
+            camTar.y = CAMERA_BOUNDS_Y;
         }
-        else if (camTar.y > mapSize.height-CAMERA_BOUNDS){
-            camTar.y = mapSize.height-CAMERA_BOUNDS;
+        else if (camTar.y > mapSize.height-CAMERA_BOUNDS_Y){
+            camTar.y = mapSize.height-CAMERA_BOUNDS_Y;
         }
         
         _moveCam->setTarget(camTar);
