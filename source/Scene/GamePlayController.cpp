@@ -98,6 +98,7 @@ _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displ
     _pause_restart->addListener([this](const std::string& name, bool down) {
         if (!down) {
             // restart the game
+            loadLevel();
             init();
         }
     });
@@ -123,12 +124,10 @@ _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displ
     
     _pause_button->activate();
     
+    
+    
+    _inventory_layer = assets->get<scene2::SceneNode>("button_panel");
 
-    // load label for n_res and n_art
-    _res_label  = std::dynamic_pointer_cast<scene2::Label>(assets->get<scene2::SceneNode>("button_panel_resources"));
-    
-    _art_label  = std::dynamic_pointer_cast<scene2::Label>(assets->get<scene2::SceneNode>("button_panel_progress"));
-    
     
     // add Win/lose panel
     _complete_layer = _assets->get<scene2::SceneNode>("complete");
@@ -171,10 +170,39 @@ _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displ
     // add switch indicator
     _switchNode = _assets->get<scene2::SceneNode>("button_switch");
     
+    
     _moveTo = cugl::scene2::MoveTo::alloc();
     _moveCam = CameraMoveTo::alloc();
     _moveCam->setDuration(ACTIONDURATION);
     _moveTo->setDuration(ACTIONDURATION);
+    
+    
+    
+    // initiazation of inventory bars, only run once
+    Vec2 barPos(550, 300);
+    for (int i=0; i<5; i++){
+        std::shared_ptr<cugl::scene2::PolygonNode> tn = std::make_shared<cugl::scene2::PolygonNode>();
+        tn->initWithTexture(_assets->get<Texture>("inventory_artifact_transparent_bar"));
+        tn->setVisible(false);
+        tn->setPosition(barPos);
+        barPos = barPos.add(150, 0);
+        _inventory_layer->addChild(tn);
+        _art_bar_vec.push_back(tn);
+    }
+
+    barPos = barPos.add(400, 0);
+
+    for (int i=0; i<5; i++){
+        std::shared_ptr<cugl::scene2::PolygonNode> tn = std::make_shared<cugl::scene2::PolygonNode>();
+        tn->initWithTexture(_assets->get<Texture>("inventory_resource_bar"));
+        tn->setVisible(false);
+        tn->setPosition(barPos);
+        barPos = barPos.add(150, 0);
+        _inventory_layer->addChild(tn);
+        _res_bar_vec.push_back(tn);
+    }
+    
+    
     
     loadLevel();
     init();
@@ -258,6 +286,7 @@ void GamePlayController::loadLevel(){
     // change label with level
     auto pause_label  = std::dynamic_pointer_cast<scene2::Label>(_assets->get<scene2::SceneNode>("pause_title"));
     pause_label->setText("Mission " + to_string(level));
+    
 }
 
 // init assets and all scenegraph when restart
@@ -353,16 +382,8 @@ void GamePlayController::init(){
     
     // to make the button pos fixed relative to screen
     _button_layer->setPosition(_cam->getPosition());
-    
-    // reload initial label for n_res and n_art
-    _res_label->setText("0");
-    
-    std::string num = std::to_string(artNum);
-    _art_label->setText("0/"+num);
-    
-    //_pastWorld->addPoints(_scene->getSize(), _scene);
-    
-    
+
+
 }
 
 void GamePlayController::update(float dt){
@@ -397,9 +418,6 @@ void GamePlayController::update(float dt){
             _scene->removeChild(_world_switch_node);
             _other_scene->addChild(_world_switch_node);
             
-            
-            // when move to the second world, minus 1 visually
-            _res_label->setText(cugl::strtool::to_string(_character->getNumRes()-1));
         }
         else {
             _activeMap = "pastWorld";
@@ -501,12 +519,12 @@ void GamePlayController::update(float dt){
             // create path
             _path->setIsDrawing(true);
             _path->setIsInitiating(true);
-            _path->updateLastPos(_character->getPosition()); //change to a fixed location on the character
-            if (_activeMap == "pastWorld"){
-                _path->clearPath(_scene);
-            }else{
-                _path->clearPath(_other_scene);
-            }
+//            _path->updateLastPos(_character->getPosition()); //change to a fixed location on the character
+//            if (_activeMap == "pastWorld"){
+//                _path->clearPath(_scene);
+//            }else{
+//                _path->clearPath(_other_scene);
+//            }
             
         }
 
@@ -555,6 +573,12 @@ void GamePlayController::update(float dt){
             if (!_character->contains(input_posi)){
                 
                 _path->setIsInitiating(false);
+                _path->updateLastPos(_character->getPosition()); //change to a fixed location on the character
+                if (_activeMap == "pastWorld"){
+                    _path->clearPath(_scene);
+                }else{
+                    _path->clearPath(_other_scene);
+                }
             }
         }
         
@@ -687,16 +711,13 @@ void GamePlayController::update(float dt){
                 if(_artifactSet->_itemSet[i]->isResource()){
                     AudioEngine::get()->play("NPC_flip", _collectResourceSound, false, _collectResourceSound->getVolume(), true);
                     _character->addRes();
-                    // update panel
-                    _res_label->setText(cugl::strtool::to_string(_character->getNumRes()));
-                    CULog("resource");
+                   
                 }
                 // if artifact
                 else if (_artifactSet->_itemSet[i]->isArtifact()){
                     AudioEngine::get()->play("arrowHit", _collectArtifactSound, false, _collectArtifactSound->getVolume(), true);
                     _character->addArt();
-                    std::string num = std::to_string(artNum);
-                    _art_label->setText(cugl::strtool::to_string(_character->getNumArt()) + "/" +num);
+
                 }
                 // make the artifact disappear and remove from set
                 _artifactSet->remove_this(i, _ordered_root);
@@ -749,6 +770,9 @@ void GamePlayController::update(float dt){
     
     // update render priority
     updateRenderPriority();
+    
+    // update inventory panel
+    updateInventoryPanel();
 }
     
     
