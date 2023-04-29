@@ -38,7 +38,8 @@ public:
     GuardModel(Vec2 position, Size size, Color4 color, int direction) : color(_color) {
         setPosition(position);
         setSize(size);
-        _direction = direction; // fixed for now, but should from the level editor for initialization
+
+        _direction = direction; // most updated direction
     }
     
 #pragma mark Setters
