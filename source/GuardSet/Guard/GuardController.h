@@ -63,6 +63,8 @@ private:
 
     Vec2 _static_pos;
 
+    // should be a value from 0 - 3000, because we use milliseconds
+    int _question_value;
 
     
 #pragma mark Main Methods
@@ -111,6 +113,8 @@ public:
         _staticDir = dir;
         _if_question_inSP = false;
 
+        _question_value = 0;
+
         // dont move the relative position!!!
         _view = std::make_unique<GuardView>(position,Size(100, 100), Color4::RED, assets, actions, isPast);
         _model = std::make_unique<GuardModel>(_view->nodePos(), Size(100, 100), Color4::RED, _staticDir);
@@ -141,11 +145,12 @@ public:
         _if_question_inSP = false;
 
 
-        // just a placeholder
+        _question_value = 0;
+
+        // just a placeholder for moving guard
         _staticDir = 0;
 
         _id = id;
-        // starting direction should from level editor
 
 
         // dont move the relative position!!!
@@ -395,7 +400,14 @@ public:
         saved_stop = _goingTo;
         returned = true;
     }
-    
+
+    void setQuestionValue(int v) {
+        _question_value =v;
+    }
+
+    int getQuestionValue() {
+        return _question_value;
+    }
 
     int getDirection() {
         return _model->getDirection();
