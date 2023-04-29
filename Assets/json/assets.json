@@ -704,7 +704,7 @@
                         "visible"  : true,
                         "pushsize" : true,
                         "anchor"   : [0.5,0.5],
-                        "scale"    : 1.5
+                        "scale"    : 0.25
                     },
                     "children" : {
                         "up"       : {
@@ -729,7 +729,7 @@
                         "visible"  : true,
                         "pushsize" : true,
                         "anchor"   : [0.5,0.5],
-                        "scale"    : 1.6
+                        "scale"    : 0.25
                     },
                     "children" : {
                         "up"       : {

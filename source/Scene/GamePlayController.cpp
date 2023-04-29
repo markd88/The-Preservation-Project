@@ -387,14 +387,14 @@ void GamePlayController::init(){
 }
 
 void GamePlayController::update(float dt){
-
+    
+    // _complete_layer->setPosition(_cam->getPosition());
     if(_fail_layer->getScene() != nullptr || _complete_layer->getScene() != nullptr || _pause_layer->getScene() != nullptr){
         _pause_button->deactivate();
         return;
     }else{
         _pause_button->activate();
     }
-
 
     //
     _world_switch_node->setPosition(_character->getNodePosition());
