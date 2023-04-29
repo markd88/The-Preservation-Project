@@ -629,7 +629,7 @@ void GamePlayController::update(float dt){
 
 
 #pragma mark Preview Methods
-    if(_input->didRelease() or _isSwitching){
+    else if(_input->didRelease() or _isSwitching){
 
         _isPreviewing = false;
        
