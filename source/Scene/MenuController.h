@@ -25,6 +25,8 @@ public:
     std::shared_ptr<cugl::AssetManager> _assets;
     
     vector<shared_ptr<cugl::scene2::Button>> _level_buttons;
+    
+    int _highestUnlocked;
 
     MenuController() {
         _level_buttons = vector<shared_ptr<cugl::scene2::Button>>(15);
@@ -64,15 +66,19 @@ public:
         for (int i=0; i<15; i++){
             _level_buttons[i] = std::dynamic_pointer_cast<scene2::Button>(assets->get<scene2::SceneNode>("menu_backdrop_grid_button"+to_string(i+1)));
             _level_buttons[i]->setVisible(true);
-            _level_buttons[i]->activate();
-            _level_buttons[i]->addListener([=](const std::string& name, bool down) {
-                if(!down){
-                    // this->_scene->setActive(down);
-                    nextScene = GAMEPLAY;
-                    level = i % 4 + 1;
-                }
-                
-            });
+            if (i >= _highestUnlocked) {
+                _level_buttons[i]->setColor(Color4::GRAY);
+            } else {
+                _level_buttons[i]->activate();
+                _level_buttons[i]->addListener([=](const std::string& name, bool down) {
+                    if(!down){
+                        // this->_scene->setActive(down);
+                        nextScene = GAMEPLAY;
+                        level = i % 4 + 1;
+                    }
+                });
+            }
+
 
         }
         
@@ -100,5 +106,9 @@ public:
                 button->deactivate();
             }
         }
+    }
+    
+    void setHighestUnlocked(int highestUnlocked) {
+        _highestUnlocked = highestUnlocked;
     }
 };

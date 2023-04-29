@@ -67,13 +67,14 @@ public:
 
 
         std::shared_ptr<Texture> question = assets->get<Texture>("question_mark_anim");
-        _question_node = scene2::SpriteNode::allocWithSheet(question, 1,8,8);
+        _question_node = scene2::SpriteNode::allocWithSheet(question, 5,6,30);
         _question_node->setVisible(false);
+        _question_node->setScale(0.5f);
+        Vec2 vec = Vec2(170,200);
+        _question_node->setPosition(vec);
         _question_node->setRelativeColor(false);
-        _node->addChildWithName(_question_node, "question_mark");
 
-        // fixed, but should be from initialization( level editor)
-        // _last_direction = 0;
+        _node->addChildWithName(_question_node, "question_mark");
 
 
 
@@ -156,9 +157,9 @@ public:
     void startQuestionAnim(string id, float time){
         _question_node->setVisible(true);
         // CULog("%s  %f", id.c_str(), time);
-        int num_frame = (time * 8) / 1000;
-        if (num_frame == 8) {
-            num_frame = 7;
+        int num_frame = (time * 30) / 3000;
+        if (num_frame == 30) {
+            num_frame = 29;
         }
         _question_node->setFrame(num_frame);
     }
@@ -192,11 +193,11 @@ public:
             duration = 1.0f;
         } else if (state == "lookaround") {
             // look around, need to use the last direction as the direction
-            start_index = 192;
+            start_index =  128;
             direction = last_direction;
             duration = 1.0f;
         } else if (state == "static" or state == "question") {
-            start_index = 128;
+            start_index = 192;
             direction = last_direction;
             duration = 1.0f;
         }

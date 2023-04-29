@@ -14,6 +14,7 @@
 #include <Level/LevelConstants.h>
 #include <Level/LevelModel.h>
 #include <common.h>
+#include "SavedGameModel.h"
 
 // This keeps us from having to write cugl:: all the time
 using namespace cugl;
@@ -54,9 +55,15 @@ void App::onStartup() {
     _assets->attach<scene2::SceneNode>(Scene2Loader::alloc()->getHook());
     
     _assets->attach<LevelModel>(GenericLoader<LevelModel>::alloc()->getHook());
+    _assets->attach<SavedGameModel>(GenericLoader<SavedGameModel>::alloc()->getHook());
 
     // load gameplay assets
     _assets->loadDirectoryAsync("json/assets.json", nullptr);
+    
+    // load saved game data
+    // load saved game data
+    _assets->load<SavedGameModel>("savedGameKey", "json/savedGame.json");
+    _savedGame = _assets->get<SavedGameModel>("savedGameKey");
 
     // Create a sprite batch (and background color) to render the scene
     _batch = SpriteBatch::alloc();
@@ -181,6 +188,7 @@ void App::update(float timestep) {
             case MENU:
                 
                 _menuController->update(timestep);
+//                _menuController->setHighestUnlocked(_savedGame->getHighestUnlocked());
                 break;
             case GAMEPLAY:
                 // if next level, deactivate first, reload level i+1, and init
@@ -219,6 +227,7 @@ void App::update(float timestep) {
                 // if init before, just use previous menu
                 if(_menuController == nullptr) {
                     _menuController = make_shared<MenuController>();
+                    _menuController->setHighestUnlocked(_savedGame->getHighestUnlocked());
                     _menuController->init(_assets);
                 }
                 else{

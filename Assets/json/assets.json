@@ -99,7 +99,7 @@
             "file": "textures/spritesheet_switch_anim.png"
         },
         "question_mark_anim" : {
-            "file": "textures/questionmark.png"
+            "file": "textures/spritesheet_question_mark.png"
         },
         "artifact-1": {
             "file":      "textures/artifact-1.png"
@@ -139,6 +139,12 @@
         },
         "inventory_resource_trans_bar":{
             "file":     "textures/inventory_resource_used.png"
+        },
+        "inventory_resource_cant_bar":{
+            "file":     "textures/inventory_resource_collected_cant.png"
+        },
+        "inventory_resource_trans_cant_bar":{
+            "file":     "textures/inventory_resource_used_cant.png"
         },
         "resource": {
             "file":     "textures/resource.png"
@@ -906,25 +912,6 @@
                                "absolute" : true
                            }
                        }
-                    }
-                },
-                 
-                 "switch":{
-                    "type"   : "Image",
-                    "format"    : {
-                        "type" : "Anchored"
-                    },
-                    "data"   : {
-                        "texture"  : "switch",
-                        "anchor"   : [0.5,0.5],
-                        "scale"    : 0.8
-                    },
-                    "layout" : {
-                        "x_anchor" : "center",
-                        "y_anchor" : "middle",
-                        "y_offset" : 120,
-                        "x_offset" : 300,
-                        "absolute" : true
                     }
                 }
                  
