@@ -38,22 +38,26 @@ public:
     /** The asset manager for this game mode. */
     std::shared_ptr<cugl::AssetManager> _assets;
     std::shared_ptr<cugl::scene2::Button> _button;
-    std::shared_ptr<cugl::scene2::Label> _res_label;
-    std::shared_ptr<cugl::scene2::Label> _art_label;
+    std::vector<std::shared_ptr<cugl::scene2::PolygonNode>> _art_bar_vec{};
+    std::vector<std::shared_ptr<cugl::scene2::PolygonNode>> _res_bar_vec{};
     
     Vec2 _button_screen_pos;
     std::shared_ptr<cugl::scene2::SceneNode> _button_layer;
     std::shared_ptr<cugl::scene2::SceneNode> _complete_layer;
     std::shared_ptr<cugl::scene2::SceneNode> _fail_layer;
+    std::shared_ptr<cugl::scene2::SceneNode> _pause_layer;
     std::shared_ptr<cugl::scene2::SceneNode> _switchNode;
+    std::shared_ptr<cugl::scene2::SceneNode> _inventory_layer;
     
     // all buttons
-    std::shared_ptr<cugl::scene2::Button> _reset_button;
     std::shared_ptr<cugl::scene2::Button> _complete_back_button;
-    std::shared_ptr<cugl::scene2::Button> _complete_again_button;
+    std::shared_ptr<cugl::scene2::Button> _complete_next_button;
     std::shared_ptr<cugl::scene2::Button> _fail_back_button;
     std::shared_ptr<cugl::scene2::Button> _fail_again_button;
-    std::shared_ptr<cugl::scene2::Button> _back_arrow;
+    std::shared_ptr<cugl::scene2::Button> _pause_button;
+    std::shared_ptr<cugl::scene2::Button> _pause_resume;
+    std::shared_ptr<cugl::scene2::Button> _pause_restart;
+    std::shared_ptr<cugl::scene2::Button> _pause_exit;
     
     
     
@@ -177,12 +181,14 @@ public:
     void setActive(bool active){
         // only handle when active is false
         // otherwise go init
-        _reset_button->deactivate();
-        _back_arrow->deactivate();
         _fail_back_button->deactivate();
         _fail_again_button->deactivate();
         _complete_back_button->deactivate();
-        _complete_again_button->deactivate();
+        _complete_next_button->deactivate();
+        _pause_button->deactivate();
+        _pause_resume->deactivate();
+        _pause_restart->deactivate();
+        _pause_exit->deactivate();
     }
 
 #pragma mark Generation Helpers
@@ -267,7 +273,20 @@ public:
             _complete_layer->setPosition(_other_cam->getPosition());
         }
         _complete_back_button->activate();
-        _complete_again_button->activate();
+        _complete_next_button->activate();
+    }
+    
+    void pauseOn(){
+        if (_activeMap == "pastWorld"){
+            _scene->addChild(_pause_layer);
+            _pause_layer->setPosition(_cam->getPosition());
+        }else{
+            _other_scene->addChild(_pause_layer);
+            _pause_layer->setPosition(_other_cam->getPosition());
+        }
+        _pause_resume->activate();
+        _pause_restart->activate();
+        _pause_exit->activate();
     }
     
     // called when scene becomes active or inactive
@@ -289,6 +308,41 @@ public:
         _obsSetPresent->updatePriority();
         _wallSetPresent->updatePriority();
         _guardSetPresent->updatePriority();
+    }
+    
+    void updateInventoryPanel(){
+        // art
+        int cur_art = _character->getNumArt();
+        int total_art = artNum;
+        for(int i=0; i<5; i++){
+            if(i < cur_art){
+                _art_bar_vec[i]->setTexture(_assets->get<Texture>("inventory_artifact_filled_bar"));
+                _art_bar_vec[i]->setVisible(true);
+            }
+            else if (i < total_art){
+                _art_bar_vec[i]->setTexture(_assets->get<Texture>("inventory_artifact_transparent_bar"));
+                _art_bar_vec[i]->setVisible(true);
+            }
+            else{
+                _art_bar_vec[i]->setVisible(false);
+            }
+        }
+        // if at the present world, draw the last bar with transparency
+        bool half_switch = _activeMap == "presentWorld";
+        int cur_res = _character->getNumRes();
+        for(int i=0; i<5; i++){
+            if(i == (cur_res-1) && half_switch){
+                _res_bar_vec[i]->setTexture(_assets->get<Texture>("inventory_resource_trans_bar"));
+                _res_bar_vec[i]->setVisible(true);
+            }
+            else if(i < cur_res){
+                _res_bar_vec[i]->setTexture(_assets->get<Texture>("inventory_resource_bar"));
+                _res_bar_vec[i]->setVisible(true);
+            }
+            else{
+                _res_bar_vec[i]->setVisible(false);
+            }
+        }
     }
 
 };

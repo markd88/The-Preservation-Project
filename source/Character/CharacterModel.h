@@ -44,7 +44,7 @@ public:
      */
     CharacterModel(Vec2 position, Size size, Color4 color): color(_color) {
         setPosition(position);
-        radius = 15 * 4;
+        radius = 15 * 6;
         _n_art = 0;
         _n_res = 0;
     }

@@ -27,6 +27,7 @@ using namespace std;
 ActiveScene curScene;
 ActiveScene nextScene;
 int level;
+bool nextLevel;
 
 /**
  * The method called after OpenGL is initialized, but before running the application.
@@ -94,6 +95,8 @@ void App::onStartup() {
 
     // parent call
     Application::onStartup();
+    
+    nextLevel = false;
 }
 
 /**
@@ -183,11 +186,22 @@ void App::update(float timestep) {
                 _loadingController->update(timestep);
                 break;
             case MENU:
+                
                 _menuController->update(timestep);
 //                _menuController->setHighestUnlocked(_savedGame->getHighestUnlocked());
                 break;
             case GAMEPLAY:
-                _gameplayController->update(timestep);
+                // if next level, deactivate first, reload level i+1, and init
+                if(nextLevel){
+                    level += 1;
+                    _gameplayController->setActive(false);
+                    _gameplayController->loadLevel();
+                    _gameplayController->init();
+                    nextLevel = false;
+                }
+                else{
+                    _gameplayController->update(timestep);
+                }
         }
     }
     else{
@@ -231,9 +245,7 @@ void App::update(float timestep) {
                     _gameplayController->loadLevel();
                     _gameplayController->init();
                 }
-//                Size size = getDisplaySize();
-//                size *= GAME_WIDTH/size.width;
-//                _gameplayController = make_shared<GamePlayController>(size, _assets);
+
                 curScene = GAMEPLAY;
                 break;
         }

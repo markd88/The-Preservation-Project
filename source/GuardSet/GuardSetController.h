@@ -131,14 +131,17 @@ public:
     
     void patrol(Vec2 _charPos, float char_angle){
 
-        static auto last_time_question = std::chrono::steady_clock::now();
+       // static auto last_time_question = std::chrono::steady_clock::now();
         static auto last_time_lookaround = std::chrono::steady_clock::now();
         static auto start_question_inSP = std::chrono::steady_clock::now();
+        static auto last_time_question_value = std::chrono::steady_clock::now();
         // Calculate the time elapsed since the last call to pinch
         auto now = std::chrono::steady_clock::now();
-        auto elapsed_question = std::chrono::duration_cast<std::chrono::milliseconds>(now - last_time_question);
+        // auto elapsed_question = std::chrono::duration_cast<std::chrono::milliseconds>(now - last_time_question);
         auto elapsed_lookaround = std::chrono::duration_cast<std::chrono::seconds>(now - last_time_lookaround);
         auto elapsed_question_inSP = std::chrono::duration_cast<std::chrono::seconds>(now - start_question_inSP);
+        auto elapsed_question_value = std::chrono::duration_cast<std::chrono::milliseconds>(now - last_time_question_value);
+
         for (int i = 0; i < _guardSet.size(); i++){
 
             string id = std::to_string(_guardSet[i]->id);
@@ -164,9 +167,12 @@ public:
             }
 
             bool acoustic_detection = false;
-            if (distance < 150 and _world->isActive()) {
+            if (distance < 200 and _world->isActive()) {
                 acoustic_detection = true;
             }
+
+
+
 
 
 #pragma mark Guard State Updates
@@ -174,16 +180,25 @@ public:
             // static state
             if (_guardSet[i]->state == "static") {
            //     CULog("static");
-                if (visual_detection) {
-                    _guardSet[i]->updatePrevState(_guardSet[i]->state);
-                    _guardSet[i]->updateState("chaseD");
-                }
-                else if (acoustic_detection) {
+                if (visual_detection || acoustic_detection) {
+
                     _guardSet[i]->updatePrevState(_guardSet[i]->state);
                     _guardSet[i]->updateState("question");
-                    last_time_question = now;
+                    last_time_question_value = now;
+                    _guardSet[i]->setQuestionValue(0);
                     _guardSet[i]->setStateBeforeQuestion("static");
                 }
+
+//                if (visual_detection) {
+//                    _guardSet[i]->updatePrevState(_guardSet[i]->state);
+//                    _guardSet[i]->updateState("chaseD");
+//                }
+//                else if (acoustic_detection) {
+//                    _guardSet[i]->updatePrevState(_guardSet[i]->state);
+//                    _guardSet[i]->updateState("question");
+//                    last_time_question = now;
+//                    _guardSet[i]->setStateBeforeQuestion("static");
+//                }
                 else {
                     // keep static
                     _guardSet[i]->updatePrevState(_guardSet[i]->state);
@@ -193,18 +208,29 @@ public:
             // question state
             else if (_guardSet[i]->state == "question") {
           //      CULog("question");
+
+                int current_question_value = _guardSet[i]->getQuestionValue();
+                // chose one rate
                 if (visual_detection) {
+                    // one second if it sees
+                    current_question_value = current_question_value + (elapsed_question_value.count() * 2);
+                } else if (acoustic_detection) {
+                    // three seconds if it hears
+                    current_question_value = current_question_value + elapsed_question_value.count();
+                } else {
+                    // three seconds if nothing happen
+                    current_question_value = current_question_value - elapsed_question_value.count();
+                }
+                last_time_question_value = now;
+                _guardSet[i]->setQuestionValue(current_question_value);
+
+                if (current_question_value > 3000 && visual_detection) {
                     // chase immediately
                     _guardSet[i]->updatePrevState(_guardSet[i]->state);
                     _guardSet[i]->stopQuestionAnim(id);
                     _guardSet[i]->updateState("chaseD");
                 }
-                else if (acoustic_detection && elapsed_question.count() <= 1000 ) {
-                    // keep question
-                    // CULog("question");
-                    _guardSet[i]->updatePrevState(_guardSet[i]->state);
-                }
-                else if (acoustic_detection && elapsed_question.count() > 1000) {
+                else if (current_question_value > 3000 && acoustic_detection) {
                     // chase in shortest path
               //      CULog("switch to chaseSP from question");
                     _guardSet[i]->stopQuestionAnim(id);
@@ -225,13 +251,21 @@ public:
 
                     _guardSet[i]->updateState("chaseSP");
                 }
+
+                else if (current_question_value >= 0 && current_question_value <= 3000) {
+                    // keep question
+                    // CULog("question");
+                    _guardSet[i]->updatePrevState(_guardSet[i]->state);
+                }
+
                 else {
                     // return to the previous state
                     _guardSet[i]->updatePrevState(_guardSet[i]->state);
         //            CULog( " state before question: %s", _guardSet[i]->getStateBeforeQuestion().c_str());
                     _guardSet[i]->updateState(_guardSet[i]->getStateBeforeQuestion());
                     if (_guardSet[i]->getStateBeforeQuestion() == "question") {
-                        last_time_question = now;
+                        last_time_question_value = now;
+                        _guardSet[i]->setQuestionValue(0);
                     }
 
                 }
@@ -313,16 +347,15 @@ public:
             else if (_guardSet[i]->state == "lookaround") {
            //     CULog("lookaround");
                 // maybe wider visual detection
-                if (visual_detection) {
-                    _guardSet[i]->updatePrevState(_guardSet[i]->state);
-                    _guardSet[i]->updateState("chaseD");
-                }
-                else if (acoustic_detection) {
+                if (visual_detection || acoustic_detection) {
+
                     _guardSet[i]->updatePrevState(_guardSet[i]->state);
                     _guardSet[i]->updateState("question");
-                    last_time_question = now;
+                    last_time_question_value = now;
+                    _guardSet[i]->setQuestionValue(0);
                     _guardSet[i]->setStateBeforeQuestion("lookaround");
                 }
+
                 else if (elapsed_lookaround.count() <= 2){
                     // keep lookaround
                     _guardSet[i]->updatePrevState(_guardSet[i]->state);
@@ -341,14 +374,13 @@ public:
 
                     vector<Vec2> sp = shortestPath(start, finish);
 
-                     sp.erase(sp.begin());
+                    if (sp.size() > 1) {
+                        sp.erase(sp.begin());
+                    }
+
                      sp.pop_back();
                      sp.push_back(true_point);
 
-           //         CULog("return path");
-//                    for(int i=0; i < sp.size(); i++) {
-//                        CULog( "x: %f, y: %f", sp.at(i).x, sp.at(i).y );
-//                    }
 
                     _guardSet[i]->setReturnVec(sp);
 
@@ -362,24 +394,41 @@ public:
             else if (_guardSet[i]->state == "patrol"){
             //    CULog("patrol");
                 //detection in patrol state = chase
-                if (visual_detection){
-                    _guardSet[i]->updatePrevState(_guardSet[i]->state);
-                    _guardSet[i]->updateState("chaseD");
-                    _guardSet[i]->saveCurrentStop();
-                }
-                else if (acoustic_detection){
-                    // if did not see, but hear
+
+                if (visual_detection || acoustic_detection) {
+
                     _guardSet[i]->updatePrevState(_guardSet[i]->state);
                     _guardSet[i]->updateState("question");
+
                     Vec2 pos =  _guardSet[i]->getNodePosition();
                     _actions->remove(patrolAction);
                     _guardSet[i]->updatePosition(pos);
-                    last_time_question = now;
+
+                    last_time_question_value = now;
+                    _guardSet[i]->setQuestionValue(0);
                     _guardSet[i]->setStateBeforeQuestion("patrol");
-
                     _guardSet[i]->saveCurrentStop();
-
                 }
+
+//                if (visual_detection){
+//                    _guardSet[i]->updatePrevState(_guardSet[i]->state);
+//                    _guardSet[i]->updateState("chaseD");
+//                    _guardSet[i]->saveCurrentStop();
+//                }
+//                else if (acoustic_detection){
+//                    // if did not see, but hear
+//                    _guardSet[i]->updatePrevState(_guardSet[i]->state);
+//                    _guardSet[i]->updateState("question");
+//                    Vec2 pos =  _guardSet[i]->getNodePosition();
+//                    _actions->remove(patrolAction);
+//                    _guardSet[i]->updatePosition(pos);
+//                    last_time_question = now;
+//                    _guardSet[i]->setStateBeforeQuestion("patrol");
+//
+//                    _guardSet[i]->saveCurrentStop();
+//
+//                }
+
                 //keep patroling otherwise
                 else{
                     _guardSet[i]->updatePrevState(_guardSet[i]->state);
@@ -390,17 +439,34 @@ public:
             
             else if (_guardSet[i]->state == "return"){
         //        CULog("return");
-                if (visual_detection){
-                    _guardSet[i]->updatePrevState(_guardSet[i]->state);
-                    _guardSet[i]->updateState("chase");
-                }
-                else if (acoustic_detection){
-                    // if did not see, but hear
+                if (visual_detection || acoustic_detection) {
+
                     _guardSet[i]->updatePrevState(_guardSet[i]->state);
                     _guardSet[i]->updateState("question");
-                    last_time_question = now;
+                    last_time_question_value = now;
+                    _guardSet[i]->setQuestionValue(0);
+
+                    Vec2 pos = _guardSet[i]->getNodePosition();
+                    _actions->remove(returnAction);
+                    _guardSet[i]->updatePosition(pos);
+
                     _guardSet[i]->setStateBeforeQuestion("return");
                 }
+
+
+//                if (visual_detection){
+//                    _guardSet[i]->updatePrevState(_guardSet[i]->state);
+//                    _guardSet[i]->updateState("chaseD");
+//                }
+//                else if (acoustic_detection){
+//                    // if did not see, but hear
+//                    _guardSet[i]->updatePrevState(_guardSet[i]->state);
+//                    _guardSet[i]->updateState("question");
+//                    last_time_question = now;
+//                    _guardSet[i]->setStateBeforeQuestion("return");
+//                }
+
+
                 //state change from return to patrol
                 else if (_guardSet[i]->returnVec.size() == 0 and _guardSet[i]->doesPatrol){
                     _guardSet[i]->updatePrevState(_guardSet[i]->state);
@@ -410,6 +476,9 @@ public:
                     _guardSet[i]->updatePosition(pos);
                 }
                 else if (_guardSet[i]->returnVec.size() == 0 and !_guardSet[i]->doesPatrol){
+                    Vec2 pos = _guardSet[i]->getNodePosition();
+                    _actions->remove(returnAction);
+                    _guardSet[i]->updatePosition(pos);
                     _guardSet[i]->updatePrevState(_guardSet[i]->state);
                     _guardSet[i]->updateState("static");
                 }
@@ -420,10 +489,10 @@ public:
             }
 
 
-        auto elapsed_question = std::chrono::duration_cast<std::chrono::milliseconds>(now - last_time_question);
+        // auto elapsed_question = std::chrono::duration_cast<std::chrono::milliseconds>(now - last_time_question);
         auto elapsed_lookaround = std::chrono::duration_cast<std::chrono::seconds>(now - last_time_lookaround);
         auto elapsed_question_inSP = std::chrono::duration_cast<std::chrono::seconds>(now - start_question_inSP);
-
+        // auto elapsed_question_value = std::chrono::duration_cast<std::chrono::milliseconds>(now - last_time_question_value);
         // CULog("%d", elapsed_question);
 
 #pragma mark Guard action according to state
@@ -445,7 +514,7 @@ public:
                 _actions->remove(chaseSPAction);
                 _actions->remove(chaseDAction);
                 _guardSet[i]->updatePosition(pos);
-                _guardSet[i]->questionAnim(id, elapsed_question.count());
+                _guardSet[i]->questionAnim(id, _guardSet[i]->getQuestionValue());
             }
             else if (_guardSet[i]->state == "lookaround") {
                 Vec2 pos = _guardSet[i]->getNodePosition();
@@ -459,6 +528,9 @@ public:
             else if (_guardSet[i]->state == "return"){
                 if (_actions->isActive(returnAction)) {
                     // let it finish
+                }
+                else if (_guardSet[i]->returnVec.empty()) {
+                    // finish returning
                 }
                 else {
                     _guardSet[i]->updateReturnTarget(_guardSet[i]->returnVec[0]);

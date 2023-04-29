@@ -1,12 +1,4 @@
 { "compressionlevel":-1,
- "editorsettings":
-    {
-     "export":
-        {
-         "format":"json",
-         "target":"level-0-past.tmj"
-        }
-    },
  "height":18,
  "infinite":false,
  "layers":[
@@ -1540,7 +1532,7 @@
         {
          "draworder":"topdown",
          "id":4,
-         "name":"wall",
+         "name":"item",
          "objects":[
                 {
                  "gid":26,
@@ -2354,8 +2346,8 @@
                         {
                          "name":"direction",
                          "type":"int",
-                         "value":4
-                        },
+                         "value":1
+                        }, 
                         {
                          "name":"isStatic",
                          "type":"bool",
@@ -3768,6 +3760,18 @@
                  "width":64,
                  "x":1472,
                  "y":1152
+                }, 
+                {
+                 "gid":66,
+                 "height":64,
+                 "id":429,
+                 "name":"",
+                 "rotation":0,
+                 "type":"collision_detection3",
+                 "visible":true,
+                 "width":64,
+                 "x":1472,
+                 "y":832
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -3776,7 +3780,7 @@
          "y":0
         }],
  "nextlayerid":9,
- "nextobjectid":423,
+ "nextobjectid":430,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.10.0",
@@ -3787,7 +3791,7 @@
          "source":"tileset.tsj"
         }, 
         {
-         "firstgid":67,
+         "firstgid":69,
          "source":"ll.tsj"
         }],
  "tilewidth":64,
