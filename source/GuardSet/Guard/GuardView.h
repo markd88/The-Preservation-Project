@@ -192,11 +192,11 @@ public:
             duration = 1.0f;
         } else if (state == "lookaround") {
             // look around, need to use the last direction as the direction
-            start_index = 192;
+            start_index =  128;
             direction = last_direction;
             duration = 1.0f;
         } else if (state == "static" or state == "question") {
-            start_index = 128;
+            start_index = 192;
             direction = last_direction;
             duration = 1.0f;
         }
