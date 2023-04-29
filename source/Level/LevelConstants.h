@@ -56,6 +56,8 @@
 #define LEVEL_FOUR_PAST_FILE      "tileset/levels/level-4/level-4-past.json"
 #define LEVEL_FOUR_PRESENT_FILE      "tileset/levels/level-4/level-4-present.json"
 
+#define SAVED_GAME_FILE      "json/savedGame.json"
+
 /** The key for loaded levels */
 #define LEVEL_ONE_PAST_KEY       "level-1-past"
 #define LEVEL_ONE_PRESENT_KEY       "level-1-present"
@@ -65,5 +67,7 @@
 #define LEVEL_THREE_PRESENT_KEY       "level-3-present"
 #define LEVEL_FOUR_PAST_KEY       "level-4-past"
 #define LEVEL_FOUR_PRESENT_KEY       "level-4-present"
+
+#define SAVED_GAME_KEY      "savedGame"
 
 #endif /* LevelConstants_h */

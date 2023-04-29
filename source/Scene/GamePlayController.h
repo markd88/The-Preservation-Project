@@ -251,7 +251,7 @@ public:
     }
 
     void failTerminate(){
-        AudioEngine::get()->play("win", _winSound, false, _winSound->getVolume(), true);
+        AudioEngine::get()->play("lost", _loseSound, false, _loseSound->getVolume(), true);
         if (_activeMap == "pastWorld"){
             _scene->addChild(_fail_layer);
             _fail_layer->setPosition(_cam->getPosition());
@@ -264,7 +264,7 @@ public:
     }
     
     void completeTerminate(){
-        AudioEngine::get()->play("lost", _loseSound, false, _loseSound->getVolume(), true);
+        AudioEngine::get()->play("win", _winSound, false, _winSound->getVolume(), true);
         if (_activeMap == "pastWorld"){
             _scene->addChild(_complete_layer);
             _complete_layer->setPosition(_cam->getPosition());
