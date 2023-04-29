@@ -19,6 +19,8 @@ using namespace cugl;
 #define CAMERA_BOUNDS_Y 200
 #define ACT_KEY  "current"
 
+static auto lastPressTime = std::chrono::steady_clock::now();
+
 GamePlayController::GamePlayController(const Size displaySize, std::shared_ptr<cugl::AssetManager>& assets ):
 _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displaySize)) {
     // Initialize the assetManage
@@ -523,57 +525,77 @@ void GamePlayController::update(float dt){
 #pragma mark Character Movement Methods
     else if(_input->didPress()){        // if press, determine if press on character
         
-        Vec2 input_posi = _input->getPosition();
+        // Get the current time
+        auto nowPressTime = std::chrono::steady_clock::now();
 
-        if (_activeMap == "pastWorld"){
-            input_posi = _scene->screenToWorldCoords(input_posi);
-        }else{
-            input_posi = _other_scene->screenToWorldCoords(input_posi);
-        }
-        auto r = _pastWorld->getNode()->getSize();
-
+        // Calculate the time elapsed since the last press
+        auto elapsedPress = std::chrono::duration_cast<std::chrono::seconds>(nowPressTime - lastPressTime);
         
-        if(_character->contains(input_posi)){
-            // create path
-            _path->setIsDrawing(true);
-            _path->setIsInitiating(true);
-//            _path->updateLastPos(_character->getPosition()); //change to a fixed location on the character
-//            if (_activeMap == "pastWorld"){
-//                _path->clearPath(_scene);
-//            }else{
-//                _path->clearPath(_other_scene);
-//            }
-        }
+        std::cout<<"elaspedPress: "<<elapsedPress.count()<<std::endl;
 
-        else if (input_posi.x - PREVIEW_RADIUS > 0 and input_posi.x < r.width - PREVIEW_RADIUS and
-                 input_posi.y > 0 and input_posi.y < r.height - PREVIEW_RADIUS*2 and !_isSwitching){
-            //initialize preview
-            _isPreviewing = true;
-            if (_activeMap == "pastWorld"){
-                auto _children = _other_scene->getChildren();
-                for (int i = 0; i < _children.size(); i++){
-                    auto tempChild = _children[i];
-                    _other_scene->removeChild(_children[i]);
-                    _scene2texture->addChild(tempChild);
-                }
-                _texture = _scene2texture->getTexture();
-                _previewNode->setTexture(_texture);
-                _previewNode->setVisible(false);
-                _scene->addChildWithName(_previewNode, "preview");
-            }
-            else{
-                auto _children = _scene->getChildren();
-                for (int i = 0; i < _children.size(); i++){
-                    auto tempChild = _children[i];
-                    _scene->removeChild(_children[i]);
-                    _scene2texture->addChild(tempChild);
-                }
-                _texture = _scene2texture->getTexture();
-                _previewNode->setTexture(_texture);
-                _previewNode->setVisible(false);
-                _other_scene->addChildWithName(_previewNode, "preview");
-            }
-        }
+        // Check if the elapsed time is within the double tap threshold
+         if (elapsedPress.count() < 0.5) {
+             // Double tap detected!
+             CULog("double tapping...");
+             
+         } else {
+             
+             Vec2 input_posi = _input->getPosition();
+
+             if (_activeMap == "pastWorld"){
+                 input_posi = _scene->screenToWorldCoords(input_posi);
+             }else{
+                 input_posi = _other_scene->screenToWorldCoords(input_posi);
+             }
+             auto r = _pastWorld->getNode()->getSize();
+
+             
+             if(_character->contains(input_posi)){
+                 // create path
+                 _path->setIsDrawing(true);
+                 _path->setIsInitiating(true);
+     //            _path->updateLastPos(_character->getPosition()); //change to a fixed location on the character
+     //            if (_activeMap == "pastWorld"){
+     //                _path->clearPath(_scene);
+     //            }else{
+     //                _path->clearPath(_other_scene);
+     //            }
+             }
+
+             else if (input_posi.x - PREVIEW_RADIUS > 0 and input_posi.x < r.width - PREVIEW_RADIUS and
+                      input_posi.y > 0 and input_posi.y < r.height - PREVIEW_RADIUS*2 and !_isSwitching){
+                 //initialize preview
+                 _isPreviewing = true;
+                 if (_activeMap == "pastWorld"){
+                     auto _children = _other_scene->getChildren();
+                     for (int i = 0; i < _children.size(); i++){
+                         auto tempChild = _children[i];
+                         _other_scene->removeChild(_children[i]);
+                         _scene2texture->addChild(tempChild);
+                     }
+                     _texture = _scene2texture->getTexture();
+                     _previewNode->setTexture(_texture);
+                     _previewNode->setVisible(false);
+                     _scene->addChildWithName(_previewNode, "preview");
+                 }
+                 else{
+                     auto _children = _scene->getChildren();
+                     for (int i = 0; i < _children.size(); i++){
+                         auto tempChild = _children[i];
+                         _scene->removeChild(_children[i]);
+                         _scene2texture->addChild(tempChild);
+                     }
+                     _texture = _scene2texture->getTexture();
+                     _previewNode->setTexture(_texture);
+                     _previewNode->setVisible(false);
+                     _other_scene->addChildWithName(_previewNode, "preview");
+                 }
+             }
+         }
+
+         // Update the last press time to the current time
+        lastPressTime = nowPressTime;
+        
     }
     
     else if (_input->isDown() && _path->isDrawing){
