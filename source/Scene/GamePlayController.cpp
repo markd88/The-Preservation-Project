@@ -32,8 +32,8 @@ _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displ
     _collectArtifactSound = assets->get<Sound>("arrowShoot");
     _collectResourceSound = assets->get<Sound>("NPC_flip");
     _switchSound = assets->get<Sound>("lovestruck");
-    _loseSound = assets->get<Sound>("win");
-    _winSound = assets->get<Sound>("lose");
+    _loseSound = assets->get<Sound>("lose");
+    _winSound = assets->get<Sound>("win");
     
     // Initialize the scene to a locked width
     Size dimen = Application::get()->getDisplaySize();
