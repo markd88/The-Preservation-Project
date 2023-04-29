@@ -531,12 +531,11 @@ void GamePlayController::update(float dt){
         // Calculate the time elapsed since the last press
         auto elapsedPress = std::chrono::duration_cast<std::chrono::seconds>(nowPressTime - lastPressTime);
         
-        std::cout<<"elaspedPress: "<<elapsedPress.count()<<std::endl;
-
         // Check if the elapsed time is within the double tap threshold
          if (elapsedPress.count() < 0.5) {
              // Double tap detected!
              CULog("double tapping...");
+             // TODO: Cancel path drawing
              
          } else {
              
