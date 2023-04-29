@@ -184,7 +184,7 @@ void App::update(float timestep) {
                 break;
             case MENU:
                 _menuController->update(timestep);
-//                _menuController->setHighestLevel(_savedGame->getHighestLevel());
+//                _menuController->setHighestUnlocked(_savedGame->getHighestUnlocked());
                 break;
             case GAMEPLAY:
                 _gameplayController->update(timestep);
@@ -213,7 +213,7 @@ void App::update(float timestep) {
                 // if init before, just use previous menu
                 if(_menuController == nullptr) {
                     _menuController = make_shared<MenuController>();
-                    _menuController->setHighestLevel(_savedGame->getHighestLevel());
+                    _menuController->setHighestUnlocked(_savedGame->getHighestUnlocked());
                     _menuController->init(_assets);
                 }
                 else{

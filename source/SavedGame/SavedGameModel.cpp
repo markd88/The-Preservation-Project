@@ -69,7 +69,7 @@ bool SavedGameModel:: preload(const std::shared_ptr<cugl::JsonValue>& json) {
         CUAssertLog(false, "Failed to load level file");
         return false;
     }
-    _highestLevel = json->get("highestLevel")->asInt();
+    _highestUnlocked = json->get("highestUnlocked")->asInt();
     return true;
 }
 

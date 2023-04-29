@@ -15,7 +15,7 @@ using namespace cugl;
 
 class SavedGameModel : public Asset {
 protected:
-    int _highestLevel;
+    int _highestUnlocked;
 
 #pragma mark Internal Helper
     /**
@@ -79,7 +79,7 @@ public:
 
 #pragma mark Model Access
     
-    int getHighestLevel() {return _highestLevel;};
+    int getHighestUnlocked() {return _highestUnlocked;};
 
 #pragma mark -
 #pragma mark Asset Loading
