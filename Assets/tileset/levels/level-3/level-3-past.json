@@ -1532,7 +1532,7 @@
         {
          "draworder":"topdown",
          "id":4,
-         "name":"item",
+         "name":"wall",
          "objects":[
                 {
                  "gid":26,

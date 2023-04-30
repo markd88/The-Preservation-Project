@@ -46,18 +46,16 @@ public:
         _last_direction = 0;
         _actions = actions;
         // Get the image and add it to the node.
-        float scale = GAME_WIDTH/size.width;
-        size *= scale;
-        
+//        float scale = GAME_WIDTH/size.width;
+//        size *= scale;
 
         std::shared_ptr<Texture> character  = assets->get<Texture>("character");
         _node = scene2::SpriteNode::allocWithSheet(character, 8, 8, 64); // SpriteNode for animation
-        _node->setScale(0.7f); // Magic number to rescale asset
-
         _node->setRelativeColor(false);
         _node->setVisible(true);
         _node->setAnchor(Vec2(0.5, 0.25));
-        _node->setPosition(position + _node->getSize()/2);
+        _node->setPosition(position + _node->getSize()/4);
+        _node->setScale(0.7f);
 
         _node->setFrame(16);
 
