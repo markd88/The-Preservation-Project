@@ -23,10 +23,14 @@ private:
     std::unique_ptr<ItemModel> _model;
     /** View reference */
     std::unique_ptr<ItemView> _view;
-
+    
+    int _id;
     
 #pragma mark Main Methods
 public:
+    /**view only version of ID**/
+    const int& id;
+    
     /**
      * Creates a controller for the model and view.
      *
@@ -34,9 +38,10 @@ public:
      * @param size      The width and height of a tile
      * @param color     The tile color
      */
-    ItemController(Vec2 position, float rot, Size size, bool isArtifact, bool isResource, bool isObs, const std::shared_ptr<cugl::AssetManager>& assets, std::string textureKey) {
+    ItemController(Vec2 position, float rot, Size size, bool isArtifact, bool isResource, bool isObs, const std::shared_ptr<cugl::AssetManager>& assets, std::string textureKey, int id) : id(_id) {
         _model = std::make_unique<ItemModel>(position, size, isArtifact, isResource, isObs, textureKey);
         _view = std::make_unique<ItemView>(position, rot, size, isArtifact, isResource, isObs, assets, textureKey);
+        _id = id;
     }
 
 #pragma mark Update Methods
@@ -113,6 +118,10 @@ public:
     
     void setTexture(const std::shared_ptr<cugl::AssetManager>& assets, std::string textureKey) {
         _view->setTexture(assets, textureKey);
+    }
+    
+    void setAction(std::shared_ptr<cugl::scene2::ActionManager> actions) {
+        _view->setAction(actions);
     }
     
     void setVisibility(bool visible){

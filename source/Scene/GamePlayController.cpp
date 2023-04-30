@@ -236,6 +236,7 @@ void GamePlayController::loadLevel(){
     _obsSetPast = _pastWorldLevel->getObs();
     _wallSetPast = _pastWorldLevel->getWall();
     _artifactSet = _pastWorldLevel->getItem();
+    _artifactSet->setAction(_actions);
     artNum = _artifactSet->getArtNum();
 
     // Draw present world
@@ -388,6 +389,7 @@ void GamePlayController::init(){
     _button_layer->setPosition(_cam->getPosition());
     
     // play past sound
+    AudioEngine::get()->clear();
     AudioEngine::get()->play("past", _pastMusic, false, _switchSound->getVolume(), true);
 }
 
@@ -423,7 +425,7 @@ void GamePlayController::update(float dt){
             _scene->removeChild(_world_switch_node);
             _other_scene->addChild(_world_switch_node);
             
-            AudioEngine::get()->clear("past");
+            AudioEngine::get()->clear();
             AudioEngine::get()->play("present", _presentMusic, false, _switchSound->getVolume(), true);
             
         }
@@ -445,7 +447,7 @@ void GamePlayController::update(float dt){
             // when move to the second world, minus 1 in model
             _character->useRes();
             
-            AudioEngine::get()->clear("present");
+            AudioEngine::get()->clear();
             AudioEngine::get()->play("past", _pastMusic, false, _switchSound->getVolume(), true);
         }
 
