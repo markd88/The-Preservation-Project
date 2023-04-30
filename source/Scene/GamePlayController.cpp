@@ -36,6 +36,10 @@ _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displ
     _loseSound = assets->get<Sound>("lose");
     _winSound = assets->get<Sound>("win");
     
+    // load music
+    _pastMusic = assets->get<Sound>("past");
+    _presentMusic = assets->get<Sound>("present");
+    
     // Initialize the scene to a locked width
     Size dimen = Application::get()->getDisplaySize();
     dimen *= SCENE_WIDTH/dimen.width; // Lock the game to a reasonable resolution
@@ -396,8 +400,9 @@ void GamePlayController::init(){
     
     // to make the button pos fixed relative to screen
     _button_layer->setPosition(_cam->getPosition());
-
-
+    
+    // play past sound
+    AudioEngine::get()->play("past", _pastMusic, false, _switchSound->getVolume(), true);
 }
 
 void GamePlayController::update(float dt){
@@ -435,6 +440,9 @@ void GamePlayController::update(float dt){
             _scene->removeChild(_world_switch_node);
             _other_scene->addChild(_world_switch_node);
             
+            AudioEngine::get()->clear("past");
+            AudioEngine::get()->play("present", _presentMusic, false, _switchSound->getVolume(), true);
+            
         }
         else {
             _activeMap = "pastWorld";
@@ -453,6 +461,9 @@ void GamePlayController::update(float dt){
             
             // when move to the second world, minus 1 in model
             _character->useRes();
+            
+            AudioEngine::get()->clear("present");
+            AudioEngine::get()->play("past", _pastMusic, false, _switchSound->getVolume(), true);
         }
 
         // stop previous movement after switch world

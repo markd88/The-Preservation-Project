@@ -157,9 +157,9 @@ public:
         _view = std::make_unique<GuardView>(position, Size(128, 128), Color4::RED, assets, actions, isPast);
         _model = std::make_unique<GuardModel>(_view->nodePos(), Size(128, 128), Color4::RED, 0);
 
-        _patrol_stops = vec;
-        unsigned int vecSize = vec.size();
-        for(unsigned int i = 0; i < vecSize; i++) {
+//        _patrol_stops = vec;
+//        unsigned int vecSize = _patrol_stops.size();
+        for(unsigned int i = 0; i < _patrol_stops.size(); i++) {
             _patrol_stops[i]  = _patrol_stops[i] + (_view->nodeSize() / 2);
         }
         _static_pos = _view->nodePos();
