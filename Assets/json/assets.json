@@ -561,6 +561,438 @@
             "magfilter": "linear",
             "wrapS":     "clamp",
             "wrapT":     "clamp"
+        },
+        "pastB_floor_stone_border_top1": {
+            "file": "textures/pastB_floor_stone_border_top1.png"
+        },
+        "box6": {
+            "file": "textures/box6.png"
+        },
+        "tile_present_obstacle_sun_block": {
+            "file": "textures/tile_present_obstacle_sun_block.png"
+        },
+        "tile_present_grass3": {
+            "file": "textures/tile_present_grass3.png"
+        },
+        "tile_present_grass2": {
+            "file": "textures/tile_present_grass2.png"
+        },
+        "pastB_side_brick_wall1": {
+            "file": "textures/pastB_side_brick_wall1.png"
+        },
+        "artifact_sword_blue": {
+            "file": "textures/artifact_sword_blue.png"
+        },
+        "tile_present_wall4": {
+            "file": "textures/tile_present_wall4.png"
+        },
+        "pastB_floor_stone_border_top2": {
+            "file": "textures/pastB_floor_stone_border_top2.png"
+        },
+        "box5": {
+            "file": "textures/box5.png"
+        },
+        "past_roof": {
+            "file": "textures/past_roof.png"
+        },
+        "artifact_scrollcaseA_wood": {
+            "file": "textures/artifact_scrollcaseA_wood.png"
+        },
+        "artifact_bowlcovered_dustedglass": {
+            "file": "textures/artifact_bowlcovered_dustedglass.png"
+        },
+        "pastB_side_brick_wall3": {
+            "file": "textures/pastB_side_brick_wall3.png"
+        },
+        "tile_present_grass1": {
+            "file": "textures/tile_present_grass1.png"
+        },
+        "pastB_side_brick_wall2": {
+            "file": "textures/pastB_side_brick_wall2.png"
+        },
+        "tile_present_grass_shadow_slopepos": {
+            "file": "textures/tile_present_grass_shadow_slopepos.png"
+        },
+        "box4": {
+            "file": "textures/box4.png"
+        },
+        "pastB_floor_stone_border_top3": {
+            "file": "textures/pastB_floor_stone_border_top3.png"
+        },
+        "tile_present_wall3": {
+            "file": "textures/tile_present_wall3.png"
+        },
+        "artifact_fan_1": {
+            "file": "textures/artifact_fan_1.png"
+        },
+        "tile_present_stones1": {
+            "file": "textures/tile_present_stones1.png"
+        },
+        "tile_present_grass_s_rock": {
+            "file": "textures/tile_present_grass_s_rock.png"
+        },
+        "pastB_wall_col_right": {
+            "file": "textures/pastB_wall_col_right.png"
+        },
+        "tile_present_grass_shadow_slopeneg": {
+            "file": "textures/tile_present_grass_shadow_slopeneg.png"
+        },
+        "tile_present_grass_s_slopepos_rock": {
+            "file": "textures/tile_present_grass_s_slopepos_rock.png"
+        },
+        "artifact_spear_blue": {
+            "file": "textures/artifact_spear_blue.png"
+        },
+        "pastB_stairs_border": {
+            "file": "textures/pastB_stairs_border.png"
+        },
+        "tile_present_bush2_shadow": {
+            "file": "textures/tile_present_bush2_shadow.png"
+        },
+        "box1": {
+            "file": "textures/box1.png"
+        },
+        "tile_present_wall2": {
+            "file": "textures/tile_present_wall2.png"
+        },
+        "tile_past_floor_windowleft": {
+            "file": "textures/tile_past_floor_windowleft.png"
+        },
+        "past_column": {
+            "file": "textures/past_column.png"
+        },
+        "artifact_box_jade": {
+            "file": "textures/artifact_box_jade.png"
+        },
+        "enemy_static": {
+            "file": "textures/enemy_static.png"
+        },
+        "past_roof_L": {
+            "file": "textures/past_roof_L.png"
+        },
+        "tile_present_grass_shadow": {
+            "file": "textures/tile_present_grass_shadow.png"
+        },
+        "artifact_fan_2": {
+            "file": "textures/artifact_fan_2.png"
+        },
+        "tile_present_stones2": {
+            "file": "textures/tile_present_stones2.png"
+        },
+        "artifact_vase_green": {
+            "file": "textures/artifact_vase_green.png"
+        },
+        "box3": {
+            "file": "textures/box3.png"
+        },
+        "artifact_scrollcaseB_gold": {
+            "file": "textures/artifact_scrollcaseB_gold.png"
+        },
+        "artifact_fan_black": {
+            "file": "textures/artifact_fan_black.png"
+        },
+        "artifact_fan_yellow": {
+            "file": "textures/artifact_fan_yellow.png"
+        },
+        "tile_past_wall_edge_R": {
+            "file": "textures/tile_past_wall_edge_R.png"
+        },
+        "pastB_wall_col_left": {
+            "file": "textures/pastB_wall_col_left.png"
+        },
+        "tile_present_obstacle_block_shadow": {
+            "file": "textures/tile_present_obstacle_block_shadow.png"
+        },
+        "tile_past_floor_column_right": {
+            "file": "textures/tile_past_floor_column_right.png"
+        },
+        "box2": {
+            "file": "textures/box2.png"
+        },
+        "tile_present_stones3": {
+            "file": "textures/tile_present_stones3.png"
+        },
+        "tile_present_wall1": {
+            "file": "textures/tile_present_wall1.png"
+        },
+        "pastB_floor_stone_border2": {
+            "file": "textures/pastB_floor_stone_border2.png"
+        },
+        "deco_past_chair_back": {
+            "file": "textures/deco_past_chair_back.png"
+        },
+        "tile_past_wall1": {
+            "file": "textures/tile_past_wall1.png"
+        },
+        "tile_past_floor_stone1": {
+            "file": "textures/tile_past_floor_stone1.png"
+        },
+        "artifact_statue_white": {
+            "file": "textures/artifact_statue_white.png"
+        },
+        "pastB_floor_stone_border3": {
+            "file": "textures/pastB_floor_stone_border3.png"
+        },
+        "deco_past_table_front": {
+            "file": "textures/deco_past_table_front.png"
+        },
+        "pastB_floor_stone_border1": {
+            "file": "textures/pastB_floor_stone_border1.png"
+        },
+        "pastB_wall_window_left": {
+            "file": "textures/pastB_wall_window_left.png"
+        },
+        "deco_past_chair_side_L": {
+            "file": "textures/deco_past_chair_side_L.png"
+        },
+        "artifact_urn_green_noaccent": {
+            "file": "textures/artifact_urn_green_noaccent.png"
+        },
+        "tile_past_wall2": {
+            "file": "textures/tile_past_wall2.png"
+        },
+        "enemy_moving": {
+            "file": "textures/enemy_moving.png"
+        },
+        "tile_past_floor_stone3": {
+            "file": "textures/tile_past_floor_stone3.png"
+        },
+        "artifact_urn_green_variantpng": {
+            "file": "textures/artifact_urn_green_variantpng.png"
+        },
+        "tile_past_floor_stone2": {
+            "file": "textures/tile_past_floor_stone2.png"
+        },
+        "tile_past_wall3": {
+            "file": "textures/tile_past_wall3.png"
+        },
+        "artifact_box_wood": {
+            "file": "textures/artifact_box_wood.png"
+        },
+        "artifact_urnB_green": {
+            "file": "textures/artifact_urnB_green.png"
+        },
+        "tile_present_obstacle_wall2_shadow": {
+            "file": "textures/tile_present_obstacle_wall2_shadow.png"
+        },
+        "tile_past_floor_column_left": {
+            "file": "textures/tile_past_floor_column_left.png"
+        },
+        "pastB_wall2": {
+            "file": "textures/pastB_wall2.png"
+        },
+        "present_wall_edge1": {
+            "file": "textures/present_wall_edge1.png"
+        },
+        "tile_past_floor2": {
+            "file": "textures/tile_past_floor2.png"
+        },
+        "pastB_stairs": {
+            "file": "textures/pastB_stairs.png"
+        },
+        "tile_present_obstacle_stone": {
+            "file": "textures/tile_present_obstacle_stone.png"
+        },
+        "artifact_sword_red": {
+            "file": "textures/artifact_sword_red.png"
+        },
+        "tile_past_floor3": {
+            "file": "textures/tile_past_floor3.png"
+        },
+        "pastB_wall3": {
+            "file": "textures/pastB_wall3.png"
+        },
+        "pastB_col_roof_shadow_left": {
+            "file": "textures/pastB_col_roof_shadow_left.png"
+        },
+        "tile_past_wall_column_left_window": {
+            "file": "textures/tile_past_wall_column_left_window.png"
+        },
+        "tile_present_grass_s_half_rock": {
+            "file": "textures/tile_present_grass_s_half_rock.png"
+        },
+        "pastB_wall1": {
+            "file": "textures/pastB_wall1.png"
+        },
+        "tile_present_side_wall": {
+            "file": "textures/tile_present_side_wall.png"
+        },
+        "deco_past_cabinet_side_R": {
+            "file": "textures/deco_past_cabinet_side_R.png"
+        },
+        "artifact_spear_red": {
+            "file": "textures/artifact_spear_red.png"
+        },
+        "present_wall_edge2": {
+            "file": "textures/present_wall_edge2.png"
+        },
+        "tile_past_floor1": {
+            "file": "textures/tile_past_floor1.png"
+        },
+        "tile_past_wall_window": {
+            "file": "textures/tile_past_wall_window.png"
+        },
+        "artifact_scrollcaseA_painted": {
+            "file": "textures/artifact_scrollcaseA_painted.png"
+        },
+        "present_wall_edge3": {
+            "file": "textures/present_wall_edge3.png"
+        },
+        "pastB_wall_window_right": {
+            "file": "textures/pastB_wall_window_right.png"
+        },
+        "tile_present_wall_slopepos": {
+            "file": "textures/tile_present_wall_slopepos.png"
+        },
+        "deco_past_vase_FORTABLE": {
+            "file": "textures/deco_past_vase_FORTABLE.png"
+        },
+        "tile_present_bush2": {
+            "file": "textures/tile_present_bush2.png"
+        },
+        "artifact_bowlcovered_jade": {
+            "file": "textures/artifact_bowlcovered_jade.png"
+        },
+        "artifact_urnB_blue": {
+            "file": "textures/artifact_urnB_blue.png"
+        },
+        "tile_present_wall_half": {
+            "file": "textures/tile_present_wall_half.png"
+        },
+        "deco_past_chair_side_R": {
+            "file": "textures/deco_past_chair_side_R.png"
+        },
+        "deco_past_cabinet_front": {
+            "file": "textures/deco_past_cabinet_front.png"
+        },
+        "past_roof_flipped": {
+            "file": "textures/past_roof_flipped.png"
+        },
+        "tile_present_bush1": {
+            "file": "textures/tile_present_bush1.png"
+        },
+        "resource_clock": {
+            "file": "textures/resource_clock.png"
+        },
+        "artifact_bowlcovered_jadeALT": {
+            "file": "textures/artifact_bowlcovered_jadeALT.png"
+        },
+        "pastB_floor_stone3": {
+            "file": "textures/pastB_floor_stone3.png"
+        },
+        "artifact_bowlcovered_porcelin": {
+            "file": "textures/artifact_bowlcovered_porcelin.png"
+        },
+        "tile_present_wall_top1": {
+            "file": "textures/tile_present_wall_top1.png"
+        },
+        "tile_present_obstacle_wall1": {
+            "file": "textures/tile_present_obstacle_wall1.png"
+        },
+        "pastB_floor_stone2": {
+            "file": "textures/pastB_floor_stone2.png"
+        },
+        "artifact_fan_blue": {
+            "file": "textures/artifact_fan_blue.png"
+        },
+        "tile_present_wall_top2": {
+            "file": "textures/tile_present_wall_top2.png"
+        },
+        "tile_present_obstacle_wall1_shadow": {
+            "file": "textures/tile_present_obstacle_wall1_shadow.png"
+        },
+        "deco_past_cabinet_side_L": {
+            "file": "textures/deco_past_cabinet_side_L.png"
+        },
+        "tile_present_obstacle_shaded_block": {
+            "file": "textures/tile_present_obstacle_shaded_block.png"
+        },
+        "tile_present_obstacle_wall2": {
+            "file": "textures/tile_present_obstacle_wall2.png"
+        },
+        "tile_present_wall_top3": {
+            "file": "textures/tile_present_wall_top3.png"
+        },
+        "pastB_floor_stone1": {
+            "file": "textures/pastB_floor_stone1.png"
+        },
+        "exit": {
+            "file": "textures/exit.png"
+        },
+        "pastB_col_corner": {
+            "file": "textures/pastB_col_corner.png"
+        },
+        "artifact_sword_green": {
+            "file": "textures/artifact_sword_green.png"
+        },
+        "tile_present_bush1_shadow": {
+            "file": "textures/tile_present_bush1_shadow.png"
+        },
+        "artifact_vase_gold": {
+            "file": "textures/artifact_vase_gold.png"
+        },
+        "artifact_bowlcovered_porcelinPLAIN": {
+            "file": "textures/artifact_bowlcovered_porcelinPLAIN.png"
+        },
+        "artifact_fan_red": {
+            "file": "textures/artifact_fan_red.png"
+        },
+        "pastB_side_brick_wall_grass1": {
+            "file": "textures/pastB_side_brick_wall_grass1.png"
+        },
+        "artifact_statue_jade": {
+            "file": "textures/artifact_statue_jade.png"
+        },
+        "pastB_side_brick_wall_grass3": {
+            "file": "textures/pastB_side_brick_wall_grass3.png"
+        },
+        "pastB_side_brick_wall_grass2": {
+            "file": "textures/pastB_side_brick_wall_grass2.png"
+        },
+        "artifact_urnB_clay": {
+            "file": "textures/artifact_urnB_clay.png"
+        },
+        "pastB_stairs_border_top": {
+            "file": "textures/pastB_stairs_border_top.png"
+        },
+        "deco_past_chair_front": {
+            "file": "textures/deco_past_chair_front.png"
+        },
+        "tile_past_floor_windowright": {
+            "file": "textures/tile_past_floor_windowright.png"
+        },
+        "artifact_fan_cherry": {
+            "file": "textures/artifact_fan_cherry.png"
+        },
+        "tile_past_wall_column_right_window": {
+            "file": "textures/tile_past_wall_column_right_window.png"
+        },
+        "past_roof_R": {
+            "file": "textures/past_roof_R.png"
+        },
+        "deco_past_table_side": {
+            "file": "textures/deco_past_table_side.png"
+        },
+        "artifact_scrollcaseB_silver": {
+            "file": "textures/artifact_scrollcaseB_silver.png"
+        },
+        "pastB_roof_shadow": {
+            "file": "textures/pastB_roof_shadow.png"
+        },
+        "pastB_col_roof_shadow_right": {
+            "file": "textures/pastB_col_roof_shadow_right.png"
+        },
+        "artifact_urn_green": {
+            "file": "textures/artifact_urn_green.png"
+        },
+        "artifact_box_painted": {
+            "file": "textures/artifact_box_painted.png"
+        },
+        "tile_past_wall_edge_L": {
+            "file": "textures/tile_past_wall_edge_L.png"
+        },
+        "pastB_wall_window": {
+            "file": "textures/pastB_wall_window.png"
         }
 	},
 	"fonts": {
