@@ -57,7 +57,7 @@ public:
         _node->setRelativeColor(false);
         _node->setVisible(true);
         _node->setAnchor(Vec2(0.5, 0.25));
-        _node->setPosition(position);
+        _node->setPosition(position + _node->getSize()/2);
 
         _node->setFrame(16);
 
