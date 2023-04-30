@@ -140,6 +140,12 @@
         "inventory_resource_trans_bar":{
             "file":     "textures/inventory_resource_used.png"
         },
+        "inventory_resource_cant_bar":{
+            "file":     "textures/inventory_resource_collected_cant.png"
+        },
+        "inventory_resource_trans_cant_bar":{
+            "file":     "textures/inventory_resource_used_cant.png"
+        },
         "resource": {
             "file":     "textures/resource.png"
         },
@@ -704,7 +710,7 @@
                         "visible"  : true,
                         "pushsize" : true,
                         "anchor"   : [0.5,0.5],
-                        "scale"    : 1.5
+                        "scale"    : 0.25
                     },
                     "children" : {
                         "up"       : {
@@ -729,7 +735,7 @@
                         "visible"  : true,
                         "pushsize" : true,
                         "anchor"   : [0.5,0.5],
-                        "scale"    : 1.6
+                        "scale"    : 0.25
                     },
                     "children" : {
                         "up"       : {
@@ -906,25 +912,6 @@
                                "absolute" : true
                            }
                        }
-                    }
-                },
-                 
-                 "switch":{
-                    "type"   : "Image",
-                    "format"    : {
-                        "type" : "Anchored"
-                    },
-                    "data"   : {
-                        "texture"  : "switch",
-                        "anchor"   : [0.5,0.5],
-                        "scale"    : 0.8
-                    },
-                    "layout" : {
-                        "x_anchor" : "center",
-                        "y_anchor" : "middle",
-                        "y_offset" : 120,
-                        "x_offset" : 300,
-                        "absolute" : true
                     }
                 }
                  

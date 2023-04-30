@@ -46,7 +46,6 @@ public:
     std::shared_ptr<cugl::scene2::SceneNode> _complete_layer;
     std::shared_ptr<cugl::scene2::SceneNode> _fail_layer;
     std::shared_ptr<cugl::scene2::SceneNode> _pause_layer;
-    std::shared_ptr<cugl::scene2::SceneNode> _switchNode;
     std::shared_ptr<cugl::scene2::SceneNode> _inventory_layer;
     
     // all buttons
@@ -108,6 +107,7 @@ public:
 
     // two_world switch
 
+    bool _cantSwitch = false;
     // if two-world switch is in progress
     bool _isSwitching;
     // first half: collapse
@@ -330,13 +330,24 @@ public:
         // if at the present world, draw the last bar with transparency
         bool half_switch = _activeMap == "presentWorld";
         int cur_res = _character->getNumRes();
+        
+        std::string resource_trans_bar;
+        std::string resource_bar;
+        if(_cantSwitch){
+            resource_trans_bar ="inventory_resource_trans_cant_bar";
+            resource_bar = "inventory_resource_cant_bar";
+        }
+        else{
+            resource_trans_bar ="inventory_resource_trans_bar";
+            resource_bar = "inventory_resource_bar";
+        }
         for(int i=0; i<5; i++){
             if(i == (cur_res-1) && half_switch){
-                _res_bar_vec[i]->setTexture(_assets->get<Texture>("inventory_resource_trans_bar"));
+                _res_bar_vec[i]->setTexture(_assets->get<Texture>(resource_trans_bar));
                 _res_bar_vec[i]->setVisible(true);
             }
             else if(i < cur_res){
-                _res_bar_vec[i]->setTexture(_assets->get<Texture>("inventory_resource_bar"));
+                _res_bar_vec[i]->setTexture(_assets->get<Texture>(resource_bar));
                 _res_bar_vec[i]->setVisible(true);
             }
             else{

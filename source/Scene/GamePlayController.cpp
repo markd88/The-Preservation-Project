@@ -169,9 +169,7 @@ _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displ
 
     
     // add switch indicator
-    _switchNode = _assets->get<scene2::SceneNode>("button_switch");
-    
-    
+
     _moveTo = cugl::scene2::MoveTo::alloc();
     _moveCam = CameraMoveTo::alloc();
     _moveCam->setDuration(ACTIONDURATION);
@@ -401,14 +399,14 @@ void GamePlayController::init(){
 }
 
 void GamePlayController::update(float dt){
-
+    
+    // _complete_layer->setPosition(_cam->getPosition());
     if(_fail_layer->getScene() != nullptr || _complete_layer->getScene() != nullptr || _pause_layer->getScene() != nullptr){
         _pause_button->deactivate();
         return;
     }else{
         _pause_button->activate();
     }
-
 
     //
     _world_switch_node->setPosition(_character->getNodePosition());
@@ -496,18 +494,12 @@ void GamePlayController::update(float dt){
 
     _input->update(dt);
     // if pinch, switch world
-    bool cant_switch = ((_activeMap == "pastWorld" && _obsSetPresent->inObstacle(_character->getPosition())) || (_activeMap == "presentWorld" && _obsSetPast->inObstacle(_character->getPosition())));
+    _cantSwitch = ((_activeMap == "pastWorld" && _obsSetPresent->inObstacle(_character->getPosition())) || (_activeMap == "presentWorld" && _obsSetPast->inObstacle(_character->getPosition())));
     
 
-    cant_switch = cant_switch || (_character->getNumRes() == 0);
-    
-    if(cant_switch){
-        _switchNode->setColor(Color4::RED);
-    }
-    else{
-        _switchNode->setColor(Color4::GREEN);
-    }
-    if(elapsed.count() >= 0.5 && _input->getPinchDelta() != 0 && !cant_switch){
+    _cantSwitch = _cantSwitch || (_character->getNumRes() == 0);
+
+    if(elapsed.count() >= 0.5 && _input->getPinchDelta() != 0 && !_cantSwitch){
         AudioEngine::get()->play("lovestruck", _switchSound, false, _switchSound->getVolume(), true);
 
         // if the character's position on the other world is obstacle, disable the switch

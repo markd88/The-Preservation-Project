@@ -49,7 +49,7 @@ public:
     
     bool init(const std::shared_ptr<cugl::AssetManager>& assets){
         Size dimen = Application::get()->getDisplaySize();
-        // dimen *= SCENE_WIDTH/dimen.width; // Lock the game to a reasonable resolution
+        dimen *= SCENE_WIDTH/dimen.width; // Lock the game to a reasonable resolution
         
         _scene = cugl::Scene2::alloc(dimen);
         
@@ -58,17 +58,82 @@ public:
         // load menu assets
         
         _assets->loadDirectory("json/menu.json");
-        
-        auto layer = _assets->get<scene2::SceneNode>("menu");
-        layer->setContentSize(dimen);
-        // layer->doLayout(); // This rearranges the children to fit the screen
-        
+        auto menu_layer = _assets->get<scene2::SceneNode>("menu");
+        menu_layer->setPosition(_scene->getSize()/2);
+       
+        Vec2 menu_size = menu_layer->getSize();
+        Vec2 space = Vec2 (menu_size.x/8, menu_size.y/5);
+        Vec2 level_pos = Vec2 (space.x*2, space.y*3);
+        auto level_font = _assets->get<cugl::Font>("courier");
+        auto level_color = Color4(206, 144, 23);
         for (int i=0; i<15; i++){
-            _level_buttons[i] = std::dynamic_pointer_cast<scene2::Button>(assets->get<scene2::SceneNode>("menu_backdrop_grid_button"+to_string(i+1)));
+//            _level_buttons[i] = std::dynamic_pointer_cast<scene2::Button>(assets->get<scene2::SceneNode>("menu_backdrop_grid_button"+to_string(i+1)));
+            // 1. get level num
+            auto level_num = to_string(i+1);
+            auto level_label = std::make_shared<cugl::scene2::Label>();
+            level_label->initWithText(level_num, level_font);
+            level_label->setForeground(level_color);
+            level_label->setScale(0.4);
+            
+            // 2. get button image
+            std::shared_ptr<cugl::scene2::PolygonNode> button_image = std::make_shared<cugl::scene2::PolygonNode>();
+            button_image->initWithTexture(_assets->get<Texture>("menu_selectbutton"));
+            button_image->addChild(level_label);
+            level_label->setAnchor(Vec2(0.5, 0.5));
+            level_label->setPosition(button_image->getSize()/2);
+            
+            // get complete image
+            std::shared_ptr<cugl::scene2::PolygonNode> complete_image = std::make_shared<cugl::scene2::PolygonNode>();
+            complete_image->initWithTexture(_assets->get<Texture>("menu_complete"));
+            button_image->addChild(complete_image);
+            complete_image->setAnchor(Vec2(0.5, 0.5));
+            complete_image->setPosition(Vec2(button_image->getSize().width*0.75, button_image->getSize().height*0.25));
+            
+            // 3. get button
+            auto level_button = std::make_shared<cugl::scene2::Button>();
+            level_button->init(button_image);
+            
+            menu_layer->addChild(level_button);
+            level_button->setAnchor(Vec2(0.5, 0.5));
+            level_button->setPosition(level_pos);
+            
+            if((i+1) % 5 == 0){
+                level_pos = Vec2(space.x*2, level_pos.y - space.y+1);
+            }
+            else{
+                level_pos += Vec2(space.x, 0);
+            }
+            
+            
+   
+            _level_buttons[i] = level_button;
+            
+            
             _level_buttons[i]->setVisible(true);
-            if (i >= _highestUnlocked) {
-                _level_buttons[i]->setColor(Color4::GRAY);
-            } else {
+
+        }
+        _scene->addChild(menu_layer);
+        
+        updateMenu();
+        return true;
+    }
+    
+    void updateMenu(){
+        for (int i=0; i<15; i++){
+            auto button_img = std::dynamic_pointer_cast<scene2::PolygonNode>(_level_buttons[i]->getChildren()[0]);
+            if (i > _highestUnlocked) {
+                button_img->setTexture(_assets->get<Texture>("menu_lock"));
+                button_img->getChildren()[0]->setVisible(false);
+                button_img->getChildren()[1]->setVisible(false);
+            }
+            else {
+                button_img->setTexture(_assets->get<Texture>("menu_selectbutton"));
+                button_img->getChildren()[0]->setVisible(true);
+                if(i < _highestUnlocked){
+                    button_img->getChildren()[1]->setVisible(true);
+                }else{
+                    button_img->getChildren()[1]->setVisible(false);
+                }
                 _level_buttons[i]->activate();
                 _level_buttons[i]->addListener([=](const std::string& name, bool down) {
                     if(!down){
@@ -78,13 +143,7 @@ public:
                     }
                 });
             }
-
-
         }
-        
-        
-        _scene->addChild(layer);
-        return true;
     }
     
     void update(float timestep){
