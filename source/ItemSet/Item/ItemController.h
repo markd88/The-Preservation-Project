@@ -24,9 +24,17 @@ private:
     /** View reference */
     std::unique_ptr<ItemView> _view;
 
+    bool can_be_collected;
+
+private: int _id;
+
     
 #pragma mark Main Methods
 public:
+
+    const int& id;
+
+
     /**
      * Creates a controller for the model and view.
      *
@@ -34,9 +42,15 @@ public:
      * @param size      The width and height of a tile
      * @param color     The tile color
      */
-    ItemController(Vec2 position, float rot, Size size, bool isArtifact, bool isResource, bool isObs, const std::shared_ptr<cugl::AssetManager>& assets, std::string textureKey) {
+    ItemController(Vec2 position, float rot, Size size, bool isArtifact, bool isResource, bool isObs, const std::shared_ptr<cugl::AssetManager>& assets, std::string textureKey, int id) : id(_id) {
         _model = std::make_unique<ItemModel>(position, size, isArtifact, isResource, isObs, textureKey);
-        _view = std::make_unique<ItemView>(position, rot, size, isArtifact, isResource, isObs, assets, textureKey);
+        _view = std::make_unique<ItemView>(position, rot, size, isArtifact, isResource, isObs, assets, textureKey, id);
+        _id = id;
+        if (isResource || isArtifact) {
+            can_be_collected = true;
+        } else {
+            can_be_collected = false;
+        }
     }
 
 #pragma mark Update Methods
@@ -51,6 +65,9 @@ public:
         _view->setPosition(position);
     }
 
+    bool Iscollectable() {
+        return can_be_collected;
+    }
     /**
      *  Updates the model and view with the size of this tile.
      *
@@ -127,6 +144,21 @@ public:
     void updatePriority(){
         return _view->updatePriority();
     }
+
+    void setAction(std::shared_ptr<cugl::scene2::ActionManager> actions) {
+        _view->setAction(actions);
+    }
+
+    void updateAnim() {
+        _view->updateAnim();
+    }
+
+    void removeAnim() {
+        _view->removeAnim();
+        can_be_collected = false;
+    }
+
+
     
 #pragma mark Controller Methods
 public:

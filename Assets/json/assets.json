@@ -32,6 +32,13 @@
         }
     },
     "textures": {
+        "clock_Anim" : {
+            "file" : "textures/clock-Anim.png"
+        },
+        "clock" : {
+            "file" : "textures/clock.png"
+        },
+
         "pause_button": {
             "file":      "textures/pause_button.png"
         },
