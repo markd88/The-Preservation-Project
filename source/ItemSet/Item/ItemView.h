@@ -102,7 +102,7 @@ public:
         //        auto node = scene2::SceneNode::alloc();
         Vec2 pos = nodePos();
 
-        if (_isArtifact || _isResource) {
+        if (_isResource) {
             std::shared_ptr<Texture> texture  = assets->get<Texture>("clock");
             _static_node = scene2::PolygonNode::allocWithTexture(texture);
             _static_node->setAnchor(Vec2::ANCHOR_CENTER);
@@ -113,7 +113,21 @@ public:
             _static_node->addChild(_anim_node);
             _anim_node->setVisible(true);
 
-        } else {
+        }
+        else if (_isArtifact ) {
+            std::shared_ptr<Texture> texture  = assets->get<Texture>("vase");
+            _static_node = scene2::PolygonNode::allocWithTexture(texture);
+            _static_node->setAnchor(Vec2::ANCHOR_CENTER);
+            setPosition(pos + Vec2(64,64));
+            std::shared_ptr<Texture> textureAnim  = assets->get<Texture>("vase_Anim");
+            _anim_node = scene2::SpriteNode::allocWithSheet(textureAnim, 2, 4, 8);
+
+            _static_node->addChild(_anim_node);
+            _anim_node->setVisible(true);
+
+        }
+
+        else {
             std::shared_ptr<Texture> texture  = assets->get<Texture>(textureKey);
             _static_node = scene2::PolygonNode::allocWithTexture(texture);
             _static_node->setAnchor(Vec2::ANCHOR_BOTTOM_LEFT);

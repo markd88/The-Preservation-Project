@@ -21,6 +21,8 @@ private:
     /** The node is attached to the root-scene*/
     std::shared_ptr<scene2::SpriteNode> _node;
 
+    std::shared_ptr<cugl::scene2::PolygonNode>  _shadow;
+
 
     /** Manager to process the animation actions */
     std::shared_ptr<cugl::scene2::ActionManager> _actions;
@@ -66,6 +68,7 @@ public:
 
 
 
+
         std::shared_ptr<Texture> question = assets->get<Texture>("question_mark_anim");
         _question_node = scene2::SpriteNode::allocWithSheet(question, 5,6,30);
         _question_node->setVisible(false);
@@ -75,6 +78,17 @@ public:
         _question_node->setRelativeColor(false);
 
         _node->addChildWithName(_question_node, "question_mark");
+
+
+        std::shared_ptr<Texture> shadow = assets->get<Texture>("shadow");
+        _shadow = scene2::PolygonNode::allocWithTexture(shadow);
+
+        _node->addChildWithName(_shadow, "shadow");
+        _shadow->setScale(0.2f);
+        _shadow->setPosition(120,50);
+        _shadow->setRelativeColor(false);
+        _shadow->setVisible(true);
+
 
 
 
