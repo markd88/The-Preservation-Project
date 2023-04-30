@@ -236,6 +236,7 @@ void GamePlayController::loadLevel(){
     _obsSetPast = _pastWorldLevel->getObs();
     _wallSetPast = _pastWorldLevel->getWall();
     _artifactSet = _pastWorldLevel->getItem();
+    _artifactSet->setAction(_actions);
     artNum = _artifactSet->getArtNum();
 
     // Draw present world

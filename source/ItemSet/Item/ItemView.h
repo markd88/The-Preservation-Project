@@ -21,6 +21,7 @@ private:
     bool _isArtifact;
     bool _isResource;
     bool _isObs;
+    std::shared_ptr<cugl::scene2::ActionManager> _actions;
     
 #pragma mark Main Functions
 public:
@@ -32,6 +33,7 @@ public:
         _isArtifact = isArtifact;
         _isResource = isResource;
         _isObs = isObs;
+        
     }
     
     ~ItemView(){
@@ -71,9 +73,9 @@ public:
         //_node->setPolygon(Rect(Vec2(0,0), size));
         _node->setContentSize(size);
     }
-    
-    void setAngle(float angle){
-        _node->setAngle(angle);
+
+    void setAction(std::shared_ptr<cugl::scene2::ActionManager> actions) {
+        _actions = actions;
     }
     
     void setTexture(const std::shared_ptr<cugl::AssetManager>& assets, std::string textureKey) {
