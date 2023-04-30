@@ -29,7 +29,7 @@ public:
     
     int artCount;
     /**vector of guard IDs**/
-    vector<int> _usedIDs;
+    std::vector<int> _usedIDs;
     
 #pragma mark Methods
 public:

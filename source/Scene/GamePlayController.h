@@ -264,6 +264,8 @@ public:
         }
         _fail_back_button->activate();
         _fail_again_button->activate();
+        AudioEngine::get()->clear("past");
+        AudioEngine::get()->clear("present");
     }
     
     void completeTerminate(){
@@ -277,6 +279,8 @@ public:
         }
         _complete_back_button->activate();
         _complete_next_button->activate();
+        AudioEngine::get()->clear("past");
+        AudioEngine::get()->clear("present");
     }
     
     void pauseOn(){
