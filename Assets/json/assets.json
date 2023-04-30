@@ -32,6 +32,20 @@
         }
     },
     "textures": {
+        "vase_Anim" : {
+            "file" : "textures/vase_gold_anim.png"
+        },
+        "vase" : {
+            "file" : "textures/vase_gold.png"
+        },
+
+        "clock_Anim" : {
+            "file" : "textures/clock-Anim.png"
+        },
+        "clock" : {
+            "file" : "textures/clock.png"
+        },
+
         "pause_button": {
             "file":      "textures/pause_button.png"
         },

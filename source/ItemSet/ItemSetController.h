@@ -28,7 +28,12 @@ public:
     typedef std::shared_ptr<cugl::Scene2> Scene;
     
     int artCount;
-    
+
+    std::vector<int> _usedIDs;
+
+
+
+
 #pragma mark Methods
 public:
 //    ItemSetController(const std::shared_ptr<cugl::AssetManager>& assets) {
@@ -49,15 +54,38 @@ public:
 //    }
     
     void add_this(Vec2 aPos, float rot, Size size, bool isArtifact, bool isResource, bool isWall, const std::shared_ptr<cugl::AssetManager>& assets, std::string textureKey){
-        Item _item = std::make_unique<ItemController>(aPos, rot, size, isArtifact, isResource, isWall, assets, textureKey);
+        int new_id = generateUniqueID();
+        Item _item = std::make_unique<ItemController>(aPos, rot, size, isArtifact, isResource, isWall, assets, textureKey, new_id);
         _itemSet.push_back(std::move(_item));
     }
-    
+
+    int generateUniqueID() {
+        int id = 0;
+        bool isUsed = true;
+        while (isUsed){
+            id = rand() % 900 + 100;
+            if (std::find(_usedIDs.begin(), _usedIDs.end(), id) != _usedIDs.end()) {
+                id = rand() % 900 + 100;
+            }
+            else {
+                _usedIDs.push_back(id);
+                isUsed = false;
+            }
+        }
+
+        return id;
+    }
 
     // idx is the idx of this item in this vec
     void remove_this(int idx, std::shared_ptr<cugl::scene2::OrderedNode>& s){
-        _itemSet[idx]->removeChildFrom(s);
-        _itemSet.erase(_itemSet.begin() + idx);
+        if (_itemSet[idx]->isArtifact()) {
+            _itemSet[idx]->removeChildFrom(s);
+            _itemSet.erase(_itemSet.begin() + idx);
+        }
+        else if (_itemSet[idx]->isResource()) {
+            _itemSet[idx]->removeAnim();
+        }
+
     }
 
     
@@ -147,6 +175,25 @@ public:
         }
         return artCount;
     }
+
+    void setAction(std::shared_ptr<cugl::scene2::ActionManager> actions){
+        unsigned int vecSize = _itemSet.size();
+        for(unsigned int i = 0; i < vecSize; i++) {
+            if(_itemSet[i] != nullptr){
+                _itemSet[i]->setAction(actions);
+            }
+        }
+    }
+
+    void updateAnim() {
+        unsigned int vecSize = _itemSet.size();
+        for(unsigned int i = 0; i < vecSize; i++) {
+            if(_itemSet[i] != nullptr){
+                _itemSet[i]->updateAnim();
+            }
+        }
+}
+
     
     // update the prio
     void updatePriority(){
