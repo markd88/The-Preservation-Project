@@ -5,4 +5,8 @@
 //  Created by Yichen Qiu on 2/23/23.
 //
 
-#include "PathController.hpp"
+#include "PathController.h"
+#include "PathModel.h"
+#include "PathView.h"
+
+

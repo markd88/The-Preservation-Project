@@ -1,24 +1,8 @@
-//
-//  MVCTileController.h
-//  TileMap Lab
-//
-//  This module provides the MVC version of the TileController class.
-//
-//  Author: Gonzalo Gonzalez
-//  Version: 1/5/23.
-//
-#ifndef __MVC_TILE_CONTROLLER_H__
-#define __MVC_TILE_CONTROLLER_H__
+#ifndef __TILE_CONTROLLER_H__
+#define __TILE_CONTROLLER_H__
+#include "TileModel.h"
+#include "TileView.h"
 
-// These do not need to be in angle brackets
-#include "MVCTileModel.h"
-#include "MVCTileView.h"
-
-namespace MVC {
-/**
- * A class communicating between the model and the view. It only
- * controls a single tile.
- */
 class TileController {
     
 #pragma mark Internal References
@@ -36,13 +20,20 @@ public:
      * @param position  The bottom left corner of the tile
      * @param size      The width and height of a tile
      * @param color     The tile color
+     * @param is_obs     if the tile is an obstacle
      */
-    TileController(Vec2 position, Size size, Color4 color) {
+    TileController(Vec2 position, Size size, Color4 color, bool is_obs = false) {
         // TODO: Implement me
-        this->_model = std::make_unique<TileModel>(position, size, color);
+        this->_model = std::make_unique<TileModel>(position, size, color, is_obs);
         _view = std::make_unique<TileView>(position, size, color);
     }
     
+    TileController(Vec2 position, Size size, bool is_obs,
+                   const std::shared_ptr<cugl::AssetManager>& assets, std::string textureKey) {
+        this->_model = std::make_unique<TileModel>(position, size, Color4::WHITE, textureKey, is_obs);
+        _view = std::make_unique<TileView>(position, size, assets, textureKey);
+    }
+
 #pragma mark Update Methods
 public:
     /**
@@ -100,25 +91,52 @@ public:
         _view->removeChildFrom(node);
     }
     
-#pragma mark Controller Methods
-public:
-    /**
-     *  Inverts the color of this tile.
-     *
-     *  Examples:
-     *      Inverting white (255, 255, 255, 0) gives black (0, 0, 0, 0)
-     *      Inverting red (255, 0, 0, 0) gives cyan (0, 255, 255, 0)
-     *      Inverting light purple (150, 100, 200, 0) gives a dull green
-     *          (105, 155, 55, 0)
-     */
-    void invertColor() {
-        // TODO: Implement me
-        Color4 old_color = _model->color;
-        Color4 new_color = old_color.complement();
-        updateColor(new_color);
+//    void setTextureKey(std::string textureKey) {
+//        _model->setTextureKey(textureKey);
+//    }
+
+    void setTexture(const std::shared_ptr<cugl::AssetManager>& assets, std::string textureKey) {
+        _view->setTexture(assets, textureKey);
     }
 
-};
-}
+#pragma mark Getters
+public:
+    /**
+     *  Get if the tile is obstacle
+     *
+     *  @param is_obs
+     */
+    bool is_obs(){
+        return _model->is_obs();
+    }
+    
+    /**
+     *  Detect if this file contains a point
+     *
+     *  @param point, the position of the point
+     */
+    bool contains(Vec2 point){
+        return _view->contains(point);
+    }
+    
+    std::string getTextureKey() {
+        return _model->getTextureKey();
+    }
 
-#endif /* __MVC_TILE_CONTROLLER_H__ */
+    bool containsLine(Vec2 a, Vec2 b){
+        return _view->containsLine(a, b);
+    }
+    
+    void setVisibility(bool visible){
+        _view->setVisibility(visible);
+    }
+    
+    Vec2 getPosition(){
+        return _view->getPos();
+    }
+    
+    Vec2 getSize(){
+        return _model->getSize();
+    }
+};
+#endif

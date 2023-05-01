@@ -1,32 +1,15 @@
-//
-//  MVCTileView.h
-//  TileMap Lab
-//
-//  This module provides the MVC version of the TileView class.
-//
-//  Author: Gonzalo Gonzalez
-//  Version: 1/5/23.
-//
-#ifndef __MVC_TILE_VIEW_H__
-#define __MVC_TILE_VIEW_H__
 #include <cugl/cugl.h>
+#include <cugl/base/CUBase.h>
+
 using namespace cugl;
 
-namespace MVC {
-/**
- * A class representing the interface for a single tile view.
- * 
- * There is very little that this class does that a SceneNode (or
- * PolygonNode) does not already do. So technically we could use
- * one of those classes for the view. But by pulling it out as its
- * own class, we make the relationship explicit.
- */
 class TileView {
     
 #pragma mark Internal References
 private:
     /** Main tile view */
     std::shared_ptr<scene2::PolygonNode> _node;
+    std::string _textureKey;
     
 #pragma mark Main Functions
 public:
@@ -48,6 +31,17 @@ public:
         setColor(color);
         setPosition(position);
         setSize(size);
+    }
+    
+    TileView(Vec2 position, Size size, const std::shared_ptr<cugl::AssetManager>& assets, std::string textureKey) {
+        // TODO: Implement me
+        this->_node = scene2::PolygonNode::alloc();
+        _node->setAnchor(Vec2::ANCHOR_BOTTOM_LEFT);
+        _node->setRelativeColor(false);
+        // _node->setPriority(10000);
+        setPosition(position);
+        setSize(size);
+//        setTextureKey(textureKey);
     }
     
     /**
@@ -120,8 +114,66 @@ public:
         // TODO: Implement me
         _node->setColor(color);
     }
+    
+    void setTexture(const std::shared_ptr<cugl::AssetManager>& assets, std::string textureKey) {
+        auto tileNode = scene2::SceneNode::alloc();
+        std::shared_ptr<Texture> texture  = assets->get<Texture>(textureKey);
+        tileNode = scene2::PolygonNode::allocWithTexture(texture);
+         
+        _node->addChild(tileNode);
+    }
 
+    /**
+     *  Detect if this file contains a point
+     *
+     *  @param point, the position of the point
+     */
+    bool contains(Vec2 point){
+        Vec2 global_pos = _node->getWorldPosition();
+        Size s = _node->getSize();
+        bool hor = (point.x >= global_pos.x && point.x <= global_pos.x + s.width);
+        bool ver = (point.y >= global_pos.y && point.y <= global_pos.y + s.height);
+        return hor && ver;
+    }
+    
+    bool containsLine(Vec2 a, Vec2 b){
+        
+        if (contains(a) or contains(b)){
+            return true;
+        }
+    
+        Vec2 pos = _node->getWorldPosition();
+        Size s = _node->getSize();
+        float rx = pos.x;
+        float ry = pos.y;
+        float rw = s.width;
+        float rh = s.height;
+        bool left = lineLine(a.x,a.y, b.x, b.y, rx, ry, rx, ry + rh);
+        bool right = lineLine(a.x,a.y, b.x, b.y, rx + rw, ry, rx + rw, ry + rh);
+        bool top = lineLine(a.x,a.y, b.x, b.y, rx, ry + rh, rx + rw, ry + rh);
+        bool bottom = lineLine(a.x,a.y,b.x,b.y, rx, ry, rx+rw, ry);
+        
+        return (left or right or top or bottom);
+         
+    }
+    
+    //determine if two lines intersect
+    bool lineLine(float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4) {
+        // calculate the distance to intersection point
+        float uA = ((x4-x3)*(y1-y3) - (y4-y3)*(x1-x3)) / ((y4-y3)*(x2-x1) - (x4-x3)*(y2-y1));
+        float uB = ((x2-x1)*(y1-y3) - (y2-y1)*(x1-x3)) / ((y4-y3)*(x2-x1) - (x4-x3)*(y2-y1));
+        
+        // if uA and uB are between 0-1, lines are colliding
+        return (uA >= 0 && uA <= 1 && uB >= 0 && uB <= 1);
+    }
+    
+    void setVisibility(bool visible){
+        _node->setVisible(visible);
+    }
+    
+    Vec2 getPos(){
+        return _node->getWorldPosition();
+    }
+    
+     
 };
-}
-
-#endif /* __MVC_TILE_VIEW_H__ */

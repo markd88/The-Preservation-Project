@@ -1,19 +1,11 @@
 //
 //  InputController.h
-//  TileMap Lab
 //
-//  This module represents the input handlers. Note that this application
-//  does not use the mouse at all.  This code is here to simply show you
-//  how you might want to organize your handler.
-//
-//  Author: Gonzalo Gonzalez
-//  Version: 1/5/23.
+//  This module represents the input handlers.
 //
 #ifndef __INPUT_CONTROLLER_H__
 #define __INPUT_CONTROLLER_H__
 #include <unordered_set>
-
-// This is in the same folder
 #include "InputModel.h"
 
 /**
@@ -26,33 +18,30 @@
  * architecture allows us to buffer keypresses even when FPS is slow.
  */
 class InputController {
-
+    
 #pragma mark Internal References
 private:
     /** Model reference*/
     std::unique_ptr<InputModel> _model;
-    /** Track the keys pressed this animation frame */
-    std::unordered_set<KeyCode> _current;
-    /** Track the keys pressed the previous animation frame */
-    std::unordered_set<KeyCode> _previous;
-    /** The unique key for the keyboard listeners */
-    Uint32 _kkey;
-    /** The unique key for the mouse listeners */
-    Uint32 _mkey;
-
+    
+    /** The unique key for the touch listeners */
+    Uint32 _touchListener;
+    
+    /** The unique key for the gensture listeners */
+    Uint32 _pinchListener;
+    
 #pragma mark External References
 private:
-    /** Keyboard reference */
-    Keyboard *_keyboard;
-    /** Mouse reference */
-    Mouse *_mouse;
-
-#pragma mark Main Functions
+    /** Touchscreen reference */
+    Touchscreen* _touch;
+    
 public:
+#pragma mark -
+#pragma mark Constructors
     /**
      * Creates the handler, initializing the input devices.
      *
-     * This method will create the mouse listeners. In the case of failure
+     * This method will create the touch listeners. In the case of failure
      * an assertion will crash the program.
      *
      * Note, the constructor should not be called directly. Retrieve a
@@ -60,8 +49,45 @@ public:
      */
     InputController();
     
+    /**
+     * Disposes of this input controller, releasing all listeners.
+     */
+    ~InputController() { dispose(); }
+    
+    /**
+     * Deactivates this input controller, releasing all listeners.
+     *
+     * This method will not dispose of the input controller. It can be reused
+     * once it is reinitialized.
+     */
+    void dispose();
+    
     /** Returns a singleton instance of InputController. */
     static std::shared_ptr<InputController> getInstance();
+    
+    bool init(const cugl::Size& size);
+    
+    // touch
+    bool initTouch();
+    
+    // gesture
+    bool initPinch(const cugl::Size& size);
+    
+    cugl::Vec2 screenToScenePinch(const cugl::Vec2& position) const;
+    
+#pragma mark -
+#pragma mark Input Detection
+    /**
+     * Returns true if this control is active.
+     *
+     * An active control is one where all of the listeners are attached
+     * and it is actively monitoring input. An input controller is only
+     * active if {@link #init} is called, and if {@link #dispose} is not.
+     *
+     * @return true if this control is active.
+     */
+    bool isActiveTouch() const { return _model->_activeTouch; }
+    bool isActivePinch() const { return _model->_activePinch; }
     
     /**
      * Aligns inputs detected through callbacks with frame updates.
@@ -69,62 +95,151 @@ public:
      * @param dt  The amount of time (in seconds) since the last frame
      */
     void update(float dt);
+    void updateTouch();
+    void updatePinch(float dt);
+    
+    /**
+     * Clears any buffered inputs so that we may start fresh.
+     */
+    void clearPinch();
 
-#pragma mark Mouse Callbacks
+#pragma mark Touch Callbacks
 private:
     /**
-     * Callback for the beginning of a mouse press event.
+     * Call back to execute when a touch is pressed.
      *
      * This function will record a press only if the left button is pressed.
      *
-     * @param event     The event with the mouse information
-     * @param clicks    The number of clicks (for double clicking)
+     * @param event     The event with the touch information
      * @param focus     Whether this device has focus (UNUSED)
      */
-    void buttonDownCB(const MouseEvent &event, Uint8 clicks, bool focus);
-
+    void touchDownCB(const cugl::TouchEvent& event, bool focus);
+    
     /**
-     * Callback for when the mouse is pressed down.
+     * Call back to execute when a touch is released.
      *
-     * This function will record whenever the left mouse is held down after the initial press.
-     *
-     * @param event     The event with the mouse information
-     * @param previous    The previous position of the mouse
+     * @param event     The event with the touch information
      * @param focus     Whether this device has focus (UNUSED)
      */
-    void buttonHeldCB(const MouseEvent& event, const Vec2 previous, bool focus);
-
+    void touchUpCB(const cugl::TouchEvent& event, bool focus);
+    
     /**
-     * Callback for the end of a mouse press event.
+     * Call back to execute when the finger moves.
      *
-     * This function will record a release for the left mouse button.
+     * This input controller sets the pointer awareness only to monitor a touch
+     * when it is dragged (moved with button down), not when it is moved. This
+     * cuts down on spurious inputs. In addition, this method only pays attention
+     * to drags initiated with the touch.
      *
-     * @param event     The event with the mouse information
-     * @param clicks    The number of clicks (for double clicking)
+     * @param event     The event with the touch information
+     * @param previous  The previously reported touch location
      * @param focus     Whether this device has focus (UNUSED)
      */
-    void buttonUpCB(const MouseEvent &event, Uint8 clicks, bool focus);
-
+    void motionCBtouch(const cugl::TouchEvent& event, const cugl::Vec2 previous, bool focus);
+    
+    // pan callbacks
+    /**
+     * Callback for the end of a pan event
+     *
+     * @param event The associated event
+     * @param focus     Whether the listener currently has focus
+     */
+    void pinchEndedCB(const cugl::CoreGestureEvent& event, bool focus);
+    
+    /**
+     * Callback for a pan movement event
+     *
+     * @param event The associated event
+     * @param focus     Whether the listener currently has focus
+     */
+    void pinchMovedCB(const cugl::CoreGestureEvent& event, bool focus);
+    
 #pragma mark Input State Getters
 public:
+    // touch
     /**
-     * Returns whether `key` is held down.
+     * Returns the current touch position
      *
-     * @param key   The keyboard key
+     * @return the current touch position
      */
-    bool isKeyPressed(KeyCode key) {
-        // Previous was the result before the start of this frame
-        return _previous.find(key) != _previous.end();
+    const cugl::Vec2& getPosition() const {
+        return _model->_currPos;
     }
     
-    /** Returns whether the mouse was first clicked during this frame. */
-    bool isMouseClicked() { return _model->isMouseClicked; }
+    /**
+     * Returns the previous touch position
+     *
+     * @return the previous touch position
+     */
+    const cugl::Vec2& getPrevious() const {
+        return _model->_prevPos;
+    }
     
-    /** Returns whether the mouse was held down during this frame. */
-    bool isMouseHeld() { return _model->isMouseHeld; }
+    /**
+     * Return true if the user initiated a press this frame.
+     *
+     * A press means that the user is pressing (button/finger) this
+     * animation frame, but was not pressing during the last frame.
+     *
+     * @return true if the user initiated a press this frame.
+     */
+    bool didPress() const {
+        return !_model->_prevDown && _model->_currDown;
+    }
     
-    /** Returns the mouse's last recorded position. */
-    Vec2 getLastMousePos() { return _model->lastMousePos; }
+    /**
+     * Return true if the user initiated a release this frame.
+     *
+     * A release means that the user was pressing (button/finger) last
+     * animation frame, but is not pressing during this frame.
+     *
+     * @return true if the user initiated a release this frame.
+     */
+    bool didRelease() const {
+        return !_model->_currDown && _model->_prevDown;
+    }
+    
+    /**
+     * Return true if the user is actively pressing this frame.
+     *
+     * This method only checks that a press is active or ongoing.
+     * It does not care when the press was initiated.
+     *
+     * @return true if the user is actively pressing this frame.
+     */
+    bool isDown() const {
+        return _model->_currDown;
+    }
+    
+    // gesture
+    const cugl::Vec2& getAnchor() const { return _model->_anchor; }
+    
+    void setAnchor(const cugl::Vec2& anchor) { _model->_anchor = anchor; }
+    
+    /**
+     * Returns the current pan delta.
+     *
+     * The delta is the amount that the user has moved a two-finger touch
+     * since the last animation frame. This distance is measured according
+     * to the first-finger touch.
+     *
+     * @return The input thrust
+     */
+    const cugl::Vec2& getPanDelta() const { return _model->_pandelta; }
+    
+    float getPinchDelta() const { return _model->_pinchDelta; }
+    
+    float getAngleDelta() const { return _model->_angleDelta; }
+    
+    bool didPan(){
+        if (!_model->_mousepan && _model->_prevPan){
+            _model->_prevPan = false;
+            return true;
+        }else{
+            return false;
+        }
+    }
+    
 };
 
 #endif /* __INPUT_CONTROLLER_H__ */

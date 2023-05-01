@@ -1,16 +1,21 @@
 //
 //  InputController.cpp
-//  TileMap Lab
 //
-//  This module represents the input handlers. Note that this application
-//  does not use the mouse at all.  This code is here to simply show you
-//  how you might want to organize your handler.
+//  This module represents the input handlers.
 //
-//  Author: Gonzalo Gonzalez
-//  Version: 1/5/23.
-//
-// This is in the same folder so it is okay
 #include "InputController.h"
+
+#pragma mark Input Constants
+
+/** The maximum zoom amount */
+#define MAX_ZOOM 5
+/** Keyboard turning amount */
+#define TURN_UNIT M_PI/128
+/** Keyboard pinch amount in pixels */
+#define PINCH_UNIT 5
+
+#pragma mark -
+#pragma mark Input Controller
 /**
  * Creates the handler, initializing the input devices.
  *
@@ -20,30 +25,106 @@
  * Note, the constructor should not be called directly. Retrieve a
  * singleton with {@link #getInstance} instead.
  */
-InputController::InputController(): _model(std::make_unique<InputModel>()), _keyboard(Input::get<Keyboard>()),
-    _mouse(Input::get<Mouse>()) {
-    _kkey = _keyboard->acquireKey();
-    bool addedKey = _keyboard->addKeyDownListener(_kkey,
-        [this](const KeyEvent& event, bool focus) {
-            _current.emplace(event.keycode);
+InputController::InputController(){
+    _model = std::make_unique<InputModel>();
+};
+
+/**
+* Deactivates this input controller, releasing all listeners.
+*
+* This method will not dispose of the input controller. It can be reused
+* once it is reinitialized.
+*/
+void InputController::dispose() {
+    if (_model->_activePinch) {
+        CoreGesture* gesture = Input::get<CoreGesture>();
+        gesture->removeBeginListener(_pinchListener);
+        gesture->removeChangeListener(_pinchListener);
+        gesture->removeEndListener(_pinchListener);
+        _model->_activePinch = false;
+    }
+}
+
+bool InputController::initTouch() {
+    // touch init
+    _touch = Input::get<Touchscreen>();
+    if (_touch) {
+        _touchListener = _touch->acquireKey();
+        bool addedKey = _touch->addBeginListener(_touchListener, [=](const cugl::TouchEvent& event, bool focus) {
+            this->touchDownCB(event,focus);
         });
-    CUAssertLog(addedKey, "failed adding key listener");
+        CUAssertLog(addedKey, "failed adding key listener");
+        
+        bool addedPress = _touch->addEndListener(_touchListener, [=](const cugl::TouchEvent& event, bool focus) {
+            this->touchUpCB(event,focus);
+        });
+        CUAssertLog(addedPress, "failed adding end listener");
+        
+        bool addedMotion = _touch->addMotionListener(_touchListener, [=](const cugl::TouchEvent& event, const Vec2 previous, bool focus) {
+            this->motionCBtouch(event,previous,focus);
+        });
+        CUAssertLog(addedMotion, "failed adding motion listener");
+        _model->_activeTouch = true;
+    }
+    return _model->_activeTouch;
+}
 
-    _mkey = _mouse->acquireKey();
-    _mouse->setPointerAwareness(Mouse::PointerAwareness::DRAG);
-    bool addedPress = _mouse->addPressListener(_mkey, [this](const MouseEvent &event, Uint8 clicks, bool focus) { buttonDownCB(event, clicks, focus);
+bool InputController::initPinch(const Size &size) {
+    // pan gesture init
+    bool success = true;
+    _model->_screensize = size;
+    CoreGesture* gesture = Input::get<CoreGesture>();
+    gesture->setSpinActive(true);
+    _pinchListener = gesture->acquireKey();
+    
+    gesture->addBeginListener(_pinchListener,[=](const CoreGestureEvent& event, bool focus) {
+        _model->_currTouch = screenToScenePinch(event.origPosition);
+        _model->_currTouch.y = _model->_screensize.height-_model->_currTouch.y;
+        _model->_prevTouch = _model->_currTouch;
+        _model->_currAngle = event.origAngle;
+        _model->_prevAngle = event.origAngle;
+        _model->_currSpread = event.origSpread;
+        _model->_prevSpread = event.origSpread;
+        _model->_anchor = _model->_currTouch;
     });
-    CUAssertLog(addedPress, "failed adding press listener");
+    gesture->addChangeListener(_pinchListener,[=](const CoreGestureEvent& event, bool focus) {
+        switch (event.type) {
+            case CoreGestureType::PAN:
+                _model->_mousepan = true;
+                _model->_currTouch = screenToScenePinch(event.currPosition);
+                _model->_currTouch.y = _model->_screensize.height-_model->_currTouch.y;
+                _model->_anchor = _model->_currTouch;
+                break;
+            case CoreGestureType::PINCH:
+                _model->_currSpread = event.currSpread;
+                break;
+            case CoreGestureType::SPIN:
+                _model->_currAngle = event.currAngle;
+                break;
+            case CoreGestureType::NONE:
+                break;
+        }
+    });
+    gesture->addEndListener(_pinchListener,[=](const CoreGestureEvent& event, bool focus) {
+        _model->_mousepan = false;
+        _model->_currTouch.setZero();
+        _model->_prevTouch.setZero();
+        _model->_anchor.setZero();
+        _model->_currAngle = 0;
+        _model->_prevAngle = 0;
+        _model->_currSpread = 0;
+        _model->_prevSpread = 0;
+    });
+    
+    _model->_activePinch = success;
+    return success;
+}
 
-    bool addedDrag = _mouse->addDragListener(_mkey, [this](const MouseEvent& event, const Vec2 previous, bool focus) {
-        buttonHeldCB(event, previous, focus);
-    });
-    CUAssertLog(addedDrag, "failed adding drag listener");
-
-    bool addedRelease = _mouse->addReleaseListener(_mkey, [this](const MouseEvent &event, Uint8 clicks, bool focus) {
-        buttonUpCB(event, clicks, focus);
-    });
-    CUAssertLog(addedRelease, "failed adding release listener");
+bool InputController::init(const Size &size) {
+    bool registerTouch = initTouch();
+    bool registerPinch = initPinch(size);
+    SDL_ShowCursor(SDL_ENABLE);
+    return registerTouch && registerPinch;
 }
 
 /** Returns a singleton instance of InputController. */
@@ -55,69 +136,103 @@ std::shared_ptr<InputController> InputController::getInstance() {
     return inputController;
 }
 
+void InputController::update(float dt){
+    updateTouch();
+    updatePinch(dt);
+}
+
 /**
  * Aligns inputs detected through callbacks with frame updates.
  *
  * @param dt  The amount of time (in seconds) since the last frame
  */
-void InputController::update(float dt) {
-    // Swap the keyboard buffers, removing old keys
-    _previous.clear();
-    _previous = _current;
-    _current.clear();
+void InputController::updateTouch() {
+    _model->_prevDown = _model->_currDown;
+    _model->_currDown = _model->_touchDown;
+    _model->_prevPos = _model->_currPos;
+    _model->_currPos = _model->_touchPos;
+}
+
+/**
+* Processes the currently cached inputs.
+*
+* This method is used to to poll the current input state.  This will poll the
+* keyboad and accelerometer.
+*
+* This method also gathers the delta difference in the touches. Depending on
+* the OS, we may see multiple updates of the same touch in a single animation
+* frame, so we need to accumulate all of the data together.
+*/
+void InputController::updatePinch(float dt) {
+    if (_model->_mousepan) {
+        _model->_prevPan = true;
+        _model->_pandelta = _model->_currTouch - _model->_prevTouch;
+    } else {
+        _model->_pandelta.setZero();
+    }
+    _model->_angleDelta = _model->_currAngle-_model->_prevAngle;
+    _model->_pinchDelta = _model->_currSpread-_model->_prevSpread;
     
-    _model->isMouseClicked = _model->didClickMouse;
-    // Only need to detect the first click
-    _model->didClickMouse = false;
-    _model->isMouseHeld = _model->didHoldMouse;
+    _model->_prevTouch = _model->_currTouch;
+    _model->_prevAngle = _model->_currAngle;
+    _model->_prevSpread = _model->_currSpread;
+}
+
+/**
+* Clears any buffered inputs so that we may start fresh.
+*/
+void InputController::clearPinch() {
+    _model->_pandelta = Vec2::ZERO;
+    _model->_pinchDelta = 0;
+    _model->_angleDelta = 0;
+    _model->_mousepan = false;
+}
+
+Vec2 InputController::screenToScenePinch(const Vec2& position) const {
+    Vec2 result = position/Application::get()->getDisplaySize();
+    result *= _model->_screensize;
+    return result;
 }
 
 #pragma mark -
-#pragma mark Mouse Callbacks
+#pragma mark Touch Callbacks
 /**
- * Callback for the beginning of a mouse press event.
- *
- * This function will record a press only if the left button is pressed.
+ * Callback for the beginning of a touch down event.
  *
  * @param event     The event with the mouse information
- * @param clicks    The number of clicks (for double clicking)
  * @param focus     Whether this device has focus (UNUSED)
  */
-void InputController::buttonDownCB(const cugl::MouseEvent &event, Uint8 clicks, bool focus) {
-    if (!_model->didHoldMouse && event.buttons.hasLeft()) {
-        _model->didClickMouse = true;
-        _model->didHoldMouse = true;
-        _model->lastMousePos = event.position;
+void InputController::touchDownCB(const cugl::TouchEvent& event, bool focus) {
+    if (!_model->_touchDown && _model->_touchId == -1) {
+        _model->_touchId = event.touch;
+        _model->_touchDown = true;
+        _model->_touchPos = event.position;
     }
 }
 
 /**
- * Callback for when the mouse is pressed down.
+ * Callback for when the touch is pressed down.
  *
- * This function will record whenever the left mouse is held down after the initial press.
- *
- * @param event     The event with the mouse information
- * @param previous    The previous position of the mouse
+ * @param event     The event with the touch information
+ * @param previous    The previous position of the touch
  * @param focus     Whether this device has focus (UNUSED)
  */
-void InputController::buttonHeldCB(const MouseEvent& event, const Vec2 previous, bool focus) {
-    if (_model->didHoldMouse && event.buttons.hasLeft()) {
-        _model->lastMousePos = event.position;
+void InputController::motionCBtouch(const cugl::TouchEvent& event, const Vec2 previous, bool focus) {
+    if (_model->_touchDown && event.touch == _model->_touchId) {
+        _model->_touchPos = event.position;
     }
 }
 
 /**
- * Callback for the end of a mouse press event.
+ * Callback for the end of a touch event.
  *
- * This function will record a release for the left mouse button.
- *
- * @param event     The event with the mouse information
- * @param clicks    The number of clicks (for double clicking)
+ * @param event     The event with the touch information
  * @param focus     Whether this device has focus (UNUSED)
  */
-void InputController::buttonUpCB(const cugl::MouseEvent &event, Uint8 clicks, bool focus) {
-    if (_model->didHoldMouse && event.buttons.hasLeft()) {
-        _model->didHoldMouse = false;
-        _model->lastMousePos = event.position;
+void InputController::touchUpCB(const cugl::TouchEvent& event, bool focus) {
+    // Only recognize the left mouse button
+    if (_model->_touchDown && _model->_touchId != -1) {
+        _model->_touchDown = false;
+        _model->_touchId = -1;
     }
 }

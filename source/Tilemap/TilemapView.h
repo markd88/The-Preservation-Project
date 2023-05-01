@@ -1,27 +1,6 @@
-//
-//  MVCTilemapView.h
-//  TileMap Lab
-//
-//  This module provides the MVC version of the TilemapView class.
-//
-//  Author: Gonzalo Gonzalez
-//  Version: 1/5/23.
-//
-#ifndef __MVC_TILEMAP_VIEW_H__
-#define __MVC_TILEMAP_VIEW_H__
-
 #include <cugl/cugl.h>
 using namespace cugl;
 
-namespace MVC {
-/**
- * A class representing the interface for the entire tile map view.
- *
- * There is very little that this class does that a SceneNode (or
- * PolygonNode) does not already do. So technically we could use
- * one of those classes for the view. But by pulling it out as its
- * own class, we make the relationship explicit.
- */
 class TilemapView {
     
 #pragma mark Internal References
@@ -61,6 +40,7 @@ public:
     void addChildTo(const std::shared_ptr<cugl::Scene2>& scene) {
         // TODO: Implement me
         scene->addChild(_node);
+        
     }
     
     /**
@@ -118,7 +98,11 @@ public:
         _node->setColor(color);
     }
     
+    void setVisibility(bool active){
+        _node->setVisible(active);
+    }
+    
+    void setPriority(float p){
+        _node->setPriority(p);
+    }
 };
-}
-
-#endif /* __MVC_TILEMAP_VIEW_H__ */

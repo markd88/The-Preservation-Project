@@ -1,310 +1,862 @@
-//
-//  GameController.cpp
-//  TileMap Lab
-//
-//  This is a the controller for the gameplay loop. Note that is is NOT
-//  a scene. Instead it is a subcontroller that references a scene. This
-//  is a legitimate design choice.
-//
-//  Authors: Walker White and Gonzalo Gonzalez
-//  Version: 1/8/23
-//
 #include <chrono>
-// This is in the same directory
-#include "GameController.h"
-// This is NOT in the same directory
-#include <Input/InputController.h>
+#include "GamePlayController.h"
+#include <chrono>
+#include <thread>
+#include "Level/LevelConstants.h"
+#include <common.h>
 
-#pragma mark Main Methods
-/**
- * Creates the game controller.
- *
- * This constructor will procedurally generate a tilemap immediately
- * on creation.
- *
- * @param displaySize   The display size of the game window
- * @param randoms        Reference to the random number generator
- */
-GameController::GameController(const Size displaySize,
-                               const std::shared_ptr<std::mt19937>& randoms):
-_scene(cugl::Scene2::alloc(displaySize)) {
-    _randoms = randoms;
+// This is NOT in the same directory
+using namespace std;
+using namespace cugl;
+#define PHYSICS_SCALE 50
+/** This is adjusted by screen aspect ratio to get the height */
+#define SCENE_WIDTH 1024
+#define ACTIONDURATION 0.08f
+#define ANIMDURATION 1f
+#define PREVIEW_RADIUS 150
+#define SWITCH_DURATION 1
+#define CAMERA_BOUNDS_X 400
+#define CAMERA_BOUNDS_Y 200
+#define ACT_KEY  "current"
+
+GamePlayController::GamePlayController(const Size displaySize, std::shared_ptr<cugl::AssetManager>& assets ):
+_scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displaySize)) {
+    // Initialize the assetManage
     
-    /// Initialize the tilemap and add it to the scene
-    _tilemap = std::make_unique<TilemapController>();
-    _tilemap->addChildTo(_scene);
+    _ordered_root = cugl::scene2::OrderedNode::allocWithOrder(cugl::scene2::OrderedNode::Order::DESCEND);
+    
+    _other_ordered_root = cugl::scene2::OrderedNode::allocWithOrder(cugl::scene2::OrderedNode::Order::DESCEND);
+
+    _assets = assets;
+    
+    // load sound
+    _collectArtifactSound = assets->get<Sound>("arrowShoot");
+    _collectResourceSound = assets->get<Sound>("NPC_flip");
+    _switchSound = assets->get<Sound>("lovestruck");
+    _loseSound = assets->get<Sound>("lose");
+    _winSound = assets->get<Sound>("win");
+    
+    // Initialize the scene to a locked width
+    Size dimen = Application::get()->getDisplaySize();
+    dimen *= SCENE_WIDTH/dimen.width; // Lock the game to a reasonable resolution
+    _input->init(dimen);
+    
+    _cam = _scene->getCamera();
+    _other_cam = _other_scene->getCamera();
+    
+    // Allocate the manager and the actions
+    _actions = cugl::scene2::ActionManager::alloc();
+    _action_world_switch = cugl::scene2::ActionManager::alloc();
+    
+    // Allocate the camera manager
+    _camManager = CameraManager::alloc();
+
+    _scene->setSize(displaySize*1.5);
+    _other_scene->setSize(displaySize*1.5);
+    
+    _previewNode = cugl::scene2::PolygonNode::alloc();
+    _scene2texture = Scene2Texture::alloc(displaySize*5);
+//    _scene->setSize(displaySize *3)
+//    _other_scene->setSize(displaySize *3);
+    
+    _path = make_unique<PathController>();
+    // initialize character, two maps, path
+    
+    // two-world switch animation initialization
+    std::shared_ptr<Texture> world_switch  = assets->get<Texture>("two_world_switch");
+    _world_switch_node = scene2::SpriteNode::allocWithSheet(world_switch, 5, 4, 20); // SpriteNode for two_world switch animation
+    // _world_switch_node->setScale(0.8f); // Magic number to rescale asset
+    _world_switch_node->setRelativeColor(false);
+    _world_switch_node->setVisible(true);
+    _world_switch_node->setFrame(19);
+
+    std::vector<int> d0 = {0,1,2,3,4,5,6,7,8};
+    _world_switch_0 = cugl::scene2::Animate::alloc(d0, SWITCH_DURATION);
+
+    std::vector<int> d1 = {9,10,11,12,13,14,15,16,17,18};
+    _world_switch_1 = cugl::scene2::Animate::alloc(d1, SWITCH_DURATION);
+
+    // init the button
+    _button_layer = _assets->get<scene2::SceneNode>("button");
+    _button_layer->setContentSize(dimen);
+    _button_layer->doLayout(); // This rearranges the children to fit the screen
+    
+    
+    // add Win/lose panel
+    _pause_layer = _assets->get<scene2::SceneNode>("pause");
+    _pause_resume = std::dynamic_pointer_cast<scene2::Button>(assets->get<scene2::SceneNode>("pause_resume"));
+    
+    _pause_resume->addListener([this](const std::string& name, bool down) {
+        if (!down) {
+            // back to game
+            auto s = _pause_layer->getScene();
+            s->removeChild(_pause_layer);
+        }
+    });
+    
+    _pause_restart = std::dynamic_pointer_cast<scene2::Button>(assets->get<scene2::SceneNode>("pause_restart"));
+    
+    _pause_restart->addListener([this](const std::string& name, bool down) {
+        if (!down) {
+            // restart the game
+            loadLevel();
+            init();
+        }
+    });
+    
+    _pause_exit = std::dynamic_pointer_cast<scene2::Button>(assets->get<scene2::SceneNode>("pause_exit"));
+    
+    _pause_exit->addListener([this](const std::string& name, bool down) {
+        if (!down) {
+            // back to menu
+            nextScene = MENU;
+        }
+    });
+    
+    // add pause button
+    
+    _pause_button = std::dynamic_pointer_cast<scene2::Button>(assets->get<scene2::SceneNode>("button_pause-button"));
+    _pause_button->addListener([this](const std::string& name, bool down) {
+        if (!down) {
+            // TODO:: activate the pause window
+            pauseOn();
+        }
+    });
+    
+    _pause_button->activate();
+    
+    
+    
+    _inventory_layer = assets->get<scene2::SceneNode>("button_panel");
+
+    
+    // add Win/lose panel
+    _complete_layer = _assets->get<scene2::SceneNode>("complete");
+    _complete_next_button = std::dynamic_pointer_cast<scene2::Button>(assets->get<scene2::SceneNode>("complete_next"));
+    
+    _complete_next_button->addListener([this](const std::string& name, bool down) {
+        if (!down) {
+            // go to next level
+            nextLevel = true;
+        }
+    });
+    
+    _complete_back_button = std::dynamic_pointer_cast<scene2::Button>(assets->get<scene2::SceneNode>("complete_back"));
+    
+    _complete_back_button->addListener([this](const std::string& name, bool down) {
+        if (!down) {
+            nextScene = MENU;
+        }
+    });
+
+    // fail panel
+    _fail_layer = _assets->get<scene2::SceneNode>("fail");
+    _fail_again_button = std::dynamic_pointer_cast<scene2::Button>(assets->get<scene2::SceneNode>("fail_again"));
+    
+    _fail_again_button->addListener([this](const std::string& name, bool down) {
+        if (!down) {
+            this->init();
+        }
+    });
+    
+    _fail_back_button = std::dynamic_pointer_cast<scene2::Button>(assets->get<scene2::SceneNode>("fail_back"));
+    
+    _fail_back_button->addListener([this](const std::string& name, bool down) {
+        if (!down) {
+            nextScene = MENU;
+        }
+    });
+
+    
+    // add switch indicator
+
+    _moveTo = cugl::scene2::MoveTo::alloc();
+    _moveCam = CameraMoveTo::alloc();
+    _moveCam->setDuration(ACTIONDURATION);
+    _moveTo->setDuration(ACTIONDURATION);
+    
+    
+    
+    // initiazation of inventory bars, only run once
+    Vec2 barPos(550, 300);
+    for (int i=0; i<5; i++){
+        std::shared_ptr<cugl::scene2::PolygonNode> tn = std::make_shared<cugl::scene2::PolygonNode>();
+        tn->initWithTexture(_assets->get<Texture>("inventory_artifact_transparent_bar"));
+        tn->setVisible(false);
+        tn->setPosition(barPos);
+        barPos = barPos.add(150, 0);
+        _inventory_layer->addChild(tn);
+        _art_bar_vec.push_back(tn);
+    }
+
+    barPos = barPos.add(400, 0);
+
+    for (int i=0; i<5; i++){
+        std::shared_ptr<cugl::scene2::PolygonNode> tn = std::make_shared<cugl::scene2::PolygonNode>();
+        tn->initWithTexture(_assets->get<Texture>("inventory_resource_bar"));
+        tn->setVisible(false);
+        tn->setPosition(barPos);
+        barPos = barPos.add(150, 0);
+        _inventory_layer->addChild(tn);
+        _res_bar_vec.push_back(tn);
+    }
+    
+    
+    
+    loadLevel();
+    init();
+    
+}
+
+void GamePlayController::loadLevel(){
+    string pastFile = "tileset/levels/level-" + std::to_string(level) + "/level-" + std::to_string(level) + "-past.json";
+    string pastKey = "level-" + std::to_string(level) + "-past";
+    string presentFile = "tileset/levels/level-" + std::to_string(level) + "/level-" + std::to_string(level) + "-present.json";
+    string presentKey = "level-" + std::to_string(level) + "-present";
+    
+    _assets->unload<LevelModel>(pastKey);
+    _assets->unload<LevelModel>(presentKey);
+    _assets->load<LevelModel>(pastKey, pastFile);
+    _assets->load<LevelModel>(presentKey, presentFile);
+
+    // Draw past world
+    _pastWorldLevel = _assets->get<LevelModel>(pastKey);
+    if (_pastWorldLevel == nullptr) {
+        CULog("Failed to import level!");
+    }
+    _pastWorldLevel->setAssets(_assets);
+    _pastWorldLevel->setTilemapTexture();
+    _pastWorld = _pastWorldLevel->getWorld();
+    _obsSetPast = _pastWorldLevel->getObs();
+    _wallSetPast = _pastWorldLevel->getWall();
+    _artifactSet = _pastWorldLevel->getItem();
+    _artifactSet->setAction(_actions);
+    artNum = _artifactSet->getArtNum();
+
+    // Draw present world
+    _presentWorldLevel = _assets->get<LevelModel>(presentKey);
+    if (_presentWorldLevel == nullptr) {
+        CULog("Failed to import level!");
+    }
+    _presentWorldLevel->setAssets(_assets);
+    _presentWorldLevel->setTilemapTexture();
+    _presentWorld = _presentWorldLevel->getWorld();
+    _obsSetPresent = _presentWorldLevel->getObs();
+    _wallSetPresent = _presentWorldLevel->getWall();
+    //_presentWorld->updateColor(Color4::CLEAR);
+    //_pastWorld->updateColor(Color4::CLEAR);
+    
+    auto pastEdges = _pastWorld->getEdges(_scene, _obsSetPast);
+    generatePastMat(_pastWorld->getVertices());
+    for (int i = 0; i < pastEdges.size(); i++){
+        addPastEdge(pastEdges[i].first, pastEdges[i].second);
+    }
+    
+    auto presentEdges = _presentWorld->getEdges(_other_scene, _obsSetPresent);
+    generatePresentMat(_presentWorld->getVertices());
+    for (int i = 0; i < presentEdges.size(); i++){
+        addPresentEdge(presentEdges[i].first, presentEdges[i].second);
+    }
+    
+    _guardSetPast = std::make_unique<GuardSetController>(_assets, _actions, _pastWorld, _obsSetPast, pastMatrix, _pastWorld->getNodes());
+    _guardSetPresent = std::make_unique<GuardSetController>(_assets, _actions, _presentWorld, _obsSetPresent, presentMatrix, _presentWorld->getNodes());
+    
+    // get guard positions
+    _pastMovingGuardsPos = _pastWorldLevel->getMovingGuardsPos();
+    _pastStaticGuardsPos = _pastWorldLevel->getStaticGuardsPos();
+    _presentMovingGuardsPos = _presentWorldLevel->getMovingGuardsPos();
+    _presentStaticGuardsPos = _presentWorldLevel->getStaticGuardsPos();
+
+    // generate guards in past world
+    generateMovingGuards(_pastMovingGuardsPos, true);
+    generateStaticGuards(_pastStaticGuardsPos, true);
+    
+    // generate guards in present world
+    generateMovingGuards(_presentMovingGuardsPos, false);
+    generateStaticGuards(_presentStaticGuardsPos, false);
+
+//    Vec2 start = Vec2(_scene->getSize().width *.85, _scene->getSize().height *.15);
+    
+//    Vec2 start = Vec2(0,0);
+    Vec2 start = _pastWorldLevel->getCharacterPos();
+
+    _character = make_unique<CharacterController>(start, _actions, _assets);
+
+    // change label with level
+    auto pause_label  = std::dynamic_pointer_cast<scene2::Label>(_assets->get<scene2::SceneNode>("pause_title"));
+    pause_label->setText("Mission " + to_string(level));
+    
+}
+
+// init assets and all scenegraph when restart
+void GamePlayController::init(){
+    
+    // dispose all active actions
+    _actions->dispose();
+    // _action_world_switch->dispose();
+    _camManager->dispose();
+    
+    // remove everything first
+    _scene->removeAllChildren();
+    _ordered_root->removeAllChildren();
+    _scene2texture->removeAllChildren();
+    _other_scene->removeAllChildren();
+    _other_ordered_root->removeAllChildren();
+    
+    _pastWorld->addChildTo(_scene);
+    _scene->addChild(_ordered_root);
+    
+    _presentWorld->addChildTo(_other_scene);
+    _other_scene->addChild(_other_ordered_root);
+
+    // for two world switch animation
+    //_scene->addChild(_world_switch_node);
+    _scene->addChild(_world_switch_node);
+    _isSwitching = false;
+
+    auto edges = _pastWorld->getEdges(_scene, _obsSetPast);
+    generatePastMat(_pastWorld->getVertices());
+    for (int i = 0; i < edges.size(); i++){
+        addPastEdge(edges[i].first, edges[i].second);
+    }
+    
+    _artifactSet->clearSet();
+    _artifactSet = _pastWorldLevel->getItem();
+    _artifactSet->addChildTo(_ordered_root);
+    
+    _obsSetPast->addChildTo(_ordered_root);
+    _wallSetPast->addChildTo(_ordered_root);
+    
+    _obsSetPresent->addChildTo(_other_ordered_root);
+    _wallSetPresent->addChildTo(_other_ordered_root);
+    _obsSetPresent->setVisibility(true);
+    auto presentEdges = _presentWorld->getEdges(_other_scene, _obsSetPresent);
+    generatePresentMat(_presentWorld->getVertices());
+    for (int i = 0; i < presentEdges.size(); i++){
+        addPresentEdge(presentEdges[i].first, presentEdges[i].second);
+    }
+    
+    _activeMap = "pastWorld";
+    _pastWorld->setActive(true);
+    _presentWorld->setActive(false);
     _template = 0;
     
-    /// Initialize generator class with a boolean to seed random generator
-    _generator = std::make_unique<GeneratorController>(true,_randoms);
+    Vec2 start = _pastWorldLevel->getCharacterPos();
+
+    _character = make_unique<CharacterController>(start, _actions, _assets);
+    //_character->addChildTo(_scene);
+    _character->addChildTo(_ordered_root);
+    
+    _guardSetPast = std::make_unique<GuardSetController>(_assets, _actions, _pastWorld, _obsSetPast, pastMatrix, _pastWorld->getNodes());
+    _guardSetPresent = std::make_unique<GuardSetController>(_assets, _actions, _presentWorld, _obsSetPresent, presentMatrix, _presentWorld->getNodes());
+    
+    _guardSetPast->clearSet();
+    _guardSetPresent->clearSet();
+    
+    // all guards are init in _guardSet
+    // generate guards in past world
+    generateMovingGuards(_pastMovingGuardsPos, true);
+    generateStaticGuards(_pastStaticGuardsPos, true);
+    
+    // generate guards in present world
+    generateMovingGuards(_presentMovingGuardsPos, false);
+    generateStaticGuards(_presentStaticGuardsPos, false);
+
+
+    _path = make_unique<PathController>();
+    path_trace = {};
+    
+    _pause_button->activate();
+    
+    
+    _scene->addChild(_button_layer);
+    //_ordered_root->addChild(_button_layer);
+    
+    Vec2 cPos = _character->getPosition();
+    
+    Size mapSize = _pastWorld->getSize();
+    if (cPos.x < CAMERA_BOUNDS_X){
+        cPos.x = CAMERA_BOUNDS_X;
+    }else if (cPos.x > mapSize.width - CAMERA_BOUNDS_X){
+        cPos.x = mapSize.width - CAMERA_BOUNDS_X;
+    }
+
+    if (cPos.y < CAMERA_BOUNDS_Y){
+        cPos.y = CAMERA_BOUNDS_Y;
+    }
+    else if (cPos.y > mapSize.height-CAMERA_BOUNDS_Y){
+        cPos.y = mapSize.height-CAMERA_BOUNDS_Y;
+    }
+    _cam->setPosition(Vec3(cPos.x,cPos.y,0));
+    _other_cam->setPosition(Vec3(cPos.x,cPos.y,0));
+    
+    _cam->update();
+    _other_cam->update();
+    
+    // to make the button pos fixed relative to screen
+    _button_layer->setPosition(_cam->getPosition());
+
+
 }
 
-/**
- * Responds to the keyboard commands.
- *
- * This method allows us to regenerate the procedurally generated tilemap
- * upon command.
- *
- * @param dt  The amount of time (in seconds) since the last frame
- */
-void GameController::update(float dt) {
-    auto inputController = InputController::getInstance();
-    inputController->update(dt);
+void GamePlayController::update(float dt){
     
-    /// Pre-made templates
-    if (inputController->isKeyPressed(KeyCode::NUM_1)) {
-        generateTemplate(1);
-    } else if (inputController->isKeyPressed(KeyCode::NUM_2)) {
-        generateTemplate(2);
-    } else if (inputController->isKeyPressed(KeyCode::NUM_3)) {
-        generateTemplate(3);
-    } else if (inputController->isKeyPressed(KeyCode::NUM_4)) {
-        generateTemplate(4);
-    } else if (inputController->isKeyPressed(KeyCode::NUM_5)) {
-        generateTemplate(5);
+    // _complete_layer->setPosition(_cam->getPosition());
+    if(_fail_layer->getScene() != nullptr || _complete_layer->getScene() != nullptr || _pause_layer->getScene() != nullptr){
+        _pause_button->deactivate();
+        return;
+    }else{
+        _pause_button->activate();
+    }
+
+    //
+    _world_switch_node->setPosition(_character->getNodePosition());
+    if (_isSwitching && _action_world_switch->isActive("first_half")) {
+        _action_world_switch->update(dt);
+      //  CULog("update first half");
+        return;
+    }
+    if (_isSwitching && !_action_world_switch->isActive("first_half") && !_action_world_switch->isActive("second_half")) {
+
+        if (_activeMap == "pastWorld") {
+            _activeMap = "presentWorld";
+            _pastWorld->setActive(false);
+            _presentWorld->setActive(true);
+            
+            _other_cam->setPosition(_cam->getPosition());
+            _other_cam->update();
+            _scene->removeChild(_button_layer);
+            _other_scene->addChild(_button_layer);
+
+            _character->removeChildFrom(_ordered_root);
+            _character->addChildTo(_other_ordered_root);
+
+            _scene->removeChild(_world_switch_node);
+            _other_scene->addChild(_world_switch_node);
+            
+        }
+        else {
+            _activeMap = "pastWorld";
+            _pastWorld->setActive(true);
+            _presentWorld->setActive(false);
+            _cam->setPosition(_other_cam->getPosition());
+            _cam->update();
+            _other_scene->removeChild(_button_layer);
+            _scene->addChild(_button_layer);
+
+            _character->removeChildFrom(_other_ordered_root);
+            _character->addChildTo(_ordered_root);
+
+            _other_scene->removeChild(_world_switch_node);
+            _scene->addChild((_world_switch_node));
+            
+            // when move to the second world, minus 1 in model
+            _character->useRes();
+        }
+
+        // stop previous movement after switch world
+        _path->clearPath(_scene);
+        _action_world_switch->activate("second_half", _world_switch_1, _world_switch_node);
+        _isSwitching = false;
+        CULog("switch second half");
+        return;
+    }
+    if (_action_world_switch->isActive("second_half")) {
+        _action_world_switch->update(dt);
+        CULog("update second half");
+        return;
+    }
+
+
+
+#pragma mark Switch World Methods
+    static auto last_time = std::chrono::steady_clock::now();
+    // Calculate the time elapsed since the last call to pinch
+    auto now = std::chrono::steady_clock::now();
+    auto elapsed = std::chrono::duration_cast<std::chrono::seconds>(now - last_time);
+
+
+
+    // codes to determine if buttons should be activated
+    if(_fail_layer->getScene() == nullptr){
+        _fail_back_button->deactivate();
+        _fail_again_button->deactivate();
+    }
+    if(_complete_layer->getScene() == nullptr){
+        _complete_back_button->deactivate();
+        _complete_next_button->deactivate();
+    }
+    if(_pause_layer->getScene() == nullptr){
+        _pause_exit->deactivate();
+        _pause_resume->deactivate();
+        _pause_restart->deactivate();
     }
     
-    /// Tile size modifier with `-` and `=`
-    if (inputController->isKeyPressed(KeyCode::EQUALS)) { _tilemap->modifyTileSize(2, 2); }
-    else if (inputController->isKeyPressed(KeyCode::MINUS)) { _tilemap->modifyTileSize(0.5, 0.5); }
+
+    _input->update(dt);
+    // if pinch, switch world
+    _cantSwitch = ((_activeMap == "pastWorld" && _obsSetPresent->inObstacle(_character->getPosition())) || (_activeMap == "presentWorld" && _obsSetPast->inObstacle(_character->getPosition())));
     
-    /// Dimension modifier with `[` and `]` for modifying columns
-    /// and `;` and `'` for modifying rows
-    if (inputController->isKeyPressed(KeyCode::LEFT_BRACKET)) { _tilemap->modifyDimensions(-1, 0);
+
+    _cantSwitch = _cantSwitch || (_character->getNumRes() == 0);
+
+    if(elapsed.count() >= 0.5 && _input->getPinchDelta() != 0 && !_cantSwitch){
+        AudioEngine::get()->play("lovestruck", _switchSound, false, _switchSound->getVolume(), true);
+
+        // if the character's position on the other world is obstacle, disable the switch
+        last_time = now;
+        // remove and add the child back so that the child is always on the top layer
+        _isSwitching = true;
+        _action_world_switch->activate("first_half", _world_switch_0, _world_switch_node);
+        CULog("activate two world animation");
+
+
+    }
+    
+#pragma mark Character Movement Methods
+    else if(_input->didPress()){        // if press, determine if press on character
         
-    } else if (inputController->isKeyPressed(KeyCode::RIGHT_BRACKET)) { _tilemap->modifyDimensions(1, 0);
+        Vec2 input_posi = _input->getPosition();
+
+        if (_activeMap == "pastWorld"){
+            input_posi = _scene->screenToWorldCoords(input_posi);
+        }else{
+            input_posi = _other_scene->screenToWorldCoords(input_posi);
+        }
+        auto r = _pastWorld->getNode()->getSize();
+
         
-    } else if (inputController->isKeyPressed(KeyCode::SEMICOLON)) { _tilemap->modifyDimensions(0, -1);
-    } else if (inputController->isKeyPressed(KeyCode::QUOTE)) { _tilemap->modifyDimensions(0, 1);
+        if(_character->contains(input_posi)){
+            // create path
+            _path->setIsDrawing(true);
+            _path->setIsInitiating(true);
+//            _path->updateLastPos(_character->getPosition()); //change to a fixed location on the character
+//            if (_activeMap == "pastWorld"){
+//                _path->clearPath(_scene);
+//            }else{
+//                _path->clearPath(_other_scene);
+//            }
+        }
+
+        else if (input_posi.x - PREVIEW_RADIUS > 0 and input_posi.x < r.width - PREVIEW_RADIUS and
+                 input_posi.y > 0 and input_posi.y < r.height - PREVIEW_RADIUS*2 and !_isSwitching){
+            //initialize preview
+            _isPreviewing = true;
+            if (_activeMap == "pastWorld"){
+                auto _children = _other_scene->getChildren();
+                for (int i = 0; i < _children.size(); i++){
+                    auto tempChild = _children[i];
+                    _other_scene->removeChild(_children[i]);
+                    _scene2texture->addChild(tempChild);
+                }
+                _texture = _scene2texture->getTexture();
+                _previewNode->setTexture(_texture);
+                _previewNode->setVisible(false);
+                _scene->addChildWithName(_previewNode, "preview");
+            }
+            else{
+                auto _children = _scene->getChildren();
+                for (int i = 0; i < _children.size(); i++){
+                    auto tempChild = _children[i];
+                    _scene->removeChild(_children[i]);
+                    _scene2texture->addChild(tempChild);
+                }
+                _texture = _scene2texture->getTexture();
+                _previewNode->setTexture(_texture);
+                _previewNode->setVisible(false);
+                _other_scene->addChildWithName(_previewNode, "preview");
+            }
+        }
     }
     
-    /// Color inversion with `\`
-    if (inputController->isKeyPressed(KeyCode::BACKSLASH)) {
-        _tilemap->invertColor();
+    else if (_input->isDown() && _path->isDrawing){
+        
+        Vec2 input_posi = _input->getPosition();
+        if (_activeMap == "pastWorld"){
+            input_posi = _scene->screenToWorldCoords(input_posi);
+        }else{
+            input_posi = _other_scene->screenToWorldCoords(input_posi);
+        }
+        // if input still within the character
+        if(_path->isInitiating){
+            // if input leaves out of the character's radius, draw the initial segments
+            if (!_character->contains(input_posi)){
+                
+                _path->setIsInitiating(false);
+                _path->updateLastPos(_character->getPosition()); //change to a fixed location on the character
+                if (_activeMap == "pastWorld"){
+                    _path->clearPath(_scene);
+                }else{
+                    _path->clearPath(_other_scene);
+                }
+            }
+        }
+        
+        if(_path->isInitiating == false){
+            while(_path->farEnough(input_posi)){
+                Vec2 checkpoint = _path->getLastPos() + (input_posi - _path->getLastPos()) / _path->getLastPos().distance(input_posi) * _path->getSize();
+
+                // TODO:: Need to add the logic so that the path won't go outside the map
+                // get map's info
+                Vec2 worldSize = _pastWorld->getSize();
+                bool withinMap = (checkpoint.x >= 0) && (checkpoint.x <= worldSize.x) && (checkpoint.y >= 0) && (checkpoint.y <= worldSize.y);
+                
+                if((_activeMap == "pastWorld" && _obsSetPast->inObstacle(checkpoint)) || (_activeMap == "presentWorld" && _obsSetPresent->inObstacle(checkpoint))){
+                    _path->setIsDrawing(false);
+                    break;
+                }
+                else if(!withinMap){
+                    _path->setIsDrawing(false);
+                    break;
+                }
+                else{
+                    if (_activeMap == "pastWorld"){
+                        _path->addSegment(checkpoint, _scene);
+                    }else{
+                        _path->addSegment(checkpoint, _other_scene);
+                    }
+                }
+            }
+        }
+    }
+
+
+#pragma mark Preview Methods
+    if(_input->didRelease() or _isSwitching){
+
+        _isPreviewing = false;
+       
+        _path->setIsDrawing(false);
+        // path_trace = _path->getPath();
+
+        if(_isSwitching){
+            if (_activeMap == "pastWorld"){
+                _path->removeFrom(_scene);
+            }else{
+                _path->removeFrom(_other_scene);
+            }
+        }
+        
+        //finish previewing
+        if (_activeMap == "pastWorld"){
+            auto _children = _scene2texture->getChildren();
+            for (int i = 0; i < _children.size(); i++){
+                auto tempChild = _children[i];
+                _scene2texture->removeChild(_children[i]);
+                _other_scene->addChild(tempChild);
+            }
+            _scene->removeChildByName("preview");
+        }
+        else{
+            auto _children = _scene2texture->getChildren();
+            for (int i = 0; i < _children.size(); i++){
+                auto tempChild = _children[i];
+                _scene2texture->removeChild(_children[i]);
+                _scene->addChild(tempChild);
+            }
+            _other_scene->removeChildByName("preview");
+        }
     }
     
-    // Regenerating tile map with a new (random) seed using 'S'
-    if (inputController->isKeyPressed(KeyCode::S)) {
-        unsigned seed = static_cast<unsigned>(time(0));
-        _randoms->seed(seed);
-        CULog("Seed = %d", seed);
-        _generator = std::make_unique<GeneratorController>(true,_randoms);
-        generateTemplate(_template);
+    else if (_isPreviewing){
+        
+        Vec2 input_posi = _input->getPosition();
+        _previewNode->setVisible(true);
+        if (_activeMap == "pastWorld"){
+            input_posi = _scene->screenToWorldCoords(input_posi);
+        }
+        else {
+            input_posi = _other_scene->screenToWorldCoords(input_posi);
+        }
+        
+        auto r = _pastWorld->getNode()->getSize();
+        
+        if (input_posi.x - PREVIEW_RADIUS < 0){
+            input_posi.x = PREVIEW_RADIUS;
+        }else if(input_posi.x > r.width - PREVIEW_RADIUS){
+            input_posi.x = r.width - PREVIEW_RADIUS;
+        }
+        
+        if (input_posi.y < 0){
+            input_posi.y  = 0;
+        }else if (input_posi.y > r.height - PREVIEW_RADIUS*2){
+            input_posi.y = r.height - PREVIEW_RADIUS*2;
+        }
+        
+        _previewNode->setAnchor(Vec2::ANCHOR_CENTER);
+        PolyFactory polyFact = PolyFactory();
+        Poly2 circle = polyFact.makeCircle(input_posi + Vec2(0, PREVIEW_RADIUS), PREVIEW_RADIUS);
+        _previewNode->setPolygon(circle);
+        _previewNode->setPosition(input_posi + Vec2(0,PREVIEW_RADIUS));
+    
+
     }
+    
+    
+    
+#pragma mark Path Methods
+    
+    if (_path->getPath().size() != 0 && !_actions->isActive("moving") ){
+        _moveTo->setTarget(_path->getPath()[0]);
+        _character->moveTo(_moveTo);
+        _character->updateLastDirection(_path->getPath()[0]);
+        
+        Vec2 camTar = _path->getPath()[0];
+        Size mapSize = _pastWorld->getSize();
+        
+        if (camTar.x < CAMERA_BOUNDS_X){
+            camTar.x = CAMERA_BOUNDS_X;
+        }else if (camTar.x > mapSize.width - CAMERA_BOUNDS_X){
+            camTar.x = mapSize.width - CAMERA_BOUNDS_X;
+        }
+
+        if (camTar.y < CAMERA_BOUNDS_Y){
+            camTar.y = CAMERA_BOUNDS_Y;
+        }
+        else if (camTar.y > mapSize.height-CAMERA_BOUNDS_Y){
+            camTar.y = mapSize.height-CAMERA_BOUNDS_Y;
+        }
+        
+        _moveCam->setTarget(camTar);
+        if (_activeMap == "pastWorld"){
+            _camManager->activate("movingCam", _moveCam, _cam);
+            _path->removeFirst(_scene);
+        }else{
+            _camManager->activate("movingOtherCam", _moveCam, _other_cam);
+            _path->removeFirst(_other_scene);
+        }
+        
+    }
+
+    if (!_actions->isActive("moving") && _actions->isActive("character_animation")) {
+        _character->stopAnimation();
+    }
+
+
+#pragma mark Resource Collection Methods
+
+    _artifactSet->updateAnim();
+
+    // if collect a resource
+    if(_activeMap == "pastWorld"){
+        for(int i=0; i<_artifactSet->_itemSet.size(); i++){
+            // detect collision
+            if( _artifactSet->_itemSet[i]->Iscollectable() && _character->contains(_artifactSet->_itemSet[i]->getNodePosition())){
+                // if close, should collect it
+                // if resource
+                if(_artifactSet->_itemSet[i]->isResource()){
+                    AudioEngine::get()->play("NPC_flip", _collectResourceSound, false, _collectResourceSound->getVolume(), true);
+                    _character->addRes();
+                   
+                }
+                // if artifact
+                else if (_artifactSet->_itemSet[i]->isArtifact()){
+                    AudioEngine::get()->play("arrowHit", _collectArtifactSound, false, _collectArtifactSound->getVolume(), true);
+                    _character->addArt();
+
+                }
+                // make the artifact disappear and remove from set
+                _artifactSet->remove_this(i, _ordered_root);
+                if(_character->getNumArt() == artNum){
+                    completeTerminate();
+                }
+                break;
+            }
+            
+        }
+        
+    }
+
+#pragma mark Guard Methods
+    _guardSetPast->patrol(_character->getNodePosition(), _character->getAngle());
+    _guardSetPresent->patrol(_character->getNodePosition(), _character->getAngle());
+    // if collide with guard
+    if(_activeMap == "pastWorld"){
+        for(int i=0; i<_guardSetPast->_guardSet.size(); i++){
+            if(_character->contains(_guardSetPast->_guardSet[i]->getNodePosition())){
+                failTerminate();
+                break;
+            }
+//            if(_obsSetPast->inObstacle(_guardSetPast->_guardSet[i]->getNodePosition())){
+//                // guard stop
+//            }
+        }
+    }
+    
+    else{
+        for(int i=0; i<_guardSetPresent->_guardSet.size(); i++){
+            if(_character->contains(_guardSetPresent->_guardSet[i]->getNodePosition())){
+                failTerminate();
+                break;
+            }
+        }
+    }
+    
+    // Animate
+    _actions->update(dt);
+    _camManager->update(dt);
+    
+    // the camera is moving smoothly, but the UI only set its movement per frame
+    if (_activeMap == "pastWorld"){
+        _button_layer->setPosition(_cam->getPosition() - Vec2(900, 70));
+    }else{
+        _button_layer->setPosition(_other_cam->getPosition() - Vec2(900, 70));
+    }
+    
+    
+    // update render priority
+    updateRenderPriority();
+    
+    // update inventory panel
+    updateInventoryPanel();
 }
+    
+    
+#pragma mark Main Methods
 
-
+    
 #pragma mark -
 #pragma mark Generation Helpers
 
-/** Generates a yellow smiley face with a black smile. */
-void GameController::generateSmileyFace() {
-    _tilemap->updateDimensions(Vec2(20, 20));
-    _tilemap->updateColor(Color4::YELLOW);
-    _tilemap->updateTileSize(Size(10, 10));
-    _tilemap->updatePosition(_scene->getSize() / 2);
-    
-    Color4 tileColor = Color4::BLACK;
-    
-    // Eyes
-    _tilemap->addTile(5, 15, tileColor);
-    _tilemap->addTile(15, 15, tileColor);
-    
-    // Nose
-    _tilemap->addTile(10, 8, tileColor);
-    
-    // Smile
-    _tilemap->addTile(3, 5, tileColor);
-    _tilemap->addTile(4, 4, tileColor);
-    for(int i = 5; i <= 15; i++) {
-        _tilemap->addTile(i, 3, tileColor);
-    }
-    _tilemap->addTile(16, 4, tileColor);
-    _tilemap->addTile(17, 5, tileColor);
-}
-
-/**
- * Generates tiles randomly on the tilemap with probability `p`.
- *
- * @param p The probability that a tile is generated.
- */
-void GameController::generateRandomTiles(float p) {
-    Vec2 dimensions = Vec2(10, 10);
-    _tilemap->updateDimensions(dimensions);
-    _tilemap->updateColor(Color4::WHITE);
-    _tilemap->updateTileSize(Size(30, 30));
-    _tilemap->updatePosition(_scene->getSize() / 2);
-    
-    if (p == 0) return;
-    for (int col = 0; col < dimensions.x; col++) {
-        for (int row = 0; row < dimensions.y; row++) {
-            float random = generateRandomFloat();
-            if (p >= random) {
-                float r = generateRandomFloat() * 255;
-                float g = generateRandomFloat() * 255;
-                float b = generateRandomFloat() * 255;
-                _tilemap->addTile(col, row, Color4(r, g, b));
-            }
+    void GamePlayController::generateMovingGuards(std::vector<std::vector<cugl::Vec2>> movingGuardsPos, bool isPast) {
+        
+        for (int i = 0; i < movingGuardsPos.size(); i++) {
+            int startX = movingGuardsPos[i][0].x;
+            int startY = movingGuardsPos[i][0].y;
+            std::vector<cugl::Vec2> patrolPoints = movingGuardsPos[i];
+            addMovingGuard(startX, startY, patrolPoints, isPast);
         }
     }
-}
 
-/** Generates tiles using Perlin noise on the tilemap. */
-void GameController::generatePerlinTiles() {
-    Vec2 dimensions = Vec2(500, 500);
-    _tilemap->updateDimensions(dimensions);
-    _tilemap->updateTileSize(Size(1, 1));
-    _tilemap->updatePosition(_scene->getSize() / 2);
-    
-    /// Adapted from https://github.com/rtouti/rtouti.github.io/blob/gh-pages/examples/perlin-noise.html
-    for (int col = 0; col < dimensions.x; col++) {
-        for (int row = 0; row < dimensions.y; row++) {
-            float n = _generator->noise2D(col*0.01, row*0.01);
-            n += 1.0;
-            n *= 0.5;
-            int rgb = round(255*n);
-            _tilemap->addTile(col, row, Color4(rgb, rgb, rgb));
+    void GamePlayController::generateStaticGuards(std::vector<std::vector<int>> staticGuardsPos, bool isPast) {
+        for (int i = 0; i < staticGuardsPos.size(); i++) {
+            int x = staticGuardsPos[i][0];
+            int y = staticGuardsPos[i][1];
+            int dir = staticGuardsPos[i][2];
+            addStaticGuard(x, y, dir, isPast);
         }
     }
-}
 
-/** Generates colored tiles using Perlin noise on the tilemap. */
-void GameController::generateColoredPerlinTiles() {
-    Vec2 dimensions = Vec2(500, 500);
-    _tilemap->updateDimensions(dimensions);
-    _tilemap->updateTileSize(Size(1, 1));
-    _tilemap->updatePosition(_scene->getSize() / 2);
     
-    /// Adapted from https://github.com/rtouti/rtouti.github.io/blob/gh-pages/examples/perlin-noise.html
-    for (int col = 0; col < dimensions.x; col++) {
-        for (int row = 0; row < dimensions.y; row++) {
-            float n = _generator->noise2D(col*0.01, row*0.01);
-            n += 1.0;
-            n *= 0.5;
-            int rgb = round(255*n);
-            Color4 color;
-            if (n < 0.5) {
-                color = Color4(0, 0, rgb*2);
-            } else if (n < 0.9) {
-                color = Color4(0, rgb, round(rgb*0.5));
-            } else {
-                color = Color4(rgb, rgb, rgb);
-            }
-            _tilemap->addTile(col, row, color);
-        }
-    }
-}
-
-/**
- * Generates colored tiles using FBM with `o` octaves on the tilemap.
- *
- * See https://thebookofshaders.com/13/ for an interactive demo on FBM
- * and octaves.
- *
- * @param octaves The octaves of noise to add.
- */
-void GameController::generateFractalBrownianMotionTiles(int octaves) {
-    Vec2 dimensions = Vec2(500, 500);
-    _tilemap->updateDimensions(dimensions);
-    _tilemap->updateTileSize(Size(1, 1));
-    _tilemap->updatePosition(_scene->getSize() / 2);
-    
-    /// Adapted from https://github.com/rtouti/rtouti.github.io/blob/gh-pages/examples/perlin-noise.html
-    for (int col = 0; col < dimensions.x; col++) {
-        for (int row = 0; row < dimensions.y; row++) {
-            float n = 0;
-            float a = 1.0;
-            float f = 0.005;
-            for(int i = 0; i < octaves; i++) {
-                float v = a * _generator->noise2D(col*f, row*f);
-                n += v;
-                a *= 0.5;
-                f *= 2.0;
-            }
-            n += 1.0;
-            n *= 0.5;
-            int rgb = round(255*n);
-            Color4 color;
-            if (n < 0.5) {
-                color = Color4(0, 0, rgb*2);
-            } else if (n < 0.9) {
-                color = Color4(0, rgb, round(rgb*0.5));
-            } else {
-                color = Color4(rgb, rgb, rgb);
-            }
-            _tilemap->addTile(col, row, color);
-        }
-    }
-}
-
 #pragma mark -
 #pragma mark Helpers
-/**
- * Creates a new tile map with the given template number
- *
- * @param template    The template number
- */
-void GameController::generateTemplate(int choice) {
-    /// Pre-made templates
-    switch (choice) {
-        case 1:
-            _tilemap->clearMap();
-            printExecution("generateSmileyFace", [this](){
-                generateSmileyFace();
-            });
-            _template = 1;
-            break;
-        case 2:
-            _tilemap->clearMap();
-            printExecution("generateRandomTiles", [this](){
-                generateRandomTiles(0.5);
-            });
-            _template = 2;
-            break;
-        case 3:
-            _tilemap->clearMap();
-            printExecution("generatePerlinTiles", [this](){
-                generatePerlinTiles();
-            });
-            _template = 3;
-            break;
-        case 4:
-            _tilemap->clearMap();
-            printExecution("generateColoredPerlinTiles", [this](){
-                generateColoredPerlinTiles();
-            });
-            _template = 4;
-            break;
-        case 5:
-            _tilemap->clearMap();
-            printExecution("generateFractalBrownianMotionTiles", [this](){
-                generateFractalBrownianMotionTiles(8);
-            });
-            _template = 5;
-            break;
-        default:
-            break;
+
+    
+    void GamePlayController::render(std::shared_ptr<SpriteBatch>& batch){
+
+        if (_activeMap == "pastWorld"){
+            _scene->render(batch);
+        }
+        
+        else{
+            _other_scene->render(batch);
+        }
+        
+        if (_isPreviewing){
+            //_scene2texture->getCamera()->setPosition(_cam->getPosition());
+            _scene2texture->render(batch);
+        }
+        
+
     }
-}
-
-
-/**
- * Executes a function with debugging information.
- *
- * This function runs function `name` wrapped in `wrapper` and will call
- * CULog twice. The information from CLog will indicate
- *
- * - when the function starts
- * - how long it took to execute
- *
- * @param name      The name of the wrapped function
- * @param wrapper   The function wrapper to execute
- */
-void GameController::printExecution(std::string name, std::function<void()> wrapper) {
-    auto before = std::chrono::high_resolution_clock::now();
-    CULog("Running %s", name.data());
-    wrapper();
-    auto after = std::chrono::high_resolution_clock::now();
-    auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(after - before).count();
-    CULog("Generated after %lld milliseconds", duration);
-}
+    
