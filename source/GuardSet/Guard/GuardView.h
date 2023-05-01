@@ -242,6 +242,7 @@ public:
 
     void updatePriority(){
         _node->setPriority(_node->getPosition().y);
+        _shadow->setPriority(_node->getPosition().y+1);
     }
 
 };
