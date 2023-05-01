@@ -207,6 +207,7 @@ public:
     // update priority based on its y coor
     void updatePriority(){
         _static_node->setPriority(_static_node->getPosition().y);
+        if(_anim_node != nullptr )_anim_node->setPriority(_static_node->getPosition().y-1);
     }
 };
 

@@ -3,6 +3,9 @@
     "menu_background": {
       "file": "textures/level_background.png"
     },
+    "menu_big_background": {
+      "file": "textures/menu_big_background.png"
+    },
     "menu_selectbutton": {
       "file": "textures/level_button.png"
     },
@@ -24,6 +27,24 @@
     }
   },
   "scene2s": {
+      "menu-backdrop": {
+        "type": "Image",
+        "format": {
+          "type": "Anchored"
+        },
+        "data": {
+          "texture": "menu_big_background",
+          "anchor": [0.5, 0.5],
+          "scale": 5
+        },
+        "layout": {
+          "x_anchor": "fill",
+          "y_anchor": "fill"
+        },
+        "children": {
+            
+          }
+        },
     "menu": {
       "type": "Image",
       "format": {
