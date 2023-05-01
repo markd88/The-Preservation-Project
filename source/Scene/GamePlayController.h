@@ -133,7 +133,8 @@ public:
     std::shared_ptr<cugl::Sound> _switchSound;
     std::shared_ptr<cugl::Sound> _loseSound;
     std::shared_ptr<cugl::Sound> _winSound;
-
+    std::shared_ptr<cugl::Sound> _pastMusic;
+    std::shared_ptr<cugl::Sound> _presentMusic;
 
 #pragma mark Main Methods
 public:
@@ -255,9 +256,11 @@ public:
         if (_activeMap == "pastWorld"){
             _scene->addChild(_fail_layer);
             _fail_layer->setPosition(_cam->getPosition());
+            AudioEngine::get()->clear("past");
         } else{
             _other_scene->addChild(_fail_layer);
             _fail_layer->setPosition(_other_cam->getPosition());
+            AudioEngine::get()->clear("present");
         }
         _fail_back_button->activate();
         _fail_again_button->activate();
@@ -268,9 +271,11 @@ public:
         if (_activeMap == "pastWorld"){
             _scene->addChild(_complete_layer);
             _complete_layer->setPosition(_cam->getPosition());
+            AudioEngine::get()->clear("past");
         }else{
             _other_scene->addChild(_complete_layer);
             _complete_layer->setPosition(_other_cam->getPosition());
+            AudioEngine::get()->clear("present");
         }
         _complete_back_button->activate();
         _complete_next_button->activate();
@@ -280,9 +285,11 @@ public:
         if (_activeMap == "pastWorld"){
             _scene->addChild(_pause_layer);
             _pause_layer->setPosition(_cam->getPosition());
+            AudioEngine::get()->pause("past");
         }else{
             _other_scene->addChild(_pause_layer);
             _pause_layer->setPosition(_other_cam->getPosition());
+            AudioEngine::get()->pause("present");
         }
         _pause_resume->activate();
         _pause_restart->activate();
