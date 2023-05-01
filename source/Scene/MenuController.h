@@ -58,6 +58,11 @@ public:
         // load menu assets
         
         _assets->loadDirectory("json/menu.json");
+        auto menu_backdrop = _assets->get<scene2::SceneNode>("menu-backdrop");
+        menu_backdrop->setPosition(_scene->getSize()/2);
+        _scene->addChild(menu_backdrop);
+        
+        
         auto menu_layer = _assets->get<scene2::SceneNode>("menu");
         menu_layer->setPosition(_scene->getSize()/2);
        

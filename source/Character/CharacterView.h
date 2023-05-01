@@ -66,8 +66,8 @@ public:
         _shadow = scene2::PolygonNode::allocWithTexture(shadow);
 
         _node->addChildWithName(_shadow, "shadow");
-        _shadow->setScale(0.2f);
-        _shadow->setPosition(120,50);
+        _shadow->setScale(0.18f);
+        _shadow->setPosition(127,65);
         _shadow->setRelativeColor(false);
         _shadow->setVisible(true);
 

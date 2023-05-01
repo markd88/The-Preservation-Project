@@ -85,7 +85,7 @@ public:
 
         _node->addChildWithName(_shadow, "shadow");
         _shadow->setScale(0.2f);
-        _shadow->setPosition(120,50);
+        _shadow->setPosition(125,70);
         _shadow->setRelativeColor(false);
         _shadow->setVisible(true);
 
