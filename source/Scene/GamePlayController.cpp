@@ -105,6 +105,11 @@ _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displ
     
     _pause_restart->addListener([this](const std::string& name, bool down) {
         if (!down) {
+            if (_activeMap == "pastWorld"){
+                AudioEngine::get()->clear("past");
+            }else{
+                AudioEngine::get()->clear("present");
+            }
             // restart the game
             loadLevel();
             init();
@@ -403,7 +408,7 @@ void GamePlayController::init(){
     // to make the button pos fixed relative to screen
     _button_layer->setPosition(_cam->getPosition());
 
-    AudioEngine::get()->play("past", _pastMusic, false, _pastMusic->getVolume(), false);
+    AudioEngine::get()->play("past", _pastMusic, true, _pastMusic->getVolume(), true);
 }
 
 void GamePlayController::update(float dt){
@@ -442,7 +447,7 @@ void GamePlayController::update(float dt){
             _other_scene->addChild(_world_switch_node);
             
             AudioEngine::get()->clear("past");
-            AudioEngine::get()->play("present", _presentMusic, false, _presentMusic->getVolume(), false);
+            AudioEngine::get()->play("present", _presentMusic, true, _presentMusic->getVolume(), false);
         }
         else {
             _activeMap = "pastWorld";
@@ -463,7 +468,7 @@ void GamePlayController::update(float dt){
             _character->useRes();
             
             AudioEngine::get()->clear("present");
-            AudioEngine::get()->play("past", _pastMusic, false, _pastMusic->getVolume(), false);
+            AudioEngine::get()->play("past", _pastMusic, true, _pastMusic->getVolume(), false);
         }
 
         // stop previous movement after switch world
