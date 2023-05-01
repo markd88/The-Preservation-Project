@@ -1,13 +1,8 @@
 {
     "sounds" : {
-        "arrowHit" : {
+        "artifact" : {
             "type": "sample",
-            "file": "sounds/arrowHit.ogg",
-            "volume": 0.5
-        },
-        "arrowShoot" : {
-            "type": "sample",
-            "file": "sounds/arrowShoot.ogg",
+            "file": "sounds/artifact.ogg",
             "volume": 0.5
         },
         "lose" : {
@@ -15,20 +10,30 @@
             "file": "sounds/lose.ogg",
             "volume": 0.5
         },
-        "lovestruck" : {
+        "switch" : {
             "type": "sample",
-            "file": "sounds/lovestruck.ogg",
-            "volume": 0.8
+            "file": "sounds/switch.ogg",
+            "volume": 0.5
         },
-        "NPC_flip" : {
+        "resource" : {
             "type": "sample",
-            "file": "sounds/NPC_flip.ogg",
-            "volume": 0.8
+            "file": "sounds/resource.ogg",
+            "volume": 0.5
         },
         "win" : {
             "type": "sample",
             "file": "sounds/win.ogg",
-            "volume": 0.8
+            "volume": 0.5
+        },
+        "past" : {
+            "type": "sample",
+            "file": "sounds/past.ogg",
+            "volume": 0.5
+        },
+        "present" : {
+            "type": "sample",
+            "file": "sounds/present.ogg",
+            "volume": 0.5
         }
     },
     "textures": {

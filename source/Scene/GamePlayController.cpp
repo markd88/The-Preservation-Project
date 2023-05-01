@@ -30,9 +30,9 @@ _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displ
     _assets = assets;
     
     // load sound
-    _collectArtifactSound = assets->get<Sound>("arrowShoot");
-    _collectResourceSound = assets->get<Sound>("NPC_flip");
-    _switchSound = assets->get<Sound>("lovestruck");
+    _collectArtifactSound = assets->get<Sound>("artifact");
+    _collectResourceSound = assets->get<Sound>("resource");
+    _switchSound = assets->get<Sound>("switch");
     _loseSound = assets->get<Sound>("lose");
     _winSound = assets->get<Sound>("win");
     _pastMusic = assets->get<Sound>("past");
@@ -513,7 +513,7 @@ void GamePlayController::update(float dt){
     _cantSwitch = _cantSwitch || (_character->getNumRes() == 0);
 
     if(elapsed.count() >= 0.5 && _input->getPinchDelta() != 0 && !_cantSwitch){
-        AudioEngine::get()->play("lovestruck", _switchSound, false, _switchSound->getVolume(), true);
+        AudioEngine::get()->play("switch", _switchSound, false, _switchSound->getVolume(), true);
 
         // if the character's position on the other world is obstacle, disable the switch
         last_time = now;
@@ -757,13 +757,13 @@ void GamePlayController::update(float dt){
                 // if close, should collect it
                 // if resource
                 if(_artifactSet->_itemSet[i]->isResource()){
-                    AudioEngine::get()->play("NPC_flip", _collectResourceSound, false, _collectResourceSound->getVolume(), true);
+                    AudioEngine::get()->play("resource", _collectResourceSound, false, _collectResourceSound->getVolume(), true);
                     _character->addRes();
                    
                 }
                 // if artifact
                 else if (_artifactSet->_itemSet[i]->isArtifact()){
-                    AudioEngine::get()->play("arrowHit", _collectArtifactSound, false, _collectArtifactSound->getVolume(), true);
+                    AudioEngine::get()->play("artifact", _collectArtifactSound, false, _collectArtifactSound->getVolume(), true);
                     _character->addArt();
 
                 }
