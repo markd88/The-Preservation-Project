@@ -69,7 +69,7 @@ public:
         Vec2 menu_size = menu_layer->getSize();
         Vec2 space = Vec2 (menu_size.x/8, menu_size.y/5);
         Vec2 level_pos = Vec2 (space.x*2, space.y*3);
-        auto level_font = _assets->get<cugl::Font>("courier");
+        auto level_font = _assets->get<cugl::Font>("courier_regular");
         auto level_color = Color4(206, 144, 23);
         for (int i=0; i<15; i++){
 //            _level_buttons[i] = std::dynamic_pointer_cast<scene2::Button>(assets->get<scene2::SceneNode>("menu_backdrop_grid_button"+to_string(i+1)));
@@ -78,7 +78,7 @@ public:
             auto level_label = std::make_shared<cugl::scene2::Label>();
             level_label->initWithText(level_num, level_font);
             level_label->setForeground(level_color);
-            level_label->setScale(0.4);
+            level_label->setScale(0.6);
             
             // 2. get button image
             std::shared_ptr<cugl::scene2::PolygonNode> button_image = std::make_shared<cugl::scene2::PolygonNode>();
