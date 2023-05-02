@@ -30,7 +30,7 @@ public:
 //    Guard _guard;
     std::vector<Guard> _guardSet;
     
-    typedef std::shared_ptr<cugl::Scene2> Scene;
+    typedef std::shared_ptr<cugl::Scene2> _scene;
     
     /** Manager to process the animation actions */
     std::shared_ptr<cugl::scene2::ActionManager> _actions;
@@ -64,7 +64,6 @@ public:
         _items = items;
         _actions = actions;
         std::vector<Guard> _guardSet;
-        
 
     };
     
@@ -129,7 +128,7 @@ public:
         return id;
     }
     
-    void patrol(Vec2 _charPos, float char_angle){
+    void patrol(Vec2 _charPos, float char_angle, shared_ptr<cugl::Scene2> scene){
 
        // static auto last_time_question = std::chrono::steady_clock::now();
         static auto last_time_lookaround = std::chrono::steady_clock::now();
@@ -453,7 +452,6 @@ public:
                     _guardSet[i]->setStateBeforeQuestion("return");
                 }
 
-
 //                if (visual_detection){
 //                    _guardSet[i]->updatePrevState(_guardSet[i]->state);
 //                    _guardSet[i]->updateState("chaseD");
@@ -551,6 +549,8 @@ public:
                 else{
                     // guard is done moving, set next stop
                     _guardSet[i]->nextStop(patrolAction);
+                    //debug 
+                    _guardSet[i]->drawPatrolPath(scene);
                 }
                 _guardSet[i]->patrolGuardAnim(id);
             }
@@ -624,28 +624,6 @@ public:
         return closest;
     }
     
-    
-    void drawLines(Scene s, Vec2 a, Vec2 b){
-        
-        SplinePather splinePather = SplinePather();
-        SimpleExtruder extruder = SimpleExtruder();
-        Spline2 spline = Spline2(a, b);
-        splinePather.set(&spline);
-        splinePather.calculate();
-
-        extruder.set(splinePather.getPath());
-        extruder.calculate(1);
-        Poly2 line = extruder.getPolygon();
-        std::shared_ptr<scene2::PolygonNode> polyNode= scene2::PolygonNode::alloc();
-        polyNode->setPolygon(line);
-        
-        polyNode->setColor(Color4::GREEN);
-        
-        polyNode->setPosition(a.getMidpoint(b));
-        
-        s->addChild(polyNode);
-        
-    }
     
     vector<Vec2> shortestPath(int start, int end){
         int n = _nodes.size();

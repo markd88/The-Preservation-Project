@@ -244,6 +244,28 @@ public:
         _node->setPriority(_node->getPosition().y);
         _shadow->setPriority(_node->getPosition().y+1);
     }
+    
+    void drawPatrolPath(shared_ptr<cugl::Scene2> s, Vec2 a, Vec2 b){
+        
+        SplinePather splinePather = SplinePather();
+        SimpleExtruder extruder = SimpleExtruder();
+        Spline2 spline = Spline2(a, b);
+        splinePather.set(&spline);
+        splinePather.calculate();
+
+        extruder.set(splinePather.getPath());
+        extruder.calculate(1);
+        Poly2 line = extruder.getPolygon();
+        std::shared_ptr<scene2::PolygonNode> polyNode= scene2::PolygonNode::alloc();
+        polyNode->setPolygon(line);
+        
+        polyNode->setColor(Color4::GREEN);
+        
+        polyNode->setPosition(a.getMidpoint(b));
+        
+        s->addChild(polyNode);
+        
+    }
 
 };
 

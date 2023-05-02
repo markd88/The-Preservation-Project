@@ -303,10 +303,15 @@ public:
         _patrolMove->setDuration(duration);
         _patrolMove->setTarget(_patrol_stops[_goingTo]);
         _view->performAction(actionName, _patrolMove);
-
+        
 
         //animate guard
 
+    }
+    
+    void drawPatrolPath(shared_ptr<cugl::Scene2> s){
+        
+        _view->drawPatrolPath(s, getNodePosition(),_patrol_stops[_goingTo] );
     }
 
     void updateAnimation(Vec2 target, string state, int last_direction, string last_state, bool valid_target, string id) {

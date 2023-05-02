@@ -811,8 +811,8 @@ void GamePlayController::update(float dt){
     }
 
 #pragma mark Guard Methods
-    _guardSetPast->patrol(_character->getNodePosition(), _character->getAngle());
-    _guardSetPresent->patrol(_character->getNodePosition(), _character->getAngle());
+    _guardSetPast->patrol(_character->getNodePosition(), _character->getAngle(), _scene);
+    _guardSetPresent->patrol(_character->getNodePosition(), _character->getAngle(), _other_scene);
     // if collide with guard
     if(_activeMap == "pastWorld"){
         for(int i=0; i<_guardSetPast->_guardSet.size(); i++){
