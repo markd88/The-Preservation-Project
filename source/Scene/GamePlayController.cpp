@@ -344,7 +344,7 @@ void GamePlayController::init(){
     
     _obsSetPresent->addChildTo(_other_ordered_root);
     _wallSetPresent->addChildTo(_other_ordered_root);
-    _obsSetPresent->setVisibility(true);
+    _obsSetPresent->setVisibility(false); // set to 'true' for debugging only!
     auto presentEdges = _presentWorld->getEdges(_other_scene, _obsSetPresent);
     generatePresentMat(_presentWorld->getVertices());
     for (int i = 0; i < presentEdges.size(); i++){
