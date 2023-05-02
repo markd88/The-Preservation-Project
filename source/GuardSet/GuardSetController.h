@@ -549,8 +549,8 @@ public:
                 else{
                     // guard is done moving, set next stop
                     _guardSet[i]->nextStop(patrolAction);
-                    //debug 
-                    _guardSet[i]->drawPatrolPath(scene);
+                    //debug
+                    //_guardSet[i]->drawPatrolPath(scene);
                 }
                 _guardSet[i]->patrolGuardAnim(id);
             }
