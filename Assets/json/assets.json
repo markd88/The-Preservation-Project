@@ -68,7 +68,9 @@
         "clock" : {
             "file" : "textures/clock.png"
         },
-
+        "brush":{
+            "file" : "textures/brush_8x8.png"
+        },
         "pause_button": {
             "file":      "textures/pause_button.png"
         },

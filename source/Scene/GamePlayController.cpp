@@ -61,7 +61,7 @@ _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displ
 //    _scene->setSize(displaySize *3)
 //    _other_scene->setSize(displaySize *3);
     
-    _path = make_unique<PathController>();
+    _path = make_unique<PathController>(_assets);
     // initialize character, two maps, path
     
     // two-world switch animation initialization
@@ -388,7 +388,7 @@ void GamePlayController::init(){
     generateStaticGuards(_presentStaticGuardsPos, false);
 
 
-    _path = make_unique<PathController>();
+    _path = make_unique<PathController>(_assets);
     path_trace = {};
     
     _pause_button->activate();
