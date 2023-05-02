@@ -31,7 +31,7 @@
 
 /** Artifact specific fields */
 #define ITEM_FIELD          "item"
-#define RESOURCE_FIELD      "resource-big"
+#define RESOURCE_FIELD      "resource_clock"
 
 /** Character specific fields */
 #define CHARACTER_FIELD         "character"

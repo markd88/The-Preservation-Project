@@ -76,10 +76,14 @@ bool LevelModel:: preload(const std::shared_ptr<cugl::JsonValue>& json) {
         return false;
     }
     // Initial map
-    int mapHeight = json->get(MAP_HEIGHT)->asInt() / 2;
-    int mapWidth = json->get(MAP_WIDTH)->asInt() / 2;
-    int tileHeight = json->get(TILE_HEIGHT)->asInt() * 2;
-    int tileWidth = json->get(TILE_WIDTH)->asInt() * 2;
+//    int mapHeight = json->get(MAP_HEIGHT)->asInt() / 2;
+//    int mapWidth = json->get(MAP_WIDTH)->asInt() / 2;
+//    int tileHeight = json->get(TILE_HEIGHT)->asInt() * 2;
+//    int tileWidth = json->get(TILE_WIDTH)->asInt() * 2;
+    int mapHeight = json->get(MAP_HEIGHT)->asInt();
+    int mapWidth = json->get(MAP_WIDTH)->asInt();
+    int tileHeight = json->get(TILE_HEIGHT)->asInt();
+    int tileWidth = json->get(TILE_WIDTH)->asInt();
     _world->updateDimensions(Vec2(mapWidth, mapHeight));
     _world->updateTileSize(Size(tileWidth, tileHeight));
 //    int totWidth = mapWidth *tileWidth;

@@ -8,7 +8,7 @@
  "margin":0,
  "name":"tileset",
  "spacing":0,
- "tilecount":56,
+ "tilecount":63,
  "tiledversion":"1.10.0",
  "tileheight":256,
  "tiles":[
@@ -113,6 +113,11 @@
          "imageheight":128,
          "imagewidth":128,
          "properties":[
+                {
+                 "name":"direction",
+                 "type":"int",
+                 "value":1
+                }, 
                 {
                  "name":"isStatic",
                  "type":"bool",
@@ -395,7 +400,7 @@
         }, 
         {
          "id":52,
-         "image":"The-Preservation-Project\/Assets\/textures\/character.png",
+         "image":"The-Preservation-Project\/Assets\/textures\/character copy.png",
          "imageheight":128,
          "imagewidth":128,
          "type":"character"
@@ -420,6 +425,55 @@
          "imageheight":128,
          "imagewidth":128,
          "type":"artifact-4-big"
+        }, 
+        {
+         "id":56,
+         "image":"The-Preservation-Project\/Assets\/textures\/resource-big.png",
+         "imageheight":128,
+         "imagewidth":128,
+         "type":"resource-big"
+        }, 
+        {
+         "id":61,
+         "image":"The-Preservation-Project\/Assets\/textures\/past_roof_L.png",
+         "imageheight":128,
+         "imagewidth":60,
+         "type":"past_roof_L"
+        }, 
+        {
+         "id":62,
+         "image":"The-Preservation-Project\/Assets\/textures\/past_roof_R.png",
+         "imageheight":128,
+         "imagewidth":60,
+         "type":"past_roof_R"
+        }, 
+        {
+         "id":63,
+         "image":"The-Preservation-Project\/Assets\/textures\/collision_detection1.png",
+         "imageheight":64,
+         "imagewidth":128,
+         "type":"collision_detection1"
+        }, 
+        {
+         "id":64,
+         "image":"The-Preservation-Project\/Assets\/textures\/collision_detection2.png",
+         "imageheight":128,
+         "imagewidth":64,
+         "type":"collision_detection2"
+        }, 
+        {
+         "id":65,
+         "image":"The-Preservation-Project\/Assets\/textures\/collision_detection3.png",
+         "imageheight":64,
+         "imagewidth":64,
+         "type":"collision_detection3"
+        }, 
+        {
+         "id":67,
+         "image":"The-Preservation-Project\/Assets\/textures\/tile_present_wall_top2.png",
+         "imageheight":128,
+         "imagewidth":128,
+         "type":"tile_present_wall_top2"
         }],
  "tilewidth":256,
  "type":"tileset",
