@@ -42,8 +42,6 @@ private:
 
     vector<Vec2> _chaseVec;
     
-    //whether guard is traversing back the path
-    bool going_back = false;
     //whether or not guard returned from chasing
     bool returned;
     //saved stop to use when returning
@@ -290,14 +288,7 @@ public:
         }
         else{
             if (_goingTo + 1 == _patrol_stops.size()){
-                going_back = true;
-            }
-            else if (going_back and (_goingTo == 0)){
-                going_back = false;
-            }
-            
-            if(going_back){
-                _goingTo -= 1;
+                _goingTo = 0;
             }
             else{
                 _goingTo += 1;

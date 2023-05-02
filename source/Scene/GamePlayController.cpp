@@ -15,12 +15,10 @@ using namespace cugl;
 #define ANIMDURATION 1f
 #define PREVIEW_RADIUS 150
 #define SWITCH_DURATION 1
-#define CAMERA_BOUNDS_X 400
-#define CAMERA_BOUNDS_Y 200
 #define ACT_KEY  "current"
 
 GamePlayController::GamePlayController(const Size displaySize, std::shared_ptr<cugl::AssetManager>& assets ):
-_scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displaySize)) {
+_scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displaySize)),  _UI_scene(cugl::Scene2::alloc(displaySize)){
     // Initialize the assetManage
     
     _ordered_root = cugl::scene2::OrderedNode::allocWithOrder(cugl::scene2::OrderedNode::Order::DESCEND);
@@ -43,6 +41,7 @@ _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displ
     
     _cam = _scene->getCamera();
     _other_cam = _other_scene->getCamera();
+    _UI_cam = _UI_scene->getCamera();
     
     // Allocate the manager and the actions
     _actions = cugl::scene2::ActionManager::alloc();
@@ -53,6 +52,7 @@ _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displ
 
     _scene->setSize(displaySize*1.5);
     _other_scene->setSize(displaySize*1.5);
+    _UI_scene->setSize(displaySize*1.5);
     
     _previewNode = cugl::scene2::PolygonNode::alloc();
     _scene2texture = Scene2Texture::alloc(displaySize*5);
@@ -81,6 +81,10 @@ _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displ
     _button_layer->setContentSize(dimen);
     _button_layer->doLayout(); // This rearranges the children to fit the screen
     
+    //camera bounds
+    Size camSize = _cam->getViewport().size;
+    cam_y_bound =  camSize.height/2;
+    cam_x_bound = camSize.width/2;
     
     // add Win/lose panel
     _pause_layer = _assets->get<scene2::SceneNode>("pause");
@@ -124,8 +128,6 @@ _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displ
     });
     
     _pause_button->activate();
-    
-    
     
     _inventory_layer = assets->get<scene2::SceneNode>("button_panel");
 
@@ -297,6 +299,7 @@ void GamePlayController::init(){
     _camManager->dispose();
     
     // remove everything first
+    _UI_scene->removeAllChildren();
     _scene->removeAllChildren();
     _ordered_root->removeAllChildren();
     _scene2texture->removeAllChildren();
@@ -311,7 +314,7 @@ void GamePlayController::init(){
 
     // for two world switch animation
     //_scene->addChild(_world_switch_node);
-    _scene->addChild(_world_switch_node);
+    _UI_scene->addChild(_world_switch_node);
     _isSwitching = false;
 
     auto edges = _pastWorld->getEdges(_scene, _obsSetPast);
@@ -369,32 +372,36 @@ void GamePlayController::init(){
     _pause_button->activate();
     
     
-    _scene->addChild(_button_layer);
+    _UI_scene->addChild(_button_layer);
     //_ordered_root->addChild(_button_layer);
     
     Vec2 cPos = _character->getPosition();
     
     Size mapSize = _pastWorld->getSize();
-    if (cPos.x < CAMERA_BOUNDS_X){
-        cPos.x = CAMERA_BOUNDS_X;
-    }else if (cPos.x > mapSize.width - CAMERA_BOUNDS_X){
-        cPos.x = mapSize.width - CAMERA_BOUNDS_X;
+    
+    if (cPos.x < cam_x_bound){
+        cPos.x = cam_x_bound;
+    }else if (cPos.x > mapSize.width - cam_x_bound){
+        cPos.x = mapSize.width - cam_x_bound;
     }
 
-    if (cPos.y < CAMERA_BOUNDS_Y){
-        cPos.y = CAMERA_BOUNDS_Y;
+    if (cPos.y < cam_y_bound){
+        cPos.y = cam_y_bound;
     }
-    else if (cPos.y > mapSize.height-CAMERA_BOUNDS_Y){
-        cPos.y = mapSize.height-CAMERA_BOUNDS_Y;
+    else if (cPos.y > mapSize.height-cam_y_bound){
+        cPos.y = mapSize.height-cam_y_bound;
     }
     _cam->setPosition(Vec3(cPos.x,cPos.y,0));
     _other_cam->setPosition(Vec3(cPos.x,cPos.y,0));
+    _UI_cam->setPosition(Vec3(cPos.x,cPos.y,0));
+
     
     _cam->update();
     _other_cam->update();
+    _UI_cam->update();
     
     // to make the button pos fixed relative to screen
-    _button_layer->setPosition(_cam->getPosition());
+    _button_layer->setPosition(_UI_cam->getPosition());
 
 
 }
@@ -424,15 +431,13 @@ void GamePlayController::update(float dt){
             _presentWorld->setActive(true);
             
             _other_cam->setPosition(_cam->getPosition());
+            _UI_cam->setPosition(_cam->getPosition());
             _other_cam->update();
-            _scene->removeChild(_button_layer);
-            _other_scene->addChild(_button_layer);
+            _UI_cam->update();
 
             _character->removeChildFrom(_ordered_root);
             _character->addChildTo(_other_ordered_root);
 
-            _scene->removeChild(_world_switch_node);
-            _other_scene->addChild(_world_switch_node);
             
         }
         else {
@@ -440,16 +445,14 @@ void GamePlayController::update(float dt){
             _pastWorld->setActive(true);
             _presentWorld->setActive(false);
             _cam->setPosition(_other_cam->getPosition());
+            _UI_cam->setPosition(_other_cam->getPosition());
+
             _cam->update();
-            _other_scene->removeChild(_button_layer);
-            _scene->addChild(_button_layer);
+            _UI_cam->update();
 
             _character->removeChildFrom(_other_ordered_root);
             _character->addChildTo(_ordered_root);
 
-            _other_scene->removeChild(_world_switch_node);
-            _scene->addChild((_world_switch_node));
-            
             // when move to the second world, minus 1 in model
             _character->useRes();
         }
@@ -530,12 +533,7 @@ void GamePlayController::update(float dt){
             // create path
             _path->setIsDrawing(true);
             _path->setIsInitiating(true);
-//            _path->updateLastPos(_character->getPosition()); //change to a fixed location on the character
-//            if (_activeMap == "pastWorld"){
-//                _path->clearPath(_scene);
-//            }else{
-//                _path->clearPath(_other_scene);
-//            }
+
         }
 
         else if (input_posi.x - PREVIEW_RADIUS > 0 and input_posi.x < r.width - PREVIEW_RADIUS and
@@ -553,6 +551,7 @@ void GamePlayController::update(float dt){
                 _previewNode->setTexture(_texture);
                 _previewNode->setVisible(false);
                 _scene->addChildWithName(_previewNode, "preview");
+                
             }
             else{
                 auto _children = _scene->getChildren();
@@ -616,6 +615,29 @@ void GamePlayController::update(float dt){
                         _path->addSegment(checkpoint, _other_scene);
                     }
                 }
+            }
+        }
+    }
+    
+    else if (_input->didRelease()){
+        Vec2 input_posi = _input->getPosition();
+
+        if (_activeMap == "pastWorld"){
+            input_posi = _scene->screenToWorldCoords(input_posi);
+        }else{
+            input_posi = _other_scene->screenToWorldCoords(input_posi);
+        }
+
+        
+        if(_character->contains(input_posi)){
+            // create path
+            _path->setIsDrawing(true);
+            _path->setIsInitiating(true);
+            _path->updateLastPos(_character->getPosition());
+            if (_activeMap == "pastWorld"){
+                _path->clearPath(_scene);
+            }else{
+                _path->clearPath(_other_scene);
             }
         }
     }
@@ -704,25 +726,29 @@ void GamePlayController::update(float dt){
         Vec2 camTar = _path->getPath()[0];
         Size mapSize = _pastWorld->getSize();
         
-        if (camTar.x < CAMERA_BOUNDS_X){
-            camTar.x = CAMERA_BOUNDS_X;
-        }else if (camTar.x > mapSize.width - CAMERA_BOUNDS_X){
-            camTar.x = mapSize.width - CAMERA_BOUNDS_X;
+        if (camTar.x < cam_x_bound){
+            camTar.x = cam_x_bound;
+        }else if (camTar.x > mapSize.width - cam_x_bound){
+            camTar.x = mapSize.width - cam_x_bound;
         }
 
-        if (camTar.y < CAMERA_BOUNDS_Y){
-            camTar.y = CAMERA_BOUNDS_Y;
+        if (camTar.y < cam_y_bound){
+            camTar.y = cam_y_bound;
         }
-        else if (camTar.y > mapSize.height-CAMERA_BOUNDS_Y){
-            camTar.y = mapSize.height-CAMERA_BOUNDS_Y;
+        else if (camTar.y > mapSize.height-cam_y_bound){
+            camTar.y = mapSize.height-cam_y_bound;
         }
         
         _moveCam->setTarget(camTar);
         if (_activeMap == "pastWorld"){
             _camManager->activate("movingCam", _moveCam, _cam);
+            _camManager->activate("movingUICam", _moveCam, _UI_cam);
+
             _path->removeFirst(_scene);
         }else{
             _camManager->activate("movingOtherCam", _moveCam, _other_cam);
+            _camManager->activate("movingUICam", _moveCam, _UI_cam);
+
             _path->removeFirst(_other_scene);
         }
         
@@ -797,12 +823,8 @@ void GamePlayController::update(float dt){
     _camManager->update(dt);
     
     // the camera is moving smoothly, but the UI only set its movement per frame
-    if (_activeMap == "pastWorld"){
-        _button_layer->setPosition(_cam->getPosition() - Vec2(900, 70));
-    }else{
-        _button_layer->setPosition(_other_cam->getPosition() - Vec2(900, 70));
-    }
     
+    _button_layer->setPosition(_UI_cam->getPosition() - Vec2(900, 70));
     
     // update render priority
     updateRenderPriority();
@@ -857,6 +879,7 @@ void GamePlayController::update(float dt){
             _scene2texture->render(batch);
         }
         
+        _UI_scene->render(batch);
 
     }
     

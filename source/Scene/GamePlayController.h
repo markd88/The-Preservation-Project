@@ -24,6 +24,8 @@ private:
     
     std::shared_ptr<cugl::Scene2> _other_scene;
     
+    std::shared_ptr<cugl::Scene2> _UI_scene;
+    
     std::shared_ptr<cugl::scene2::OrderedNode> _ordered_root;
     
     std::shared_ptr<cugl::scene2::OrderedNode> _other_ordered_root;
@@ -81,6 +83,10 @@ public:
     vector<Vec2> path_trace;
     std::shared_ptr<Camera> _cam;
     std::shared_ptr<Camera> _other_cam;
+    std::shared_ptr<Camera> _UI_cam;
+    int cam_x_bound;
+    int cam_y_bound;
+
     /** Manager to process the animation actions */
     std::shared_ptr<cugl::scene2::ActionManager> _actions;
     std::shared_ptr<cugl::scene2::MoveTo> _moveTo;
