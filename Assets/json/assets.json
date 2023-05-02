@@ -37,6 +37,9 @@
         }
     },
     "textures": {
+        "pastB_wall_door": {
+            "file": "textures/pastB_wall_door.png"
+        },
         "presentB_fence_bottom_corner": {
             "file": "textures/presentB_fence_bottom_corner.png"
         },

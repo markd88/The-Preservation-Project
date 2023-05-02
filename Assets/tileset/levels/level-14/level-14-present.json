@@ -5730,20 +5730,8 @@
                  "type":"box6",
                  "visible":true,
                  "width":256,
-                 "x":1280,
-                 "y":1322.66666666667
-                }, 
-                {
-                 "gid":35,
-                 "height":128,
-                 "id":497,
-                 "name":"",
-                 "rotation":0,
-                 "type":"box1",
-                 "visible":true,
-                 "width":128,
-                 "x":1536,
-                 "y":1280
+                 "x":1211.55619596542,
+                 "y":1326.26897214217
                 }, 
                 {
                  "gid":35,
@@ -5754,20 +5742,8 @@
                  "type":"box1",
                  "visible":true,
                  "width":128,
-                 "x":1664,
-                 "y":1408
-                }, 
-                {
-                 "gid":35,
-                 "height":128,
-                 "id":499,
-                 "name":"",
-                 "rotation":0,
-                 "type":"box1",
-                 "visible":true,
-                 "width":128,
-                 "x":1536,
-                 "y":1408
+                 "x":1642.38616714697,
+                 "y":1375.57925072046
                 }, 
                 {
                  "gid":36,
@@ -5792,8 +5768,7 @@
                  "width":128,
                  "x":640,
                  "y":682.666666666667
-                },
-            
+                }, 
                 {
                  "gid":36,
                  "height":64,
@@ -5817,7 +5792,8 @@
                  "width":128,
                  "x":896,
                  "y":682.666666666667
-                }, 
+                },
+            
                 {
                  "gid":36,
                  "height":64,
@@ -6057,8 +6033,7 @@
                  "width":128,
                  "x":1280,
                  "y":1365.33333333333
-                },
-            
+                }, 
                 {
                  "gid":36,
                  "height":64,
@@ -6068,8 +6043,8 @@
                  "type":"box2",
                  "visible":true,
                  "width":128,
-                 "x":1408,
-                 "y":1365.33333333333
+                 "x":1341.35734870317,
+                 "y":1368.93563880883
                 }, 
                 {
                  "gid":36,
@@ -6082,7 +6057,8 @@
                  "width":128,
                  "x":512,
                  "y":1024
-                }, 
+                },
+            
                 {
                  "gid":36,
                  "height":64,
@@ -6278,18 +6254,6 @@
                 {
                  "gid":37,
                  "height":128,
-                 "id":548,
-                 "name":"",
-                 "rotation":0,
-                 "type":"box3",
-                 "visible":true,
-                 "width":64,
-                 "x":1664,
-                 "y":1280
-                }, 
-                {
-                 "gid":37,
-                 "height":128,
                  "id":549,
                  "name":"",
                  "rotation":0,
@@ -6322,8 +6286,7 @@
                  "width":64,
                  "x":1834.66666666667,
                  "y":1280
-                },
-            
+                }, 
                 {
                  "gid":37,
                  "height":128,
@@ -6347,18 +6310,6 @@
                  "width":64,
                  "x":1877.33333333333,
                  "y":1024
-                }, 
-                {
-                 "gid":38,
-                 "height":64,
-                 "id":554,
-                 "name":"",
-                 "rotation":0,
-                 "type":"box4",
-                 "visible":true,
-                 "width":64,
-                 "x":1536,
-                 "y":1152
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -6370,12 +6321,12 @@
  "nextobjectid":556,
  "orientation":"orthogonal",
  "renderorder":"right-down",
- "tiledversion":"1.10.1",
+ "tiledversion":"1.10.0",
  "tileheight":128,
  "tilesets":[
         {
          "firstgid":1,
-         "source":"tileset.tsj"
+         "source":"..\/tpp-tileset.tsj"
         }],
  "tilewidth":128,
  "type":"map",
