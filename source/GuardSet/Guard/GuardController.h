@@ -364,12 +364,22 @@ public:
 
     void chaseChar(string actionName){
         // CULog("chasing");
-        updateChaseSpeed(0.45);
+        //updateChaseSpeed(0.45);
+        float speed = 111;
+        float distance = getNodePosition().distance(_chaseMove->getTarget());
+        float duration = distance / speed;
+        //move guard
+        _chaseMove->setDuration(duration);
         _view->performAction(actionName, _chaseMove);
     }
     
     void returnGuard(string actionName){
         // CULog("returning");
+        float speed = 53;
+        float distance = getNodePosition().distance(_returnMove->getTarget());
+        float duration = distance / speed;
+        //move guard
+        _returnMove->setDuration(duration);
         _view->performAction(actionName, _returnMove);
     }
     

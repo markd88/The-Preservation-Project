@@ -19,6 +19,13 @@ using namespace cugl;
 
 GamePlayController::GamePlayController(const Size displaySize, std::shared_ptr<cugl::AssetManager>& assets ):
 _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displaySize)),  _UI_scene(cugl::Scene2::alloc(displaySize)){
+    //minimap stuff
+    _renderTarget = RenderTarget::alloc((displaySize*1.5).width, (displaySize*1.5).height);
+    _minimapNode = cugl::scene2::PolygonNode::alloc();
+    _minimapChar = cugl::scene2::PolygonNode::alloc();
+
+    
+    
     // Initialize the assetManage
     
     _ordered_root = cugl::scene2::OrderedNode::allocWithOrder(cugl::scene2::OrderedNode::Order::DESCEND);
@@ -57,7 +64,7 @@ _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displ
     _UI_scene->setSize(displaySize*1.5);
     
     _previewNode = cugl::scene2::PolygonNode::alloc();
-    _scene2texture = Scene2Texture::alloc(displaySize*5);
+    _scene2texture = Scene2Texture::alloc(displaySize*6);
 //    _scene->setSize(displaySize *3)
 //    _other_scene->setSize(displaySize *3);
     
@@ -545,9 +552,10 @@ void GamePlayController::update(float dt){
         }
         auto r = _pastWorld->getNode()->getSize();
 
-        
         if(_character->contains(input_posi)){
             // create path
+            _path->updateLastPos(_character->getPosition());
+
             _path->setIsDrawing(true);
             _path->setIsInitiating(true);
 
@@ -897,6 +905,7 @@ void GamePlayController::update(float dt){
         }
         
         _UI_scene->render(batch);
+        
 
     }
     
