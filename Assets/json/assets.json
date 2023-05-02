@@ -32,6 +32,24 @@
         }
     },
     "textures": {
+        "presentB_fence_bottom_corner": {
+            "file": "textures/presentB_fence_bottom_corner.png"
+        },
+        "presentB_fence": {
+            "file": "textures/presentB_fence.png"
+        },
+        "presentB_fence_top_corner": {
+            "file": "textures/presentB_fence_top_corner.png"
+        },
+        "presentB_fence_top_corner_flip": {
+            "file": "textures/presentB_fence_top_corner_flip.png"
+        },
+        "presentB_fence_bottom_corner_flip": {
+            "file": "textures/presentB_fence_bottom_corner_flip.png"
+        },
+        "presentB_fence_side": {
+            "file": "textures/presentB_fence_side.png"
+        },
         "vase_Anim" : {
             "file" : "textures/vase_gold_anim.png"
         },
