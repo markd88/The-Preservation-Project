@@ -144,7 +144,7 @@ public:
                     if(!down){
                         // this->_scene->setActive(down);
                         nextScene = GAMEPLAY;
-                        level = i % 5 + 1;
+                        level = i + 1;
                     }
                 });
             }
