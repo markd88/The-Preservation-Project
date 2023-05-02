@@ -256,7 +256,7 @@ void GamePlayController::loadLevel(){
     _artifactSet = _pastWorldLevel->getItem();
     _artifactSet->setAction(_actions);
     artNum = _artifactSet->getArtNum();
-    _exitSet = _pastWorldLevel->getItem();
+    _exitSet = _pastWorldLevel->getExit();
 
     // Draw present world
     _presentWorldLevel = _assets->get<LevelModel>(presentKey);
@@ -352,6 +352,7 @@ void GamePlayController::init(){
     
     _obsSetPast->addChildTo(_ordered_root);
     _wallSetPast->addChildTo(_ordered_root);
+    _exitSet->addChildTo(_ordered_root);
     
     _obsSetPresent->addChildTo(_other_ordered_root);
     _wallSetPresent->addChildTo(_other_ordered_root);
@@ -813,9 +814,9 @@ void GamePlayController::update(float dt){
                 }
                 // make the artifact disappear and remove from set
                 _artifactSet->remove_this(i, _ordered_root);
-                if(_character->getNumArt() == artNum){
-                    completeTerminate();
-                }
+//                if(_character->getNumArt() == artNum){
+//                    completeTerminate();
+//                }
                 break;
             }
             
@@ -848,6 +849,20 @@ void GamePlayController::update(float dt){
         }
     }
     
+#pragma mark Exit Method
+
+    if(_activeMap == "pastWorld"){
+        for(int i=0; i<_exitSet->_itemSet.size(); i++){
+            // detect collision
+            if( _character->containsExit(_exitSet->_itemSet[i]->getNodePosition()) && _character->getNumArt() == artNum){
+                completeTerminate();
+                break;
+            }
+            
+        }
+        
+    }
+    
     // Animate
     _actions->update(dt);
     _camManager->update(dt);
@@ -862,7 +877,6 @@ void GamePlayController::update(float dt){
     // update inventory panel
     updateInventoryPanel();
 }
-    
     
 #pragma mark Main Methods
 

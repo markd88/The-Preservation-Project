@@ -69,6 +69,7 @@ public:
     bool Iscollectable() {
         return can_be_collected;
     }
+
     /**
      *  Updates the model and view with the size of this tile.
      *
@@ -93,6 +94,10 @@ public:
     
     bool isObs(){
         return _model->isObs();
+    }
+    
+    bool isExit() {
+        return _model->isExit();
     }
     
     std::string getTextureKey() {
