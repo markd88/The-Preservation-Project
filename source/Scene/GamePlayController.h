@@ -106,6 +106,8 @@ public:
     std::shared_ptr<LevelModel> _presentWorldLevel;
     
     //preview variables
+    bool _tappingPause = false; // when tapping pause, disable preview
+    
     bool _isPreviewing;
     std::shared_ptr<cugl::scene2::PolygonNode> _previewNode;
     std::shared_ptr<Scene2Texture> _scene2texture;
