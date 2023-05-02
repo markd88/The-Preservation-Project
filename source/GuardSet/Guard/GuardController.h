@@ -161,6 +161,7 @@ public:
             _patrol_stops[i]  = _patrol_stops[i] + (_view->nodeSize() / 2);
         }
         _static_pos = _view->nodePos();
+        CULog("initial pos: %f, %f", _view->nodePos().x, _view->nodePos().y);
         // dont move the relative position!!!
     }
 
