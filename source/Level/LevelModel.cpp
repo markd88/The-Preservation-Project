@@ -111,6 +111,22 @@ bool LevelModel:: preload(const std::shared_ptr<cugl::JsonValue>& json) {
 * references to other assets, then these should be disconnected earlier.
 */
 void LevelModel::unload() {
+    if (_world != nullptr) {
+        _world->clearMap();
+        _world = nullptr;
+    }
+    if (_item != nullptr) {
+        _item->clearSet();
+        _item = nullptr;
+    }
+    if (_obs != nullptr) {
+        _obs->clearSet();
+        _obs = nullptr;
+    }
+    if (_wall != nullptr) {
+        _wall->clearSet();
+        _wall = nullptr;
+    }
 }
 
 
