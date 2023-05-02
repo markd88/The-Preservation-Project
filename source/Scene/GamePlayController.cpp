@@ -30,11 +30,13 @@ _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displ
     _assets = assets;
     
     // load sound
-    _collectArtifactSound = assets->get<Sound>("arrowShoot");
-    _collectResourceSound = assets->get<Sound>("NPC_flip");
-    _switchSound = assets->get<Sound>("lovestruck");
+    _collectArtifactSound = assets->get<Sound>("artifact");
+    _collectResourceSound = assets->get<Sound>("resource");
+    _switchSound = assets->get<Sound>("switch");
     _loseSound = assets->get<Sound>("lose");
     _winSound = assets->get<Sound>("win");
+    _pastMusic = assets->get<Sound>("past");
+    _presentMusic = assets->get<Sound>("present");
     
     // Initialize the scene to a locked width
     Size dimen = Application::get()->getDisplaySize();
@@ -88,6 +90,11 @@ _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displ
     
     _pause_resume->addListener([this](const std::string& name, bool down) {
         if (!down) {
+            if (_activeMap == "pastWorld"){
+                AudioEngine::get()->resume("past");
+            }else{
+                AudioEngine::get()->resume("present");
+            }
             // back to game
             auto s = _pause_layer->getScene();
             s->removeChild(_pause_layer);
@@ -98,6 +105,11 @@ _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displ
     
     _pause_restart->addListener([this](const std::string& name, bool down) {
         if (!down) {
+            if (_activeMap == "pastWorld"){
+                AudioEngine::get()->clear("past");
+            }else{
+                AudioEngine::get()->clear("present");
+            }
             // restart the game
             loadLevel();
             init();
@@ -396,7 +408,7 @@ void GamePlayController::init(){
     // to make the button pos fixed relative to screen
     _button_layer->setPosition(_cam->getPosition());
 
-
+    AudioEngine::get()->play("past", _pastMusic, true, _pastMusic->getVolume(), true);
 }
 
 void GamePlayController::update(float dt){
@@ -434,6 +446,8 @@ void GamePlayController::update(float dt){
             _scene->removeChild(_world_switch_node);
             _other_scene->addChild(_world_switch_node);
             
+            AudioEngine::get()->clear("past");
+            AudioEngine::get()->play("present", _presentMusic, true, _presentMusic->getVolume(), false);
         }
         else {
             _activeMap = "pastWorld";
@@ -452,6 +466,9 @@ void GamePlayController::update(float dt){
             
             // when move to the second world, minus 1 in model
             _character->useRes();
+            
+            AudioEngine::get()->clear("present");
+            AudioEngine::get()->play("past", _pastMusic, true, _pastMusic->getVolume(), false);
         }
 
         // stop previous movement after switch world
@@ -501,7 +518,7 @@ void GamePlayController::update(float dt){
     _cantSwitch = _cantSwitch || (_character->getNumRes() == 0);
 
     if(elapsed.count() >= 0.5 && _input->getPinchDelta() != 0 && !_cantSwitch){
-        AudioEngine::get()->play("lovestruck", _switchSound, false, _switchSound->getVolume(), true);
+        AudioEngine::get()->play("switch", _switchSound, false, _switchSound->getVolume(), true);
 
         // if the character's position on the other world is obstacle, disable the switch
         last_time = now;
@@ -745,13 +762,13 @@ void GamePlayController::update(float dt){
                 // if close, should collect it
                 // if resource
                 if(_artifactSet->_itemSet[i]->isResource()){
-                    AudioEngine::get()->play("NPC_flip", _collectResourceSound, false, _collectResourceSound->getVolume(), true);
+                    AudioEngine::get()->play("resource", _collectResourceSound, false, _collectResourceSound->getVolume(), true);
                     _character->addRes();
                    
                 }
                 // if artifact
                 else if (_artifactSet->_itemSet[i]->isArtifact()){
-                    AudioEngine::get()->play("arrowHit", _collectArtifactSound, false, _collectArtifactSound->getVolume(), true);
+                    AudioEngine::get()->play("artifact", _collectArtifactSound, false, _collectArtifactSound->getVolume(), true);
                     _character->addArt();
 
                 }
