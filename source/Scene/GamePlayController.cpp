@@ -256,6 +256,7 @@ void GamePlayController::loadLevel(){
     _artifactSet = _pastWorldLevel->getItem();
     _artifactSet->setAction(_actions);
     artNum = _artifactSet->getArtNum();
+    _exitSet = _pastWorldLevel->getItem();
 
     // Draw present world
     _presentWorldLevel = _assets->get<LevelModel>(presentKey);

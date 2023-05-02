@@ -53,9 +53,10 @@ public:
 //        _ItemSet.push_back(std::move(_Item));
 //    }
     
-    void add_this(Vec2 aPos, float rot, Size size, bool isArtifact, bool isResource, bool isWall, const std::shared_ptr<cugl::AssetManager>& assets, std::string textureKey){
+    void add_this(Vec2 pos, Size size, bool isArtifact, bool isResource, bool isWall, bool isExit,
+        const std::shared_ptr<cugl::AssetManager>& assets, std::string textureKey){
         int new_id = generateUniqueID();
-        Item _item = std::make_unique<ItemController>(aPos, rot, size, isArtifact, isResource, isWall, assets, textureKey, new_id);
+        Item _item = std::make_unique<ItemController>(pos, size, isArtifact, isResource, isWall, isExit, assets, textureKey, new_id);
         _itemSet.push_back(std::move(_item));
     }
 

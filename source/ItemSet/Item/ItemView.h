@@ -33,7 +33,7 @@ private:
 #pragma mark Main Functions
 public:
     /** contructor */
-    ItemView(Vec2 position, float angle, Size size, bool isArtifact, bool isResource, bool isObs, const std::shared_ptr<cugl::AssetManager>& assets, std::string textureKey, int id) {
+    ItemView(Vec2 position, Size size, bool isArtifact, bool isResource, bool isObs, bool isExit, const std::shared_ptr<cugl::AssetManager>& assets, std::string textureKey, int id) {
         _static_node = scene2::PolygonNode::alloc();
         setPosition(position);
 
