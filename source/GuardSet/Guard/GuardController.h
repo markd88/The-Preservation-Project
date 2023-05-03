@@ -129,8 +129,8 @@ public:
         _goingTo = 0;
         _returnVec = {};
         _chaseVec = {};
-
-
+        saved_stop = 1;
+        returned = false;
         _chaseMove = cugl::scene2::MoveTo::alloc();
         _chaseMove->setDuration(DURATION);
         

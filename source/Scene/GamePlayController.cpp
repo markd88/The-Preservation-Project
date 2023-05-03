@@ -25,7 +25,7 @@ _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displ
     _minimapChar = cugl::scene2::PolygonNode::alloc();
     added = false;
 
-    
+    _isPreviewing = false;
     
     // Initialize the assetManage
     
@@ -721,7 +721,7 @@ void GamePlayController::update(float dt){
     else if (_isPreviewing){
         
         Vec2 input_posi = _input->getPosition();
-        _previewNode->setVisible(true);
+    
         if (_activeMap == "pastWorld"){
             input_posi = _scene->screenToWorldCoords(input_posi);
         }
@@ -832,8 +832,8 @@ void GamePlayController::update(float dt){
     }
 
 #pragma mark Guard Methods
-    _guardSetPast->patrol(_character->getNodePosition(), _character->getAngle(), _scene);
-    _guardSetPresent->patrol(_character->getNodePosition(), _character->getAngle(), _other_scene);
+    _guardSetPast->patrol(_character->getNodePosition(), _character->getAngle(), _scene, "past");
+    _guardSetPresent->patrol(_character->getNodePosition(), _character->getAngle(), _other_scene, "present");
     // if collide with guard
     if(_activeMap == "pastWorld"){
         for(int i=0; i<_guardSetPast->_guardSet.size(); i++){
@@ -911,10 +911,20 @@ void GamePlayController::update(float dt){
         else{
             _other_scene->render(batch);
         }
+        _scene2texture->render(batch);
+        
+        std::chrono::duration<double> elapsed_seconds = _previewEnd - _previewStart;
         
         if (_isPreviewing){
-            //_scene2texture->getCamera()->setPosition(_cam->getPosition());
-            //_scene2texture->render(batch);
+            _previewEnd = std::chrono::steady_clock::now();
+            //std::cout<<"time elapsed: "<<elapsed_seconds.count()<<"\n";
+            if (elapsed_seconds.count() > .5){
+                _previewNode->setVisible(true);
+            }
+            
+        }else{
+            _previewNode->setVisible(false);
+            _previewStart = std::chrono::steady_clock::now();
         }
         
         _UI_scene->render(batch);
