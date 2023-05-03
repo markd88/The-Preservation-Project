@@ -21,11 +21,14 @@ private:
     // attach to scene one by the other
     bool _inScene = true;
     
+    std::shared_ptr<cugl::AssetManager> _assets;
+    
 public:
-    PathView(std::vector<std::shared_ptr<scene2::PolygonNode>> pathLines, Color4 color, int size){
+    PathView(std::vector<std::shared_ptr<scene2::PolygonNode>> pathLines, Color4 color, int size, std::shared_ptr<cugl::AssetManager>& assets){
         _pathLines = pathLines;
         _color = color;
         _size = size;
+        _assets = assets;
     }
     
     void addToPathLines(Spline2 spline, Vec2 pos, const std::shared_ptr<cugl::Scene2>& scene){
@@ -44,8 +47,17 @@ public:
         polyNode->setPolygon(line);
         polyNode->setPosition(pos);
         polyNode->setColor(_color);
-        _pathLines.push_back(polyNode);
-        if(_inScene)scene->addChild(polyNode);
+        
+
+        std::shared_ptr<cugl::scene2::PolygonNode> brush = std::make_shared<cugl::scene2::PolygonNode>();
+        brush->initWithTexture(_assets->get<Texture>("brush"));
+        brush->setPosition(pos);
+        brush->setScale(1.2);
+        
+//        _pathLines.push_back(polyNode);
+//        if(_inScene)scene->addChild(polyNode);
+        _pathLines.push_back(brush);
+        if(_inScene)scene->addChild(brush);
         _inScene = !_inScene;
     }
     

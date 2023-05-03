@@ -69,7 +69,7 @@ _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displ
 //    _scene->setSize(displaySize *3)
 //    _other_scene->setSize(displaySize *3);
     
-    _path = make_unique<PathController>();
+    _path = make_unique<PathController>(_assets);
     // initialize character, two maps, path
     
     // two-world switch animation initialization
@@ -110,6 +110,7 @@ _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displ
             // back to game
             auto s = _pause_layer->getScene();
             s->removeChild(_pause_layer);
+            _tappingPause = false;
         }
     });
     
@@ -141,6 +142,7 @@ _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displ
     
     _pause_button = std::dynamic_pointer_cast<scene2::Button>(assets->get<scene2::SceneNode>("button_pause-button"));
     _pause_button->addListener([this](const std::string& name, bool down) {
+        _tappingPause = true;
         if (!down) {
             // TODO:: activate the pause window
             pauseOn();
@@ -177,7 +179,15 @@ _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displ
     
     _fail_again_button->addListener([this](const std::string& name, bool down) {
         if (!down) {
-            this->init();
+            if (_activeMap == "pastWorld"){
+                AudioEngine::get()->clear("past");
+            }else{
+                AudioEngine::get()->clear("present");
+            }
+            // restart the game
+            loadLevel();
+            init();
+        
         }
     });
     
@@ -352,7 +362,7 @@ void GamePlayController::init(){
     
     _obsSetPresent->addChildTo(_other_ordered_root);
     _wallSetPresent->addChildTo(_other_ordered_root);
-    _obsSetPresent->setVisibility(true);
+    _obsSetPresent->setVisibility(false); // set to 'true' for debugging only!
     auto presentEdges = _presentWorld->getEdges(_other_scene, _obsSetPresent);
     generatePresentMat(_presentWorld->getVertices());
     for (int i = 0; i < presentEdges.size(); i++){
@@ -386,7 +396,7 @@ void GamePlayController::init(){
     generateStaticGuards(_presentStaticGuardsPos, false);
 
 
-    _path = make_unique<PathController>();
+    _path = make_unique<PathController>(_assets);
     path_trace = {};
     
     _pause_button->activate();
@@ -424,6 +434,8 @@ void GamePlayController::init(){
     _button_layer->setPosition(_UI_cam->getPosition());
 
     AudioEngine::get()->play("past", _pastMusic, true, _pastMusic->getVolume(), true);
+    
+    _tappingPause = false;
 }
 
 void GamePlayController::update(float dt){
@@ -563,7 +575,7 @@ void GamePlayController::update(float dt){
         }
 
         else if (input_posi.x - PREVIEW_RADIUS > 0 and input_posi.x < r.width - PREVIEW_RADIUS and
-                 input_posi.y > 0 and input_posi.y < r.height - PREVIEW_RADIUS*2 and !_isSwitching){
+                 input_posi.y > 0 and input_posi.y < r.height - PREVIEW_RADIUS*2 and !_isSwitching and !_tappingPause){
             //initialize preview
             _isPreviewing = true;
             if (_activeMap == "pastWorld"){

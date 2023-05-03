@@ -27,6 +27,7 @@ public:
      *  This is an appoach to address the issue that the character will flash to the initial touchpoint
      */
     bool _isInitiating;
+
     
 public:
     /** A public accessible, read-only version of the fields*/
@@ -42,7 +43,7 @@ public:
      * @param batch   The spritebatch used for drawing segments
      */
     
-    PathController():
+    PathController(std::shared_ptr<cugl::AssetManager>& assets):
     isDrawing(_isDrawing),
     isInitiating(_isInitiating)
     {
@@ -51,7 +52,7 @@ public:
         _isDrawing = false;
         _isInitiating = false;
         _model = std::make_unique<PathModel>(Color4::BLACK, 12, Vec2::ZERO, Path);
-        _view = std::make_unique<PathView>(pathLines, Color4::BLACK, 12);
+        _view = std::make_unique<PathView>(pathLines, Color4::BLACK, 12, assets);
     }
     
 #pragma mark Update Methods

@@ -24,6 +24,10 @@
     "courier":{
         "file":     "fonts/CourierPrime-Bold.ttf",
         "size":     75
+    },
+    "courier_regular":{
+        "file":     "fonts/CourierPrime-Regular.ttf",
+        "size":     75
     }
   },
   "scene2s": {
