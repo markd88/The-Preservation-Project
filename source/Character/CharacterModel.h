@@ -98,7 +98,13 @@ public:
         return false;
     }
     
-    
+    // because exit is blocked by wall, so we need a larger radius
+    bool containsExit(Vec2 point){
+        if(_position.distance(point) <= 3* radius){
+            return true;
+        }
+        return false;
+    }
     
 };
 #endif /* CharacterModel_h */

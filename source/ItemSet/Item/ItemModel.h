@@ -19,6 +19,7 @@ private:
     bool _isArtifact;
     bool _isResource;
     bool _isObs;
+    bool _isExit;
     
     std::string _textureKey;
     int radius;
@@ -36,12 +37,13 @@ public:
      * @param size      The width and height of a Item
      * @param color     The Item color
      */
-    ItemModel(Vec2 position, Size size, bool isArtifact, bool isResource, bool isObs, std::string textureKey){
+    ItemModel(Vec2 position, Size size, bool isArtifact, bool isResource, bool isObs, bool isExit, std::string textureKey){
         setPosition(position);
         setSize(size);
         setArtifact(isArtifact);
         setResource(isResource);
         setObs(isObs);
+        setExit(isExit);
         setTextureKey(textureKey);
     }
     
@@ -86,6 +88,10 @@ public:
         return _isObs;
     }
     
+    bool isExit(){
+        return _isExit;
+    }
+    
     void setArtifact(bool isArtifact) {
         _isArtifact = isArtifact;
 
@@ -103,6 +109,11 @@ public:
     
     void setObs(bool isObs) {
         _isObs = isObs;
+
+    }
+    
+    void setExit(bool isExit) {
+        _isExit = isExit;
 
     }
     

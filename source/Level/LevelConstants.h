@@ -33,8 +33,11 @@
 #define ITEM_FIELD          "item"
 #define RESOURCE_FIELD      "resource_clock"
 
+/** Exit specific fields */
+#define EXIT_FIELD          "exit"
+
 /** Character specific fields */
-#define CHARACTER_FIELD         "character"
+#define CHARACTER_FIELD     "character"
 
 /** Guard specific fields */
 #define GUARD_FIELD         "guard"

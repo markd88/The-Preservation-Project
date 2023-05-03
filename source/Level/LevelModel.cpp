@@ -25,6 +25,7 @@ LevelModel::LevelModel(void) : Asset()
     _item = std::make_shared<ItemSetController>();
     _obs = std::make_shared<ItemSetController>();
     _wall = std::make_shared<ItemSetController>();
+    _exit = std::make_shared<ItemSetController>();
 }
 
 /**
@@ -134,7 +135,7 @@ bool LevelModel::loadObject(const std::string type, int totalHeight, const std::
     if (type == TILEMAP_FILED) {
         return loadTilemap(json);
     }
-    if (type == ITEM_FIELD || type == OBS_FIELD || type == WALL_FIELD) {
+    if (type == ITEM_FIELD || type == OBS_FIELD || type == WALL_FIELD || type == EXIT_FIELD) {
         return loadItem(json, type);
     }
     if (type == GUARD_FIELD) {
@@ -181,25 +182,28 @@ bool LevelModel::loadItem(const std::shared_ptr<JsonValue>& json, const std::str
     int height = json->get("width")->asInt();
     int x = json->get("x")->asInt(); // x pos
     int y = totalHeight - json->get("y")->asInt(); // totalHeight - yHeight
-    int rot = json->get("rotation")->asInt();
     
     Vec2 pos = Vec2 (x, y);
     Size size = Size(width, height);
     if (type == WALL_FIELD) {
-        // isArtifact = false, isResource = false, isObs = false
-        _wall->add_this(pos, rot, size, false, false, false, _assets, textureType);
+        // isArtifact = false, isResource = false, isObs = false, isExit = false
+        _wall->add_this(pos, size, false, false, false, false, _assets, textureType);
     }
-    if (type == OBS_FIELD) {
-        // isArtifact = false, isResource = false, isObs = TRUE
-        _obs->add_this(pos, rot, size, false, false, true, _assets, textureType);
+    else if (type == OBS_FIELD) {
+        // isArtifact = false, isResource = false, isObs = TRUE, isExit = false
+        _obs->add_this(pos, size, false, false, true, false, _assets, textureType);
     }
-    if (type == ITEM_FIELD) {
+    else if (type == EXIT_FIELD) {
+        // isArtifact = false, isResource = false, isObs = false, isExit = TRUE
+        _exit->add_this(pos, size, false, false, false, true, _assets, textureType);
+    }
+    else if (type == ITEM_FIELD) {
         if (textureType == RESOURCE_FIELD) {
-            // isArtifact = false, isResource = TRUE, isObs = false
-            _item->add_this(pos, rot, size, false, true, false, _assets, textureType);
+            // isArtifact = false, isResource = TRUE, isObs = false, isExit = false
+            _item->add_this(pos, size, false, true, false, false, _assets, textureType);
         } else {
-            // isArtifact = TRUE, isResource = false, isObs = false
-            _item->add_this(pos, rot, size, true, false, false, _assets, textureType);
+            // isArtifact = TRUE, isResource = false, isObs = false, isExit = false
+            _item->add_this(pos, size, true, false, false, false, _assets, textureType);
         }
     }
 
@@ -294,4 +298,5 @@ void LevelModel::setTilemapTexture() {
     _item->setTexture(_assets);
     _obs->setTexture(_assets);
     _wall->setTexture(_assets);
+    _exit->setTexture(_assets);
 };

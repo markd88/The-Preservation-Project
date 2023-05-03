@@ -42,9 +42,10 @@ public:
      * @param size      The width and height of a tile
      * @param color     The tile color
      */
-    ItemController(Vec2 position, float rot, Size size, bool isArtifact, bool isResource, bool isObs, const std::shared_ptr<cugl::AssetManager>& assets, std::string textureKey, int id) : id(_id) {
-        _model = std::make_unique<ItemModel>(position, size, isArtifact, isResource, isObs, textureKey);
-        _view = std::make_unique<ItemView>(position, rot, size, isArtifact, isResource, isObs, assets, textureKey, id);
+    ItemController(Vec2 position, Size size, bool isArtifact, bool isResource, bool isObs, bool isExit,
+        const std::shared_ptr<cugl::AssetManager>& assets, std::string textureKey, int id) : id(_id) {
+        _model = std::make_unique<ItemModel>(position, size, isArtifact, isResource, isObs, isExit, textureKey);
+        _view = std::make_unique<ItemView>(position, size, isArtifact, isResource, isObs, isExit, assets, textureKey, id);
         _id = id;
         if (isResource || isArtifact) {
             can_be_collected = true;
@@ -68,6 +69,7 @@ public:
     bool Iscollectable() {
         return can_be_collected;
     }
+
     /**
      *  Updates the model and view with the size of this tile.
      *
@@ -92,6 +94,10 @@ public:
     
     bool isObs(){
         return _model->isObs();
+    }
+    
+    bool isExit() {
+        return _model->isExit();
     }
     
     std::string getTextureKey() {
