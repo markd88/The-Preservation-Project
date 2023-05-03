@@ -21,8 +21,7 @@ GamePlayController::GamePlayController(const Size displaySize, std::shared_ptr<c
 _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displaySize)),  _UI_scene(cugl::Scene2::alloc(displaySize)){
     //minimap stuff
     _renderTarget = RenderTarget::alloc((displaySize*1.5).width, (displaySize*1.5).height);
-    _minimapNode = cugl::scene2::PolygonNode::alloc();
-    _minimapChar = cugl::scene2::PolygonNode::alloc();
+    
     added = false;
 
     _isPreviewing = false;
@@ -63,6 +62,9 @@ _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displ
     _scene->setSize(displaySize*1.5);
     _other_scene->setSize(displaySize*1.5);
     _UI_scene->setSize(displaySize*1.5);
+    
+    _minimapNode = cugl::scene2::PolygonNode::alloc();
+    _minimapChar = cugl::scene2::PolygonNode::alloc();
     
     _previewNode = cugl::scene2::PolygonNode::alloc();
     _scene2texture = Scene2Texture::alloc(displaySize*6);
@@ -563,63 +565,38 @@ void GamePlayController::update(float dt){
         }else{
             input_posi = _other_scene->screenToWorldCoords(input_posi);
         }
-        auto r = _pastWorld->getNode()->getSize();
 
-        if(_character->contains(input_posi)){
-            // create path
-            _path->updateLastPos(_character->getPosition());
+        // create path
+        _path->updateLastPos(_character->getPosition());
 
-            _path->setIsDrawing(true);
-            _path->setIsInitiating(true);
+        _path->setIsDrawing(true);
+        _path->setIsInitiating(true);
+        pathOffset = _character->getNodePosition() - input_posi;
+        
 
-        }
-
-        else if (input_posi.x - PREVIEW_RADIUS > 0 and input_posi.x < r.width - PREVIEW_RADIUS and
-                 input_posi.y > 0 and input_posi.y < r.height - PREVIEW_RADIUS*2 and !_isSwitching and !_tappingPause){
-            //initialize preview
-            _isPreviewing = true;
-            if (_activeMap == "pastWorld"){
-                auto _children = _other_scene->getChildren();
-                for (int i = 0; i < _children.size(); i++){
-                    auto tempChild = _children[i];
-                    _other_scene->removeChild(_children[i]);
-                    _scene2texture->addChild(tempChild);
-                }
-                _texture = _scene2texture->getTexture();
-                _previewNode->setTexture(_texture);
-                _previewNode->setVisible(false);
-                _scene->addChildWithName(_previewNode, "preview");
-                
-            }
-            else{
-                auto _children = _scene->getChildren();
-                for (int i = 0; i < _children.size(); i++){
-                    auto tempChild = _children[i];
-                    _scene->removeChild(_children[i]);
-                    _scene2texture->addChild(tempChild);
-                }
-                _texture = _scene2texture->getTexture();
-                _previewNode->setTexture(_texture);
-                _previewNode->setVisible(false);
-                _other_scene->addChildWithName(_previewNode, "preview");
-            }
-        }
     }
     
     else if (_input->isDown() && _path->isDrawing){
         
-        Vec2 input_posi = _input->getPosition();
+        Vec2 input_posi1 = _input->getPosition();
         if (_activeMap == "pastWorld"){
-            input_posi = _scene->screenToWorldCoords(input_posi);
+            input_posi1 = _scene->screenToWorldCoords(input_posi1);
         }else{
-            input_posi = _other_scene->screenToWorldCoords(input_posi);
+            input_posi1 = _other_scene->screenToWorldCoords(input_posi1);
         }
+        
+        Vec2 input_posi = input_posi1 + pathOffset;
+        //Vec2 cpos = _character->getNodePosition();
+        //std::cout<<"CPOS: "<<cpos.x<<","<<cpos.y<<"\n";
+        std::cout<<"INPOS: "<<input_posi.x<<","<<input_posi.y<<"\n";
+
         // if input still within the character
         if(_path->isInitiating){
             // if input leaves out of the character's radius, draw the initial segments
             if (!_character->contains(input_posi)){
                 
                 _path->setIsInitiating(false);
+                std::cout<<"done initializing"<<"\n";
                 _path->updateLastPos(_character->getPosition()); //change to a fixed location on the character
                 if (_activeMap == "pastWorld"){
                     _path->clearPath(_scene);
@@ -911,25 +888,46 @@ void GamePlayController::update(float dt){
         else{
             _other_scene->render(batch);
         }
-        _scene2texture->render(batch);
-        
-        std::chrono::duration<double> elapsed_seconds = _previewEnd - _previewStart;
-        
-        if (_isPreviewing){
-            _previewEnd = std::chrono::steady_clock::now();
-            //std::cout<<"time elapsed: "<<elapsed_seconds.count()<<"\n";
-            if (elapsed_seconds.count() > .5){
-                _previewNode->setVisible(true);
-            }
-            
-        }else{
-            _previewNode->setVisible(false);
-            _previewStart = std::chrono::steady_clock::now();
-        }
         
         _UI_scene->render(batch);
         
+        _renderTarget->begin();
+        _other_cam->setPosition(_cam->getPosition());
+        _other_cam->update();
+        _other_scene->render(batch);
+        _renderTarget->end();
+        _minimapTexture = _renderTarget->getTexture();
+        _minimapNode->setTexture(_minimapTexture);
+        _renderTarget->setClearColor(Color4::CLEAR);
         
+        Rect camView = _other_cam->getViewport();
+        Vec2 center = Vec2(camView.origin.x + camView.size.width/2, camView.origin.y + camView.size.height/2);
+        
+        PolyFactory polyFact = PolyFactory();
+        Poly2 circle = polyFact.makeCircle(center, PREVIEW_RADIUS*2.4);
+                
+        _minimapNode->setPolygon(circle);
+        _minimapNode->setPosition(_cam->getPosition() + Vec2(400,250));
+        _minimapNode->flipVertical(true);
+        _minimapNode->setScale(.25);
+        auto c = _minimapNode->getColor();
+        _minimapNode->setColor(Color4(c.r, c.g, c.b, 180));
+        
+        Rect player = Rect(_character->getNodePosition(), Size(50, 50));
+        _minimapChar->setPolygon(player);
+        _minimapChar->setColor(Color4::RED);
+        _minimapChar->setPosition(_character->getNodePosition());
+       
+        if (_scene->getChildByName("minimap")){
+            
+        }else{
+            _scene->addChildWithName(_minimapNode, "minimap");
+        }
+        if (_other_scene->getChildByName("miniChar")){
+            
+        }else{
+            _other_scene->addChildWithName(_minimapChar, "miniChar");
+        }
 
     }
     

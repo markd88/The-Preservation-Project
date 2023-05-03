@@ -118,6 +118,7 @@ public:
     std::shared_ptr<Texture> _minimapTexture;
     std::chrono::steady_clock::time_point _previewStart;
     std::chrono::steady_clock::time_point _previewEnd;
+    Vec2 pathOffset;
     bool added;
     
 
