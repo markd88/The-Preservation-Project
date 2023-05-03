@@ -12,6 +12,7 @@
 #include <Tilemap/TilemapController.h>
 #include <ItemSet/ItemSetController.h>
 
+
 using namespace std;
 #include <cmath>
 
@@ -70,7 +71,6 @@ public:
 #pragma mark Update Methods
 public:
 
-
     // add one guard
     void add_this_moving(Vec2 gPos, std::shared_ptr<cugl::scene2::OrderedNode> s, const std::shared_ptr<cugl::AssetManager>& assets, vector<Vec2> patrol_stops, bool isPast){
         Guard _guard = std::make_unique<GuardController>(gPos, assets, patrol_stops, _actions, generateUniqueID(), isPast);
@@ -128,7 +128,7 @@ public:
         return id;
     }
     
-    void patrol(Vec2 _charPos, float char_angle, shared_ptr<cugl::Scene2> scene){
+    void patrol(Vec2 _charPos, float char_angle, shared_ptr<cugl::Scene2> scene, string world){
 
        // static auto last_time_question = std::chrono::steady_clock::now();
         static auto last_time_lookaround = std::chrono::steady_clock::now();
@@ -145,10 +145,10 @@ public:
 
             string id = std::to_string(_guardSet[i]->id);
 
-            string chaseDAction = "chaseD" + id;
-            string chaseSPAction = "chaseSP" + id;
-            string patrolAction = "patrol" + id;
-            string returnAction = "return" + id;
+            string chaseDAction = "chaseD" + id + world;
+            string chaseSPAction = "chaseSP" + id + world;
+            string patrolAction = "patrol" + id + world;
+            string returnAction = "return" + id + world;
 
 
             Vec2 guardPos = _guardSet[i]->getNodePosition();
