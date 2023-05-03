@@ -75,7 +75,7 @@ _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displ
     // two-world switch animation initialization
     std::shared_ptr<Texture> world_switch  = assets->get<Texture>("two_world_switch");
     _world_switch_node = scene2::SpriteNode::allocWithSheet(world_switch, 5, 4, 20); // SpriteNode for two_world switch animation
-    // _world_switch_node->setScale(0.8f); // Magic number to rescale asset
+    _world_switch_node->setScale(1.5f); // Magic number to rescale asset
     _world_switch_node->setRelativeColor(false);
     _world_switch_node->setVisible(true);
     _world_switch_node->setFrame(19);
