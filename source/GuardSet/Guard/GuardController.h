@@ -45,7 +45,7 @@ private:
     //whether or not guard returned from chasing
     bool returned;
     //saved stop to use when returning
-    int saved_stop;
+    int saved_stop = 0;
     //current state
     string _state;
     //prev state
