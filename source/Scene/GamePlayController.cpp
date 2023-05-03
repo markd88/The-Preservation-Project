@@ -23,6 +23,7 @@ _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displ
     _renderTarget = RenderTarget::alloc((displaySize*1.5).width, (displaySize*1.5).height);
     _minimapNode = cugl::scene2::PolygonNode::alloc();
     _minimapChar = cugl::scene2::PolygonNode::alloc();
+    added = false;
 
     
     
@@ -901,10 +902,11 @@ void GamePlayController::update(float dt){
         
         if (_isPreviewing){
             //_scene2texture->getCamera()->setPosition(_cam->getPosition());
-            _scene2texture->render(batch);
+            //_scene2texture->render(batch);
         }
         
         _UI_scene->render(batch);
+        
         
 
     }

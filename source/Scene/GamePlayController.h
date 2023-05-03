@@ -110,11 +110,11 @@ public:
     std::shared_ptr<cugl::scene2::PolygonNode> _previewNode;
     std::shared_ptr<Scene2Texture> _scene2texture;
     std::shared_ptr<Texture> _texture;
-    
     std::shared_ptr<cugl::scene2::PolygonNode> _minimapNode;
     std::shared_ptr<cugl::scene2::PolygonNode> _minimapChar;
     std::shared_ptr<cugl::RenderTarget> _renderTarget;
     std::shared_ptr<Texture> _minimapTexture;
+    bool added;
 
     // two_world switch
 
