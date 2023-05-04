@@ -37,6 +37,15 @@
         }
     },
     "textures": {
+        "character-placeholder": {
+            "file": "textures/character-placeholder.png"
+        },
+        "tile_past_door_side": {
+            "file": "textures/tile_past_door_side.png"
+        },
+        "exit_side": {
+            "file": "textures/exit_side.png"
+        },
         "pastB_wall_door": {
             "file": "textures/pastB_wall_door.png"
         },

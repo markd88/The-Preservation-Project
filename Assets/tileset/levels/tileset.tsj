@@ -8,7 +8,7 @@
  "margin":0,
  "name":"tileset",
  "spacing":0,
- "tilecount":153,
+ "tilecount":154,
  "tiledversion":"1.10.0",
  "tileheight":512,
  "tiles":[
@@ -638,7 +638,9 @@
         }, 
         {
          "id":168,
-         "image":"The-Preservation-Project\/Assets\/textures\/pastB_wall_door.png",
+         "image":"..\/..\/textures\/pastB_wall_door.png",
+         "imageheight":128,
+         "imagewidth":128,
          "type":"pastB_wall_door"
         }, 
         {
@@ -1056,7 +1058,9 @@
         }, 
         {
          "id":173,
-         "image":"The-Preservation-Project\/Assets\/textures\/tile_past_door_side.png",
+         "image":"..\/..\/textures\/tile_past_door_side.png",
+         "imageheight":180,
+         "imagewidth":29,
          "type":"tile_past_door_side"
         }, 
         {
@@ -1100,6 +1104,13 @@
          "imageheight":128,
          "imagewidth":128,
          "type":"presentB_fence_side"
+        }, 
+        {
+         "id":180,
+         "image":"..\/..\/textures\/exit_side.png",
+         "imageheight":168,
+         "imagewidth":72,
+         "type":"exit_side"
         }],
  "tilewidth":256,
  "type":"tileset",
