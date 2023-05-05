@@ -241,9 +241,9 @@ _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displ
 }
 
 void GamePlayController::loadLevel(){
-    string pastFile = "tileset/levels/level-" + std::to_string(level) + "/level-" + std::to_string(level) + "-past.json";
+    string pastFile = "tileset/levels/level-" + std::to_string(level) + "-past.json";
     string pastKey = "level-" + std::to_string(level) + "-past";
-    string presentFile = "tileset/levels/level-" + std::to_string(level) + "/level-" + std::to_string(level) + "-present.json";
+    string presentFile = "tileset/levels/level-" + std::to_string(level) + "-present.json";
     string presentKey = "level-" + std::to_string(level) + "-present";
     
     _assets->unload<LevelModel>(pastKey);
