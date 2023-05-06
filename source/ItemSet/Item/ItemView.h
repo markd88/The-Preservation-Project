@@ -22,6 +22,7 @@ private:
     bool _isArtifact;
     bool _isResource;
     bool _isObs;
+    bool _isExit;
 
     std::shared_ptr<cugl::scene2::Animate> _c_0;
 
@@ -40,13 +41,12 @@ public:
         _isArtifact = isArtifact;
         _isResource = isResource;
         _isObs = isObs;
+        _isExit = isExit;
         _id = id;
 
 
         std::vector<int> d0 = {1,2,3,4,5,6,7,0};
         _c_0 = cugl::scene2::Animate::alloc(d0, 1.0f);
-
-
     }
     
     ~ItemView(){
@@ -138,7 +138,12 @@ public:
             _anim_node->setVisible(true);
 
         }
-
+        else if (_isExit) {
+            std::shared_ptr<Texture> texture  = assets->get<Texture>(textureKey);
+            _static_node = scene2::PolygonNode::allocWithTexture(texture);
+            _static_node->setAnchor(Vec2::ANCHOR_CENTER);
+            setPosition(pos + _static_node->getSize()/2);
+        }
         else {
             std::shared_ptr<Texture> texture  = assets->get<Texture>(textureKey);
             _static_node = scene2::PolygonNode::allocWithTexture(texture);
