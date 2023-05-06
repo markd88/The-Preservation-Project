@@ -63,11 +63,12 @@ _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displ
     _scene->setSize(displaySize*1.5);
     _other_scene->setSize(displaySize*1.5);
     _UI_scene->setSize(displaySize*1.5);
+//    _scene->setSize(displaySize *3);
+//    _other_scene->setSize(displaySize *3);
+//    _UI_scene->setSize(displaySize*3);
     
     _previewNode = cugl::scene2::PolygonNode::alloc();
     _scene2texture = Scene2Texture::alloc(displaySize*6);
-//    _scene->setSize(displaySize *3)
-//    _other_scene->setSize(displaySize *3);
     
     _path = make_unique<PathController>(_assets);
     // initialize character, two maps, path

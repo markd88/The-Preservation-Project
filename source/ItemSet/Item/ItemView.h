@@ -98,6 +98,10 @@ public:
         _static_node->setAngle(angle);
     }
     
+    Vec2 nodePos(){
+        return _static_node->getPosition();
+    }
+    
     void setTexture(const std::shared_ptr<cugl::AssetManager>& assets, std::string textureKey) {
         //        auto node = scene2::SceneNode::alloc();
         Vec2 pos = nodePos();
@@ -105,24 +109,32 @@ public:
         if (_isResource) {
             std::shared_ptr<Texture> texture  = assets->get<Texture>("clock");
             _static_node = scene2::PolygonNode::allocWithTexture(texture);
-            _static_node->setAnchor(Vec2::ANCHOR_CENTER);
-            setPosition(pos + Vec2(64,64));
+            _static_node->setAnchor(Vec2(0.5, 0.2));
+            Vec2 offset = Vec2 (_static_node->getSize().width/2, _static_node->getSize().height/5);
+            setPosition(pos + offset);
             std::shared_ptr<Texture> textureAnim  = assets->get<Texture>("clock_Anim");
             _anim_node = scene2::SpriteNode::allocWithSheet(textureAnim, 2, 4, 8);
 
             _static_node->addChild(_anim_node);
+            _anim_node->setAnchor(Vec2(0.5, 0.2));
+            Vec2 offset_anim = Vec2 (_anim_node->getSize().width/2, _anim_node->getSize().height/5);
+            setPosition(pos + offset_anim);
             _anim_node->setVisible(true);
 
         }
         else if (_isArtifact ) {
             std::shared_ptr<Texture> texture  = assets->get<Texture>("vase");
             _static_node = scene2::PolygonNode::allocWithTexture(texture);
-            _static_node->setAnchor(Vec2::ANCHOR_CENTER);
-            setPosition(pos + Vec2(64,64));
+            _static_node->setAnchor(Vec2(0.5, 0.2));
+            Vec2 offset = Vec2 (_static_node->getSize().width/2, _static_node->getSize().height/5);
+            setPosition(pos + offset);
             std::shared_ptr<Texture> textureAnim  = assets->get<Texture>("vase_Anim");
             _anim_node = scene2::SpriteNode::allocWithSheet(textureAnim, 2, 4, 8);
 
             _static_node->addChild(_anim_node);
+            _anim_node->setAnchor(Vec2(0.5, 0.2));
+            Vec2 offset_anim = Vec2 (_anim_node->getSize().width/2, _anim_node->getSize().height/5);
+            setPosition(pos + offset_anim);
             _anim_node->setVisible(true);
 
         }
@@ -132,10 +144,10 @@ public:
             _static_node = scene2::PolygonNode::allocWithTexture(texture);
             _static_node->setAnchor(Vec2::ANCHOR_BOTTOM_LEFT);
             setPosition(pos);
-        }
-        if (_isObs) {
-
-            setVisibility(false);
+//            std::cout<< _static_node->getPosition().x <<std::endl;
+            if (_isObs) {
+                _static_node->setVisible(false);
+            }
         }
     }
 
@@ -148,10 +160,6 @@ public:
             _actions->activate("item"+ std::to_string(_id), _c_0, _anim_node);
         }
 
-    }
-    
-    Vec2 nodePos(){
-        return _static_node->getPosition();
     }
     
     void setVisibility(bool visible){
