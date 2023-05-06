@@ -97,6 +97,7 @@ public:
         }
         return false;
     }
+
     
     bool containsNear(Vec2 point){
         if(_position.distance(point) <= radius * 0.75){
@@ -112,6 +113,6 @@ public:
         }
         return false;
     }
-    
+
 };
 #endif /* CharacterModel_h */

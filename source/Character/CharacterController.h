@@ -124,9 +124,6 @@ public:
         return _model->containsNear(point);
     }
     
-    bool containsExit(Vec2 point){
-        return _model->containsExit(point);
-    }
 #pragma mark Scene Methods
 public:
     /**
