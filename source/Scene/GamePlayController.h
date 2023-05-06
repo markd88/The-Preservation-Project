@@ -325,7 +325,7 @@ public:
         _wallSetPast->updatePriority();
         _character->updatePriority();
         _guardSetPast->updatePriority();
-        
+        _exitSet->updatePriority();;
         
         //_presentWorld->setPriority(1000);
         _obsSetPresent->updatePriority();

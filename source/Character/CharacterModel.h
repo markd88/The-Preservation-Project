@@ -91,8 +91,15 @@ public:
      *
      *  @param point The position of the touchpoint
      */
-    bool contains(Vec2 point){
+    bool containsFar(Vec2 point){
         if(_position.distance(point) <= radius){
+            return true;
+        }
+        return false;
+    }
+    
+    bool containsNear(Vec2 point){
+        if(_position.distance(point) <= radius * 0.75){
             return true;
         }
         return false;
