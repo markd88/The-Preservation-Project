@@ -115,8 +115,13 @@ public:
      *
      *  @param point The position of the touchpoint
      */
-    bool contains(Vec2 point){
-        return _model->contains(point);
+    bool containsFar(Vec2 point){
+        return _model->containsFar(point);
+    }
+    
+    // for other purposes
+    bool containsNear(Vec2 point){
+        return _model->containsNear(point);
     }
     
     bool containsExit(Vec2 point){
