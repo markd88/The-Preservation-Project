@@ -32,8 +32,8 @@ LevelModel::LevelModel(void) : Asset()
 * Destroys this level, releasing all resources.
 */
 LevelModel::~LevelModel(void) {
-    unload();
-    clearRootNode();
+//    unload();
+//    clearRootNode();
 }
 
 
