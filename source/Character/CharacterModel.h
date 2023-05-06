@@ -91,8 +91,24 @@ public:
      *
      *  @param point The position of the touchpoint
      */
-    bool contains(Vec2 point){
+    bool containsFar(Vec2 point){
         if(_position.distance(point) <= radius){
+            return true;
+        }
+        return false;
+    }
+
+    
+    bool containsNear(Vec2 point){
+        if(_position.distance(point) <= radius * 0.75){
+            return true;
+        }
+        return false;
+    }
+    
+    // because exit is blocked by wall, so we need a larger radius
+    bool containsExit(Vec2 point){
+        if(_position.distance(point) <= 3* radius){
             return true;
         }
         return false;

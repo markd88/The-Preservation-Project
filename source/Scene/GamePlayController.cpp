@@ -13,7 +13,7 @@ using namespace cugl;
 #define SCENE_WIDTH 1024
 #define ACTIONDURATION 0.08f
 #define ANIMDURATION 1f
-#define PREVIEW_RADIUS 150
+#define PREVIEW_RADIUS 200
 #define SWITCH_DURATION 1
 #define ACT_KEY  "current"
 
@@ -568,7 +568,7 @@ void GamePlayController::update(float dt){
         }
         auto r = _pastWorld->getNode()->getSize();
 
-        if(_character->contains(input_posi)){
+        if(_character->containsFar(input_posi)){
             // create path
             _path->updateLastPos(_character->getPosition());
 
@@ -620,7 +620,7 @@ void GamePlayController::update(float dt){
         // if input still within the character
         if(_path->isInitiating){
             // if input leaves out of the character's radius, draw the initial segments
-            if (!_character->contains(input_posi)){
+            if (!_character->containsFar(input_posi)){
                 
                 _path->setIsInitiating(false);
                 _path->updateLastPos(_character->getPosition()); //change to a fixed location on the character
@@ -642,7 +642,8 @@ void GamePlayController::update(float dt){
                 bool withinMap = (checkpoint.x >= 0) && (checkpoint.x <= worldSize.x) && (checkpoint.y >= 0) && (checkpoint.y <= worldSize.y);
                 
                 if((_activeMap == "pastWorld" && _obsSetPast->inObstacle(checkpoint)) || (_activeMap == "presentWorld" && _obsSetPresent->inObstacle(checkpoint))){
-                    _path->setIsDrawing(false);
+                    // don't want the path drawing be canceled if tap on a wall
+                    // _path->setIsDrawing(false);
                     break;
                 }
                 else if(!withinMap){
@@ -670,7 +671,7 @@ void GamePlayController::update(float dt){
         }
 
         
-        if(_character->contains(input_posi)){
+        if(_character->containsFar(input_posi)){
             // create path
             _path->setIsDrawing(true);
             _path->setIsInitiating(true);
@@ -808,7 +809,7 @@ void GamePlayController::update(float dt){
     if(_activeMap == "pastWorld"){
         for(int i=0; i<_artifactSet->_itemSet.size(); i++){
             // detect collision
-            if( _artifactSet->_itemSet[i]->Iscollectable() && _character->contains(_artifactSet->_itemSet[i]->getNodePosition())){
+            if( _artifactSet->_itemSet[i]->Iscollectable() && _character->containsNear(_artifactSet->_itemSet[i]->getNodePosition())){
                 // if close, should collect it
                 // if resource
                 if(_artifactSet->_itemSet[i]->isResource()){
@@ -840,7 +841,7 @@ void GamePlayController::update(float dt){
     // if collide with guard
     if(_activeMap == "pastWorld"){
         for(int i=0; i<_guardSetPast->_guardSet.size(); i++){
-            if(_character->contains(_guardSetPast->_guardSet[i]->getNodePosition())){
+            if(_character->containsNear(_guardSetPast->_guardSet[i]->getNodePosition())){
                 failTerminate();
                 break;
             }
@@ -852,7 +853,7 @@ void GamePlayController::update(float dt){
     
     else{
         for(int i=0; i<_guardSetPresent->_guardSet.size(); i++){
-            if(_character->contains(_guardSetPresent->_guardSet[i]->getNodePosition())){
+            if(_character->containsNear(_guardSetPresent->_guardSet[i]->getNodePosition())){
                 failTerminate();
                 break;
             }
@@ -934,7 +935,7 @@ void GamePlayController::update(float dt){
         if (_isPreviewing){
             _previewEnd = std::chrono::steady_clock::now();
             //std::cout<<"time elapsed: "<<elapsed_seconds.count()<<"\n";
-            if (elapsed_seconds.count() > .5){
+            if (elapsed_seconds.count() > .3){
                 _previewNode->setVisible(true);
             }
             
