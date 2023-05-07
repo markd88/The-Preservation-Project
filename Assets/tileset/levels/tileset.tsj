@@ -1111,6 +1111,18 @@
          "imageheight":168,
          "imagewidth":72,
          "type":"exit_side"
+        },
+	{
+         "id":181,
+         "image":".\/..\/textures\/draw.png",
+         "imageheight":382,
+         "imagewidth":781
+        },
+	{
+         "id":182,
+         "image":".\/..\/textures\/pinch.png",
+         "imageheight":382,
+         "imagewidth":781
         }],
  "tilewidth":256,
  "type":"tileset",

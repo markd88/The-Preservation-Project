@@ -864,7 +864,7 @@ void GamePlayController::update(float dt){
     if(_activeMap == "pastWorld"){
         for(int i=0; i<_exitSet->_itemSet.size(); i++){
             // detect collision
-            if( _character->containsFarExit(_exitSet->_itemSet[i]->getNodePosition()) && _character->getNumArt() == artNum){
+            if( _character->containsFar(_exitSet->_itemSet[i]->getNodePosition()) && _character->getNumArt() == artNum){
                 completeTerminate();
                 break;
             }

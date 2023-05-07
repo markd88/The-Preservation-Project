@@ -230,6 +230,12 @@
         "blue": {
             "file":      "textures/blue.png"
         },
+        "draw": {
+            "file":      "textures/draw.png"
+        },
+        "pinch": {
+            "file":      "textures/pinch.png"
+        },
         "collision_detection3": {
             "file":      "textures/collision_detection3.png"
         },
