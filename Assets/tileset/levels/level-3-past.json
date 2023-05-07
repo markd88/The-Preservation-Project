@@ -1189,19 +1189,7 @@
                  "width":128,
                  "x":128,
                  "y":128
-                },
-                {
-                 "gid":181,
-                 "height":382,
-                 "id":107,
-                 "name":"",
-                 "rotation":0,
-                 "type":"pinch",
-                 "visible":true,
-                 "width":781,
-                 "x":352,
-                 "y":1024
-                },
+                }, 
                 {
                  "gid":103,
                  "height":128,

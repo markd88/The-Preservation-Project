@@ -1107,18 +1107,6 @@
          "name":"wall",
          "objects":[
                 {
-                 "gid":182,
-                 "height":384,
-                 "id":81,
-                 "name":"draw",
-                 "rotation":0,
-                 "type":"draw",
-                 "visible":true,
-                 "width":781,
-                 "x":192,
-                 "y":1024
-                },
-                {
                  "gid":103,
                  "height":128,
                  "id":81,
@@ -1129,7 +1117,7 @@
                  "width":128,
                  "x":0,
                  "y":256
-                },
+                }, 
                 {
                  "gid":100,
                  "height":128,

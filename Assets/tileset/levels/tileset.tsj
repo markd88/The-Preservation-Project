@@ -1111,18 +1111,6 @@
          "imageheight":168,
          "imagewidth":72,
          "type":"exit_side"
-        },
-	{
-         "id":181,
-         "image":"Game\/The-Preservation-Project\/Assets\/textures\/draw.png",
-         "imageheight":382,
-         "imagewidth":781
-        },
-	{
-         "id":182,
-         "image":"Game\/The-Preservation-Project\/Assets\/textures\/pinch.png",
-         "imageheight":382,
-         "imagewidth":781
         }],
  "tilewidth":256,
  "type":"tileset",

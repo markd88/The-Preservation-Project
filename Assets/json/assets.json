@@ -101,12 +101,6 @@
         "reset": {
             "file":      "textures/reset-button.png"
         },
-        "draw": {
-            "file":      "textures/draw.png"
-        },
-        "pinch": {
-            "file":      "textures/pinch.png"
-        },
         "back_arrow": {
             "file":      "textures/menu-back.png"
         },

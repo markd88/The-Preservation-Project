@@ -44,8 +44,8 @@ public:
      */
     ItemController(Vec2 position, Size size, bool isArtifact, bool isResource, bool isObs, bool isExit,
         const std::shared_ptr<cugl::AssetManager>& assets, std::string textureKey, int id) : id(_id) {
+        _model = std::make_unique<ItemModel>(position, size, isArtifact, isResource, isObs, isExit, textureKey);
         _view = std::make_unique<ItemView>(position, size, isArtifact, isResource, isObs, isExit, assets, textureKey, id);
-        _model = std::make_unique<ItemModel>(_view->nodePos(), size, isArtifact, isResource, isObs, isExit, textureKey);
         _id = id;
         if (isResource || isArtifact) {
             can_be_collected = true;
