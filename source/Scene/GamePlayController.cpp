@@ -809,7 +809,7 @@ void GamePlayController::update(float dt){
     if(_activeMap == "pastWorld"){
         for(int i=0; i<_artifactSet->_itemSet.size(); i++){
             // detect collision
-            if( _artifactSet->_itemSet[i]->Iscollectable() && _character->containsNear(_artifactSet->_itemSet[i]->getNodePosition())){
+            if( _artifactSet->_itemSet[i]->Iscollectable() && _character->containsFar(_artifactSet->_itemSet[i]->getNodePosition())){
                 // if close, should collect it
                 // if resource
                 if(_artifactSet->_itemSet[i]->isResource()){
@@ -865,7 +865,7 @@ void GamePlayController::update(float dt){
     if(_activeMap == "pastWorld"){
         for(int i=0; i<_exitSet->_itemSet.size(); i++){
             // detect collision
-            if( _character->contains(_exitSet->_itemSet[i]->getNodePosition()) && _character->getNumArt() == artNum){
+            if( _character->containsFar(_exitSet->_itemSet[i]->getNodePosition()) && _character->getNumArt() == artNum){
                 completeTerminate();
                 break;
             }
