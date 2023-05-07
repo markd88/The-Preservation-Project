@@ -1114,13 +1114,13 @@
         },
 	{
          "id":181,
-         "image":"Game\/The-Preservation-Project\/Assets\/textures\/draw.png",
+         "image":"..\/..\/textures\/draw.png",
          "imageheight":382,
          "imagewidth":781
         },
 	{
          "id":182,
-         "image":"Game\/The-Preservation-Project\/Assets\/textures\/pinch.png",
+         "image":"..\/..\/textures\/pinch.png",
          "imageheight":382,
          "imagewidth":781
         }],
