@@ -4718,8 +4718,8 @@
                  "type":"resource_clock",
                  "visible":true,
                  "width":200,
-                 "x":1176.55229495862,
-                 "y":1185.88111361926
+                 "x":1152,
+                 "y":1088
                 }, 
                 {
                  "height":200,
@@ -4729,8 +4729,8 @@
                  "type":"resource_clock",
                  "visible":true,
                  "width":200,
-                 "x":1517,
-                 "y":1182
+                 "x":1536,
+                 "y":1088
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -4874,7 +4874,7 @@
                  "width":168,
                  "x":2028,
                  "y":1560
-                },
+                }, 
                 {
                  "height":168,
                  "id":323,
@@ -5895,7 +5895,7 @@
  "tilesets":[
         {
          "firstgid":1,
-         "source":"tileset.tsj"
+         "source":"Game\/The-Preservation-Project\/Assets\/tileset\/levels\/tileset.tsj"
         }],
  "tilewidth":128,
  "type":"map",
