@@ -14,6 +14,12 @@
     },
     "menu_lock": {
       "file": "textures/level_locked.png"
+    },
+    "menu_next":{
+        "file": "textures/level_next_button.png"
+    },
+    "menu_prev":{
+        "file": "textures/level_prev_button.png"
     }
   },
   "fonts": {
