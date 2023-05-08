@@ -28,7 +28,7 @@ public:
     
     int _highestUnlocked;
     
-    bool _firstPage = false; // false if on second page
+    bool _firstPage = true; // false if on second page
 
     MenuController() {
         _level_buttons = vector<shared_ptr<cugl::scene2::Button>>(15);
@@ -194,6 +194,8 @@ public:
                     button_img->getChildren()[1]->setVisible(false);
                 }
                 _level_buttons[i]->activate();
+                
+                _level_buttons[i]->clearListeners();
                 _level_buttons[i]->addListener([=](const std::string& name, bool down) {
                     if(!down){
                         // this->_scene->setActive(down);
