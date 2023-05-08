@@ -27,6 +27,8 @@ public:
     vector<shared_ptr<cugl::scene2::Button>> _level_buttons;
     
     int _highestUnlocked;
+    
+    bool _firstPage = false; // false if on second page
 
     MenuController() {
         _level_buttons = vector<shared_ptr<cugl::scene2::Button>>(15);
@@ -48,6 +50,11 @@ public:
     }
     
     bool init(const std::shared_ptr<cugl::AssetManager>& assets){
+        
+        // init level with -1
+        
+        level = -1;
+        
         Size dimen = Application::get()->getDisplaySize();
         dimen *= SCENE_WIDTH/dimen.width; // Lock the game to a reasonable resolution
         
@@ -68,15 +75,53 @@ public:
        
         Vec2 menu_size = menu_layer->getSize();
         Vec2 space = Vec2 (menu_size.x/8, menu_size.y/5);
+        
+        
+        // set up next and prev button
+        std::shared_ptr<cugl::scene2::PolygonNode> next_image = std::make_shared<cugl::scene2::PolygonNode>();
+        next_image->initWithTexture(_assets->get<Texture>("menu_next"));
+        next_image->setScale(1.2);
+        auto next_button = std::make_shared<cugl::scene2::Button>();
+        next_button->init(next_image);
+        
+        menu_layer->addChild(next_button);
+        next_button->setPosition(Vec2(space.x*7, space.y*2));
+        next_button->setVisible(true);
+        next_button->addListener([=](const std::string& name, bool down) {
+            if(!down){
+                _firstPage = false;
+                updateMenu();
+            }
+        });
+        next_button->activate();
+        
+        
+        // set up next and prev button
+        std::shared_ptr<cugl::scene2::PolygonNode> prev_image = std::make_shared<cugl::scene2::PolygonNode>();
+        prev_image->initWithTexture(_assets->get<Texture>("menu_prev"));
+        prev_image->setScale(1.2);
+        auto prev_button = std::make_shared<cugl::scene2::Button>();
+        prev_button->init(prev_image);
+        
+        menu_layer->addChild(prev_button);
+        prev_button->setPosition(Vec2(space.x*1, space.y*2));
+        prev_button->setVisible(true);
+        prev_button->addListener([=](const std::string& name, bool down) {
+            if(!down){
+                _firstPage = true;
+                updateMenu();
+            }
+        });
+        prev_button->activate();
+        
         Vec2 level_pos = Vec2 (space.x*2, space.y*3);
         auto level_font = _assets->get<cugl::Font>("courier_regular");
         auto level_color = Color4(206, 144, 23);
         for (int i=0; i<15; i++){
 //            _level_buttons[i] = std::dynamic_pointer_cast<scene2::Button>(assets->get<scene2::SceneNode>("menu_backdrop_grid_button"+to_string(i+1)));
             // 1. get level num
-            auto level_num = to_string(i+1);
             auto level_label = std::make_shared<cugl::scene2::Label>();
-            level_label->initWithText(level_num, level_font);
+            level_label->initWithText("10", level_font); // 10 is only placeholder, will be replaced in upate
             level_label->setForeground(level_color);
             level_label->setScale(0.6);
             
@@ -102,18 +147,18 @@ public:
             level_button->setAnchor(Vec2(0.5, 0.5));
             level_button->setPosition(level_pos);
             
+
             if((i+1) % 5 == 0){
                 level_pos = Vec2(space.x*2, level_pos.y - space.y+1);
             }
             else{
                 level_pos += Vec2(space.x, 0);
             }
-            
-            
-   
+
             _level_buttons[i] = level_button;
             
             
+            // set buttons in first page active
             _level_buttons[i]->setVisible(true);
 
         }
@@ -124,9 +169,14 @@ public:
     }
     
     void updateMenu(){
+        int page = 0;
+        if(!_firstPage) page = 1;
+        
         for (int i=0; i<15; i++){
+            int lev = i+page*15 + 1;
             auto button_img = std::dynamic_pointer_cast<scene2::PolygonNode>(_level_buttons[i]->getChildren()[0]);
-            if (i > _highestUnlocked) {
+            if (lev > _highestUnlocked) {
+                _level_buttons[i]->deactivate();
                 button_img->setTexture(_assets->get<Texture>("menu_lock"));
                 button_img->getChildren()[0]->setVisible(false);
                 button_img->getChildren()[1]->setVisible(false);
@@ -134,7 +184,11 @@ public:
             else {
                 button_img->setTexture(_assets->get<Texture>("menu_selectbutton"));
                 button_img->getChildren()[0]->setVisible(true);
-                if(i < _highestUnlocked){
+                string level_label = to_string(lev);
+                if(level_label.size() == 1) level_label = "0" + level_label;
+                std::dynamic_pointer_cast<cugl::scene2::Label>(button_img->getChildren()[0])->setText(level_label);
+                //cout<<lev<<endl;
+                if(lev < _highestUnlocked){
                     button_img->getChildren()[1]->setVisible(true);
                 }else{
                     button_img->getChildren()[1]->setVisible(false);
@@ -144,12 +198,32 @@ public:
                     if(!down){
                         // this->_scene->setActive(down);
                         nextScene = GAMEPLAY;
-                        level = i + 1;
+                        level = lev;
                     }
                 });
             }
         }
     }
+//
+//    // go from page 1 to 2, or backwards
+//    void switchPage(){
+//        _firstPage = !_firstPage;
+//        if(_firstPage){
+//            for(int i=0; i<_level_buttons.size(); i++){
+//                auto button_img = std::dynamic_pointer_cast<scene2::PolygonNode>(_level_buttons[i]->getChildren()[0]);
+//                if (i<15){
+//                    _level_buttons[i]->setVisible(true);
+//                    button_img->getChildren()[0]->setVisible(false);
+//                    button_img->getChildren()[1]->setVisible(false);
+//                    _level_buttons[i]->activate();
+//                }
+//                else{
+//                    _level_buttons[i]->setVisible(false);
+//                    _level_buttons[i]->deactivate();
+//                }
+//            }
+//        }
+//    }
     
     void update(float timestep){
         

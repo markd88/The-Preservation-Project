@@ -193,7 +193,7 @@ void App::update(float timestep) {
             case GAMEPLAY:
                 // if next level, deactivate first, reload level i+1, and init
                 if(nextLevel){
-                    level = (level+1)%4;
+                    level = level+1;
                     _gameplayController->setActive(false);
                     _gameplayController->loadLevel();
                     _gameplayController->init();
