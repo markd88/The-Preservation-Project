@@ -65,6 +65,8 @@ _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displ
     _UI_scene->setSize(displaySize*1.5);
     
     _previewNode = cugl::scene2::PolygonNode::alloc();
+    _previewBound = cugl::scene2::PathNode::alloc();
+
     _scene2texture = Scene2Texture::alloc(displaySize*6);
 //    _scene->setSize(displaySize *3)
 //    _other_scene->setSize(displaySize *3);
@@ -589,8 +591,14 @@ void GamePlayController::update(float dt){
                 }
                 _texture = _scene2texture->getTexture();
                 _previewNode->setTexture(_texture);
+                auto c = _previewNode->getColor();
+                _previewNode->setColor(Color4(c.r, c.g, c.b, 220));
                 _previewNode->setVisible(false);
                 _scene->addChildWithName(_previewNode, "preview");
+                
+                _previewBound->setVisible(false);
+                _scene->addChildWithName(_previewBound, "previewBound");
+                
                 
             }
             else{
@@ -604,6 +612,9 @@ void GamePlayController::update(float dt){
                 _previewNode->setTexture(_texture);
                 _previewNode->setVisible(false);
                 _other_scene->addChildWithName(_previewNode, "preview");
+                
+                _previewBound->setVisible(false);
+                _other_scene->addChildWithName(_previewBound, "previewBound");
             }
         }
     }
@@ -709,6 +720,8 @@ void GamePlayController::update(float dt){
                 _other_scene->addChild(tempChild);
             }
             _scene->removeChildByName("preview");
+            _scene->removeChildByName("previewBound");
+
         }
         else{
             auto _children = _scene2texture->getChildren();
@@ -718,6 +731,8 @@ void GamePlayController::update(float dt){
                 _scene->addChild(tempChild);
             }
             _other_scene->removeChildByName("preview");
+            _other_scene->removeChildByName("previewBound");
+
         }
     }
     
@@ -751,8 +766,14 @@ void GamePlayController::update(float dt){
         Poly2 circle = polyFact.makeCircle(input_posi + Vec2(0, PREVIEW_RADIUS), PREVIEW_RADIUS);
         _previewNode->setPolygon(circle);
         _previewNode->setPosition(input_posi + Vec2(0,PREVIEW_RADIUS));
-    
-
+        
+        _previewBound->setAnchor(Vec2::ANCHOR_CENTER);
+        PathFactory pathFact = PathFactory();
+        Path2 bound = pathFact.makeCircle(_previewNode->getPosition(), PREVIEW_RADIUS);
+        _previewBound->setPath(bound);
+        _previewBound->setPosition(_previewNode->getPosition());
+        
+        
     }
     
     
@@ -936,10 +957,13 @@ void GamePlayController::update(float dt){
             //std::cout<<"time elapsed: "<<elapsed_seconds.count()<<"\n";
             if (elapsed_seconds.count() > .3){
                 _previewNode->setVisible(true);
+                _previewBound->setVisible(true);
             }
             
         }else{
             _previewNode->setVisible(false);
+            _previewBound->setVisible(false);
+
             _previewStart = std::chrono::steady_clock::now();
         }
         

@@ -63,6 +63,12 @@ private:
 
     // should be a value from 0 - 3000, because we use milliseconds
     int _question_value;
+    
+    //patrol speed
+    int _patrol_speed;
+    
+    //chase speed
+    int _chase_speed;
 
     
 #pragma mark Main Methods
@@ -104,7 +110,8 @@ public:
         _returnMove = cugl::scene2::MoveTo::alloc();
         _returnMove->setDuration(DURATION);
         _is_question = false;
-        
+        _patrol_speed = 53;
+        _chase_speed = 111;
         _doesPatrol = false;
         _id = id;
 
@@ -133,6 +140,9 @@ public:
         returned = false;
         _chaseMove = cugl::scene2::MoveTo::alloc();
         _chaseMove->setDuration(DURATION);
+        
+        _patrol_speed = 53;
+        _chase_speed = 111;
         
         _returnMove = cugl::scene2::MoveTo::alloc();
         _returnMove->setDuration(DURATION);
@@ -296,9 +306,9 @@ public:
             }
         }
         
-        float speed = 53;
+        
         float distance = getNodePosition().distance(_patrol_stops[_goingTo]);
-        float duration = distance / speed;
+        float duration = distance / _patrol_speed;
         
         //move guard
         _patrolMove->setDuration(duration);
@@ -366,7 +376,7 @@ public:
     void chaseChar(string actionName){
         // CULog("chasing");
         //updateChaseSpeed(0.45);
-        float speed = 111;
+        float speed = _chase_speed;
         float distance = getNodePosition().distance(_chaseMove->getTarget());
         float duration = distance / speed;
         //move guard
@@ -435,6 +445,10 @@ public:
     
     Vec2 getSavedStop(){
         return _patrol_stops[saved_stop];
+    }
+    
+    void updateChaseSpeed(int s){
+        _chase_speed += s;
     }
 
 
