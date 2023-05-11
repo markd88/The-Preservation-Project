@@ -3990,7 +3990,7 @@
         {
          "draworder":"topdown",
          "id":3,
-         "name":"wall",
+         "name":"deco",
          "objects":[
                 {
                  "gid":176,
@@ -6313,7 +6313,7 @@
                 }],
          "opacity":1,
          "type":"objectgroup",
-         "visible":true,
+         "visible":false,
          "x":0,
          "y":0
         }],
@@ -6321,7 +6321,7 @@
  "nextobjectid":587,
  "orientation":"orthogonal",
  "renderorder":"right-down",
- "tiledversion":"1.10.0",
+ "tiledversion":"1.10.1",
  "tileheight":128,
  "tilesets":[
         {

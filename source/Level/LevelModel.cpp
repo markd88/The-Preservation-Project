@@ -135,7 +135,7 @@ bool LevelModel::loadObject(const std::string type, int totalHeight, const std::
     if (type == TILEMAP_FILED) {
         return loadTilemap(json);
     }
-    if (type == ITEM_FIELD || type == OBS_FIELD || type == WALL_FIELD || type == EXIT_FIELD) {
+    if (type == ITEM_FIELD || type == OBS_FIELD || type == DECO_FIELD || type == EXIT_FIELD) {
         return loadItem(json, type);
     }
     if (type == GUARD_FIELD) {
@@ -185,7 +185,7 @@ bool LevelModel::loadItem(const std::shared_ptr<JsonValue>& json, const std::str
     
     Vec2 pos = Vec2 (x, y);
     Size size = Size(width, height);
-    if (type == WALL_FIELD) {
+    if (type == DECO_FIELD) {
         // isArtifact = false, isResource = false, isObs = false, isExit = false
         _wall->add_this(pos, size, false, false, false, false, _assets, textureType);
     }

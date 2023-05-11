@@ -26,7 +26,7 @@
 #define TILEMAP_FILED       "tilemap"
 
 /** Wall specific fields */
-#define WALL_FIELD          "wall"
+#define DECO_FIELD          "deco"
 #define OBS_FIELD           "obs"
 
 /** Artifact specific fields */

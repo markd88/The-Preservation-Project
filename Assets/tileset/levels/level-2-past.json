@@ -1175,7 +1175,7 @@
         {
          "draworder":"topdown",
          "id":3,
-         "name":"wall",
+         "name":"deco",
          "objects":[
                 {
                  "gid":103,
