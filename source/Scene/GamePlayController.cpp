@@ -460,9 +460,13 @@ void GamePlayController::update(float dt){
     if (_isSwitching && !_action_world_switch->isActive("first_half") && !_action_world_switch->isActive("second_half")) {
 
         if (_activeMap == "pastWorld") {
+            _scene->removeChildByName("minimap");
+            _other_scene->removeChildByName("miniChar");
             _activeMap = "presentWorld";
             _pastWorld->setActive(false);
             _presentWorld->setActive(true);
+            
+            
             
             _other_cam->setPosition(_cam->getPosition());
             _UI_cam->setPosition(_cam->getPosition());
@@ -477,11 +481,14 @@ void GamePlayController::update(float dt){
             AudioEngine::get()->play("present", _presentMusic, true, _presentMusic->getVolume(), false);
         }
         else {
+            _other_scene->removeChildByName("minimap");
+            _scene->removeChildByName("miniChar");
             _activeMap = "pastWorld";
             _pastWorld->setActive(true);
             _presentWorld->setActive(false);
             _cam->setPosition(_other_cam->getPosition());
             _UI_cam->setPosition(_other_cam->getPosition());
+            
 
             _cam->update();
             _UI_cam->update();
@@ -891,42 +898,85 @@ void GamePlayController::update(float dt){
         
         _UI_scene->render(batch);
         
-        _renderTarget->begin();
-        _other_cam->setPosition(_cam->getPosition());
-        _other_cam->update();
-        _other_scene->render(batch);
-        _renderTarget->end();
-        _minimapTexture = _renderTarget->getTexture();
-        _minimapNode->setTexture(_minimapTexture);
-        _renderTarget->setClearColor(Color4::CLEAR);
-        
-        Rect camView = _other_cam->getViewport();
-        Vec2 center = Vec2(camView.origin.x + camView.size.width/2, camView.origin.y + camView.size.height/2);
-        
-        PolyFactory polyFact = PolyFactory();
-        Poly2 circle = polyFact.makeCircle(center, PREVIEW_RADIUS*2.4);
+        if (_activeMap == "pastWorld"){
+            
+            
+            
+            _renderTarget->begin();
+            _other_cam->setPosition(_cam->getPosition());
+            _other_cam->update();
+            _other_scene->render(batch);
+            _renderTarget->end();
+            _minimapTexture = _renderTarget->getTexture();
+            _minimapNode->setTexture(_minimapTexture);
+            _renderTarget->setClearColor(Color4::CLEAR);
+            
+            Rect camView = _other_cam->getViewport();
+            Vec2 center = Vec2(camView.origin.x + camView.size.width/2, camView.origin.y + camView.size.height/2);
+            
+            PolyFactory polyFact = PolyFactory();
+            Poly2 circle = polyFact.makeCircle(center, PREVIEW_RADIUS*2.4);
+            
+            _minimapNode->setPolygon(circle);
+            _minimapNode->setPosition(_cam->getPosition() + Vec2(400,250));
+            _minimapNode->flipVertical(true);
+            _minimapNode->setScale(.25);
+            auto c = _minimapNode->getColor();
+            _minimapNode->setColor(Color4(c.r, c.g, c.b, 180));
+            
+            Rect player = Rect(_character->getNodePosition(), Size(50, 50));
+            _minimapChar->setPolygon(player);
+            _minimapChar->setColor(Color4::RED);
+            _minimapChar->setPosition(_character->getNodePosition());
+            
+            if (_scene->getChildByName("minimap")){
                 
-        _minimapNode->setPolygon(circle);
-        _minimapNode->setPosition(_cam->getPosition() + Vec2(400,250));
-        _minimapNode->flipVertical(true);
-        _minimapNode->setScale(.25);
-        auto c = _minimapNode->getColor();
-        _minimapNode->setColor(Color4(c.r, c.g, c.b, 180));
-        
-        Rect player = Rect(_character->getNodePosition(), Size(50, 50));
-        _minimapChar->setPolygon(player);
-        _minimapChar->setColor(Color4::RED);
-        _minimapChar->setPosition(_character->getNodePosition());
-       
-        if (_scene->getChildByName("minimap")){
-            
+            }else{
+                _scene->addChildWithName(_minimapNode, "minimap");
+            }
+            if (_other_scene->getChildByName("miniChar")){
+                
+            }else{
+                _other_scene->addChildWithName(_minimapChar, "miniChar");
+            }
         }else{
-            _scene->addChildWithName(_minimapNode, "minimap");
-        }
-        if (_other_scene->getChildByName("miniChar")){
+            _renderTarget->begin();
+            _cam->setPosition(_other_cam->getPosition());
+            _cam->update();
+            _scene->render(batch);
+            _renderTarget->end();
+            _minimapTexture = _renderTarget->getTexture();
+            _minimapNode->setTexture(_minimapTexture);
+            _renderTarget->setClearColor(Color4::CLEAR);
             
-        }else{
-            _other_scene->addChildWithName(_minimapChar, "miniChar");
+            Rect camView = _cam->getViewport();
+            Vec2 center = Vec2(camView.origin.x + camView.size.width/2, camView.origin.y + camView.size.height/2);
+            
+            PolyFactory polyFact = PolyFactory();
+            Poly2 circle = polyFact.makeCircle(center, PREVIEW_RADIUS*2.4);
+            
+            _minimapNode->setPolygon(circle);
+            _minimapNode->setPosition(_other_cam->getPosition() + Vec2(400,250));
+            _minimapNode->flipVertical(true);
+            _minimapNode->setScale(.25);
+            auto c = _minimapNode->getColor();
+            _minimapNode->setColor(Color4(c.r, c.g, c.b, 180));
+            
+            Rect player = Rect(_character->getNodePosition(), Size(50, 50));
+            _minimapChar->setPolygon(player);
+            _minimapChar->setColor(Color4::RED);
+            _minimapChar->setPosition(_character->getNodePosition());
+            
+            if (_other_scene->getChildByName("minimap")){
+                
+            }else{
+                _other_scene->addChildWithName(_minimapNode, "minimap");
+            }
+            if (_scene->getChildByName("miniChar")){
+                
+            }else{
+                _scene->addChildWithName(_minimapChar, "miniChar");
+            }
         }
 
     }
