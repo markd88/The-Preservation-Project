@@ -570,7 +570,7 @@ public:
                     // wait for it to finish
                 }
                 else {
-
+                    _guardSet[i]->updateChaseSpeed(5);
                     Vec2 pos = _guardSet[i]->getNodePosition();
 
                     _actions->remove(chaseSPAction);
@@ -592,6 +592,7 @@ public:
                 }
 
                 else {
+                    _guardSet[i]->updateChaseSpeed(5);
                     _guardSet[i]->updateChaseSPTarget(_guardSet[i]->chaseVec[0]);
                     _guardSet[i]->chaseChar(chaseSPAction);
                     _guardSet[i]->chaseGuardAnim(id);
@@ -717,7 +718,6 @@ public:
             guard->updatePriority();
         }
     }
-
 
 };
 

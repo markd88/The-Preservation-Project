@@ -110,6 +110,8 @@ public:
     
     bool _isPreviewing;
     std::shared_ptr<cugl::scene2::PolygonNode> _previewNode;
+    std::shared_ptr<cugl::scene2::PathNode> _previewBound;
+
     std::shared_ptr<Scene2Texture> _scene2texture;
     std::shared_ptr<Texture> _texture;
     std::shared_ptr<cugl::scene2::PolygonNode> _minimapNode;
