@@ -4035,7 +4035,7 @@
                         {
                          "name":"path",
                          "type":"string",
-                         "value":"332,678:322,678"
+                         "value":"332,678:1322,678"
                         }],
                  "rotation":0,
                  "type":"enemy_moving",
