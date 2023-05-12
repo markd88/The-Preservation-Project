@@ -1997,29 +1997,6 @@
                 {
                  "gid":53,
                  "height":128,
-                 "id":671,
-                 "name":"",
-                 "properties":[
-                        {
-                         "name":"direction",
-                         "type":"int",
-                         "value":0
-                        }, 
-                        {
-                         "name":"isStatic",
-                         "type":"bool",
-                         "value":true
-                        }],
-                 "rotation":0,
-                 "type":"enemy_static",
-                 "visible":true,
-                 "width":128,
-                 "x":256,
-                 "y":384
-                }, 
-                {
-                 "gid":53,
-                 "height":128,
                  "id":790,
                  "name":"",
                  "properties":[
@@ -2994,7 +2971,7 @@
                 }],
          "opacity":1,
          "type":"objectgroup",
-         "visible":true,
+         "visible":false,
          "x":0,
          "y":0
         }],
