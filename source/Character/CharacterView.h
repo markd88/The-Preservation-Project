@@ -19,6 +19,7 @@ private:
     /** Main character view */
     /** The node is attached to the root-scene*/
     std::shared_ptr<cugl::scene2::SpriteNode>  _node;
+    std::shared_ptr<cugl::scene2::SpriteNode>  _cross_mark;
 
     std::shared_ptr<cugl::scene2::PolygonNode>  _shadow;
     
@@ -36,6 +37,8 @@ private:
 
     // last direction
     int _last_direction;
+
+    std::shared_ptr<cugl::scene2::Animate> _cross_mark_anim;
     
     
 #pragma mark Main Functions
@@ -68,6 +71,18 @@ public:
         _shadow->setVisible(true);
 
 
+        std::shared_ptr<Texture> cross_mark = assets->get<Texture>( "spritesheet_cross_anim");
+        _cross_mark = scene2::SpriteNode::allocWithSheet(cross_mark, 2, 3, 6);
+
+        _node->addChildWithName(_cross_mark, "cross_mark");
+        _cross_mark->setScale(0.2f);
+        _cross_mark->setPosition(0,0);
+        _cross_mark->setRelativeColor(false);
+        _cross_mark->setVisible(false);
+
+
+        std::vector<int> a = {0,1,2,3,4,5};
+        _cross_mark_anim = cugl::scene2::Animate::alloc(a, DURATION);
 
 
 
@@ -129,6 +144,18 @@ public:
 
 #pragma mark Setters
 public:
+
+    void start_cross_mark() {
+
+        if (_actions->isActive("cross_mark")) {
+            // remove it
+        }
+        // should always start a new one
+        _actions->activate("cross_mark", _cross_mark_anim, _cross_mark);
+    };
+
+
+
     void setPosition(Vec2 position){
         _node->setPosition(position);
     }
