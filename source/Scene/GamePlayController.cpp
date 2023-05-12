@@ -789,8 +789,8 @@ void GamePlayController::update(float dt){
         _previewNode->setPosition(input_posi + Vec2(0,PREVIEW_RADIUS));
         
         _previewBound->setAnchor(Vec2::ANCHOR_CENTER);
-        PolyFactory pathFact = PolyFactory();
-        Poly2 bound = pathFact.makeCircle(_previewNode->getPosition(), PREVIEW_RADIUS);
+        PathFactory pathFact = PathFactory();
+        Path2 bound = pathFact.makeCircle(_previewNode->getPosition(), PREVIEW_RADIUS);
         _previewBound->setPath(bound);
         _previewBound->setPosition(_previewNode->getPosition());
         
