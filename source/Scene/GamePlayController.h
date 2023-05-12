@@ -72,12 +72,19 @@ public:
     
     int artNum;
     std::shared_ptr<ItemSetController> _artifactSet;
+
+    int resNum;
+    std::shared_ptr<ItemSetController> _resourceSet;
+
     std::shared_ptr<ItemSetController> _exitSet;
     std::shared_ptr<ItemSetController> _obsSetPast;
     std::shared_ptr<ItemSetController> _obsSetPresent;
     std::shared_ptr<ItemSetController> _wallSetPast;
     std::shared_ptr<ItemSetController> _wallSetPresent;
-    
+    // shadow
+    std::shared_ptr<ItemSetController> _shadowSetPast;
+    std::shared_ptr<ItemSetController> _shadowSetPresent;
+
     std::unique_ptr<PathController> _path;
     std::shared_ptr<InputController> _input = InputController::getInstance();
     vector<Vec2> path_trace;
@@ -323,8 +330,10 @@ public:
         // both orderedRoot
         //_pastWorld->setPriority(1000);
         _artifactSet->updatePriority();
+        _resourceSet->updatePriority();
         _obsSetPast->updatePriority();
         _wallSetPast->updatePriority();
+        _shadowSetPast->updatePriority();
         _character->updatePriority();
         _guardSetPast->updatePriority();
         _exitSet->updatePriority();;
@@ -332,6 +341,7 @@ public:
         //_presentWorld->setPriority(1000);
         _obsSetPresent->updatePriority();
         _wallSetPresent->updatePriority();
+        _shadowSetPresent->updatePriority();
         _guardSetPresent->updatePriority();
     }
     
