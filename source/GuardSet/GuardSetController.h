@@ -215,7 +215,7 @@ public:
                     current_question_value = current_question_value + (elapsed_question_value.count() * 2);
                 } else if (acoustic_detection) {
                     // three seconds if it hears
-                    current_question_value = current_question_value + elapsed_question_value.count();
+                    current_question_value = current_question_value + (elapsed_question_value.count() * 1.6);
                 } else {
                     // three seconds if nothing happen
                     current_question_value = current_question_value - elapsed_question_value.count();
