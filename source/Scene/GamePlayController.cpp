@@ -569,7 +569,13 @@ void GamePlayController::update(float dt){
 
     _cantSwitch = _cantSwitch || (_character->getNumRes() == 0);
 
+    if(elapsed.count() >= 0.5 && _input->getPinchDelta() != 0 && _cantSwitch){
+        _character->start_cross_mark();
+        CULog("start cross");
+    }
+
     if(elapsed.count() >= 0.5 && _input->getPinchDelta() != 0 && !_cantSwitch){
+
         AudioEngine::get()->play("switch", _switchSound, false, _switchSound->getVolume(), true);
 
         // if the character's position on the other world is obstacle, disable the switch

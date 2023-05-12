@@ -72,16 +72,17 @@ public:
 
 
         std::shared_ptr<Texture> cross_mark = assets->get<Texture>( "spritesheet_cross_anim");
-        _cross_mark = scene2::SpriteNode::allocWithSheet(cross_mark, 2, 3, 6);
+        _cross_mark = scene2::SpriteNode::allocWithSheet(cross_mark, 2, 4, 8);
 
         _node->addChildWithName(_cross_mark, "cross_mark");
-        _cross_mark->setScale(0.2f);
-        _cross_mark->setPosition(0,0);
+        _cross_mark->setScale(2.0f);
+        _cross_mark->setPosition(250,330);
         _cross_mark->setRelativeColor(false);
-        _cross_mark->setVisible(false);
+        _cross_mark->setVisible(true);
+        _cross_mark->setFrame(0);
 
 
-        std::vector<int> a = {0,1,2,3,4,5};
+        std::vector<int> a = {0,1,2,3,4,5,6,7};
         _cross_mark_anim = cugl::scene2::Animate::alloc(a, DURATION);
 
 
