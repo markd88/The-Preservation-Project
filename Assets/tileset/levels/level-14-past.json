@@ -5048,57 +5048,9 @@
         }, 
         {
          "draworder":"topdown",
-         "id":6,
-         "name":"item",
+         "id":10,
+         "name":"resource",
          "objects":[
-                {
-                 "gid":33,
-                 "height":128,
-                 "id":339,
-                 "name":"",
-                 "rotation":0,
-                 "type":"artifact_vase_gold",
-                 "visible":true,
-                 "width":128,
-                 "x":2301,
-                 "y":1337
-                }, 
-                {
-                 "gid":10,
-                 "height":128,
-                 "id":340,
-                 "name":"",
-                 "rotation":0,
-                 "type":"artifact_fan_2",
-                 "visible":true,
-                 "width":128,
-                 "x":705,
-                 "y":786
-                }, 
-                {
-                 "gid":6,
-                 "height":128,
-                 "id":341,
-                 "name":"",
-                 "rotation":0,
-                 "type":"artifact_box_jade",
-                 "visible":true,
-                 "width":128,
-                 "x":930,
-                 "y":1063
-                }, 
-                {
-                 "gid":24,
-                 "height":128,
-                 "id":342,
-                 "name":"",
-                 "rotation":0,
-                 "type":"artifact_sword_blue",
-                 "visible":true,
-                 "width":128,
-                 "x":1947,
-                 "y":708
-                }, 
                 {
                  "gid":89,
                  "height":200,
@@ -5158,6 +5110,65 @@
                  "width":200,
                  "x":1517,
                  "y":1182
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "x":0,
+         "y":0
+        }, 
+        {
+         "draworder":"topdown",
+         "id":6,
+         "name":"item",
+         "objects":[
+                {
+                 "gid":33,
+                 "height":128,
+                 "id":339,
+                 "name":"",
+                 "rotation":0,
+                 "type":"artifact_vase_gold",
+                 "visible":true,
+                 "width":128,
+                 "x":2301,
+                 "y":1337
+                }, 
+                {
+                 "gid":10,
+                 "height":128,
+                 "id":340,
+                 "name":"",
+                 "rotation":0,
+                 "type":"artifact_fan_2",
+                 "visible":true,
+                 "width":128,
+                 "x":705,
+                 "y":786
+                }, 
+                {
+                 "gid":6,
+                 "height":128,
+                 "id":341,
+                 "name":"",
+                 "rotation":0,
+                 "type":"artifact_box_jade",
+                 "visible":true,
+                 "width":128,
+                 "x":930,
+                 "y":1063
+                }, 
+                {
+                 "gid":24,
+                 "height":128,
+                 "id":342,
+                 "name":"",
+                 "rotation":0,
+                 "type":"artifact_sword_blue",
+                 "visible":true,
+                 "width":128,
+                 "x":1947,
+                 "y":708
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -6481,7 +6492,7 @@
          "x":0,
          "y":0
         }],
- "nextlayerid":10,
+ "nextlayerid":11,
  "nextobjectid":822,
  "orientation":"orthogonal",
  "renderorder":"right-down",

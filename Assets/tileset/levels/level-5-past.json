@@ -3414,8 +3414,8 @@
         }, 
         {
          "draworder":"topdown",
-         "id":5,
-         "name":"item",
+         "id":11,
+         "name":"resource",
          "objects":[
                 {
                  "gid":89,
@@ -3452,7 +3452,18 @@
                  "width":200,
                  "x":472,
                  "y":885
-                }, 
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "x":0,
+         "y":0
+        }, 
+        {
+         "draworder":"topdown",
+         "id":5,
+         "name":"item",
+         "objects":[
                 {
                  "gid":34,
                  "height":128,
@@ -4601,7 +4612,7 @@
          "x":0,
          "y":0
         }],
- "nextlayerid":11,
+ "nextlayerid":12,
  "nextobjectid":452,
  "orientation":"orthogonal",
  "renderorder":"right-down",

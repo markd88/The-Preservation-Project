@@ -28,6 +28,7 @@ public:
     typedef std::shared_ptr<cugl::Scene2> Scene;
     
     int artCount;
+    int resCount;
 
     std::vector<int> _usedIDs;
 
@@ -42,6 +43,8 @@ public:
     
     ItemSetController() {
         ItemSet _itemSet;
+        artCount = 0; // init only
+        resCount = 0; // init only
     };
 
 #pragma mark Update Methods
@@ -166,7 +169,6 @@ public:
         return false;
     }
 
-    
     const int getArtNum(){
         artCount = 0;
         for(auto item: _itemSet){
@@ -175,6 +177,16 @@ public:
             }
         }
         return artCount;
+    }
+    
+    const int getResNum(){
+        resCount = 0;
+        for(auto item: _itemSet){
+            if(item->isResource()){
+                resCount +=1;
+            }
+        }
+        return resCount;
     }
 
     void setAction(std::shared_ptr<cugl::scene2::ActionManager> actions){

@@ -2969,9 +2969,8 @@
         }, 
         {
          "draworder":"topdown",
-         "id":4,
-         "locked":true,
-         "name":"item",
+         "id":10,
+         "name":"resource",
          "objects":[
                 {
                  "gid":89,
@@ -2986,18 +2985,6 @@
                  "y":461
                 }, 
                 {
-                 "gid":5,
-                 "height":128,
-                 "id":272,
-                 "name":"",
-                 "rotation":0,
-                 "type":"artifact_bowlcovered_porcelinPLAIN",
-                 "visible":true,
-                 "width":128,
-                 "x":303,
-                 "y":1032
-                }, 
-                {
                  "gid":182,
                  "height":200,
                  "id":275,
@@ -3008,6 +2995,30 @@
                  "width":200,
                  "x":451,
                  "y":1000.333
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "x":0,
+         "y":0
+        }, 
+        {
+         "draworder":"topdown",
+         "id":4,
+         "locked":true,
+         "name":"item",
+         "objects":[
+                {
+                 "gid":5,
+                 "height":128,
+                 "id":272,
+                 "name":"",
+                 "rotation":0,
+                 "type":"artifact_bowlcovered_porcelinPLAIN",
+                 "visible":true,
+                 "width":128,
+                 "x":303,
+                 "y":1032
                 }, 
                 {
                  "gid":24,
@@ -4023,7 +4034,7 @@
          "x":0,
          "y":0
         }],
- "nextlayerid":10,
+ "nextlayerid":11,
  "nextobjectid":416,
  "orientation":"orthogonal",
  "renderorder":"right-down",

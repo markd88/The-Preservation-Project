@@ -31,7 +31,7 @@
 
 /** Artifact specific fields */
 #define ITEM_FIELD          "item"
-#define RESOURCE_FIELD      "resource_clock"
+#define RESOURCE_FIELD      "resource"
 
 /** Exit specific fields */
 #define EXIT_FIELD          "exit"

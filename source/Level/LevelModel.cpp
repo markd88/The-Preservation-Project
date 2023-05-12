@@ -26,6 +26,7 @@ LevelModel::LevelModel(void) : Asset()
     _obs = std::make_shared<ItemSetController>();
     _wall = std::make_shared<ItemSetController>();
     _exit = std::make_shared<ItemSetController>();
+    _resources = std::make_shared<ItemSetController>();
 }
 
 /**
@@ -135,7 +136,7 @@ bool LevelModel::loadObject(const std::string type, int totalHeight, const std::
     if (type == TILEMAP_FILED) {
         return loadTilemap(json);
     }
-    if (type == ITEM_FIELD || type == OBS_FIELD || type == DECO_FIELD || type == EXIT_FIELD) {
+    if (type == ITEM_FIELD || type == OBS_FIELD || type == DECO_FIELD || type == EXIT_FIELD || type == RESOURCE_FIELD) {
         return loadItem(json, type);
     }
     if (type == GUARD_FIELD) {
@@ -197,14 +198,14 @@ bool LevelModel::loadItem(const std::shared_ptr<JsonValue>& json, const std::str
         // isArtifact = false, isResource = false, isObs = false, isExit = TRUE
         _exit->add_this(pos, size, false, false, false, true, _assets, textureType);
     }
+    else if (type == RESOURCE_FIELD) {
+        // isArtifact = false, isResource = TRUE, isObs = false, isExit = false
+        _resources->add_this(pos, size, false, true, false, false, _assets, textureType);
+        std::cout<<"_resources: "<<_resources->_itemSet.size()<<std::endl;
+    }
     else if (type == ITEM_FIELD) {
-        if (textureType == RESOURCE_FIELD) {
-            // isArtifact = false, isResource = TRUE, isObs = false, isExit = false
-            _item->add_this(pos, size, false, true, false, false, _assets, textureType);
-        } else {
-            // isArtifact = TRUE, isResource = false, isObs = false, isExit = false
-            _item->add_this(pos, size, true, false, false, false, _assets, textureType);
-        }
+        // isArtifact = TRUE, isResource = false, isObs = false, isExit = false
+        _item->add_this(pos, size, true, false, false, false, _assets, textureType);
     }
 
     success = success && x >= 0 && y >= 0;
@@ -299,4 +300,5 @@ void LevelModel::setTilemapTexture() {
     _obs->setTexture(_assets);
     _wall->setTexture(_assets);
     _exit->setTexture(_assets);
+    _resources->setTexture(_assets);
 };

@@ -4105,9 +4105,8 @@
         }, 
         {
          "draworder":"topdown",
-         "id":4,
-         "locked":true,
-         "name":"item",
+         "id":10,
+         "name":"resource",
          "objects":[
                 {
                  "gid":89,
@@ -4144,7 +4143,19 @@
                  "width":200,
                  "x":182.666666666667,
                  "y":1453.33333333333
-                }, 
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "x":0,
+         "y":0
+        }, 
+        {
+         "draworder":"topdown",
+         "id":4,
+         "locked":true,
+         "name":"item",
+         "objects":[
                 {
                  "gid":10,
                  "height":128,
@@ -5377,7 +5388,7 @@
          "x":0,
          "y":0
         }],
- "nextlayerid":10,
+ "nextlayerid":11,
  "nextobjectid":506,
  "orientation":"orthogonal",
  "renderorder":"right-down",

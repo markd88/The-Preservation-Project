@@ -35,6 +35,7 @@ protected:
     std::shared_ptr<ItemSetController> _wall;
     std::shared_ptr<ItemSetController> _item;
     std::shared_ptr<ItemSetController> _exit;
+    std::shared_ptr<ItemSetController> _resources;
 
     /** The AssetManager for the game mode */
     std::shared_ptr<cugl::AssetManager> _assets;
@@ -118,6 +119,7 @@ public:
     std::vector<std::vector<cugl::Vec2>> getMovingGuardsPos() {return _movingGuardsPos;};
     std::vector<std::vector<int>> getStaticGuardsPos() {return _staticGuardsPos;};
     std::shared_ptr<ItemSetController> getExit() {return _exit;};
+    std::shared_ptr<ItemSetController> getResources() {return _resources->copy();};
 
 #pragma mark Drawing Methods
 

@@ -261,9 +261,15 @@ void GamePlayController::loadLevel(){
     _pastWorld = _pastWorldLevel->getWorld();
     _obsSetPast = _pastWorldLevel->getObs();
     _wallSetPast = _pastWorldLevel->getWall();
+    // artifact
     _artifactSet = _pastWorldLevel->getItem();
     _artifactSet->setAction(_actions);
     artNum = _artifactSet->getArtNum();
+    // resources
+    _resourceSet = _pastWorldLevel->getResources();
+    _resourceSet->setAction(_actions);
+    resNum = _resourceSet->getResNum();
+    // exit
     _exitSet = _pastWorldLevel->getExit();
 
     // Draw present world
@@ -357,7 +363,11 @@ void GamePlayController::init(){
     _artifactSet->clearSet();
     _artifactSet = _pastWorldLevel->getItem();
     _artifactSet->addChildTo(_ordered_root);
-    
+
+    _resourceSet->clearSet();
+    _resourceSet = _pastWorldLevel->getResources();
+    _resourceSet->addChildTo(_ordered_root);
+
     _obsSetPast->addChildTo(_ordered_root);
     _wallSetPast->addChildTo(_ordered_root);
     _exitSet->addChildTo(_ordered_root);
@@ -804,33 +814,38 @@ void GamePlayController::update(float dt){
 #pragma mark Resource Collection Methods
 
     _artifactSet->updateAnim();
-
+    _resourceSet->updateAnim();
+    
     // if collect a resource
     if(_activeMap == "pastWorld"){
+        // artifact
         for(int i=0; i<_artifactSet->_itemSet.size(); i++){
             // detect collision
             if( _artifactSet->_itemSet[i]->Iscollectable() && _character->containsFar(_artifactSet->_itemSet[i]->getNodePosition())){
                 // if close, should collect it
-                // if resource
-                if(_artifactSet->_itemSet[i]->isResource()){
-                    AudioEngine::get()->play("resource", _collectResourceSound, false, _collectResourceSound->getVolume(), true);
-                    _character->addRes();
-                   
-                }
-                // if artifact
-                else if (_artifactSet->_itemSet[i]->isArtifact()){
+                if (_artifactSet->_itemSet[i]->isArtifact()){
                     AudioEngine::get()->play("artifact", _collectArtifactSound, false, _collectArtifactSound->getVolume(), true);
                     _character->addArt();
-
                 }
                 // make the artifact disappear and remove from set
                 _artifactSet->remove_this(i, _ordered_root);
-//                if(_character->getNumArt() == artNum){
-//                    completeTerminate();
-//                }
                 break;
             }
-            
+        }
+        
+        // resource
+        for(int i=0; i<_resourceSet->_itemSet.size(); i++){
+            // detect collision
+            if( _resourceSet->_itemSet[i]->Iscollectable() && _character->containsFar(_resourceSet->_itemSet[i]->getNodePosition())){
+                // if close, should collect it
+                if(_resourceSet->_itemSet[i]->isResource()){
+                    AudioEngine::get()->play("resource", _collectResourceSound, false, _collectResourceSound->getVolume(), true);
+                    _character->addRes();
+                }
+                // make the artifact disappear and remove from set
+                _resourceSet->remove_this(i, _ordered_root);
+                break;
+            }
         }
         
     }

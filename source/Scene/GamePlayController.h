@@ -72,6 +72,10 @@ public:
     
     int artNum;
     std::shared_ptr<ItemSetController> _artifactSet;
+
+    int resNum;
+    std::shared_ptr<ItemSetController> _resourceSet;
+
     std::shared_ptr<ItemSetController> _exitSet;
     std::shared_ptr<ItemSetController> _obsSetPast;
     std::shared_ptr<ItemSetController> _obsSetPresent;
@@ -321,6 +325,7 @@ public:
         // both orderedRoot
         //_pastWorld->setPriority(1000);
         _artifactSet->updatePriority();
+        _resourceSet->updatePriority();
         _obsSetPast->updatePriority();
         _wallSetPast->updatePriority();
         _character->updatePriority();
