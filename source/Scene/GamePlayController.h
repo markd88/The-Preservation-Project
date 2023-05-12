@@ -81,7 +81,10 @@ public:
     std::shared_ptr<ItemSetController> _obsSetPresent;
     std::shared_ptr<ItemSetController> _wallSetPast;
     std::shared_ptr<ItemSetController> _wallSetPresent;
-    
+    // shadow
+    std::shared_ptr<ItemSetController> _shadowSetPast;
+    std::shared_ptr<ItemSetController> _shadowSetPresent;
+
     std::unique_ptr<PathController> _path;
     std::shared_ptr<InputController> _input = InputController::getInstance();
     vector<Vec2> path_trace;
@@ -328,6 +331,7 @@ public:
         _resourceSet->updatePriority();
         _obsSetPast->updatePriority();
         _wallSetPast->updatePriority();
+        _shadowSetPast->updatePriority();
         _character->updatePriority();
         _guardSetPast->updatePriority();
         _exitSet->updatePriority();;
@@ -335,6 +339,7 @@ public:
         //_presentWorld->setPriority(1000);
         _obsSetPresent->updatePriority();
         _wallSetPresent->updatePriority();
+        _shadowSetPresent->updatePriority();
         _guardSetPresent->updatePriority();
     }
     

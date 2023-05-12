@@ -2647,6 +2647,30 @@
                  "width":32,
                  "x":225.336666666667,
                  "y":1150.66666666667
+                }, 
+                {
+                 "gid":129,
+                 "height":128,
+                 "id":724,
+                 "name":"",
+                 "rotation":0,
+                 "type":"tile_present_stones2",
+                 "visible":true,
+                 "width":128,
+                 "x":1273,
+                 "y":999
+                }, 
+                {
+                 "gid":130,
+                 "height":128,
+                 "id":729,
+                 "name":"",
+                 "rotation":0,
+                 "type":"tile_present_stones3",
+                 "visible":true,
+                 "width":128,
+                 "x":524,
+                 "y":502
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -3321,30 +3345,6 @@
                  "width":30,
                  "x":227.666666666667,
                  "y":894.666666666667
-                }, 
-                {
-                 "gid":129,
-                 "height":128,
-                 "id":724,
-                 "name":"",
-                 "rotation":0,
-                 "type":"tile_present_stones2",
-                 "visible":true,
-                 "width":128,
-                 "x":1273,
-                 "y":999
-                }, 
-                {
-                 "gid":130,
-                 "height":128,
-                 "id":729,
-                 "name":"",
-                 "rotation":0,
-                 "type":"tile_present_stones3",
-                 "visible":true,
-                 "width":128,
-                 "x":524,
-                 "y":502
                 }],
          "opacity":1,
          "type":"objectgroup",

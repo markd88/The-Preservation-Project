@@ -261,6 +261,8 @@ void GamePlayController::loadLevel(){
     _pastWorld = _pastWorldLevel->getWorld();
     _obsSetPast = _pastWorldLevel->getObs();
     _wallSetPast = _pastWorldLevel->getWall();
+    // shadow
+    _shadowSetPast = _pastWorldLevel->getShadow();
     // artifact
     _artifactSet = _pastWorldLevel->getItem();
     _artifactSet->setAction(_actions);
@@ -282,8 +284,7 @@ void GamePlayController::loadLevel(){
     _presentWorld = _presentWorldLevel->getWorld();
     _obsSetPresent = _presentWorldLevel->getObs();
     _wallSetPresent = _presentWorldLevel->getWall();
-    //_presentWorld->updateColor(Color4::CLEAR);
-    //_pastWorld->updateColor(Color4::CLEAR);
+    _shadowSetPresent = _presentWorldLevel->getShadow();
     
     auto pastEdges = _pastWorld->getEdges(_scene, _obsSetPast);
     generatePastMat(_pastWorld->getVertices());
@@ -344,9 +345,16 @@ void GamePlayController::init(){
     _other_ordered_root->removeAllChildren();
     
     _pastWorld->addChildTo(_scene);
+    std::shared_ptr<cugl::scene2::OrderedNode> shadowRootPast = cugl::scene2::OrderedNode::allocWithOrder(cugl::scene2::OrderedNode::Order::DESCEND);
+    _scene->addChild(shadowRootPast);
+    _shadowSetPast->addChildTo(shadowRootPast);
+
     _scene->addChild(_ordered_root);
     
     _presentWorld->addChildTo(_other_scene);
+    std::shared_ptr<cugl::scene2::OrderedNode> shadowRootPresent =  cugl::scene2::OrderedNode::allocWithOrder(cugl::scene2::OrderedNode::Order::DESCEND);
+    _other_scene->addChild(shadowRootPresent);
+    _shadowSetPresent->addChildTo(shadowRootPresent);
     _other_scene->addChild(_other_ordered_root);
 
     // for two world switch animation
@@ -370,10 +378,12 @@ void GamePlayController::init(){
 
     _obsSetPast->addChildTo(_ordered_root);
     _wallSetPast->addChildTo(_ordered_root);
+//    _shadowSetPast->addChildTo(_ordered_root);
     _exitSet->addChildTo(_ordered_root);
     
     _obsSetPresent->addChildTo(_other_ordered_root);
     _wallSetPresent->addChildTo(_other_ordered_root);
+//    _shadowSetPresent->addChildTo(_other_ordered_root);
     _obsSetPresent->setVisibility(false); // set to 'true' for debugging only!
 //    _obsSetPresent->setVisibility(true); // set to 'true' for debugging only!
     auto presentEdges = _presentWorld->getEdges(_other_scene, _obsSetPresent);
@@ -511,12 +521,12 @@ void GamePlayController::update(float dt){
         _path->clearPath(_scene);
         _action_world_switch->activate("second_half", _world_switch_1, _world_switch_node);
         _isSwitching = false;
-        CULog("switch second half");
+//        CULog("switch second half");
         return;
     }
     if (_action_world_switch->isActive("second_half")) {
         _action_world_switch->update(dt);
-        CULog("update second half");
+//        CULog("update second half");
         return;
     }
 

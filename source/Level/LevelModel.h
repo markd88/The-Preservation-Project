@@ -36,6 +36,7 @@ protected:
     std::shared_ptr<ItemSetController> _item;
     std::shared_ptr<ItemSetController> _exit;
     std::shared_ptr<ItemSetController> _resources;
+    std::shared_ptr<ItemSetController> _shadows;
 
     /** The AssetManager for the game mode */
     std::shared_ptr<cugl::AssetManager> _assets;
@@ -57,17 +58,7 @@ protected:
     */
     bool loadObject(const std::string type, int totalHeight, const std::shared_ptr<JsonValue>& json);
 
-    /**
-     * Loads a single wall object
-     *
-     * The wall will be retained and stored in the vector _walls.  If the
-     * wall fails to load, then it will not be added to _walls.
-     *
-     * @param  reader   a JSON reader with cursor ready to read the wall
-     *
-     * @retain the wall
-     * @return true if the wall was successfully loaded
-     */
+    /** Load single object*/
     bool loadTilemap(const std::shared_ptr<JsonValue>& json);
     bool loadItem(const std::shared_ptr<JsonValue>& json, const std::string type);
     bool load(const std::shared_ptr<JsonValue>& json);
@@ -115,6 +106,7 @@ public:
     std::shared_ptr<ItemSetController> getItem() {return _item->copy();};
     std::shared_ptr<ItemSetController> getObs() {return _obs;};
     std::shared_ptr<ItemSetController> getWall() {return _wall;};
+    std::shared_ptr<ItemSetController> getShadow() {return _shadows;};
     cugl::Vec2 getCharacterPos() {return _characterPos;};
     std::vector<std::vector<cugl::Vec2>> getMovingGuardsPos() {return _movingGuardsPos;};
     std::vector<std::vector<int>> getStaticGuardsPos() {return _staticGuardsPos;};
@@ -170,9 +162,6 @@ public:
      */
     void unload();
 
-
-    //#pragma mark -
-    //#pragma mark Initializers
     /**
      * Creates a new, empty level.
      */

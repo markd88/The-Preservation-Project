@@ -25,6 +25,7 @@ LevelModel::LevelModel(void) : Asset()
     _item = std::make_shared<ItemSetController>();
     _obs = std::make_shared<ItemSetController>();
     _wall = std::make_shared<ItemSetController>();
+    _shadows = std::make_shared<ItemSetController>();
     _exit = std::make_shared<ItemSetController>();
     _resources = std::make_shared<ItemSetController>();
 }
@@ -136,7 +137,7 @@ bool LevelModel::loadObject(const std::string type, int totalHeight, const std::
     if (type == TILEMAP_FILED) {
         return loadTilemap(json);
     }
-    if (type == ITEM_FIELD || type == OBS_FIELD || type == DECO_FIELD || type == EXIT_FIELD || type == RESOURCE_FIELD) {
+    if (type == ITEM_FIELD || type == OBS_FIELD || type == DECO_FIELD || type == EXIT_FIELD || type == RESOURCE_FIELD || type == SHADOW_FIELD) {
         return loadItem(json, type);
     }
     if (type == GUARD_FIELD) {
@@ -190,6 +191,10 @@ bool LevelModel::loadItem(const std::shared_ptr<JsonValue>& json, const std::str
         // isArtifact = false, isResource = false, isObs = false, isExit = false
         _wall->add_this(pos, size, false, false, false, false, _assets, textureType);
     }
+    else if (type == SHADOW_FIELD) {
+        // isArtifact = false, isResource = false, isObs = false, isExit = false
+        _shadows->add_this(pos, size, false, false, false, false, _assets, textureType);
+    }
     else if (type == OBS_FIELD) {
         // isArtifact = false, isResource = false, isObs = TRUE, isExit = false
         _obs->add_this(pos, size, false, false, true, false, _assets, textureType);
@@ -201,7 +206,6 @@ bool LevelModel::loadItem(const std::shared_ptr<JsonValue>& json, const std::str
     else if (type == RESOURCE_FIELD) {
         // isArtifact = false, isResource = TRUE, isObs = false, isExit = false
         _resources->add_this(pos, size, false, true, false, false, _assets, textureType);
-        std::cout<<"_resources: "<<_resources->_itemSet.size()<<std::endl;
     }
     else if (type == ITEM_FIELD) {
         // isArtifact = TRUE, isResource = false, isObs = false, isExit = false
@@ -299,6 +303,7 @@ void LevelModel::setTilemapTexture() {
     _item->setTexture(_assets);
     _obs->setTexture(_assets);
     _wall->setTexture(_assets);
+    _shadows->setTexture(_assets);
     _exit->setTexture(_assets);
     _resources->setTexture(_assets);
 };
