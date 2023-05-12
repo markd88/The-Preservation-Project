@@ -15,6 +15,7 @@ using namespace std;
 #include <GuardSet/GuardSetController.h>
 #include <ItemSet/ItemSetController.h>
 #include "LevelModel.h"
+#include <common.h>
 
 class GamePlayController {
 #pragma mark Internal References
@@ -304,6 +305,7 @@ public:
         }
         _complete_back_button->activate();
         _complete_next_button->activate();
+        level = level+1;
     }
     
     void pauseOn(){

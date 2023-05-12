@@ -52,6 +52,10 @@ protected:
     
     std::shared_ptr<SavedGameModel> _savedGame;
     
+    std::string _saveDir;
+    
+    int _highestUnlocked = -1;
+    
 public:
     /**
      * Creates, but does not initialized a new application.
@@ -146,6 +150,34 @@ public:
      */
     virtual void draw() override;
     
+    
+    // methods for save progress
+    void createSave(){
+        writeSave(1);
+    }
+
+    int readSave(){
+        // return -1 if file not exists
+        bool exists = cugl::filetool::file_exists(_saveDir);
+        if(!exists) return -1;
+        auto read = JsonReader::alloc(_saveDir);
+        auto temp = read->readAll();
+        
+        std::string highestStr = temp.substr(0, temp.size()-1);
+        int highest = stoi(highestStr);
+        read->close();
+        return highest;
+    }
+
+    void writeSave(int highest){
+        // write into saveDir
+        auto write = JsonWriter::alloc(_saveDir);
+        std::shared_ptr<cugl::JsonValue> saveValue = cugl::JsonValue::alloc(cugl::JsonValue::Type::NumberType);
+        saveValue->init(highest*1.0);
+        write->writeJson(saveValue);
+        write->close();
+    }
+
 };
 
 #endif /* __PV_APP_H__ */
