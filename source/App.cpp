@@ -97,6 +97,20 @@ void App::onStartup() {
     Application::onStartup();
     
     nextLevel = false;
+    
+    // for saved file add
+    _saveDir = Application::get()->getSaveDirectory();
+    _saveDir.append("saved.json");
+    _saveDir = filetool::normalize_path(_saveDir);
+    
+    _highestUnlocked = readSave();
+    if(_highestUnlocked == -1){
+        createSave();
+        _highestUnlocked = readSave(); // read again the newly created save file with value 0
+    }
+    // DELETE when game release!!!
+    writeSave(30);
+    _highestUnlocked = readSave();
 }
 
 /**
@@ -163,22 +177,13 @@ void App::onResume() {
  * @param timestep  The amount of time (in seconds) since the last frame
  */
 void App::update(float timestep) {
-//    if (!_loaded && _loadingController->_scene->isActive()) {
-//        _loadingController->update(timestep);
-//    } else if (!_loaded) {
-//        _loadingController->dispose(); // Disables the input listeners in this mode
-//        _loaded = true;
-//        Size size = getDisplaySize();
-//        size *= GAME_WIDTH/size.width;
-//        // _gameplayController = make_shared<GamePlayController>(size, _assets);
-//        _menuController = make_shared<MenuController>();
-//        _menuController->init(_assets);
-//
-//    } else {
-//
-//        //_gameplayController->update(timestep);
-//        _menuController->update(timestep);
-//    }
+    // detect if unlocking new level
+    if(level > _highestUnlocked){
+        writeSave(level);
+        _highestUnlocked = readSave();
+    }
+    
+    
     if(curScene == nextScene){
         switch(curScene)
         {
@@ -193,7 +198,7 @@ void App::update(float timestep) {
             case GAMEPLAY:
                 // if next level, deactivate first, reload level i+1, and init
                 if(nextLevel){
-                    level = level+1;
+                    
                     _gameplayController->setActive(false);
                     _gameplayController->loadLevel();
                     _gameplayController->init();
@@ -227,11 +232,11 @@ void App::update(float timestep) {
                 // if init before, just use previous menu
                 if(_menuController == nullptr) {
                     _menuController = make_shared<MenuController>();
-                    _menuController->setHighestUnlocked(_savedGame->getHighestUnlocked());
+                    _menuController->setHighestUnlocked(_highestUnlocked);
                     _menuController->init(_assets);
                 }
                 else{
-                    //_menuController->setActive(true);
+                    _menuController->setHighestUnlocked(_highestUnlocked);
                     _menuController->updateMenu();
                 }
                 curScene = MENU;
