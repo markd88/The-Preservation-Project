@@ -231,7 +231,8 @@ void App::update(float timestep) {
                     _menuController->init(_assets);
                 }
                 else{
-                    _menuController->setActive(true);
+                    //_menuController->setActive(true);
+                    _menuController->updateMenu();
                 }
                 curScene = MENU;
                 break;
@@ -269,7 +270,7 @@ void App::draw() {
 //        _menuController->render(_batch);
 //        //_gameplayController->render(_batch);
 //    }
-    switch(curScene)
+    switch(nextScene)
     {
         case LOADING:
             _loadingController->render(_batch);
