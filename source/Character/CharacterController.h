@@ -94,6 +94,10 @@ public:
     void addRes(){
         _model->setNumRes(getNumRes() + 1);
     }
+
+    void start_cross_mark() {
+        _view->start_cross_mark();
+    }
     
     bool useRes(){
         if(getNumRes() == 0) return false;
