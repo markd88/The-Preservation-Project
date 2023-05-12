@@ -1,5 +1,5 @@
 { "compressionlevel":-1,
- "height":13,
+ "height":11,
  "infinite":false,
  "layers":[
         {
@@ -7,126 +7,6 @@
          "id":2,
          "name":"tilemap",
          "objects":[
-                {
-                 "gid":99,
-                 "height":128,
-                 "id":53,
-                 "name":"",
-                 "rotation":0,
-                 "type":"tile_past_floor3",
-                 "visible":true,
-                 "width":128,
-                 "x":0,
-                 "y":384
-                }, 
-                {
-                 "gid":99,
-                 "height":128,
-                 "id":54,
-                 "name":"",
-                 "rotation":0,
-                 "type":"tile_past_floor3",
-                 "visible":true,
-                 "width":128,
-                 "x":0,
-                 "y":512
-                }, 
-                {
-                 "gid":99,
-                 "height":128,
-                 "id":55,
-                 "name":"",
-                 "rotation":0,
-                 "type":"tile_past_floor3",
-                 "visible":true,
-                 "width":128,
-                 "x":0,
-                 "y":640
-                }, 
-                {
-                 "gid":99,
-                 "height":128,
-                 "id":56,
-                 "name":"",
-                 "rotation":0,
-                 "type":"tile_past_floor3",
-                 "visible":true,
-                 "width":128,
-                 "x":0,
-                 "y":768
-                }, 
-                {
-                 "gid":99,
-                 "height":128,
-                 "id":57,
-                 "name":"",
-                 "rotation":0,
-                 "type":"tile_past_floor3",
-                 "visible":true,
-                 "width":128,
-                 "x":0,
-                 "y":896
-                }, 
-                {
-                 "gid":99,
-                 "height":128,
-                 "id":58,
-                 "name":"",
-                 "rotation":0,
-                 "type":"tile_past_floor3",
-                 "visible":true,
-                 "width":128,
-                 "x":0,
-                 "y":1024
-                }, 
-                {
-                 "gid":99,
-                 "height":128,
-                 "id":59,
-                 "name":"",
-                 "rotation":0,
-                 "type":"tile_past_floor3",
-                 "visible":true,
-                 "width":128,
-                 "x":0,
-                 "y":1152
-                }, 
-                {
-                 "gid":99,
-                 "height":128,
-                 "id":60,
-                 "name":"",
-                 "rotation":0,
-                 "type":"tile_past_floor3",
-                 "visible":true,
-                 "width":128,
-                 "x":0,
-                 "y":1280
-                }, 
-                {
-                 "gid":99,
-                 "height":128,
-                 "id":61,
-                 "name":"",
-                 "rotation":0,
-                 "type":"tile_past_floor3",
-                 "visible":true,
-                 "width":128,
-                 "x":0,
-                 "y":1408
-                }, 
-                {
-                 "gid":99,
-                 "height":128,
-                 "id":62,
-                 "name":"",
-                 "rotation":0,
-                 "type":"tile_past_floor3",
-                 "visible":true,
-                 "width":128,
-                 "x":0,
-                 "y":1536
-                }, 
                 {
                  "gid":98,
                  "height":128,
@@ -136,7 +16,7 @@
                  "type":"tile_past_floor2",
                  "visible":true,
                  "width":128,
-                 "x":512,
+                 "x":256,
                  "y":512
                 }, 
                 {
@@ -148,7 +28,7 @@
                  "type":"tile_past_floor2",
                  "visible":true,
                  "width":128,
-                 "x":512,
+                 "x":256,
                  "y":640
                 }, 
                 {
@@ -160,7 +40,7 @@
                  "type":"tile_past_floor2",
                  "visible":true,
                  "width":128,
-                 "x":640,
+                 "x":384,
                  "y":512
                 }, 
                 {
@@ -172,7 +52,7 @@
                  "type":"tile_past_floor2",
                  "visible":true,
                  "width":128,
-                 "x":640,
+                 "x":384,
                  "y":640
                 }, 
                 {
@@ -184,7 +64,7 @@
                  "type":"tile_past_floor2",
                  "visible":true,
                  "width":128,
-                 "x":896,
+                 "x":640,
                  "y":512
                 }, 
                 {
@@ -196,7 +76,7 @@
                  "type":"tile_past_floor2",
                  "visible":true,
                  "width":128,
-                 "x":768,
+                 "x":512,
                  "y":512
                 }, 
                 {
@@ -208,7 +88,7 @@
                  "type":"tile_past_floor2",
                  "visible":true,
                  "width":128,
-                 "x":768,
+                 "x":512,
                  "y":640
                 }, 
                 {
@@ -220,10 +100,9 @@
                  "type":"tile_past_floor2",
                  "visible":true,
                  "width":128,
-                 "x":896,
+                 "x":640,
                  "y":640
-                },
-            
+                }, 
                 {
                  "gid":98,
                  "height":128,
@@ -233,7 +112,7 @@
                  "type":"tile_past_floor2",
                  "visible":true,
                  "width":128,
-                 "x":1024,
+                 "x":768,
                  "y":640
                 }, 
                 {
@@ -245,7 +124,7 @@
                  "type":"tile_past_floor2",
                  "visible":true,
                  "width":128,
-                 "x":1024,
+                 "x":768,
                  "y":512
                 }, 
                 {
@@ -257,7 +136,7 @@
                  "type":"tile_past_floor2",
                  "visible":true,
                  "width":128,
-                 "x":1152,
+                 "x":896,
                  "y":512
                 }, 
                 {
@@ -269,7 +148,7 @@
                  "type":"tile_past_floor2",
                  "visible":true,
                  "width":128,
-                 "x":1152,
+                 "x":896,
                  "y":640
                 }, 
                 {
@@ -281,9 +160,10 @@
                  "type":"tile_past_floor2",
                  "visible":true,
                  "width":128,
-                 "x":1280,
+                 "x":1024,
                  "y":640
-                }, 
+                },
+            
                 {
                  "gid":98,
                  "height":128,
@@ -293,7 +173,7 @@
                  "type":"tile_past_floor2",
                  "visible":true,
                  "width":128,
-                 "x":1280,
+                 "x":1024,
                  "y":512
                 }, 
                 {
@@ -305,7 +185,7 @@
                  "type":"tile_past_floor2",
                  "visible":true,
                  "width":128,
-                 "x":1408,
+                 "x":1152,
                  "y":512
                 }, 
                 {
@@ -317,7 +197,7 @@
                  "type":"tile_past_floor2",
                  "visible":true,
                  "width":128,
-                 "x":1408,
+                 "x":1152,
                  "y":640
                 }, 
                 {
@@ -329,7 +209,7 @@
                  "type":"tile_past_floor2",
                  "visible":true,
                  "width":128,
-                 "x":1536,
+                 "x":1280,
                  "y":640
                 }, 
                 {
@@ -341,7 +221,7 @@
                  "type":"tile_past_floor2",
                  "visible":true,
                  "width":128,
-                 "x":1536,
+                 "x":1280,
                  "y":512
                 }, 
                 {
@@ -353,32 +233,8 @@
                  "type":"tile_past_floor2",
                  "visible":true,
                  "width":128,
-                 "x":1536,
+                 "x":1280,
                  "y":512
-                }, 
-                {
-                 "gid":155,
-                 "height":128,
-                 "id":121,
-                 "name":"",
-                 "rotation":0,
-                 "type":"pastB_floor_stone1",
-                 "visible":true,
-                 "width":128,
-                 "x":128,
-                 "y":128
-                }, 
-                {
-                 "gid":155,
-                 "height":128,
-                 "id":122,
-                 "name":"",
-                 "rotation":0,
-                 "type":"pastB_floor_stone1",
-                 "visible":true,
-                 "width":128,
-                 "x":0,
-                 "y":128
                 }, 
                 {
                  "gid":155,
@@ -389,7 +245,7 @@
                  "type":"pastB_floor_stone1",
                  "visible":true,
                  "width":128,
-                 "x":257,
+                 "x":1,
                  "y":128
                 }, 
                 {
@@ -401,7 +257,7 @@
                  "type":"pastB_floor_stone1",
                  "visible":true,
                  "width":128,
-                 "x":384,
+                 "x":128,
                  "y":128
                 }, 
                 {
@@ -413,7 +269,7 @@
                  "type":"pastB_floor_stone1",
                  "visible":true,
                  "width":128,
-                 "x":512,
+                 "x":256,
                  "y":128
                 }, 
                 {
@@ -425,7 +281,7 @@
                  "type":"pastB_floor_stone1",
                  "visible":true,
                  "width":128,
-                 "x":640,
+                 "x":384,
                  "y":128
                 }, 
                 {
@@ -437,10 +293,9 @@
                  "type":"pastB_floor_stone1",
                  "visible":true,
                  "width":128,
-                 "x":768,
+                 "x":512,
                  "y":128
-                },
-            
+                }, 
                 {
                  "gid":155,
                  "height":128,
@@ -450,7 +305,7 @@
                  "type":"pastB_floor_stone1",
                  "visible":true,
                  "width":128,
-                 "x":1024,
+                 "x":768,
                  "y":128
                 }, 
                 {
@@ -462,9 +317,10 @@
                  "type":"pastB_floor_stone1",
                  "visible":true,
                  "width":128,
-                 "x":768,
+                 "x":512,
                  "y":128
-                }, 
+                },
+            
                 {
                  "gid":155,
                  "height":128,
@@ -474,7 +330,7 @@
                  "type":"pastB_floor_stone1",
                  "visible":true,
                  "width":128,
-                 "x":896,
+                 "x":640,
                  "y":128
                 }, 
                 {
@@ -486,7 +342,7 @@
                  "type":"pastB_floor_stone1",
                  "visible":true,
                  "width":128,
-                 "x":1152,
+                 "x":896,
                  "y":128
                 }, 
                 {
@@ -498,7 +354,7 @@
                  "type":"pastB_floor_stone1",
                  "visible":true,
                  "width":128,
-                 "x":1280,
+                 "x":1024,
                  "y":128
                 }, 
                 {
@@ -510,7 +366,7 @@
                  "type":"pastB_floor_stone1",
                  "visible":true,
                  "width":128,
-                 "x":1408,
+                 "x":1152,
                  "y":128
                 }, 
                 {
@@ -522,7 +378,7 @@
                  "type":"pastB_floor_stone1",
                  "visible":true,
                  "width":128,
-                 "x":1536,
+                 "x":1280,
                  "y":128
                 }, 
                 {
@@ -534,502 +390,8 @@
                  "type":"pastB_floor_stone1",
                  "visible":true,
                  "width":128,
-                 "x":1664,
-                 "y":128
-                }, 
-                {
-                 "gid":155,
-                 "height":128,
-                 "id":136,
-                 "name":"",
-                 "rotation":0,
-                 "type":"pastB_floor_stone1",
-                 "visible":true,
-                 "width":128,
-                 "x":1792,
-                 "y":128
-                }, 
-                {
-                 "gid":155,
-                 "height":128,
-                 "id":137,
-                 "name":"",
-                 "rotation":0,
-                 "type":"pastB_floor_stone1",
-                 "visible":true,
-                 "width":128,
-                 "x":1920,
-                 "y":128
-                }, 
-                {
-                 "gid":155,
-                 "height":128,
-                 "id":138,
-                 "name":"",
-                 "rotation":0,
-                 "type":"pastB_floor_stone1",
-                 "visible":true,
-                 "width":128,
-                 "x":2048,
-                 "y":128
-                }, 
-                {
-                 "gid":155,
-                 "height":128,
-                 "id":139,
-                 "name":"",
-                 "rotation":0,
-                 "type":"pastB_floor_stone1",
-                 "visible":true,
-                 "width":128,
-                 "x":2176,
-                 "y":128
-                }, 
-                {
-                 "gid":155,
-                 "height":128,
-                 "id":140,
-                 "name":"",
-                 "rotation":0,
-                 "type":"pastB_floor_stone1",
-                 "visible":true,
-                 "width":128,
-                 "x":2176,
-                 "y":256
-                }, 
-                {
-                 "gid":155,
-                 "height":128,
-                 "id":141,
-                 "name":"",
-                 "rotation":0,
-                 "type":"pastB_floor_stone1",
-                 "visible":true,
-                 "width":128,
-                 "x":2176,
-                 "y":384
-                }, 
-                {
-                 "gid":155,
-                 "height":128,
-                 "id":142,
-                 "name":"",
-                 "rotation":0,
-                 "type":"pastB_floor_stone1",
-                 "visible":true,
-                 "width":128,
-                 "x":2176,
-                 "y":512
-                }, 
-                {
-                 "gid":155,
-                 "height":128,
-                 "id":143,
-                 "name":"",
-                 "rotation":0,
-                 "type":"pastB_floor_stone1",
-                 "visible":true,
-                 "width":128,
-                 "x":2176,
-                 "y":640
-                }, 
-                {
-                 "gid":155,
-                 "height":128,
-                 "id":144,
-                 "name":"",
-                 "rotation":0,
-                 "type":"pastB_floor_stone1",
-                 "visible":true,
-                 "width":128,
-                 "x":2176,
-                 "y":768
-                }, 
-                {
-                 "gid":155,
-                 "height":128,
-                 "id":145,
-                 "name":"",
-                 "rotation":0,
-                 "type":"pastB_floor_stone1",
-                 "visible":true,
-                 "width":128,
-                 "x":2176,
-                 "y":896
-                },
-            
-                {
-                 "gid":155,
-                 "height":128,
-                 "id":146,
-                 "name":"",
-                 "rotation":0,
-                 "type":"pastB_floor_stone1",
-                 "visible":true,
-                 "width":128,
-                 "x":2176,
-                 "y":1024
-                }, 
-                {
-                 "gid":155,
-                 "height":128,
-                 "id":147,
-                 "name":"",
-                 "rotation":0,
-                 "type":"pastB_floor_stone1",
-                 "visible":true,
-                 "width":128,
-                 "x":2176,
-                 "y":1152
-                }, 
-                {
-                 "gid":155,
-                 "height":128,
-                 "id":148,
-                 "name":"",
-                 "rotation":0,
-                 "type":"pastB_floor_stone1",
-                 "visible":true,
-                 "width":128,
-                 "x":2176,
-                 "y":1280
-                }, 
-                {
-                 "gid":155,
-                 "height":128,
-                 "id":149,
-                 "name":"",
-                 "rotation":0,
-                 "type":"pastB_floor_stone1",
-                 "visible":true,
-                 "width":128,
-                 "x":2176,
-                 "y":1408
-                }, 
-                {
-                 "gid":155,
-                 "height":128,
-                 "id":150,
-                 "name":"",
-                 "rotation":0,
-                 "type":"pastB_floor_stone1",
-                 "visible":true,
-                 "width":128,
-                 "x":2176,
-                 "y":1536
-                }, 
-                {
-                 "gid":155,
-                 "height":128,
-                 "id":151,
-                 "name":"",
-                 "rotation":0,
-                 "type":"pastB_floor_stone1",
-                 "visible":true,
-                 "width":128,
-                 "x":2176,
-                 "y":1664
-                }, 
-                {
-                 "gid":155,
-                 "height":128,
-                 "id":152,
-                 "name":"",
-                 "rotation":0,
-                 "type":"pastB_floor_stone1",
-                 "visible":true,
-                 "width":128,
-                 "x":2048,
-                 "y":1664
-                }, 
-                {
-                 "gid":155,
-                 "height":128,
-                 "id":156,
-                 "name":"",
-                 "rotation":0,
-                 "type":"pastB_floor_stone1",
-                 "visible":true,
-                 "width":128,
-                 "x":1536,
-                 "y":1664
-                }, 
-                {
-                 "gid":155,
-                 "height":128,
-                 "id":157,
-                 "name":"",
-                 "rotation":0,
-                 "type":"pastB_floor_stone1",
-                 "visible":true,
-                 "width":128,
                  "x":1408,
-                 "y":1664
-                }, 
-                {
-                 "gid":155,
-                 "height":128,
-                 "id":158,
-                 "name":"",
-                 "rotation":0,
-                 "type":"pastB_floor_stone1",
-                 "visible":true,
-                 "width":128,
-                 "x":1280,
-                 "y":1664
-                }, 
-                {
-                 "gid":155,
-                 "height":128,
-                 "id":159,
-                 "name":"",
-                 "rotation":0,
-                 "type":"pastB_floor_stone1",
-                 "visible":true,
-                 "width":128,
-                 "x":1152,
-                 "y":1664
-                }, 
-                {
-                 "gid":155,
-                 "height":128,
-                 "id":160,
-                 "name":"",
-                 "rotation":0,
-                 "type":"pastB_floor_stone1",
-                 "visible":true,
-                 "width":128,
-                 "x":1024,
-                 "y":1664
-                }, 
-                {
-                 "gid":155,
-                 "height":128,
-                 "id":161,
-                 "name":"",
-                 "rotation":0,
-                 "type":"pastB_floor_stone1",
-                 "visible":true,
-                 "width":128,
-                 "x":896,
-                 "y":1664
-                }, 
-                {
-                 "gid":155,
-                 "height":128,
-                 "id":162,
-                 "name":"",
-                 "rotation":0,
-                 "type":"pastB_floor_stone1",
-                 "visible":true,
-                 "width":128,
-                 "x":768,
-                 "y":1664
-                }, 
-                {
-                 "gid":155,
-                 "height":128,
-                 "id":163,
-                 "name":"",
-                 "rotation":0,
-                 "type":"pastB_floor_stone1",
-                 "visible":true,
-                 "width":128,
-                 "x":640,
-                 "y":1664
-                }, 
-                {
-                 "gid":155,
-                 "height":128,
-                 "id":164,
-                 "name":"",
-                 "rotation":0,
-                 "type":"pastB_floor_stone1",
-                 "visible":true,
-                 "width":128,
-                 "x":512,
-                 "y":1664
-                }, 
-                {
-                 "gid":155,
-                 "height":128,
-                 "id":165,
-                 "name":"",
-                 "rotation":0,
-                 "type":"pastB_floor_stone1",
-                 "visible":true,
-                 "width":128,
-                 "x":384,
-                 "y":1664
-                }, 
-                {
-                 "gid":155,
-                 "height":128,
-                 "id":166,
-                 "name":"",
-                 "rotation":0,
-                 "type":"pastB_floor_stone1",
-                 "visible":true,
-                 "width":128,
-                 "x":128,
-                 "y":1664
-                },
-            
-                {
-                 "gid":155,
-                 "height":128,
-                 "id":167,
-                 "name":"",
-                 "rotation":0,
-                 "type":"pastB_floor_stone1",
-                 "visible":true,
-                 "width":128,
-                 "x":0,
-                 "y":1664
-                }, 
-                {
-                 "gid":155,
-                 "height":128,
-                 "id":168,
-                 "name":"",
-                 "rotation":0,
-                 "type":"pastB_floor_stone1",
-                 "visible":true,
-                 "width":128,
-                 "x":256,
-                 "y":1664
-                }, 
-                {
-                 "gid":155,
-                 "height":128,
-                 "id":169,
-                 "name":"",
-                 "rotation":0,
-                 "type":"pastB_floor_stone1",
-                 "visible":true,
-                 "width":128,
-                 "x":0,
-                 "y":1536
-                }, 
-                {
-                 "gid":155,
-                 "height":128,
-                 "id":170,
-                 "name":"",
-                 "rotation":0,
-                 "type":"pastB_floor_stone1",
-                 "visible":true,
-                 "width":128,
-                 "x":0,
-                 "y":1408
-                }, 
-                {
-                 "gid":155,
-                 "height":128,
-                 "id":171,
-                 "name":"",
-                 "rotation":0,
-                 "type":"pastB_floor_stone1",
-                 "visible":true,
-                 "width":128,
-                 "x":0,
-                 "y":1280
-                }, 
-                {
-                 "gid":155,
-                 "height":128,
-                 "id":172,
-                 "name":"",
-                 "rotation":0,
-                 "type":"pastB_floor_stone1",
-                 "visible":true,
-                 "width":128,
-                 "x":0,
-                 "y":1152
-                }, 
-                {
-                 "gid":155,
-                 "height":128,
-                 "id":173,
-                 "name":"",
-                 "rotation":0,
-                 "type":"pastB_floor_stone1",
-                 "visible":true,
-                 "width":128,
-                 "x":0,
-                 "y":1024
-                }, 
-                {
-                 "gid":155,
-                 "height":128,
-                 "id":174,
-                 "name":"",
-                 "rotation":0,
-                 "type":"pastB_floor_stone1",
-                 "visible":true,
-                 "width":128,
-                 "x":0,
-                 "y":896
-                }, 
-                {
-                 "gid":155,
-                 "height":128,
-                 "id":175,
-                 "name":"",
-                 "rotation":0,
-                 "type":"pastB_floor_stone1",
-                 "visible":true,
-                 "width":128,
-                 "x":0,
-                 "y":768
-                }, 
-                {
-                 "gid":155,
-                 "height":128,
-                 "id":176,
-                 "name":"",
-                 "rotation":0,
-                 "type":"pastB_floor_stone1",
-                 "visible":true,
-                 "width":128,
-                 "x":0,
-                 "y":640
-                }, 
-                {
-                 "gid":155,
-                 "height":128,
-                 "id":177,
-                 "name":"",
-                 "rotation":0,
-                 "type":"pastB_floor_stone1",
-                 "visible":true,
-                 "width":128,
-                 "x":0,
-                 "y":512
-                }, 
-                {
-                 "gid":155,
-                 "height":128,
-                 "id":178,
-                 "name":"",
-                 "rotation":0,
-                 "type":"pastB_floor_stone1",
-                 "visible":true,
-                 "width":128,
-                 "x":0,
-                 "y":384
-                }, 
-                {
-                 "gid":155,
-                 "height":128,
-                 "id":179,
-                 "name":"",
-                 "rotation":0,
-                 "type":"pastB_floor_stone1",
-                 "visible":true,
-                 "width":128,
-                 "x":0,
-                 "y":256
+                 "y":128
                 }, 
                 {
                  "gid":99,
@@ -1040,7 +402,7 @@
                  "type":"tile_past_floor3",
                  "visible":true,
                  "width":128,
-                 "x":1536,
+                 "x":1280,
                  "y":1280
                 }, 
                 {
@@ -1052,7 +414,7 @@
                  "type":"tile_past_floor3",
                  "visible":true,
                  "width":128,
-                 "x":1536,
+                 "x":1280,
                  "y":1152
                 }, 
                 {
@@ -1064,7 +426,7 @@
                  "type":"tile_past_floor3",
                  "visible":true,
                  "width":128,
-                 "x":1536,
+                 "x":1280,
                  "y":1024
                 }, 
                 {
@@ -1076,7 +438,7 @@
                  "type":"tile_past_floor3",
                  "visible":true,
                  "width":128,
-                 "x":1536,
+                 "x":1280,
                  "y":896
                 }, 
                 {
@@ -1088,10 +450,9 @@
                  "type":"tile_past_floor3",
                  "visible":true,
                  "width":128,
-                 "x":1536,
+                 "x":1280,
                  "y":768
-                },
-            
+                }, 
                 {
                  "gid":99,
                  "height":128,
@@ -1101,7 +462,7 @@
                  "type":"tile_past_floor3",
                  "visible":true,
                  "width":128,
-                 "x":1408,
+                 "x":1152,
                  "y":768
                 }, 
                 {
@@ -1113,9 +474,10 @@
                  "type":"tile_past_floor3",
                  "visible":true,
                  "width":128,
-                 "x":1280,
+                 "x":1024,
                  "y":768
-                }, 
+                },
+            
                 {
                  "gid":99,
                  "height":128,
@@ -1125,7 +487,7 @@
                  "type":"tile_past_floor3",
                  "visible":true,
                  "width":128,
-                 "x":1280,
+                 "x":1024,
                  "y":896
                 }, 
                 {
@@ -1137,7 +499,7 @@
                  "type":"tile_past_floor3",
                  "visible":true,
                  "width":128,
-                 "x":1408,
+                 "x":1152,
                  "y":896
                 }, 
                 {
@@ -1149,7 +511,7 @@
                  "type":"tile_past_floor3",
                  "visible":true,
                  "width":128,
-                 "x":1408,
+                 "x":1152,
                  "y":1024
                 }, 
                 {
@@ -1161,7 +523,7 @@
                  "type":"tile_past_floor3",
                  "visible":true,
                  "width":128,
-                 "x":1280,
+                 "x":1024,
                  "y":1024
                 }, 
                 {
@@ -1173,7 +535,7 @@
                  "type":"tile_past_floor3",
                  "visible":true,
                  "width":128,
-                 "x":1280,
+                 "x":1024,
                  "y":1152
                 }, 
                 {
@@ -1185,7 +547,7 @@
                  "type":"tile_past_floor3",
                  "visible":true,
                  "width":128,
-                 "x":1408,
+                 "x":1152,
                  "y":1152
                 }, 
                 {
@@ -1197,7 +559,7 @@
                  "type":"tile_past_floor3",
                  "visible":true,
                  "width":128,
-                 "x":1408,
+                 "x":1152,
                  "y":1280
                 }, 
                 {
@@ -1209,7 +571,7 @@
                  "type":"tile_past_floor3",
                  "visible":true,
                  "width":128,
-                 "x":1280,
+                 "x":1024,
                  "y":1280
                 }, 
                 {
@@ -1221,7 +583,7 @@
                  "type":"tile_past_floor3",
                  "visible":true,
                  "width":128,
-                 "x":1152,
+                 "x":896,
                  "y":1280
                 }, 
                 {
@@ -1233,7 +595,7 @@
                  "type":"tile_past_floor3",
                  "visible":true,
                  "width":128,
-                 "x":1024,
+                 "x":768,
                  "y":1280
                 }, 
                 {
@@ -1245,7 +607,7 @@
                  "type":"tile_past_floor3",
                  "visible":true,
                  "width":128,
-                 "x":1152,
+                 "x":896,
                  "y":1152
                 }, 
                 {
@@ -1257,7 +619,7 @@
                  "type":"tile_past_floor3",
                  "visible":true,
                  "width":128,
-                 "x":1152,
+                 "x":896,
                  "y":1024
                 }, 
                 {
@@ -1269,9 +631,10 @@
                  "type":"tile_past_floor3",
                  "visible":true,
                  "width":128,
-                 "x":1152,
+                 "x":896,
                  "y":896
-                }, 
+                },
+            
                 {
                  "gid":99,
                  "height":128,
@@ -1281,7 +644,7 @@
                  "type":"tile_past_floor3",
                  "visible":true,
                  "width":128,
-                 "x":1152,
+                 "x":896,
                  "y":768
                 }, 
                 {
@@ -1293,7 +656,7 @@
                  "type":"tile_past_floor3",
                  "visible":true,
                  "width":128,
-                 "x":1024,
+                 "x":768,
                  "y":768
                 }, 
                 {
@@ -1305,10 +668,9 @@
                  "type":"tile_past_floor3",
                  "visible":true,
                  "width":128,
-                 "x":1024,
+                 "x":768,
                  "y":896
-                },
-            
+                }, 
                 {
                  "gid":99,
                  "height":128,
@@ -1318,7 +680,7 @@
                  "type":"tile_past_floor3",
                  "visible":true,
                  "width":128,
-                 "x":1024,
+                 "x":768,
                  "y":1152
                 }, 
                 {
@@ -1330,7 +692,7 @@
                  "type":"tile_past_floor3",
                  "visible":true,
                  "width":128,
-                 "x":1024,
+                 "x":768,
                  "y":896
                 }, 
                 {
@@ -1342,7 +704,7 @@
                  "type":"tile_past_floor3",
                  "visible":true,
                  "width":128,
-                 "x":1024,
+                 "x":768,
                  "y":1024
                 }, 
                 {
@@ -1354,7 +716,7 @@
                  "type":"tile_past_floor3",
                  "visible":true,
                  "width":128,
-                 "x":768,
+                 "x":512,
                  "y":768
                 }, 
                 {
@@ -1366,7 +728,7 @@
                  "type":"tile_past_floor3",
                  "visible":true,
                  "width":128,
-                 "x":1024,
+                 "x":768,
                  "y":768
                 }, 
                 {
@@ -1378,7 +740,7 @@
                  "type":"tile_past_floor3",
                  "visible":true,
                  "width":128,
-                 "x":1024,
+                 "x":768,
                  "y":768
                 }, 
                 {
@@ -1390,7 +752,7 @@
                  "type":"tile_past_floor3",
                  "visible":true,
                  "width":128,
-                 "x":896,
+                 "x":640,
                  "y":768
                 }, 
                 {
@@ -1402,7 +764,7 @@
                  "type":"tile_past_floor3",
                  "visible":true,
                  "width":128,
-                 "x":896,
+                 "x":640,
                  "y":896
                 }, 
                 {
@@ -1414,7 +776,7 @@
                  "type":"tile_past_floor3",
                  "visible":true,
                  "width":128,
-                 "x":768,
+                 "x":512,
                  "y":896
                 }, 
                 {
@@ -1426,9 +788,10 @@
                  "type":"tile_past_floor3",
                  "visible":true,
                  "width":128,
-                 "x":768,
+                 "x":512,
                  "y":1152
-                }, 
+                },
+            
                 {
                  "gid":99,
                  "height":128,
@@ -1438,7 +801,7 @@
                  "type":"tile_past_floor3",
                  "visible":true,
                  "width":128,
-                 "x":768,
+                 "x":512,
                  "y":1024
                 }, 
                 {
@@ -1450,7 +813,7 @@
                  "type":"tile_past_floor3",
                  "visible":true,
                  "width":128,
-                 "x":896,
+                 "x":640,
                  "y":1024
                 }, 
                 {
@@ -1462,7 +825,7 @@
                  "type":"tile_past_floor3",
                  "visible":true,
                  "width":128,
-                 "x":896,
+                 "x":640,
                  "y":1280
                 }, 
                 {
@@ -1474,7 +837,7 @@
                  "type":"tile_past_floor3",
                  "visible":true,
                  "width":128,
-                 "x":896,
+                 "x":640,
                  "y":1152
                 }, 
                 {
@@ -1486,7 +849,7 @@
                  "type":"tile_past_floor3",
                  "visible":true,
                  "width":128,
-                 "x":768,
+                 "x":512,
                  "y":1280
                 }, 
                 {
@@ -1498,7 +861,7 @@
                  "type":"tile_past_floor3",
                  "visible":true,
                  "width":128,
-                 "x":640,
+                 "x":384,
                  "y":1280
                 }, 
                 {
@@ -1510,7 +873,7 @@
                  "type":"tile_past_floor3",
                  "visible":true,
                  "width":128,
-                 "x":640,
+                 "x":384,
                  "y":1152
                 }, 
                 {
@@ -1522,10 +885,9 @@
                  "type":"tile_past_floor3",
                  "visible":true,
                  "width":128,
-                 "x":640,
+                 "x":384,
                  "y":1024
-                },
-            
+                }, 
                 {
                  "gid":99,
                  "height":128,
@@ -1535,7 +897,7 @@
                  "type":"tile_past_floor3",
                  "visible":true,
                  "width":128,
-                 "x":640,
+                 "x":384,
                  "y":896
                 }, 
                 {
@@ -1547,7 +909,7 @@
                  "type":"tile_past_floor3",
                  "visible":true,
                  "width":128,
-                 "x":640,
+                 "x":384,
                  "y":768
                 }, 
                 {
@@ -1559,7 +921,7 @@
                  "type":"tile_past_floor3",
                  "visible":true,
                  "width":128,
-                 "x":512,
+                 "x":256,
                  "y":768
                 }, 
                 {
@@ -1571,7 +933,7 @@
                  "type":"tile_past_floor3",
                  "visible":true,
                  "width":128,
-                 "x":512,
+                 "x":256,
                  "y":1280
                 }, 
                 {
@@ -1583,9 +945,10 @@
                  "type":"tile_past_floor3",
                  "visible":true,
                  "width":128,
-                 "x":512,
+                 "x":256,
                  "y":1152
-                }, 
+                },
+            
                 {
                  "gid":99,
                  "height":128,
@@ -1595,7 +958,7 @@
                  "type":"tile_past_floor3",
                  "visible":true,
                  "width":128,
-                 "x":512,
+                 "x":256,
                  "y":1024
                 }, 
                 {
@@ -1607,142 +970,9 @@
                  "type":"tile_past_floor3",
                  "visible":true,
                  "width":128,
-                 "x":512,
+                 "x":256,
                  "y":896
                 }, 
-                {
-                 "gid":155,
-                 "height":128,
-                 "id":409,
-                 "name":"",
-                 "rotation":0,
-                 "type":"pastB_floor_stone1",
-                 "visible":true,
-                 "width":128,
-                 "x":2048,
-                 "y":1536
-                }, 
-                {
-                 "gid":155,
-                 "height":128,
-                 "id":410,
-                 "name":"",
-                 "rotation":0,
-                 "type":"pastB_floor_stone1",
-                 "visible":true,
-                 "width":128,
-                 "x":2048,
-                 "y":1408
-                }, 
-                {
-                 "gid":155,
-                 "height":128,
-                 "id":411,
-                 "name":"",
-                 "rotation":0,
-                 "type":"pastB_floor_stone1",
-                 "visible":true,
-                 "width":128,
-                 "x":2048,
-                 "y":1280
-                }, 
-                {
-                 "gid":155,
-                 "height":128,
-                 "id":412,
-                 "name":"",
-                 "rotation":0,
-                 "type":"pastB_floor_stone1",
-                 "visible":true,
-                 "width":128,
-                 "x":2048,
-                 "y":1152
-                }, 
-                {
-                 "gid":155,
-                 "height":128,
-                 "id":413,
-                 "name":"",
-                 "rotation":0,
-                 "type":"pastB_floor_stone1",
-                 "visible":true,
-                 "width":128,
-                 "x":2048,
-                 "y":896
-                }, 
-                {
-                 "gid":155,
-                 "height":128,
-                 "id":414,
-                 "name":"",
-                 "rotation":0,
-                 "type":"pastB_floor_stone1",
-                 "visible":true,
-                 "width":128,
-                 "x":2048,
-                 "y":1024
-                }, 
-                {
-                 "gid":155,
-                 "height":128,
-                 "id":415,
-                 "name":"",
-                 "rotation":0,
-                 "type":"pastB_floor_stone1",
-                 "visible":true,
-                 "width":128,
-                 "x":2048,
-                 "y":768
-                }, 
-                {
-                 "gid":155,
-                 "height":128,
-                 "id":416,
-                 "name":"",
-                 "rotation":0,
-                 "type":"pastB_floor_stone1",
-                 "visible":true,
-                 "width":128,
-                 "x":2048,
-                 "y":640
-                }, 
-                {
-                 "gid":155,
-                 "height":128,
-                 "id":417,
-                 "name":"",
-                 "rotation":0,
-                 "type":"pastB_floor_stone1",
-                 "visible":true,
-                 "width":128,
-                 "x":2048,
-                 "y":512
-                }, 
-                {
-                 "gid":155,
-                 "height":128,
-                 "id":418,
-                 "name":"",
-                 "rotation":0,
-                 "type":"pastB_floor_stone1",
-                 "visible":true,
-                 "width":128,
-                 "x":2048,
-                 "y":256
-                }, 
-                {
-                 "gid":155,
-                 "height":128,
-                 "id":419,
-                 "name":"",
-                 "rotation":0,
-                 "type":"pastB_floor_stone1",
-                 "visible":true,
-                 "width":128,
-                 "x":2048,
-                 "y":384
-                },
-            
                 {
                  "gid":99,
                  "height":128,
@@ -1752,7 +982,7 @@
                  "type":"tile_past_floor3",
                  "visible":true,
                  "width":128,
-                 "x":1536,
+                 "x":1280,
                  "y":256
                 }, 
                 {
@@ -1764,7 +994,7 @@
                  "type":"tile_past_floor3",
                  "visible":true,
                  "width":128,
-                 "x":1408,
+                 "x":1152,
                  "y":256
                 }, 
                 {
@@ -1776,7 +1006,7 @@
                  "type":"tile_past_floor3",
                  "visible":true,
                  "width":128,
-                 "x":1280,
+                 "x":1024,
                  "y":256
                 }, 
                 {
@@ -1788,7 +1018,7 @@
                  "type":"tile_past_floor3",
                  "visible":true,
                  "width":128,
-                 "x":1024,
+                 "x":768,
                  "y":256
                 }, 
                 {
@@ -1800,7 +1030,7 @@
                  "type":"tile_past_floor3",
                  "visible":true,
                  "width":128,
-                 "x":1152,
+                 "x":896,
                  "y":256
                 }, 
                 {
@@ -1812,7 +1042,7 @@
                  "type":"tile_past_floor3",
                  "visible":true,
                  "width":128,
-                 "x":896,
+                 "x":640,
                  "y":256
                 }, 
                 {
@@ -1824,7 +1054,7 @@
                  "type":"tile_past_floor3",
                  "visible":true,
                  "width":128,
-                 "x":768,
+                 "x":512,
                  "y":256
                 }, 
                 {
@@ -1836,7 +1066,7 @@
                  "type":"tile_past_floor3",
                  "visible":true,
                  "width":128,
-                 "x":640,
+                 "x":384,
                  "y":256
                 }, 
                 {
@@ -1848,260 +1078,7 @@
                  "type":"tile_past_floor3",
                  "visible":true,
                  "width":128,
-                 "x":512,
-                 "y":256
-                }, 
-                {
-                 "gid":99,
-                 "height":128,
-                 "id":801,
-                 "name":"",
-                 "rotation":0,
-                 "type":"tile_past_floor3",
-                 "visible":true,
-                 "width":128,
-                 "x":128,
-                 "y":384
-                }, 
-                {
-                 "gid":99,
-                 "height":128,
-                 "id":802,
-                 "name":"",
-                 "rotation":0,
-                 "type":"tile_past_floor3",
-                 "visible":true,
-                 "width":128,
-                 "x":128,
-                 "y":512
-                }, 
-                {
-                 "gid":99,
-                 "height":128,
-                 "id":803,
-                 "name":"",
-                 "rotation":0,
-                 "type":"tile_past_floor3",
-                 "visible":true,
-                 "width":128,
-                 "x":128,
-                 "y":640
-                }, 
-                {
-                 "gid":99,
-                 "height":128,
-                 "id":804,
-                 "name":"",
-                 "rotation":0,
-                 "type":"tile_past_floor3",
-                 "visible":true,
-                 "width":128,
-                 "x":128,
-                 "y":768
-                }, 
-                {
-                 "gid":99,
-                 "height":128,
-                 "id":805,
-                 "name":"",
-                 "rotation":0,
-                 "type":"tile_past_floor3",
-                 "visible":true,
-                 "width":128,
-                 "x":128,
-                 "y":896
-                }, 
-                {
-                 "gid":99,
-                 "height":128,
-                 "id":806,
-                 "name":"",
-                 "rotation":0,
-                 "type":"tile_past_floor3",
-                 "visible":true,
-                 "width":128,
-                 "x":128,
-                 "y":1024
-                }, 
-                {
-                 "gid":99,
-                 "height":128,
-                 "id":807,
-                 "name":"",
-                 "rotation":0,
-                 "type":"tile_past_floor3",
-                 "visible":true,
-                 "width":128,
-                 "x":128,
-                 "y":1152
-                }, 
-                {
-                 "gid":99,
-                 "height":128,
-                 "id":808,
-                 "name":"",
-                 "rotation":0,
-                 "type":"tile_past_floor3",
-                 "visible":true,
-                 "width":128,
-                 "x":128,
-                 "y":1280
-                }, 
-                {
-                 "gid":99,
-                 "height":128,
-                 "id":809,
-                 "name":"",
-                 "rotation":0,
-                 "type":"tile_past_floor3",
-                 "visible":true,
-                 "width":128,
-                 "x":128,
-                 "y":1408
-                },
-            
-                {
-                 "gid":99,
-                 "height":128,
-                 "id":810,
-                 "name":"",
-                 "rotation":0,
-                 "type":"tile_past_floor3",
-                 "visible":true,
-                 "width":128,
-                 "x":128,
-                 "y":1536
-                }, 
-                {
-                 "gid":155,
-                 "height":128,
-                 "id":811,
-                 "name":"",
-                 "rotation":0,
-                 "type":"pastB_floor_stone1",
-                 "visible":true,
-                 "width":128,
-                 "x":128,
-                 "y":1536
-                }, 
-                {
-                 "gid":155,
-                 "height":128,
-                 "id":812,
-                 "name":"",
-                 "rotation":0,
-                 "type":"pastB_floor_stone1",
-                 "visible":true,
-                 "width":128,
-                 "x":128,
-                 "y":1408
-                }, 
-                {
-                 "gid":155,
-                 "height":128,
-                 "id":813,
-                 "name":"",
-                 "rotation":0,
-                 "type":"pastB_floor_stone1",
-                 "visible":true,
-                 "width":128,
-                 "x":128,
-                 "y":1280
-                }, 
-                {
-                 "gid":155,
-                 "height":128,
-                 "id":814,
-                 "name":"",
-                 "rotation":0,
-                 "type":"pastB_floor_stone1",
-                 "visible":true,
-                 "width":128,
-                 "x":128,
-                 "y":1152
-                }, 
-                {
-                 "gid":155,
-                 "height":128,
-                 "id":815,
-                 "name":"",
-                 "rotation":0,
-                 "type":"pastB_floor_stone1",
-                 "visible":true,
-                 "width":128,
-                 "x":128,
-                 "y":1024
-                }, 
-                {
-                 "gid":155,
-                 "height":128,
-                 "id":816,
-                 "name":"",
-                 "rotation":0,
-                 "type":"pastB_floor_stone1",
-                 "visible":true,
-                 "width":128,
-                 "x":128,
-                 "y":896
-                }, 
-                {
-                 "gid":155,
-                 "height":128,
-                 "id":817,
-                 "name":"",
-                 "rotation":0,
-                 "type":"pastB_floor_stone1",
-                 "visible":true,
-                 "width":128,
-                 "x":128,
-                 "y":768
-                }, 
-                {
-                 "gid":155,
-                 "height":128,
-                 "id":818,
-                 "name":"",
-                 "rotation":0,
-                 "type":"pastB_floor_stone1",
-                 "visible":true,
-                 "width":128,
-                 "x":128,
-                 "y":640
-                }, 
-                {
-                 "gid":155,
-                 "height":128,
-                 "id":819,
-                 "name":"",
-                 "rotation":0,
-                 "type":"pastB_floor_stone1",
-                 "visible":true,
-                 "width":128,
-                 "x":128,
-                 "y":512
-                }, 
-                {
-                 "gid":155,
-                 "height":128,
-                 "id":820,
-                 "name":"",
-                 "rotation":0,
-                 "type":"pastB_floor_stone1",
-                 "visible":true,
-                 "width":128,
-                 "x":128,
-                 "y":384
-                }, 
-                {
-                 "gid":155,
-                 "height":128,
-                 "id":821,
-                 "name":"",
-                 "rotation":0,
-                 "type":"pastB_floor_stone1",
-                 "visible":true,
-                 "width":128,
-                 "x":128,
+                 "x":256,
                  "y":256
                 }, 
                 {
@@ -2113,7 +1090,7 @@
                  "type":"tile_past_floor3",
                  "visible":true,
                  "width":128,
-                 "x":256,
+                 "x":0,
                  "y":384
                 }, 
                 {
@@ -2125,9 +1102,10 @@
                  "type":"tile_past_floor3",
                  "visible":true,
                  "width":128,
-                 "x":256,
+                 "x":0,
                  "y":512
-                }, 
+                },
+            
                 {
                  "gid":99,
                  "height":128,
@@ -2137,7 +1115,7 @@
                  "type":"tile_past_floor3",
                  "visible":true,
                  "width":128,
-                 "x":256,
+                 "x":0,
                  "y":640
                 }, 
                 {
@@ -2149,7 +1127,7 @@
                  "type":"tile_past_floor3",
                  "visible":true,
                  "width":128,
-                 "x":256,
+                 "x":0,
                  "y":768
                 }, 
                 {
@@ -2161,7 +1139,7 @@
                  "type":"tile_past_floor3",
                  "visible":true,
                  "width":128,
-                 "x":256,
+                 "x":0,
                  "y":896
                 }, 
                 {
@@ -2173,10 +1151,9 @@
                  "type":"tile_past_floor3",
                  "visible":true,
                  "width":128,
-                 "x":256,
+                 "x":0,
                  "y":1024
-                },
-            
+                }, 
                 {
                  "gid":99,
                  "height":128,
@@ -2186,7 +1163,7 @@
                  "type":"tile_past_floor3",
                  "visible":true,
                  "width":128,
-                 "x":256,
+                 "x":0,
                  "y":1152
                 }, 
                 {
@@ -2198,7 +1175,7 @@
                  "type":"tile_past_floor3",
                  "visible":true,
                  "width":128,
-                 "x":256,
+                 "x":0,
                  "y":1280
                 }, 
                 {
@@ -2210,32 +1187,8 @@
                  "type":"tile_past_floor3",
                  "visible":true,
                  "width":128,
-                 "x":256,
+                 "x":0,
                  "y":1408
-                }, 
-                {
-                 "gid":99,
-                 "height":128,
-                 "id":852,
-                 "name":"",
-                 "rotation":0,
-                 "type":"tile_past_floor3",
-                 "visible":true,
-                 "width":128,
-                 "x":256,
-                 "y":1536
-                }, 
-                {
-                 "gid":155,
-                 "height":128,
-                 "id":853,
-                 "name":"",
-                 "rotation":0,
-                 "type":"pastB_floor_stone1",
-                 "visible":true,
-                 "width":128,
-                 "x":256,
-                 "y":1536
                 }, 
                 {
                  "gid":155,
@@ -2246,7 +1199,7 @@
                  "type":"pastB_floor_stone1",
                  "visible":true,
                  "width":128,
-                 "x":256,
+                 "x":0,
                  "y":1408
                 }, 
                 {
@@ -2258,7 +1211,7 @@
                  "type":"pastB_floor_stone1",
                  "visible":true,
                  "width":128,
-                 "x":256,
+                 "x":0,
                  "y":1280
                 }, 
                 {
@@ -2270,7 +1223,7 @@
                  "type":"pastB_floor_stone1",
                  "visible":true,
                  "width":128,
-                 "x":256,
+                 "x":0,
                  "y":1152
                 }, 
                 {
@@ -2282,7 +1235,7 @@
                  "type":"pastB_floor_stone1",
                  "visible":true,
                  "width":128,
-                 "x":256,
+                 "x":0,
                  "y":1024
                 }, 
                 {
@@ -2294,7 +1247,7 @@
                  "type":"pastB_floor_stone1",
                  "visible":true,
                  "width":128,
-                 "x":256,
+                 "x":0,
                  "y":896
                 }, 
                 {
@@ -2306,9 +1259,10 @@
                  "type":"pastB_floor_stone1",
                  "visible":true,
                  "width":128,
-                 "x":256,
+                 "x":0,
                  "y":768
-                }, 
+                },
+            
                 {
                  "gid":155,
                  "height":128,
@@ -2318,7 +1272,7 @@
                  "type":"pastB_floor_stone1",
                  "visible":true,
                  "width":128,
-                 "x":256,
+                 "x":0,
                  "y":640
                 }, 
                 {
@@ -2330,7 +1284,7 @@
                  "type":"pastB_floor_stone1",
                  "visible":true,
                  "width":128,
-                 "x":256,
+                 "x":0,
                  "y":512
                 }, 
                 {
@@ -2342,7 +1296,7 @@
                  "type":"pastB_floor_stone1",
                  "visible":true,
                  "width":128,
-                 "x":256,
+                 "x":0,
                  "y":384
                 }, 
                 {
@@ -2354,7 +1308,7 @@
                  "type":"pastB_floor_stone1",
                  "visible":true,
                  "width":128,
-                 "x":256,
+                 "x":0,
                  "y":256
                 }, 
                 {
@@ -2366,7 +1320,7 @@
                  "type":"tile_past_floor3",
                  "visible":true,
                  "width":128,
-                 "x":384,
+                 "x":128,
                  "y":384
                 }, 
                 {
@@ -2378,7 +1332,7 @@
                  "type":"tile_past_floor3",
                  "visible":true,
                  "width":128,
-                 "x":384,
+                 "x":128,
                  "y":512
                 }, 
                 {
@@ -2390,10 +1344,9 @@
                  "type":"tile_past_floor3",
                  "visible":true,
                  "width":128,
-                 "x":384,
+                 "x":128,
                  "y":640
-                },
-            
+                }, 
                 {
                  "gid":99,
                  "height":128,
@@ -2403,7 +1356,7 @@
                  "type":"tile_past_floor3",
                  "visible":true,
                  "width":128,
-                 "x":384,
+                 "x":128,
                  "y":768
                 }, 
                 {
@@ -2415,7 +1368,7 @@
                  "type":"tile_past_floor3",
                  "visible":true,
                  "width":128,
-                 "x":384,
+                 "x":128,
                  "y":896
                 }, 
                 {
@@ -2427,7 +1380,7 @@
                  "type":"tile_past_floor3",
                  "visible":true,
                  "width":128,
-                 "x":384,
+                 "x":128,
                  "y":1024
                 }, 
                 {
@@ -2439,7 +1392,7 @@
                  "type":"tile_past_floor3",
                  "visible":true,
                  "width":128,
-                 "x":384,
+                 "x":128,
                  "y":1152
                 }, 
                 {
@@ -2451,7 +1404,7 @@
                  "type":"tile_past_floor3",
                  "visible":true,
                  "width":128,
-                 "x":384,
+                 "x":128,
                  "y":1280
                 }, 
                 {
@@ -2463,33 +1416,10 @@
                  "type":"tile_past_floor3",
                  "visible":true,
                  "width":128,
-                 "x":384,
+                 "x":128,
                  "y":1408
-                }, 
-                {
-                 "gid":99,
-                 "height":128,
-                 "id":873,
-                 "name":"",
-                 "rotation":0,
-                 "type":"tile_past_floor3",
-                 "visible":true,
-                 "width":128,
-                 "x":384,
-                 "y":1536
-                }, 
-                {
-                 "gid":155,
-                 "height":128,
-                 "id":874,
-                 "name":"",
-                 "rotation":0,
-                 "type":"pastB_floor_stone1",
-                 "visible":true,
-                 "width":128,
-                 "x":384,
-                 "y":1536
-                }, 
+                },
+            
                 {
                  "gid":155,
                  "height":128,
@@ -2499,7 +1429,7 @@
                  "type":"pastB_floor_stone1",
                  "visible":true,
                  "width":128,
-                 "x":384,
+                 "x":128,
                  "y":1408
                 }, 
                 {
@@ -2511,7 +1441,7 @@
                  "type":"pastB_floor_stone1",
                  "visible":true,
                  "width":128,
-                 "x":384,
+                 "x":128,
                  "y":1280
                 }, 
                 {
@@ -2523,7 +1453,7 @@
                  "type":"pastB_floor_stone1",
                  "visible":true,
                  "width":128,
-                 "x":384,
+                 "x":128,
                  "y":1152
                 }, 
                 {
@@ -2535,7 +1465,7 @@
                  "type":"pastB_floor_stone1",
                  "visible":true,
                  "width":128,
-                 "x":384,
+                 "x":128,
                  "y":1024
                 }, 
                 {
@@ -2547,7 +1477,7 @@
                  "type":"pastB_floor_stone1",
                  "visible":true,
                  "width":128,
-                 "x":384,
+                 "x":128,
                  "y":896
                 }, 
                 {
@@ -2559,7 +1489,7 @@
                  "type":"pastB_floor_stone1",
                  "visible":true,
                  "width":128,
-                 "x":384,
+                 "x":128,
                  "y":768
                 }, 
                 {
@@ -2571,7 +1501,7 @@
                  "type":"pastB_floor_stone1",
                  "visible":true,
                  "width":128,
-                 "x":384,
+                 "x":128,
                  "y":640
                 }, 
                 {
@@ -2583,7 +1513,7 @@
                  "type":"pastB_floor_stone1",
                  "visible":true,
                  "width":128,
-                 "x":384,
+                 "x":128,
                  "y":512
                 }, 
                 {
@@ -2595,7 +1525,7 @@
                  "type":"pastB_floor_stone1",
                  "visible":true,
                  "width":128,
-                 "x":384,
+                 "x":128,
                  "y":384
                 }, 
                 {
@@ -2607,514 +1537,7 @@
                  "type":"pastB_floor_stone1",
                  "visible":true,
                  "width":128,
-                 "x":384,
-                 "y":256
-                },
-            
-                {
-                 "gid":99,
-                 "height":128,
-                 "id":885,
-                 "name":"",
-                 "rotation":0,
-                 "type":"tile_past_floor3",
-                 "visible":true,
-                 "width":128,
-                 "x":1920,
-                 "y":384
-                }, 
-                {
-                 "gid":99,
-                 "height":128,
-                 "id":886,
-                 "name":"",
-                 "rotation":0,
-                 "type":"tile_past_floor3",
-                 "visible":true,
-                 "width":128,
-                 "x":1920,
-                 "y":512
-                }, 
-                {
-                 "gid":99,
-                 "height":128,
-                 "id":887,
-                 "name":"",
-                 "rotation":0,
-                 "type":"tile_past_floor3",
-                 "visible":true,
-                 "width":128,
-                 "x":1920,
-                 "y":640
-                }, 
-                {
-                 "gid":99,
-                 "height":128,
-                 "id":888,
-                 "name":"",
-                 "rotation":0,
-                 "type":"tile_past_floor3",
-                 "visible":true,
-                 "width":128,
-                 "x":1920,
-                 "y":768
-                }, 
-                {
-                 "gid":99,
-                 "height":128,
-                 "id":889,
-                 "name":"",
-                 "rotation":0,
-                 "type":"tile_past_floor3",
-                 "visible":true,
-                 "width":128,
-                 "x":1920,
-                 "y":896
-                }, 
-                {
-                 "gid":99,
-                 "height":128,
-                 "id":890,
-                 "name":"",
-                 "rotation":0,
-                 "type":"tile_past_floor3",
-                 "visible":true,
-                 "width":128,
-                 "x":1920,
-                 "y":1024
-                }, 
-                {
-                 "gid":99,
-                 "height":128,
-                 "id":891,
-                 "name":"",
-                 "rotation":0,
-                 "type":"tile_past_floor3",
-                 "visible":true,
-                 "width":128,
-                 "x":1920,
-                 "y":1152
-                }, 
-                {
-                 "gid":99,
-                 "height":128,
-                 "id":892,
-                 "name":"",
-                 "rotation":0,
-                 "type":"tile_past_floor3",
-                 "visible":true,
-                 "width":128,
-                 "x":1920,
-                 "y":1280
-                }, 
-                {
-                 "gid":99,
-                 "height":128,
-                 "id":893,
-                 "name":"",
-                 "rotation":0,
-                 "type":"tile_past_floor3",
-                 "visible":true,
-                 "width":128,
-                 "x":1920,
-                 "y":1408
-                }, 
-                {
-                 "gid":99,
-                 "height":128,
-                 "id":894,
-                 "name":"",
-                 "rotation":0,
-                 "type":"tile_past_floor3",
-                 "visible":true,
-                 "width":128,
-                 "x":1920,
-                 "y":1536
-                }, 
-                {
-                 "gid":155,
-                 "height":128,
-                 "id":895,
-                 "name":"",
-                 "rotation":0,
-                 "type":"pastB_floor_stone1",
-                 "visible":true,
-                 "width":128,
-                 "x":1920,
-                 "y":1536
-                }, 
-                {
-                 "gid":155,
-                 "height":128,
-                 "id":896,
-                 "name":"",
-                 "rotation":0,
-                 "type":"pastB_floor_stone1",
-                 "visible":true,
-                 "width":128,
-                 "x":1920,
-                 "y":1408
-                }, 
-                {
-                 "gid":155,
-                 "height":128,
-                 "id":897,
-                 "name":"",
-                 "rotation":0,
-                 "type":"pastB_floor_stone1",
-                 "visible":true,
-                 "width":128,
-                 "x":1920,
-                 "y":1280
-                }, 
-                {
-                 "gid":155,
-                 "height":128,
-                 "id":898,
-                 "name":"",
-                 "rotation":0,
-                 "type":"pastB_floor_stone1",
-                 "visible":true,
-                 "width":128,
-                 "x":1920,
-                 "y":1152
-                }, 
-                {
-                 "gid":155,
-                 "height":128,
-                 "id":899,
-                 "name":"",
-                 "rotation":0,
-                 "type":"pastB_floor_stone1",
-                 "visible":true,
-                 "width":128,
-                 "x":1920,
-                 "y":1024
-                }, 
-                {
-                 "gid":155,
-                 "height":128,
-                 "id":900,
-                 "name":"",
-                 "rotation":0,
-                 "type":"pastB_floor_stone1",
-                 "visible":true,
-                 "width":128,
-                 "x":1920,
-                 "y":896
-                }, 
-                {
-                 "gid":155,
-                 "height":128,
-                 "id":901,
-                 "name":"",
-                 "rotation":0,
-                 "type":"pastB_floor_stone1",
-                 "visible":true,
-                 "width":128,
-                 "x":1920,
-                 "y":768
-                }, 
-                {
-                 "gid":155,
-                 "height":128,
-                 "id":902,
-                 "name":"",
-                 "rotation":0,
-                 "type":"pastB_floor_stone1",
-                 "visible":true,
-                 "width":128,
-                 "x":1920,
-                 "y":640
-                },
-            
-                {
-                 "gid":155,
-                 "height":128,
-                 "id":903,
-                 "name":"",
-                 "rotation":0,
-                 "type":"pastB_floor_stone1",
-                 "visible":true,
-                 "width":128,
-                 "x":1920,
-                 "y":512
-                }, 
-                {
-                 "gid":155,
-                 "height":128,
-                 "id":904,
-                 "name":"",
-                 "rotation":0,
-                 "type":"pastB_floor_stone1",
-                 "visible":true,
-                 "width":128,
-                 "x":1920,
-                 "y":384
-                }, 
-                {
-                 "gid":155,
-                 "height":128,
-                 "id":905,
-                 "name":"",
-                 "rotation":0,
-                 "type":"pastB_floor_stone1",
-                 "visible":true,
-                 "width":128,
-                 "x":1920,
-                 "y":256
-                }, 
-                {
-                 "gid":99,
-                 "height":128,
-                 "id":906,
-                 "name":"",
-                 "rotation":0,
-                 "type":"tile_past_floor3",
-                 "visible":true,
-                 "width":128,
-                 "x":1792,
-                 "y":384
-                }, 
-                {
-                 "gid":99,
-                 "height":128,
-                 "id":907,
-                 "name":"",
-                 "rotation":0,
-                 "type":"tile_past_floor3",
-                 "visible":true,
-                 "width":128,
-                 "x":1792,
-                 "y":512
-                }, 
-                {
-                 "gid":99,
-                 "height":128,
-                 "id":908,
-                 "name":"",
-                 "rotation":0,
-                 "type":"tile_past_floor3",
-                 "visible":true,
-                 "width":128,
-                 "x":1792,
-                 "y":640
-                }, 
-                {
-                 "gid":99,
-                 "height":128,
-                 "id":909,
-                 "name":"",
-                 "rotation":0,
-                 "type":"tile_past_floor3",
-                 "visible":true,
-                 "width":128,
-                 "x":1792,
-                 "y":768
-                }, 
-                {
-                 "gid":99,
-                 "height":128,
-                 "id":910,
-                 "name":"",
-                 "rotation":0,
-                 "type":"tile_past_floor3",
-                 "visible":true,
-                 "width":128,
-                 "x":1792,
-                 "y":896
-                }, 
-                {
-                 "gid":99,
-                 "height":128,
-                 "id":911,
-                 "name":"",
-                 "rotation":0,
-                 "type":"tile_past_floor3",
-                 "visible":true,
-                 "width":128,
-                 "x":1792,
-                 "y":1024
-                }, 
-                {
-                 "gid":99,
-                 "height":128,
-                 "id":912,
-                 "name":"",
-                 "rotation":0,
-                 "type":"tile_past_floor3",
-                 "visible":true,
-                 "width":128,
-                 "x":1792,
-                 "y":1152
-                }, 
-                {
-                 "gid":99,
-                 "height":128,
-                 "id":913,
-                 "name":"",
-                 "rotation":0,
-                 "type":"tile_past_floor3",
-                 "visible":true,
-                 "width":128,
-                 "x":1792,
-                 "y":1280
-                }, 
-                {
-                 "gid":99,
-                 "height":128,
-                 "id":914,
-                 "name":"",
-                 "rotation":0,
-                 "type":"tile_past_floor3",
-                 "visible":true,
-                 "width":128,
-                 "x":1792,
-                 "y":1408
-                }, 
-                {
-                 "gid":99,
-                 "height":128,
-                 "id":915,
-                 "name":"",
-                 "rotation":0,
-                 "type":"tile_past_floor3",
-                 "visible":true,
-                 "width":128,
-                 "x":1792,
-                 "y":1536
-                }, 
-                {
-                 "gid":155,
-                 "height":128,
-                 "id":916,
-                 "name":"",
-                 "rotation":0,
-                 "type":"pastB_floor_stone1",
-                 "visible":true,
-                 "width":128,
-                 "x":1792,
-                 "y":1536
-                }, 
-                {
-                 "gid":155,
-                 "height":128,
-                 "id":917,
-                 "name":"",
-                 "rotation":0,
-                 "type":"pastB_floor_stone1",
-                 "visible":true,
-                 "width":128,
-                 "x":1792,
-                 "y":1408
-                }, 
-                {
-                 "gid":155,
-                 "height":128,
-                 "id":918,
-                 "name":"",
-                 "rotation":0,
-                 "type":"pastB_floor_stone1",
-                 "visible":true,
-                 "width":128,
-                 "x":1792,
-                 "y":1280
-                }, 
-                {
-                 "gid":155,
-                 "height":128,
-                 "id":919,
-                 "name":"",
-                 "rotation":0,
-                 "type":"pastB_floor_stone1",
-                 "visible":true,
-                 "width":128,
-                 "x":1792,
-                 "y":1152
-                }, 
-                {
-                 "gid":155,
-                 "height":128,
-                 "id":920,
-                 "name":"",
-                 "rotation":0,
-                 "type":"pastB_floor_stone1",
-                 "visible":true,
-                 "width":128,
-                 "x":1792,
-                 "y":1024
-                },
-            
-                {
-                 "gid":155,
-                 "height":128,
-                 "id":921,
-                 "name":"",
-                 "rotation":0,
-                 "type":"pastB_floor_stone1",
-                 "visible":true,
-                 "width":128,
-                 "x":1792,
-                 "y":896
-                }, 
-                {
-                 "gid":155,
-                 "height":128,
-                 "id":922,
-                 "name":"",
-                 "rotation":0,
-                 "type":"pastB_floor_stone1",
-                 "visible":true,
-                 "width":128,
-                 "x":1792,
-                 "y":768
-                }, 
-                {
-                 "gid":155,
-                 "height":128,
-                 "id":923,
-                 "name":"",
-                 "rotation":0,
-                 "type":"pastB_floor_stone1",
-                 "visible":true,
-                 "width":128,
-                 "x":1792,
-                 "y":640
-                }, 
-                {
-                 "gid":155,
-                 "height":128,
-                 "id":924,
-                 "name":"",
-                 "rotation":0,
-                 "type":"pastB_floor_stone1",
-                 "visible":true,
-                 "width":128,
-                 "x":1792,
-                 "y":512
-                }, 
-                {
-                 "gid":155,
-                 "height":128,
-                 "id":925,
-                 "name":"",
-                 "rotation":0,
-                 "type":"pastB_floor_stone1",
-                 "visible":true,
-                 "width":128,
-                 "x":1792,
-                 "y":384
-                }, 
-                {
-                 "gid":155,
-                 "height":128,
-                 "id":926,
-                 "name":"",
-                 "rotation":0,
-                 "type":"pastB_floor_stone1",
-                 "visible":true,
-                 "width":128,
-                 "x":1792,
+                 "x":128,
                  "y":256
                 }, 
                 {
@@ -3126,7 +1549,7 @@
                  "type":"tile_past_floor3",
                  "visible":true,
                  "width":128,
-                 "x":1664,
+                 "x":1408,
                  "y":384
                 }, 
                 {
@@ -3138,7 +1561,7 @@
                  "type":"tile_past_floor3",
                  "visible":true,
                  "width":128,
-                 "x":1664,
+                 "x":1408,
                  "y":512
                 }, 
                 {
@@ -3150,9 +1573,10 @@
                  "type":"tile_past_floor3",
                  "visible":true,
                  "width":128,
-                 "x":1664,
+                 "x":1408,
                  "y":640
-                }, 
+                },
+            
                 {
                  "gid":99,
                  "height":128,
@@ -3162,7 +1586,7 @@
                  "type":"tile_past_floor3",
                  "visible":true,
                  "width":128,
-                 "x":1664,
+                 "x":1408,
                  "y":768
                 }, 
                 {
@@ -3174,7 +1598,7 @@
                  "type":"tile_past_floor3",
                  "visible":true,
                  "width":128,
-                 "x":1664,
+                 "x":1408,
                  "y":896
                 }, 
                 {
@@ -3186,7 +1610,7 @@
                  "type":"tile_past_floor3",
                  "visible":true,
                  "width":128,
-                 "x":1664,
+                 "x":1408,
                  "y":1024
                 }, 
                 {
@@ -3198,7 +1622,7 @@
                  "type":"tile_past_floor3",
                  "visible":true,
                  "width":128,
-                 "x":1664,
+                 "x":1408,
                  "y":1152
                 }, 
                 {
@@ -3210,7 +1634,7 @@
                  "type":"tile_past_floor3",
                  "visible":true,
                  "width":128,
-                 "x":1664,
+                 "x":1408,
                  "y":1280
                 }, 
                 {
@@ -3222,32 +1646,8 @@
                  "type":"tile_past_floor3",
                  "visible":true,
                  "width":128,
-                 "x":1664,
+                 "x":1408,
                  "y":1408
-                }, 
-                {
-                 "gid":99,
-                 "height":128,
-                 "id":936,
-                 "name":"",
-                 "rotation":0,
-                 "type":"tile_past_floor3",
-                 "visible":true,
-                 "width":128,
-                 "x":1664,
-                 "y":1536
-                }, 
-                {
-                 "gid":155,
-                 "height":128,
-                 "id":937,
-                 "name":"",
-                 "rotation":0,
-                 "type":"pastB_floor_stone1",
-                 "visible":true,
-                 "width":128,
-                 "x":1664,
-                 "y":1536
                 }, 
                 {
                  "gid":155,
@@ -3258,10 +1658,9 @@
                  "type":"pastB_floor_stone1",
                  "visible":true,
                  "width":128,
-                 "x":1664,
+                 "x":1408,
                  "y":1408
-                },
-            
+                }, 
                 {
                  "gid":155,
                  "height":128,
@@ -3271,7 +1670,7 @@
                  "type":"pastB_floor_stone1",
                  "visible":true,
                  "width":128,
-                 "x":1664,
+                 "x":1408,
                  "y":1280
                 }, 
                 {
@@ -3283,7 +1682,7 @@
                  "type":"pastB_floor_stone1",
                  "visible":true,
                  "width":128,
-                 "x":1664,
+                 "x":1408,
                  "y":1152
                 }, 
                 {
@@ -3295,7 +1694,7 @@
                  "type":"pastB_floor_stone1",
                  "visible":true,
                  "width":128,
-                 "x":1664,
+                 "x":1408,
                  "y":1024
                 }, 
                 {
@@ -3307,7 +1706,7 @@
                  "type":"pastB_floor_stone1",
                  "visible":true,
                  "width":128,
-                 "x":1664,
+                 "x":1408,
                  "y":896
                 }, 
                 {
@@ -3319,7 +1718,7 @@
                  "type":"pastB_floor_stone1",
                  "visible":true,
                  "width":128,
-                 "x":1664,
+                 "x":1408,
                  "y":768
                 }, 
                 {
@@ -3331,9 +1730,10 @@
                  "type":"pastB_floor_stone1",
                  "visible":true,
                  "width":128,
-                 "x":1664,
+                 "x":1408,
                  "y":640
-                }, 
+                },
+            
                 {
                  "gid":155,
                  "height":128,
@@ -3343,7 +1743,7 @@
                  "type":"pastB_floor_stone1",
                  "visible":true,
                  "width":128,
-                 "x":1664,
+                 "x":1408,
                  "y":512
                 }, 
                 {
@@ -3355,7 +1755,7 @@
                  "type":"pastB_floor_stone1",
                  "visible":true,
                  "width":128,
-                 "x":1664,
+                 "x":1408,
                  "y":384
                 }, 
                 {
@@ -3367,189 +1767,8 @@
                  "type":"pastB_floor_stone1",
                  "visible":true,
                  "width":128,
-                 "x":1664,
-                 "y":256
-                }, 
-                {
-                 "gid":99,
-                 "height":128,
-                 "id":948,
-                 "name":"",
-                 "rotation":0,
-                 "type":"tile_past_floor3",
-                 "visible":true,
-                 "width":128,
-                 "x":1920,
-                 "y":1664
-                }, 
-                {
-                 "gid":155,
-                 "height":128,
-                 "id":949,
-                 "name":"",
-                 "rotation":0,
-                 "type":"pastB_floor_stone1",
-                 "visible":true,
-                 "width":128,
-                 "x":1920,
-                 "y":1664
-                }, 
-                {
-                 "gid":99,
-                 "height":128,
-                 "id":950,
-                 "name":"",
-                 "rotation":0,
-                 "type":"tile_past_floor3",
-                 "visible":true,
-                 "width":128,
-                 "x":1792,
-                 "y":1664
-                }, 
-                {
-                 "gid":155,
-                 "height":128,
-                 "id":951,
-                 "name":"",
-                 "rotation":0,
-                 "type":"pastB_floor_stone1",
-                 "visible":true,
-                 "width":128,
-                 "x":1792,
-                 "y":1664
-                }, 
-                {
-                 "gid":99,
-                 "height":128,
-                 "id":952,
-                 "name":"",
-                 "rotation":0,
-                 "type":"tile_past_floor3",
-                 "visible":true,
-                 "width":128,
-                 "x":1664,
-                 "y":1664
-                }, 
-                {
-                 "gid":155,
-                 "height":128,
-                 "id":953,
-                 "name":"",
-                 "rotation":0,
-                 "type":"pastB_floor_stone1",
-                 "visible":true,
-                 "width":128,
-                 "x":1664,
-                 "y":1664
-                }, 
-                {
-                 "gid":155,
-                 "height":128,
-                 "id":963,
-                 "name":"",
-                 "rotation":0,
-                 "type":"pastB_floor_stone1",
-                 "visible":true,
-                 "width":128,
-                 "x":1536,
-                 "y":1536
-                }, 
-                {
-                 "gid":155,
-                 "height":128,
-                 "id":964,
-                 "name":"",
-                 "rotation":0,
-                 "type":"pastB_floor_stone1",
-                 "visible":true,
-                 "width":128,
                  "x":1408,
-                 "y":1536
-                }, 
-                {
-                 "gid":155,
-                 "height":128,
-                 "id":965,
-                 "name":"",
-                 "rotation":0,
-                 "type":"pastB_floor_stone1",
-                 "visible":true,
-                 "width":128,
-                 "x":1280,
-                 "y":1536
-                },
-            
-                {
-                 "gid":155,
-                 "height":128,
-                 "id":966,
-                 "name":"",
-                 "rotation":0,
-                 "type":"pastB_floor_stone1",
-                 "visible":true,
-                 "width":128,
-                 "x":1152,
-                 "y":1536
-                }, 
-                {
-                 "gid":155,
-                 "height":128,
-                 "id":967,
-                 "name":"",
-                 "rotation":0,
-                 "type":"pastB_floor_stone1",
-                 "visible":true,
-                 "width":128,
-                 "x":1024,
-                 "y":1536
-                }, 
-                {
-                 "gid":155,
-                 "height":128,
-                 "id":968,
-                 "name":"",
-                 "rotation":0,
-                 "type":"pastB_floor_stone1",
-                 "visible":true,
-                 "width":128,
-                 "x":896,
-                 "y":1536
-                }, 
-                {
-                 "gid":155,
-                 "height":128,
-                 "id":969,
-                 "name":"",
-                 "rotation":0,
-                 "type":"pastB_floor_stone1",
-                 "visible":true,
-                 "width":128,
-                 "x":768,
-                 "y":1536
-                }, 
-                {
-                 "gid":155,
-                 "height":128,
-                 "id":970,
-                 "name":"",
-                 "rotation":0,
-                 "type":"pastB_floor_stone1",
-                 "visible":true,
-                 "width":128,
-                 "x":640,
-                 "y":1536
-                }, 
-                {
-                 "gid":155,
-                 "height":128,
-                 "id":971,
-                 "name":"",
-                 "rotation":0,
-                 "type":"pastB_floor_stone1",
-                 "visible":true,
-                 "width":128,
-                 "x":512,
-                 "y":1536
+                 "y":256
                 }, 
                 {
                  "gid":155,
@@ -3560,7 +1779,7 @@
                  "type":"pastB_floor_stone1",
                  "visible":true,
                  "width":128,
-                 "x":1536,
+                 "x":1280,
                  "y":1408
                 }, 
                 {
@@ -3572,7 +1791,7 @@
                  "type":"pastB_floor_stone1",
                  "visible":true,
                  "width":128,
-                 "x":1408,
+                 "x":1152,
                  "y":1408
                 }, 
                 {
@@ -3584,7 +1803,7 @@
                  "type":"pastB_floor_stone1",
                  "visible":true,
                  "width":128,
-                 "x":1280,
+                 "x":1024,
                  "y":1408
                 }, 
                 {
@@ -3596,7 +1815,7 @@
                  "type":"pastB_floor_stone1",
                  "visible":true,
                  "width":128,
-                 "x":1152,
+                 "x":896,
                  "y":1408
                 }, 
                 {
@@ -3608,7 +1827,7 @@
                  "type":"pastB_floor_stone1",
                  "visible":true,
                  "width":128,
-                 "x":1024,
+                 "x":768,
                  "y":1408
                 }, 
                 {
@@ -3620,7 +1839,7 @@
                  "type":"pastB_floor_stone1",
                  "visible":true,
                  "width":128,
-                 "x":896,
+                 "x":640,
                  "y":1408
                 }, 
                 {
@@ -3632,7 +1851,7 @@
                  "type":"pastB_floor_stone1",
                  "visible":true,
                  "width":128,
-                 "x":768,
+                 "x":512,
                  "y":1408
                 }, 
                 {
@@ -3644,7 +1863,7 @@
                  "type":"pastB_floor_stone1",
                  "visible":true,
                  "width":128,
-                 "x":640,
+                 "x":384,
                  "y":1408
                 }, 
                 {
@@ -3656,21 +1875,22 @@
                  "type":"pastB_floor_stone1",
                  "visible":true,
                  "width":128,
-                 "x":512,
+                 "x":256,
                  "y":1408
                 }, 
                 {
-                 "gid":99,
+                 "gid":155,
                  "height":128,
                  "id":1025,
                  "name":"",
                  "rotation":0,
-                 "type":"tile_past_floor3",
+                 "type":"pastB_floor_stone1",
                  "visible":true,
                  "width":128,
-                 "x":512,
-                 "y":384
-                }, 
+                 "x":1536,
+                 "y":128
+                },
+            
                 {
                  "gid":99,
                  "height":128,
@@ -3680,7 +1900,7 @@
                  "type":"tile_past_floor3",
                  "visible":true,
                  "width":128,
-                 "x":768,
+                 "x":1536,
                  "y":384
                 }, 
                 {
@@ -3692,10 +1912,9 @@
                  "type":"tile_past_floor3",
                  "visible":true,
                  "width":128,
-                 "x":1024,
-                 "y":384
-                },
-            
+                 "x":1536,
+                 "y":512
+                }, 
                 {
                  "gid":99,
                  "height":128,
@@ -3705,8 +1924,8 @@
                  "type":"tile_past_floor3",
                  "visible":true,
                  "width":128,
-                 "x":1280,
-                 "y":384
+                 "x":1536,
+                 "y":640
                 }, 
                 {
                  "gid":99,
@@ -3718,12 +1937,265 @@
                  "visible":true,
                  "width":128,
                  "x":1536,
+                 "y":768
+                }, 
+                {
+                 "gid":99,
+                 "height":128,
+                 "id":1030,
+                 "name":"",
+                 "rotation":0,
+                 "type":"tile_past_floor3",
+                 "visible":true,
+                 "width":128,
+                 "x":1536,
+                 "y":896
+                }, 
+                {
+                 "gid":99,
+                 "height":128,
+                 "id":1031,
+                 "name":"",
+                 "rotation":0,
+                 "type":"tile_past_floor3",
+                 "visible":true,
+                 "width":128,
+                 "x":1536,
+                 "y":1024
+                }, 
+                {
+                 "gid":99,
+                 "height":128,
+                 "id":1032,
+                 "name":"",
+                 "rotation":0,
+                 "type":"tile_past_floor3",
+                 "visible":true,
+                 "width":128,
+                 "x":1536,
+                 "y":1152
+                }, 
+                {
+                 "gid":99,
+                 "height":128,
+                 "id":1033,
+                 "name":"",
+                 "rotation":0,
+                 "type":"tile_past_floor3",
+                 "visible":true,
+                 "width":128,
+                 "x":1536,
+                 "y":1280
+                }, 
+                {
+                 "gid":99,
+                 "height":128,
+                 "id":1034,
+                 "name":"",
+                 "rotation":0,
+                 "type":"tile_past_floor3",
+                 "visible":true,
+                 "width":128,
+                 "x":1536,
+                 "y":1408
+                }, 
+                {
+                 "gid":155,
+                 "height":128,
+                 "id":1035,
+                 "name":"",
+                 "rotation":0,
+                 "type":"pastB_floor_stone1",
+                 "visible":true,
+                 "width":128,
+                 "x":1536,
+                 "y":1408
+                }, 
+                {
+                 "gid":155,
+                 "height":128,
+                 "id":1036,
+                 "name":"",
+                 "rotation":0,
+                 "type":"pastB_floor_stone1",
+                 "visible":true,
+                 "width":128,
+                 "x":1536,
+                 "y":1280
+                }, 
+                {
+                 "gid":155,
+                 "height":128,
+                 "id":1037,
+                 "name":"",
+                 "rotation":0,
+                 "type":"pastB_floor_stone1",
+                 "visible":true,
+                 "width":128,
+                 "x":1536,
+                 "y":1152
+                }, 
+                {
+                 "gid":155,
+                 "height":128,
+                 "id":1038,
+                 "name":"",
+                 "rotation":0,
+                 "type":"pastB_floor_stone1",
+                 "visible":true,
+                 "width":128,
+                 "x":1536,
+                 "y":1024
+                },
+            
+                {
+                 "gid":155,
+                 "height":128,
+                 "id":1039,
+                 "name":"",
+                 "rotation":0,
+                 "type":"pastB_floor_stone1",
+                 "visible":true,
+                 "width":128,
+                 "x":1536,
+                 "y":896
+                }, 
+                {
+                 "gid":155,
+                 "height":128,
+                 "id":1040,
+                 "name":"",
+                 "rotation":0,
+                 "type":"pastB_floor_stone1",
+                 "visible":true,
+                 "width":128,
+                 "x":1536,
+                 "y":768
+                }, 
+                {
+                 "gid":155,
+                 "height":128,
+                 "id":1041,
+                 "name":"",
+                 "rotation":0,
+                 "type":"pastB_floor_stone1",
+                 "visible":true,
+                 "width":128,
+                 "x":1536,
+                 "y":640
+                }, 
+                {
+                 "gid":155,
+                 "height":128,
+                 "id":1042,
+                 "name":"",
+                 "rotation":0,
+                 "type":"pastB_floor_stone1",
+                 "visible":true,
+                 "width":128,
+                 "x":1536,
+                 "y":512
+                }, 
+                {
+                 "gid":155,
+                 "height":128,
+                 "id":1043,
+                 "name":"",
+                 "rotation":0,
+                 "type":"pastB_floor_stone1",
+                 "visible":true,
+                 "width":128,
+                 "x":1536,
+                 "y":384
+                }, 
+                {
+                 "gid":155,
+                 "height":128,
+                 "id":1044,
+                 "name":"",
+                 "rotation":0,
+                 "type":"pastB_floor_stone1",
+                 "visible":true,
+                 "width":128,
+                 "x":1536,
+                 "y":256
+                }, 
+                {
+                 "gid":98,
+                 "height":128,
+                 "id":1046,
+                 "name":"",
+                 "rotation":0,
+                 "type":"tile_past_floor2",
+                 "visible":true,
+                 "width":128,
+                 "x":256,
+                 "y":384
+                }, 
+                {
+                 "gid":98,
+                 "height":128,
+                 "id":1048,
+                 "name":"",
+                 "rotation":0,
+                 "type":"tile_past_floor2",
+                 "visible":true,
+                 "width":128,
+                 "x":512,
+                 "y":384
+                }, 
+                {
+                 "gid":98,
+                 "height":128,
+                 "id":1049,
+                 "name":"",
+                 "rotation":0,
+                 "type":"tile_past_floor2",
+                 "visible":true,
+                 "width":128,
+                 "x":768,
+                 "y":384
+                }, 
+                {
+                 "gid":98,
+                 "height":128,
+                 "id":1050,
+                 "name":"",
+                 "rotation":0,
+                 "type":"tile_past_floor2",
+                 "visible":true,
+                 "width":128,
+                 "x":1024,
+                 "y":384
+                }, 
+                {
+                 "gid":98,
+                 "height":128,
+                 "id":1051,
+                 "name":"",
+                 "rotation":0,
+                 "type":"tile_past_floor2",
+                 "visible":true,
+                 "width":128,
+                 "x":1280,
                  "y":384
                 }, 
                 {
                  "gid":95,
                  "height":128,
-                 "id":1030,
+                 "id":1052,
+                 "name":"",
+                 "rotation":0,
+                 "type":"tile_past_floor_windowleft",
+                 "visible":true,
+                 "width":128,
+                 "x":384,
+                 "y":384
+                }, 
+                {
+                 "gid":95,
+                 "height":128,
+                 "id":1053,
                  "name":"",
                  "rotation":0,
                  "type":"tile_past_floor_windowleft",
@@ -3731,11 +2203,12 @@
                  "width":128,
                  "x":640,
                  "y":384
-                }, 
+                },
+            
                 {
                  "gid":95,
                  "height":128,
-                 "id":1031,
+                 "id":1054,
                  "name":"",
                  "rotation":0,
                  "type":"tile_past_floor_windowleft",
@@ -3747,25 +2220,13 @@
                 {
                  "gid":95,
                  "height":128,
-                 "id":1032,
+                 "id":1055,
                  "name":"",
                  "rotation":0,
                  "type":"tile_past_floor_windowleft",
                  "visible":true,
                  "width":128,
                  "x":1152,
-                 "y":384
-                }, 
-                {
-                 "gid":95,
-                 "height":128,
-                 "id":1033,
-                 "name":"",
-                 "rotation":0,
-                 "type":"tile_past_floor_windowleft",
-                 "visible":true,
-                 "width":128,
-                 "x":1408,
                  "y":384
                 }],
          "opacity":1,
@@ -3789,7 +2250,7 @@
                  "type":"past_roof_R",
                  "visible":true,
                  "width":60,
-                 "x":512,
+                 "x":256,
                  "y":896
                 }, 
                 {
@@ -3801,7 +2262,7 @@
                  "type":"past_roof_R",
                  "visible":true,
                  "width":60,
-                 "x":512,
+                 "x":256,
                  "y":1024
                 }, 
                 {
@@ -3813,7 +2274,7 @@
                  "type":"past_roof_R",
                  "visible":true,
                  "width":60,
-                 "x":512,
+                 "x":256,
                  "y":1152
                 }, 
                 {
@@ -3825,7 +2286,7 @@
                  "type":"past_roof_R",
                  "visible":true,
                  "width":60,
-                 "x":1664,
+                 "x":1408,
                  "y":1024
                 }, 
                 {
@@ -3837,7 +2298,7 @@
                  "type":"past_roof_R",
                  "visible":true,
                  "width":60,
-                 "x":1664,
+                 "x":1408,
                  "y":1152
                 }, 
                 {
@@ -3849,7 +2310,7 @@
                  "type":"past_roof_R",
                  "visible":true,
                  "width":60,
-                 "x":1664,
+                 "x":1408,
                  "y":896
                 }, 
                 {
@@ -3861,7 +2322,7 @@
                  "type":"past_roof_R",
                  "visible":true,
                  "width":60,
-                 "x":1664,
+                 "x":1408,
                  "y":640
                 }, 
                 {
@@ -3873,7 +2334,7 @@
                  "type":"past_roof_R",
                  "visible":true,
                  "width":60,
-                 "x":1664,
+                 "x":1408,
                  "y":512
                 }, 
                 {
@@ -3885,7 +2346,7 @@
                  "type":"past_roof_R",
                  "visible":true,
                  "width":60,
-                 "x":1664,
+                 "x":1408,
                  "y":384
                 }, 
                 {
@@ -3897,7 +2358,7 @@
                  "type":"past_roof_R",
                  "visible":true,
                  "width":60,
-                 "x":1664,
+                 "x":1408,
                  "y":256
                 }, 
                 {
@@ -3909,7 +2370,7 @@
                  "type":"tile_past_wall1",
                  "visible":true,
                  "width":128,
-                 "x":1536,
+                 "x":1280,
                  "y":256
                 }, 
                 {
@@ -3921,7 +2382,7 @@
                  "type":"tile_past_wall1",
                  "visible":true,
                  "width":128,
-                 "x":1408,
+                 "x":1152,
                  "y":256
                 }, 
                 {
@@ -3933,9 +2394,10 @@
                  "type":"tile_past_wall1",
                  "visible":true,
                  "width":128,
-                 "x":1280,
+                 "x":1024,
                  "y":256
-                }, 
+                },
+            
                 {
                  "gid":103,
                  "height":128,
@@ -3945,7 +2407,7 @@
                  "type":"tile_past_wall1",
                  "visible":true,
                  "width":128,
-                 "x":1152,
+                 "x":896,
                  "y":256
                 }, 
                 {
@@ -3957,7 +2419,7 @@
                  "type":"tile_past_wall1",
                  "visible":true,
                  "width":128,
-                 "x":1024,
+                 "x":768,
                  "y":256
                 }, 
                 {
@@ -3969,7 +2431,7 @@
                  "type":"tile_past_wall1",
                  "visible":true,
                  "width":128,
-                 "x":768,
+                 "x":512,
                  "y":256
                 }, 
                 {
@@ -3981,7 +2443,7 @@
                  "type":"tile_past_wall1",
                  "visible":true,
                  "width":128,
-                 "x":512,
+                 "x":256,
                  "y":256
                 }, 
                 {
@@ -3993,10 +2455,9 @@
                  "type":"tile_past_wall_column_right_window",
                  "visible":true,
                  "width":128,
-                 "x":896,
+                 "x":640,
                  "y":256
-                },
-            
+                }, 
                 {
                  "gid":102,
                  "height":128,
@@ -4006,7 +2467,7 @@
                  "type":"tile_past_wall_window",
                  "visible":true,
                  "width":128,
-                 "x":768,
+                 "x":512,
                  "y":256
                 }, 
                 {
@@ -4018,7 +2479,7 @@
                  "type":"tile_past_wall_column_left_window",
                  "visible":true,
                  "width":128,
-                 "x":640,
+                 "x":384,
                  "y":256
                 }, 
                 {
@@ -4030,7 +2491,7 @@
                  "type":"tile_past_wall_column_left_window",
                  "visible":true,
                  "width":128,
-                 "x":1152,
+                 "x":896,
                  "y":256
                 }, 
                 {
@@ -4042,7 +2503,7 @@
                  "type":"tile_past_wall_column_right_window",
                  "visible":true,
                  "width":128,
-                 "x":1408,
+                 "x":1152,
                  "y":256
                 }, 
                 {
@@ -4054,7 +2515,7 @@
                  "type":"tile_past_wall_window",
                  "visible":true,
                  "width":128,
-                 "x":1280,
+                 "x":1024,
                  "y":256
                 }, 
                 {
@@ -4066,7 +2527,7 @@
                  "type":"past_roof_R",
                  "visible":true,
                  "width":60,
-                 "x":512,
+                 "x":256,
                  "y":256
                 }, 
                 {
@@ -4078,7 +2539,7 @@
                  "type":"past_roof_R",
                  "visible":true,
                  "width":60,
-                 "x":512,
+                 "x":256,
                  "y":384
                 }, 
                 {
@@ -4090,9 +2551,10 @@
                  "type":"pastB_wall1",
                  "visible":true,
                  "width":128,
-                 "x":1536,
+                 "x":1280,
                  "y":1280
-                }, 
+                },
+            
                 {
                  "gid":158,
                  "height":128,
@@ -4102,7 +2564,7 @@
                  "type":"pastB_wall1",
                  "visible":true,
                  "width":128,
-                 "x":1280,
+                 "x":1024,
                  "y":1280
                 }, 
                 {
@@ -4114,7 +2576,7 @@
                  "type":"pastB_wall1",
                  "visible":true,
                  "width":128,
-                 "x":896,
+                 "x":640,
                  "y":1280
                 }, 
                 {
@@ -4126,7 +2588,7 @@
                  "type":"pastB_wall1",
                  "visible":true,
                  "width":128,
-                 "x":640,
+                 "x":384,
                  "y":1280
                 }, 
                 {
@@ -4138,7 +2600,7 @@
                  "type":"pastB_wall2",
                  "visible":true,
                  "width":128,
-                 "x":512,
+                 "x":256,
                  "y":1280
                 }, 
                 {
@@ -4150,7 +2612,7 @@
                  "type":"pastB_wall_window",
                  "visible":true,
                  "width":128,
-                 "x":768,
+                 "x":512,
                  "y":1280
                 }, 
                 {
@@ -4162,7 +2624,7 @@
                  "type":"pastB_wall_window",
                  "visible":true,
                  "width":128,
-                 "x":1024,
+                 "x":768,
                  "y":1280
                 }, 
                 {
@@ -4174,7 +2636,7 @@
                  "type":"pastB_wall_window",
                  "visible":true,
                  "width":128,
-                 "x":1152,
+                 "x":896,
                  "y":1280
                 }, 
                 {
@@ -4186,7 +2648,7 @@
                  "type":"pastB_wall_window",
                  "visible":true,
                  "width":128,
-                 "x":1408,
+                 "x":1152,
                  "y":1280
                 }, 
                 {
@@ -4198,7 +2660,7 @@
                  "type":"past_roof_R",
                  "visible":true,
                  "width":60,
-                 "x":512,
+                 "x":256,
                  "y":768
                 }, 
                 {
@@ -4210,10 +2672,9 @@
                  "type":"past_roof_R",
                  "visible":true,
                  "width":60,
-                 "x":512,
+                 "x":256,
                  "y":640
-                },
-            
+                }, 
                 {
                  "gid":142,
                  "height":128,
@@ -4223,7 +2684,7 @@
                  "type":"past_roof_R",
                  "visible":true,
                  "width":60,
-                 "x":512,
+                 "x":256,
                  "y":512
                 }, 
                 {
@@ -4235,7 +2696,7 @@
                  "type":"pastB_col_corner",
                  "visible":true,
                  "width":31,
-                 "x":1664,
+                 "x":1408,
                  "y":1280
                 }],
          "opacity":1,
@@ -4259,7 +2720,7 @@
                  "type":"artifact_statue_jade",
                  "visible":true,
                  "width":128,
-                 "x":1152,
+                 "x":896,
                  "y":768
                 }],
          "opacity":1,
@@ -4283,7 +2744,7 @@
                  "type":"character-placeholder",
                  "visible":true,
                  "width":128,
-                 "x":768,
+                 "x":512,
                  "y":768
                 }],
          "opacity":1,
@@ -4319,7 +2780,7 @@
                  "type":"tile_past_door_side",
                  "visible":true,
                  "width":29,
-                 "x":1664,
+                 "x":1408,
                  "y":768
                 }, 
                 {
@@ -4331,7 +2792,7 @@
                  "type":"exit_side",
                  "visible":true,
                  "width":72,
-                 "x":1643.75,
+                 "x":1387.75,
                  "y":792.25
                 }],
          "opacity":1,
@@ -4354,7 +2815,7 @@
                  "type":"box2",
                  "visible":true,
                  "width":128,
-                 "x":1536,
+                 "x":1280,
                  "y":1280
                 }, 
                 {
@@ -4366,7 +2827,7 @@
                  "type":"box2",
                  "visible":true,
                  "width":128,
-                 "x":1408,
+                 "x":1152,
                  "y":1280
                 }, 
                 {
@@ -4378,7 +2839,7 @@
                  "type":"box2",
                  "visible":true,
                  "width":128,
-                 "x":1280,
+                 "x":1024,
                  "y":1280
                 }, 
                 {
@@ -4390,7 +2851,7 @@
                  "type":"box2",
                  "visible":true,
                  "width":128,
-                 "x":1152,
+                 "x":896,
                  "y":1280
                 }, 
                 {
@@ -4402,7 +2863,7 @@
                  "type":"box2",
                  "visible":true,
                  "width":128,
-                 "x":1024,
+                 "x":768,
                  "y":1280
                 }, 
                 {
@@ -4414,7 +2875,7 @@
                  "type":"box2",
                  "visible":true,
                  "width":128,
-                 "x":896,
+                 "x":640,
                  "y":1280
                 }, 
                 {
@@ -4426,7 +2887,7 @@
                  "type":"box2",
                  "visible":true,
                  "width":128,
-                 "x":768,
+                 "x":512,
                  "y":1280
                 }, 
                 {
@@ -4438,7 +2899,7 @@
                  "type":"box2",
                  "visible":true,
                  "width":128,
-                 "x":640,
+                 "x":384,
                  "y":1280
                 }, 
                 {
@@ -4450,7 +2911,7 @@
                  "type":"box2",
                  "visible":true,
                  "width":128,
-                 "x":512,
+                 "x":256,
                  "y":1280
                 }, 
                 {
@@ -4462,7 +2923,7 @@
                  "type":"box2",
                  "visible":true,
                  "width":128,
-                 "x":512,
+                 "x":256,
                  "y":256
                 }, 
                 {
@@ -4474,7 +2935,7 @@
                  "type":"box2",
                  "visible":true,
                  "width":128,
-                 "x":640,
+                 "x":384,
                  "y":256
                 }, 
                 {
@@ -4486,7 +2947,7 @@
                  "type":"box2",
                  "visible":true,
                  "width":128,
-                 "x":768,
+                 "x":512,
                  "y":256
                 }, 
                 {
@@ -4498,9 +2959,10 @@
                  "type":"box2",
                  "visible":true,
                  "width":128,
-                 "x":896,
+                 "x":640,
                  "y":256
-                }, 
+                },
+            
                 {
                  "gid":36,
                  "height":64,
@@ -4510,7 +2972,7 @@
                  "type":"box2",
                  "visible":true,
                  "width":128,
-                 "x":1024,
+                 "x":768,
                  "y":256
                 }, 
                 {
@@ -4522,7 +2984,7 @@
                  "type":"box2",
                  "visible":true,
                  "width":128,
-                 "x":1152,
+                 "x":896,
                  "y":256
                 }, 
                 {
@@ -4534,7 +2996,7 @@
                  "type":"box2",
                  "visible":true,
                  "width":128,
-                 "x":1280,
+                 "x":1024,
                  "y":256
                 }, 
                 {
@@ -4546,7 +3008,7 @@
                  "type":"box2",
                  "visible":true,
                  "width":128,
-                 "x":1408,
+                 "x":1152,
                  "y":256
                 }, 
                 {
@@ -4558,10 +3020,9 @@
                  "type":"box2",
                  "visible":true,
                  "width":128,
-                 "x":1536,
+                 "x":1280,
                  "y":256
-                },
-            
+                }, 
                 {
                  "gid":37,
                  "height":128,
@@ -4571,7 +3032,7 @@
                  "type":"box3",
                  "visible":true,
                  "width":64,
-                 "x":1664,
+                 "x":1408,
                  "y":1280
                 }, 
                 {
@@ -4583,7 +3044,7 @@
                  "type":"box3",
                  "visible":true,
                  "width":64,
-                 "x":1664,
+                 "x":1408,
                  "y":1152
                 }, 
                 {
@@ -4595,7 +3056,7 @@
                  "type":"box3",
                  "visible":true,
                  "width":64,
-                 "x":1664,
+                 "x":1408,
                  "y":1024
                 }, 
                 {
@@ -4607,7 +3068,7 @@
                  "type":"box3",
                  "visible":true,
                  "width":64,
-                 "x":1664,
+                 "x":1408,
                  "y":896
                 }, 
                 {
@@ -4619,7 +3080,7 @@
                  "type":"box3",
                  "visible":true,
                  "width":64,
-                 "x":1664,
+                 "x":1408,
                  "y":768
                 }, 
                 {
@@ -4631,7 +3092,7 @@
                  "type":"box3",
                  "visible":true,
                  "width":64,
-                 "x":1664,
+                 "x":1408,
                  "y":640
                 }, 
                 {
@@ -4643,7 +3104,7 @@
                  "type":"box3",
                  "visible":true,
                  "width":64,
-                 "x":1664,
+                 "x":1408,
                  "y":512
                 }, 
                 {
@@ -4655,9 +3116,10 @@
                  "type":"box3",
                  "visible":true,
                  "width":64,
-                 "x":1664,
+                 "x":1408,
                  "y":384
-                }, 
+                },
+            
                 {
                  "gid":37,
                  "height":128,
@@ -4667,7 +3129,7 @@
                  "type":"box3",
                  "visible":true,
                  "width":64,
-                 "x":512,
+                 "x":256,
                  "y":1280
                 }, 
                 {
@@ -4679,7 +3141,7 @@
                  "type":"box3",
                  "visible":true,
                  "width":64,
-                 "x":512,
+                 "x":256,
                  "y":1152
                 }, 
                 {
@@ -4691,7 +3153,7 @@
                  "type":"box3",
                  "visible":true,
                  "width":64,
-                 "x":512,
+                 "x":256,
                  "y":1024
                 }, 
                 {
@@ -4703,7 +3165,7 @@
                  "type":"box3",
                  "visible":true,
                  "width":64,
-                 "x":512,
+                 "x":256,
                  "y":768
                 }, 
                 {
@@ -4715,7 +3177,7 @@
                  "type":"box3",
                  "visible":true,
                  "width":64,
-                 "x":512,
+                 "x":256,
                  "y":896
                 }, 
                 {
@@ -4727,7 +3189,7 @@
                  "type":"box3",
                  "visible":true,
                  "width":64,
-                 "x":512,
+                 "x":256,
                  "y":640
                 }, 
                 {
@@ -4739,7 +3201,7 @@
                  "type":"box3",
                  "visible":true,
                  "width":64,
-                 "x":512,
+                 "x":256,
                  "y":512
                 }, 
                 {
@@ -4751,7 +3213,7 @@
                  "type":"box3",
                  "visible":true,
                  "width":64,
-                 "x":512,
+                 "x":256,
                  "y":384
                 }, 
                 {
@@ -4763,7 +3225,7 @@
                  "type":"box4",
                  "visible":true,
                  "width":64,
-                 "x":1664,
+                 "x":1408,
                  "y":256
                 }],
          "opacity":1,
@@ -4773,7 +3235,7 @@
          "y":0
         }],
  "nextlayerid":9,
- "nextobjectid":1034,
+ "nextobjectid":1056,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.10.1",
@@ -4786,5 +3248,5 @@
  "tilewidth":128,
  "type":"map",
  "version":"1.10",
- "width":18
+ "width":13
 }
