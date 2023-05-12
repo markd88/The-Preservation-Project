@@ -65,6 +65,8 @@ _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displ
     _UI_scene->setSize(displaySize*1.5);
     
     _previewNode = cugl::scene2::PolygonNode::alloc();
+    _previewBound = cugl::scene2::PathNode::alloc();
+
     _scene2texture = Scene2Texture::alloc(displaySize*6);
 //    _scene->setSize(displaySize *3)
 //    _other_scene->setSize(displaySize *3);
@@ -74,16 +76,16 @@ _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displ
     
     // two-world switch animation initialization
     std::shared_ptr<Texture> world_switch  = assets->get<Texture>("two_world_switch");
-    _world_switch_node = scene2::SpriteNode::allocWithSheet(world_switch, 5, 4, 20); // SpriteNode for two_world switch animation
+    _world_switch_node = scene2::SpriteNode::allocWithSheet(world_switch, 5, 5, 25); // SpriteNode for two_world switch animation
     _world_switch_node->setScale(1.5f); // Magic number to rescale asset
     _world_switch_node->setRelativeColor(false);
     _world_switch_node->setVisible(true);
-    _world_switch_node->setFrame(19);
+    _world_switch_node->setFrame(0);
 
-    std::vector<int> d0 = {0,1,2,3,4,5,6,7,8};
+    std::vector<int> d0 = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21};
     _world_switch_0 = cugl::scene2::Animate::alloc(d0, SWITCH_DURATION);
 
-    std::vector<int> d1 = {9,10,11,12,13,14,15,16,17,18};
+    std::vector<int> d1 = {21,20,19,18,17,16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1,0};
     _world_switch_1 = cugl::scene2::Animate::alloc(d1, SWITCH_DURATION);
 
     // init the button
@@ -610,8 +612,14 @@ void GamePlayController::update(float dt){
                 }
                 _texture = _scene2texture->getTexture();
                 _previewNode->setTexture(_texture);
+                auto c = _previewNode->getColor();
+                _previewNode->setColor(Color4(c.r, c.g, c.b, 220));
                 _previewNode->setVisible(false);
                 _scene->addChildWithName(_previewNode, "preview");
+                
+                _previewBound->setVisible(false);
+                _scene->addChildWithName(_previewBound, "previewBound");
+                
                 
             }
             else{
@@ -625,6 +633,9 @@ void GamePlayController::update(float dt){
                 _previewNode->setTexture(_texture);
                 _previewNode->setVisible(false);
                 _other_scene->addChildWithName(_previewNode, "preview");
+                
+                _previewBound->setVisible(false);
+                _other_scene->addChildWithName(_previewBound, "previewBound");
             }
         }
     }
@@ -730,6 +741,8 @@ void GamePlayController::update(float dt){
                 _other_scene->addChild(tempChild);
             }
             _scene->removeChildByName("preview");
+            _scene->removeChildByName("previewBound");
+
         }
         else{
             auto _children = _scene2texture->getChildren();
@@ -739,6 +752,8 @@ void GamePlayController::update(float dt){
                 _scene->addChild(tempChild);
             }
             _other_scene->removeChildByName("preview");
+            _other_scene->removeChildByName("previewBound");
+
         }
     }
     
@@ -772,8 +787,14 @@ void GamePlayController::update(float dt){
         Poly2 circle = polyFact.makeCircle(input_posi + Vec2(0, PREVIEW_RADIUS), PREVIEW_RADIUS);
         _previewNode->setPolygon(circle);
         _previewNode->setPosition(input_posi + Vec2(0,PREVIEW_RADIUS));
-    
-
+        
+        _previewBound->setAnchor(Vec2::ANCHOR_CENTER);
+        PathFactory pathFact = PathFactory();
+        Path2 bound = pathFact.makeCircle(_previewNode->getPosition(), PREVIEW_RADIUS);
+        _previewBound->setPath(bound);
+        _previewBound->setPosition(_previewNode->getPosition());
+        
+        
     }
     
     
@@ -962,10 +983,13 @@ void GamePlayController::update(float dt){
             //std::cout<<"time elapsed: "<<elapsed_seconds.count()<<"\n";
             if (elapsed_seconds.count() > .3){
                 _previewNode->setVisible(true);
+                _previewBound->setVisible(true);
             }
             
         }else{
             _previewNode->setVisible(false);
+            _previewBound->setVisible(false);
+
             _previewStart = std::chrono::steady_clock::now();
         }
         

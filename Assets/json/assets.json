@@ -186,7 +186,7 @@
             "file":      "textures/artifact-4-big.png"
         },
         "two_world_switch": {
-            "file": "textures/spritesheet_switch_anim.png"
+            "file": "textures/spritesheet_switch_anim_sand_small.png"
         },
         "question_mark_anim" : {
             "file": "textures/spritesheet_question_mark.png"
