@@ -46,6 +46,10 @@
         "artifact_fan_black_WALL": {
             "file": "textures/artifact_fan_black_WALL.png"
         },
+        "artifact_fan_black_WALL_Anim": {
+            "file": "textures/artifact_fan_black_WALL_anim.png"
+        },
+
         "artifact_fan_gold": {
             "file": "textures/artifact_fan_gold.png"
         },
@@ -54,6 +58,9 @@
         },
         "artifact_fan_cherry_WALL": {
             "file": "textures/artifact_fan_cherry_WALL.png"
+        },
+        "artifact_fan_cherry_WALL_Anim": {
+            "file": "textures/artifact_fan_cherry_WALL_anim.png"
         },
         "resource_left": {
             "file": "textures/resource_left.png"
@@ -64,17 +71,29 @@
         "artifact_fan_gold_WALL": {
             "file": "textures/artifact_fan_gold_WALL.png"
         },
+        "artifact_fan_gold_WALL_Anim": {
+            "file": "textures/artifact_fan_gold_WALL_anim.png"
+        },
         "artifact_fan_yellow_WALL": {
             "file": "textures/artifact_fan_yellow_WALL.png"
         },
+        "artifact_fan_yellow_WALL_Anim": {
+            "file": "textures/artifact_fan_yellow_WALL_anim.png"
+        },
         "artifact_fan_red_WALL": {
             "file": "textures/artifact_fan_red_WALL.png"
+        },
+        "artifact_fan_red_WALL_Anim": {
+            "file": "textures/artifact_fan_red_WALL_anim.png"
         },
         "artifact_sword_gold": {
             "file": "textures/artifact_sword_gold.png"
         },
         "artifact_fan_paper_WALL": {
             "file": "textures/artifact_fan_paper_WALL.png"
+        },
+        "artifact_fan_paper_WALL_Anim": {
+            "file": "textures/artifact_fan_paper_WALL_anim.png"
         },
         "artifact_box_gold": {
             "file": "textures/artifact_box_gold.png"
@@ -84,6 +103,9 @@
         },
         "artifact_fan_blue_WALL": {
             "file": "textures/artifact_fan_blue_WALL.png"
+        },
+        "artifact_fan_blue_WALL_Anim": {
+            "file": "textures/artifact_fan_blue_WALL_anim.png"
         },
         "resource_right": {
             "file": "textures/resource_right.png"
