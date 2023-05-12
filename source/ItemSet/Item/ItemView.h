@@ -105,12 +105,16 @@ public:
         Vec2 pos = nodePos();
 
         if (_isResource) {
-            std::shared_ptr<Texture> texture  = assets->get<Texture>("clock");
+            std::shared_ptr<Texture> texture  = assets->get<Texture>(textureKey);
             _static_node = scene2::PolygonNode::allocWithTexture(texture);
             _static_node->setAnchor(Vec2(0.5, 0.2));
             Vec2 offset = Vec2 (_static_node->getSize().width/2, _static_node->getSize().height/5);
             setPosition(pos + offset);
-            std::shared_ptr<Texture> textureAnim  = assets->get<Texture>("clock_Anim");
+            std::shared_ptr<Texture> textureAnim  = assets->get<Texture>(textureKey+"_Anim");
+            if (textureAnim == nullptr) {
+                textureAnim  = assets->get<Texture>( "clock_Anim");
+            }
+
             _anim_node = scene2::SpriteNode::allocWithSheet(textureAnim, 2, 4, 8);
 
             _static_node->addChild(_anim_node);
@@ -193,7 +197,7 @@ public:
     
     bool containsLine(Vec2 a, Vec2 b){
         
-        if (contains(a) or contains(b)){
+        if (contains(a) || contains(b)){
             return true;
         }
     
@@ -208,7 +212,7 @@ public:
         bool top = lineLine(a.x,a.y, b.x, b.y, rx, ry + rh, rx + rw, ry + rh);
         bool bottom = lineLine(a.x,a.y,b.x,b.y, rx, ry, rx+rw, ry);
         
-        return (left or right or top or bottom);
+        return (left || right || top || bottom);
          
     }
     
