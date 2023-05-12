@@ -82,8 +82,8 @@ public:
         _cross_mark->setFrame(0);
 
 
-        std::vector<int> a = {0,1,2,3,4,5,6,7};
-        _cross_mark_anim = cugl::scene2::Animate::alloc(a, DURATION);
+        std::vector<int> a = {0,1,1,1,2,2,2,7};
+        _cross_mark_anim = cugl::scene2::Animate::alloc(a, 2.2f);
 
 
 

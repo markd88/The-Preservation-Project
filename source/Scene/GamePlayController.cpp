@@ -84,12 +84,12 @@ _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displ
     _world_switch_node->setScale(1.5f); // Magic number to rescale asset
     _world_switch_node->setRelativeColor(false);
     _world_switch_node->setVisible(true);
-    _world_switch_node->setFrame(0);
+    _world_switch_node->setFrame(24);
 
-    std::vector<int> d0 = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21};
+    std::vector<int> d0 = {24,0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21};
     _world_switch_0 = cugl::scene2::Animate::alloc(d0, SWITCH_DURATION);
 
-    std::vector<int> d1 = {21,20,19,18,17,16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1,0};
+    std::vector<int> d1 = {21,20,19,18,17,16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1,0,24};
     _world_switch_1 = cugl::scene2::Animate::alloc(d1, SWITCH_DURATION);
 
     // init the button
@@ -479,7 +479,7 @@ void GamePlayController::update(float dt){
     }
 
     //
-    _world_switch_node->setPosition(_character->getNodePosition());
+    _world_switch_node->setPosition(_cam->getPosition());
     if (_isSwitching && _action_world_switch->isActive("first_half")) {
         _action_world_switch->update(dt);
       //  CULog("update first half");
