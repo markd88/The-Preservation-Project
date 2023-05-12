@@ -23,6 +23,8 @@ private:
 
     std::shared_ptr<cugl::scene2::PolygonNode>  _shadow;
 
+    std::shared_ptr<cugl::scene2::PolygonNode> _exclamation_node;
+
 
     /** Manager to process the animation actions */
     std::shared_ptr<cugl::scene2::ActionManager> _actions;
@@ -90,6 +92,14 @@ public:
         _shadow->setVisible(true);
 
 
+        std::shared_ptr<Texture> exclamation = assets->get<Texture>("exclamation_mark");
+        _exclamation_node = scene2::PolygonNode::allocWithTexture(exclamation);
+
+        _node->addChildWithName(_exclamation_node, "exclamation");
+        _exclamation_node->setScale(.5f);
+        _exclamation_node->setPosition(70,200);
+        _exclamation_node->setVisible(true);
+
 
 
     }
@@ -124,6 +134,15 @@ public:
 
 #pragma mark Setters
 public:
+    void start_exclamation() {
+        _exclamation_node->setVisible(true);
+    };
+
+    void stop_exclamation() {
+        _exclamation_node->setVisible(false);
+    }
+
+
     void setPosition(Vec2 position){
         _node->setPosition(position);
     }

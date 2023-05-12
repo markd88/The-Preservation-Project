@@ -325,6 +325,16 @@ public:
         _view->drawPatrolPath(s, getNodePosition(),_patrol_stops[_goingTo] );
     }
 
+    void start_exclamation() {
+        // CULog("start exclamation");
+        _view->start_exclamation();
+    }
+
+    void stop_exclamation() {
+        // CULog("stop exclamation");
+        _view->stop_exclamation();
+    }
+
     void updateAnimation(Vec2 target, string state, int last_direction, string last_state, bool valid_target, string id) {
 
         int direction;

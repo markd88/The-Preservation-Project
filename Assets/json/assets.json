@@ -37,6 +37,12 @@
         }
     },
     "textures": {
+        "spritesheet_cross_anim" : {
+            "file": "textures/spritesheet_cross_anim.png"
+        },
+        "exclamation_mark" : {
+            "file" : "textures/exclamation_mark.png"
+        },
         "artifact_fan_black_WALL": {
             "file": "textures/artifact_fan_black_WALL.png"
         },

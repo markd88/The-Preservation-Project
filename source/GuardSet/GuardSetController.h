@@ -486,12 +486,8 @@ public:
                 }
             }
 
-
-        // auto elapsed_question = std::chrono::duration_cast<std::chrono::milliseconds>(now - last_time_question);
-        auto elapsed_lookaround = std::chrono::duration_cast<std::chrono::seconds>(now - last_time_lookaround);
-        auto elapsed_question_inSP = std::chrono::duration_cast<std::chrono::seconds>(now - start_question_inSP);
-        // auto elapsed_question_value = std::chrono::duration_cast<std::chrono::milliseconds>(now - last_time_question_value);
-        // CULog("%d", elapsed_question);
+            auto elapsed_lookaround = std::chrono::duration_cast<std::chrono::seconds>(now - last_time_lookaround);
+            auto elapsed_question_inSP = std::chrono::duration_cast<std::chrono::seconds>(now - start_question_inSP);
 
 #pragma mark Guard action according to state
 
@@ -505,6 +501,9 @@ public:
                 _guardSet[i]->updatePosition(pos);
                 _guardSet[i]->stopQuestionAnim(id);
                 _guardSet[i]->staticGuardAnim(id);
+
+                _guardSet[i]->stop_exclamation();
+
             }
             else if (_guardSet[i]->state == "question") {
                 Vec2 pos = _guardSet[i]->getNodePosition();
@@ -513,6 +512,8 @@ public:
                 _actions->remove(chaseDAction);
                 _guardSet[i]->updatePosition(pos);
                 _guardSet[i]->questionAnim(id, _guardSet[i]->getQuestionValue());
+                _guardSet[i]->stop_exclamation();
+
             }
             else if (_guardSet[i]->state == "lookaround") {
                 Vec2 pos = _guardSet[i]->getNodePosition();
@@ -521,6 +522,8 @@ public:
                 _actions->remove(chaseDAction);
                 _guardSet[i]->updatePosition(pos);
                 _guardSet[i]->lookAroundAnim(id);
+                _guardSet[i]->stop_exclamation();
+
             }
             // return state
             else if (_guardSet[i]->state == "return"){
@@ -538,6 +541,8 @@ public:
                 }
 
                 _guardSet[i]->returnGuardAnim(id);
+                _guardSet[i]->stop_exclamation();
+
             }
             //patrol state
             else if (_guardSet[i]->state == "patrol" and _guardSet[i]->doesPatrol){
@@ -552,6 +557,8 @@ public:
 
                 }
                 _guardSet[i]->patrolGuardAnim(id);
+                _guardSet[i]->stop_exclamation();
+
             }
 
 
@@ -563,6 +570,7 @@ public:
                 _actions->remove(patrolAction);
 
                 _guardSet[i]->updatePosition(pos);
+                _guardSet[i]->start_exclamation();
             }
             //detection for static guard
             else if (_guardSet[i]->state == "chaseD"){
@@ -583,6 +591,7 @@ public:
                     _guardSet[i]->chaseChar(chaseDAction);
                 }
                 _guardSet[i]->chaseGuardAnim(id);
+                _guardSet[i]->start_exclamation();
             }
             else if (_guardSet[i]->state == "chaseSP"){
                 if (_actions->isActive(chaseSPAction)) {
@@ -601,11 +610,12 @@ public:
                     _guardSet[i]->eraseChaseSPVec();
                 }
 
-
+                _guardSet[i]->start_exclamation();
             }
 
             Vec2 pos = _guardSet[i]->getNodePosition();
             _guardSet[i]->updatePosition(pos);
+
             
         }
     }
