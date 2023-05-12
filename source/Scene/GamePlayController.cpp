@@ -465,11 +465,12 @@ void GamePlayController::init(){
     AudioEngine::get()->play("past", _pastMusic, true, _pastMusic->getVolume(), true);
     
     _tappingPause = false;
+    
+    
 }
 
 void GamePlayController::update(float dt){
-    
-    // _complete_layer->setPosition(_cam->getPosition());
+
     if(_fail_layer->getScene() != nullptr || _complete_layer->getScene() != nullptr || _pause_layer->getScene() != nullptr){
         _pause_button->deactivate();
         return;
@@ -606,7 +607,7 @@ void GamePlayController::update(float dt){
 
             _path->setIsDrawing(true);
             _path->setIsInitiating(true);
-
+            // completeTerminate();
         }
 
         else if (input_posi.x - PREVIEW_RADIUS > 0 and input_posi.x < r.width - PREVIEW_RADIUS and

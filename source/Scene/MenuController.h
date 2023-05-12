@@ -206,26 +206,7 @@ public:
             }
         }
     }
-//
-//    // go from page 1 to 2, or backwards
-//    void switchPage(){
-//        _firstPage = !_firstPage;
-//        if(_firstPage){
-//            for(int i=0; i<_level_buttons.size(); i++){
-//                auto button_img = std::dynamic_pointer_cast<scene2::PolygonNode>(_level_buttons[i]->getChildren()[0]);
-//                if (i<15){
-//                    _level_buttons[i]->setVisible(true);
-//                    button_img->getChildren()[0]->setVisible(false);
-//                    button_img->getChildren()[1]->setVisible(false);
-//                    _level_buttons[i]->activate();
-//                }
-//                else{
-//                    _level_buttons[i]->setVisible(false);
-//                    _level_buttons[i]->deactivate();
-//                }
-//            }
-//        }
-//    }
+
     
     void update(float timestep){
         
