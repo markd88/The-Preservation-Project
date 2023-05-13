@@ -166,7 +166,7 @@ public:
             }
 
             bool acoustic_detection = false;
-            if (distance < 200 and _world->isActive()) {
+            if (distance < 150 and _world->isActive()) {
                 acoustic_detection = true;
             }
 
