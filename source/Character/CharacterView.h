@@ -82,8 +82,8 @@ public:
         _cross_mark->setFrame(0);
 
 
-        std::vector<int> a = {0,1,1,1,2,2,2,7};
-        _cross_mark_anim = cugl::scene2::Animate::alloc(a, 2.2f);
+        std::vector<int> a = {0,1,1,1,1,1,1,2,2,2,2,2,7};
+        _cross_mark_anim = cugl::scene2::Animate::alloc(a, 1.5f);
 
 
 
@@ -150,6 +150,7 @@ public:
 
         if (_actions->isActive("cross_mark")) {
             // remove it
+            _actions->remove("cross_mark");
         }
         // should always start a new one
         _actions->activate("cross_mark", _cross_mark_anim, _cross_mark);
