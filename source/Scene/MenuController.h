@@ -223,7 +223,7 @@ public:
             }
         }
         else{
-            for(auto button : _level_buttons){
+            for(auto &button : _level_buttons){
                 button->deactivate();
             }
         }
