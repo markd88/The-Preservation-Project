@@ -3054,8 +3054,8 @@
                  "type":"resource_left",
                  "visible":true,
                  "width":200,
-                 "x":820,
-                 "y":1320
+                 "x":844.169590643275,
+                 "y":1327.48538011696
                 }, 
                 {
                  "gid":89,
@@ -4332,7 +4332,7 @@
                 }],
          "opacity":1,
          "type":"objectgroup",
-         "visible":false,
+         "visible":true,
          "x":0,
          "y":0
         }],

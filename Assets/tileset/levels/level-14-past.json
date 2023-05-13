@@ -3323,7 +3323,6 @@
         {
          "draworder":"topdown",
          "id":5,
-         "locked":true,
          "name":"item",
          "objects":[
                 {
@@ -3364,15 +3363,15 @@
                 }, 
                 {
                  "gid":22,
-                 "height":128,
+                 "height":103.39975399754,
                  "id":297,
                  "name":"",
                  "rotation":0,
                  "type":"artifact_statue_jade",
                  "visible":true,
-                 "width":128,
-                 "x":817,
-                 "y":977
+                 "width":103.39975399754,
+                 "x":829.30012300123,
+                 "y":971.075030750308
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -3383,7 +3382,6 @@
         {
          "draworder":"topdown",
          "id":6,
-         "locked":true,
          "name":"resource",
          "objects":[
                 {
@@ -3397,18 +3395,6 @@
                  "width":200,
                  "x":307,
                  "y":474
-                }, 
-                {
-                 "gid":183,
-                 "height":200,
-                 "id":299,
-                 "name":"",
-                 "rotation":0,
-                 "type":"resource_right",
-                 "visible":true,
-                 "width":200,
-                 "x":813,
-                 "y":569
                 }, 
                 {
                  "gid":182,
@@ -3433,6 +3419,18 @@
                  "width":200,
                  "x":1366,
                  "y":1309
+                }, 
+                {
+                 "gid":89,
+                 "height":200,
+                 "id":395,
+                 "name":"",
+                 "rotation":0,
+                 "type":"resource_clock",
+                 "visible":true,
+                 "width":200,
+                 "x":700.963565191208,
+                 "y":485.426076482987
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -3572,7 +3570,6 @@
         {
          "draworder":"topdown",
          "id":10,
-         "locked":true,
          "name":"obs",
          "objects":[
                 {
@@ -4404,8 +4401,8 @@
                  "type":"box4",
                  "visible":true,
                  "width":64,
-                 "x":889,
-                 "y":533
+                 "x":771.56549232159,
+                 "y":435.137910267992
                 }, 
                 {
                  "gid":38,
@@ -4527,15 +4524,27 @@
                  "width":64,
                  "x":980,
                  "y":999
+                }, 
+                {
+                 "gid":36,
+                 "height":64,
+                 "id":396,
+                 "name":"",
+                 "rotation":0,
+                 "type":"box2",
+                 "visible":true,
+                 "width":128,
+                 "x":800.083640836408,
+                 "y":905.884378843788
                 }],
          "opacity":1,
          "type":"objectgroup",
-         "visible":true,
+         "visible":false,
          "x":0,
          "y":0
         }],
  "nextlayerid":11,
- "nextobjectid":395,
+ "nextobjectid":397,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.10.1",

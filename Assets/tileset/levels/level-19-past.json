@@ -3030,7 +3030,6 @@
         {
          "draworder":"topdown",
          "id":3,
-         "locked":true,
          "name":"deco",
          "objects":[
                 {
@@ -3960,6 +3959,18 @@
                  "width":99,
                  "x":1536,
                  "y":384
+                }, 
+                {
+                 "gid":50,
+                 "height":195,
+                 "id":1038,
+                 "name":"",
+                 "rotation":0,
+                 "type":"deco_past_table_side",
+                 "visible":true,
+                 "width":98,
+                 "x":808.142857142857,
+                 "y":752.986522911051
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -5312,6 +5323,30 @@
                  "width":64,
                  "x":1984.75,
                  "y":1024.25
+                }, 
+                {
+                 "gid":37,
+                 "height":128,
+                 "id":1039,
+                 "name":"",
+                 "rotation":0,
+                 "type":"box3",
+                 "visible":true,
+                 "width":64,
+                 "x":825.142857142857,
+                 "y":686.641509433962
+                }, 
+                {
+                 "gid":37,
+                 "height":128,
+                 "id":1040,
+                 "name":"",
+                 "rotation":0,
+                 "type":"box3",
+                 "visible":true,
+                 "width":64,
+                 "x":825.142857142857,
+                 "y":727.072776280323
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -5320,7 +5355,7 @@
          "y":0
         }],
  "nextlayerid":10,
- "nextobjectid":1035,
+ "nextobjectid":1041,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.10.1",

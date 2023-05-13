@@ -2944,7 +2944,6 @@
         {
          "draworder":"topdown",
          "id":3,
-         "locked":true,
          "name":"deco",
          "objects":[
                 {
@@ -4102,6 +4101,18 @@
                  "width":98,
                  "x":2178,
                  "y":1241
+                }, 
+                {
+                 "gid":43,
+                 "height":195,
+                 "id":527,
+                 "name":"",
+                 "rotation":0,
+                 "type":"deco_past_cabinet_side_L",
+                 "visible":true,
+                 "width":99,
+                 "x":1558.45550378122,
+                 "y":1056.21556794744
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -5638,15 +5649,39 @@
                  "width":64,
                  "x":912,
                  "y":997
+                }, 
+                {
+                 "gid":37,
+                 "height":128,
+                 "id":528,
+                 "name":"",
+                 "rotation":0,
+                 "type":"box3",
+                 "visible":true,
+                 "width":64,
+                 "x":1575.45550378122,
+                 "y":987.015812390192
+                }, 
+                {
+                 "gid":37,
+                 "height":128,
+                 "id":529,
+                 "name":"",
+                 "rotation":0,
+                 "type":"box3",
+                 "visible":true,
+                 "width":64,
+                 "x":1575.45550378122,
+                 "y":1053.50423955389
                 }],
          "opacity":1,
          "type":"objectgroup",
-         "visible":true,
+         "visible":false,
          "x":0,
          "y":0
         }],
  "nextlayerid":11,
- "nextobjectid":527,
+ "nextobjectid":530,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.10.1",
