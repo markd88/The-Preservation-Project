@@ -216,8 +216,8 @@ _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displ
     
     
     // initiazation of inventory bars, only run once
-    Vec2 barPos(550, 300);
-    for (int i=0; i<5; i++){
+    Vec2 barPos(750, 300);
+    for (int i=0; i<7; i++){
         std::shared_ptr<cugl::scene2::PolygonNode> tn = std::make_shared<cugl::scene2::PolygonNode>();
         tn->initWithTexture(_assets->get<Texture>("inventory_artifact_transparent_bar"));
         tn->setVisible(false);
@@ -227,9 +227,9 @@ _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displ
         _art_bar_vec.push_back(tn);
     }
 
-    barPos = barPos.add(400, 0);
+    barPos = barPos.add(500, 0);
 
-    for (int i=0; i<5; i++){
+    for (int i=0; i<7; i++){
         std::shared_ptr<cugl::scene2::PolygonNode> tn = std::make_shared<cugl::scene2::PolygonNode>();
         tn->initWithTexture(_assets->get<Texture>("inventory_resource_bar"));
         tn->setVisible(false);

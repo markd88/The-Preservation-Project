@@ -351,7 +351,7 @@ public:
         // art
         int cur_art = _character->getNumArt();
         int total_art = artNum;
-        for(int i=0; i<5; i++){
+        for(int i=0; i<7; i++){
             if(i < cur_art){
                 _art_bar_vec[i]->setTexture(_assets->get<Texture>("inventory_artifact_filled_bar"));
                 _art_bar_vec[i]->setVisible(true);
@@ -378,7 +378,7 @@ public:
             resource_trans_bar ="inventory_resource_trans_bar";
             resource_bar = "inventory_resource_bar";
         }
-        for(int i=0; i<5; i++){
+        for(int i=0; i<7; i++){
             if(i == (cur_res-1) && half_switch){
                 _res_bar_vec[i]->setTexture(_assets->get<Texture>(resource_trans_bar));
                 _res_bar_vec[i]->setVisible(true);
