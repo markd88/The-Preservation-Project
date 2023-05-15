@@ -315,8 +315,11 @@
         "draw": {
             "file":      "textures/draw.png"
         },
-        "pinch": {
-            "file":      "textures/pinch.png"
+        "switch1": {
+            "file":      "textures/switch1.png"
+        },
+        "switch2": {
+            "file":      "textures/switch2.png"
         },
         "collision_detection3": {
             "file":      "textures/collision_detection3.png"
