@@ -534,7 +534,7 @@ public:
                     // finish returning
                 }
                 else {
-                    _guardSet[i]->setChaseSpeed(111);
+                    _guardSet[i]->setChaseSpeed(120);
                     _guardSet[i]->updateReturnTarget(_guardSet[i]->returnVec[0]);
                     _guardSet[i]->returnGuard(returnAction);
                     // erase from return vector

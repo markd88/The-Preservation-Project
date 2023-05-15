@@ -111,7 +111,7 @@ public:
         _returnMove->setDuration(DURATION);
         _is_question = false;
         _patrol_speed = 53;
-        _chase_speed = 111;
+        _chase_speed = 120;
         _doesPatrol = false;
         _id = id;
 
@@ -142,7 +142,7 @@ public:
         _chaseMove->setDuration(DURATION);
         
         _patrol_speed = 53;
-        _chase_speed = 111;
+        _chase_speed = 120;
         
         _returnMove = cugl::scene2::MoveTo::alloc();
         _returnMove->setDuration(DURATION);
@@ -454,7 +454,7 @@ public:
     }
     
     void updateChaseSpeed(int s){
-        if (_chase_speed < 161){
+        if (_chase_speed < 181){
             _chase_speed += s;
         }
     }
