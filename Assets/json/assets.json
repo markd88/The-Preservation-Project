@@ -1235,8 +1235,8 @@
         "pastB_wall_window": {
             "file": "textures/pastB_wall_window.png"
         }
-	},
-	"fonts": {
+    },
+    "fonts": {
         "felt": {
             "file":     "fonts/MarkerFelt.ttf",
             "size":     24
@@ -1249,7 +1249,7 @@
             "file":     "fonts/CourierPrime-Bold.ttf",
             "size":     150
         }
-	},
+    },
     "widgets": {
 
     },

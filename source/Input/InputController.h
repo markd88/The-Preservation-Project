@@ -27,7 +27,7 @@ private:
     /** The unique key for the touch listeners */
     Uint32 _touchListener;
     
-    /** The unique key for the gensture listeners */
+    /** The unique key for the gesture listeners */
     Uint32 _pinchListener;
     
 #pragma mark External References
@@ -198,6 +198,11 @@ public:
     bool didRelease() const {
         return !_model->_currDown && _model->_prevDown;
     }
+    
+    cugl::TouchID getTouchID(){
+        return _model->_touchId;
+    }
+
     
     /**
      * Return true if the user is actively pressing this frame.
