@@ -1,46 +1,28 @@
 {
 	"textures": {
-        "reset": {
-            "file":      "textures/reset-button.png",
-            "wrapS":     "clamp",
-            "wrapT":     "clamp",
-            "minfilter": "linear",
-            "magfilter": "linear"
-        },
 		"logo": {
-			"file":      "textures/header.png",
-            "wrapS":     "clamp",
-            "wrapT":     "clamp",
-            "minfilter": "linear",
-            "magfilter": "linear"
+			"file":      "textures/game_logo_logo.png"
 		},
         "bg" : {
-            "file":      "textures/test-bg.png",
-            "wrapS":     "clamp",
-            "wrapT":     "clamp",
-            "minfilter": "linear",
-            "magfilter": "linear"
+            "file":      "textures/loading.png"
         },
-
         "play": {
-            "file":      "textures/cugl-play.png",
-            "wrapS":     "clamp",
-            "wrapT":     "clamp",
-            "minfilter": "linear",
-            "magfilter": "linear"
+            "file":      "textures/Play_button.png"
         },
         "progress": {
             "file":      "textures/progress.png",
-            "wrapS":     "clamp",
-            "wrapT":     "clamp",
-            "minfilter": "linear",
-            "magfilter": "linear",
             "atlas":     {
                 "background" : [0,    0, 320, 45],
                 "foreground" : [24,  45, 296, 90],
                 "leftcap"    : [0,   45,  24, 90],
                 "rightcap"   : [296, 45, 320, 90]
             }
+        },
+        "main":{
+            "file":      "textures/main_new.png"
+        },
+        "studio":{
+            "file":      "textures/name_pending_logo.png"
         }
 	},
     "scene2s" : {
@@ -50,7 +32,7 @@
                 "type" : "Anchored"
             },
             "data" : {
-                "color": [239,61,49,255]
+                "color": [206,144,23,255]
             },
             "children"  : {
                 "bg" : {
@@ -60,32 +42,71 @@
                     },
                     "data"   : {
                         "texture"  : "bg",
-                        "anchor"   : [0.5,0.7],
-                        "scale"    : 0.7
+                        "anchor"   : [0.5,0.5],
+                        "scale"    : 0.55
                     },
                     "layout" : {
                         "x_anchor" : "center",
                         "y_anchor" : "middle",
-                        "y_offset" : 115,
+                        "x_offset" : 30,
+                        "y_offset" : -100,
                         "absolute" : true
                     }
-
                 },
-                "logo"  : {
+                "main" : {
                     "type"   : "Image",
                     "format"    : {
                         "type" : "Anchored"
                     },
                     "data"   : {
-                        "texture"  : "logo",
+                        "texture"  : "main",
                         "anchor"   : [0.5,0.5],
-                        "scale"    : 0.5
+                        "scale"    : 0.6
                     },
                     "layout" : {
                         "x_anchor" : "center",
                         "y_anchor" : "middle",
-                        "y_offset" : 115,
+                        "x_offset" : 0,
+                        "y_offset" : -20,
                         "absolute" : true
+                    },
+                    "children" : {
+                        "logo"  : {
+                            "type"   : "Image",
+                            "format"    : {
+                                "type" : "Anchored"
+                            },
+                            "data"   : {
+                                "texture"  : "logo",
+                                "anchor"   : [0.5,0.5],
+                                "scale"    : 0.6
+                            },
+                            "layout" : {
+                                "x_anchor" : "center",
+                                "y_anchor" : "middle",
+                                "x_offset" : -230,
+                                "y_offset" : 280,
+                                "absolute" : true
+                            }
+                        },
+                        "studio" : {
+                            "type"   : "Image",
+                            "format"    : {
+                                "type" : "Anchored"
+                            },
+                            "data"   : {
+                                "texture"  : "studio",
+                                "anchor"   : [0.5,0.5],
+                                "scale"    : 0.55
+                            },
+                            "layout" : {
+                                "x_anchor" : "center",
+                                "y_anchor" : "middle",
+                                "x_offset" : 660,
+                                "y_offset" : 360,
+                                "absolute" : true
+                            }
+                        }
                     }
                 },
                 "name"  : {
@@ -112,7 +133,7 @@
                         "visible"  : false,
                         "pushsize" : true,
                         "anchor"   : [0.5,0.5],
-                        "scale"    : 0.8
+                        "scale"    : 0.4
                     },
                     "children" : {
                         "up" : {
@@ -125,7 +146,8 @@
                     "layout" : {
                         "x_anchor" : "center",
                         "y_anchor" : "middle",
-                        "y_offset" : -115,
+                        "x_offset" : 0,
+                        "y_offset" : -150,
                         "absolute" : true
                     }
                 },
@@ -136,7 +158,8 @@
                         "background" : "progress_background",
                         "foreground" : "progress_foreground",
                         "left_cap"   : "progress_leftcap",
-                        "right_cap"  : "progress_rightcap"
+                        "right_cap"  : "progress_rightcap",
+                        "color": [57,42,31,255]
                     },
                     "layout" : {
                         "x_anchor" : "center",
