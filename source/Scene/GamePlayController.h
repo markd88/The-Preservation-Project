@@ -60,8 +60,8 @@ public:
     std::shared_ptr<cugl::scene2::Button> _pause_resume;
     std::shared_ptr<cugl::scene2::Button> _pause_restart;
     std::shared_ptr<cugl::scene2::Button> _pause_exit;
-    
-    
+    std::shared_ptr<cugl::scene2::Button> _toggle_pan;
+
     
     /** The tilemap to procedurally generate */
     std::unique_ptr<CharacterController> _character;
@@ -88,6 +88,8 @@ public:
 
     std::unique_ptr<PathController> _path;
     std::shared_ptr<InputController> _input = InputController::getInstance();
+    std::shared_ptr<InputController> _input2 = InputController::getInstance();
+
     vector<Vec2> path_trace;
     std::shared_ptr<Camera> _cam;
     std::shared_ptr<Camera> _other_cam;
@@ -106,8 +108,11 @@ public:
     /**manager to process camera actions**/
     std::shared_ptr<CameraManager> _camManager;
     std::shared_ptr<CameraMoveTo> _moveCam;
-    
+    std::shared_ptr<CameraMoveTo> _panCam;
+    Vec2 _prevPanPos;
+    bool panned;
     string _activeMap;
+    
 
 //    std::shared_ptr<cugl::scene2::Label> _label;
     std::shared_ptr<LevelModel> _pastWorldLevel;
@@ -119,7 +124,6 @@ public:
     bool _isPreviewing;
     std::shared_ptr<cugl::scene2::PolygonNode> _previewNode;
     std::shared_ptr<cugl::scene2::PathNode> _previewBound;
-
     std::shared_ptr<Scene2Texture> _scene2texture;
     std::shared_ptr<Texture> _texture;
     std::shared_ptr<cugl::scene2::PolygonNode> _minimapNode;
@@ -129,6 +133,7 @@ public:
     std::chrono::steady_clock::time_point _previewStart;
     std::chrono::steady_clock::time_point _previewEnd;
     bool added;
+    bool _isPanning;
     
 
     // two_world switch
