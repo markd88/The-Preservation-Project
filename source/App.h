@@ -20,7 +20,6 @@ using namespace std;
 #include <Scene/LoadingController.h>
 #include <Scene/MenuController.h>
 #include <common.h>
-#include "SavedGameModel.h"
 /**
  * Class for a viewing procedurally generated tile-based content
  *
@@ -49,9 +48,7 @@ protected:
     
     /** Whether or not we have finished loading all assets */
     bool _loaded;
-    
-    std::shared_ptr<SavedGameModel> _savedGame;
-    
+        
     std::string _saveDir;
     
     int _highestUnlocked = -1;

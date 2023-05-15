@@ -39,8 +39,4 @@
 /** Guard specific fields */
 #define GUARD_FIELD         "guard"
 
-/** SavedGame file*/
-#define SAVED_GAME_FILE      "json/savedGame.json"
-#define SAVED_GAME_KEY      "savedGame"
-
 #endif /* LevelConstants_h */
