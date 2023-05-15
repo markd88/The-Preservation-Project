@@ -14,7 +14,7 @@ using namespace std;
 #include <Camera/CameraMove.h>
 #include <GuardSet/GuardSetController.h>
 #include <ItemSet/ItemSetController.h>
-#include "LevelModel.h"
+#include "LevelController.h"
 #include <common.h>
 
 class GamePlayController {
@@ -110,8 +110,8 @@ public:
     string _activeMap;
 
 //    std::shared_ptr<cugl::scene2::Label> _label;
-    std::shared_ptr<LevelModel> _pastWorldLevel;
-    std::shared_ptr<LevelModel> _presentWorldLevel;
+    std::shared_ptr<LevelController> _pastWorldLevel;
+    std::shared_ptr<LevelController> _presentWorldLevel;
     
     //preview variables
     bool _tappingPause = false; // when tapping pause, disable preview

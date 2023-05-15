@@ -252,13 +252,13 @@ void GamePlayController::loadLevel(){
     string presentFile = "tileset/levels/level-" + std::to_string(level) + "-present.json";
     string presentKey = "level-" + std::to_string(level) + "-present";
     
-    _assets->unload<LevelModel>(pastKey);
-    _assets->unload<LevelModel>(presentKey);
-    _assets->load<LevelModel>(pastKey, pastFile);
-    _assets->load<LevelModel>(presentKey, presentFile);
+    _assets->unload<LevelController>(pastKey);
+    _assets->unload<LevelController>(presentKey);
+    _assets->load<LevelController>(pastKey, pastFile);
+    _assets->load<LevelController>(presentKey, presentFile);
 
     // Draw past world
-    _pastWorldLevel = _assets->get<LevelModel>(pastKey);
+    _pastWorldLevel = _assets->get<LevelController>(pastKey);
     if (_pastWorldLevel == nullptr) {
         CULog("Failed to import level!");
     }
@@ -281,7 +281,7 @@ void GamePlayController::loadLevel(){
     _exitSet = _pastWorldLevel->getExit();
 
     // Draw present world
-    _presentWorldLevel = _assets->get<LevelModel>(presentKey);
+    _presentWorldLevel = _assets->get<LevelController>(presentKey);
     if (_presentWorldLevel == nullptr) {
         CULog("Failed to import level!");
     }
