@@ -467,7 +467,6 @@ void GamePlayController::init(){
     
     _tappingPause = false;
     
-    
 }
 
 void GamePlayController::update(float dt){
@@ -683,8 +682,10 @@ void GamePlayController::update(float dt){
                     _isPanning = true;
                     _path->setIsDrawing(false);
                     if (_activeMap == "pastWorld"){
+                        _camManager->clearAllActions(_cam);
                         _prevPanPos = _cam->getPosition();
                     }else{
+                        _camManager->clearAllActions(_other_cam);
                         _prevPanPos = _other_cam->getPosition();
                     }
                     break;
