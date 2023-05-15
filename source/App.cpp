@@ -12,7 +12,7 @@
 // Include the class header, which includes all of the CUGL classes
 #include "App.h"
 #include <Level/LevelConstants.h>
-#include <Level/LevelModel.h>
+#include <Level/LevelController.h>
 #include <common.h>
 #include "SavedGameModel.h"
 
@@ -54,7 +54,7 @@ void App::onStartup() {
     _assets->attach<WidgetValue>(WidgetLoader::alloc()->getHook());
     _assets->attach<scene2::SceneNode>(Scene2Loader::alloc()->getHook());
     
-    _assets->attach<LevelModel>(GenericLoader<LevelModel>::alloc()->getHook());
+    _assets->attach<LevelController>(GenericLoader<LevelController>::alloc()->getHook());
     _assets->attach<SavedGameModel>(GenericLoader<SavedGameModel>::alloc()->getHook());
 
     // load gameplay assets

@@ -1,11 +1,11 @@
 //
-//  LevelModel.cpp
+//  LevelController.cpp
 //  tilemap-ios
 //
 //  Created by Ann Zhou on 3/19/23.
 //
 
-#include "LevelModel.h"
+#include "LevelController.h"
 #include "LevelConstants.h"
 
 #include <cugl/assets/CUJsonLoader.h>
@@ -19,7 +19,7 @@ int totalHeight = 0;
 /**
 * Creates a new, empty level.
 */
-LevelModel::LevelModel(void) : Asset()
+LevelController::LevelController(void) : Asset()
 {
     _world = std::make_unique<TilemapController>();
     _item = std::make_shared<ItemSetController>();
@@ -33,7 +33,7 @@ LevelModel::LevelModel(void) : Asset()
 /**
 * Destroys this level, releasing all resources.
 */
-LevelModel::~LevelModel(void) {
+LevelController::~LevelController(void) {
 //    unload();
 //    clearRootNode();
 }
@@ -44,7 +44,7 @@ LevelModel::~LevelModel(void) {
 /**
 * Clears the root scene graph node for this level
 */
-void LevelModel::clearRootNode() {
+void LevelController::clearRootNode() {
 }
 
 
@@ -59,7 +59,7 @@ void LevelModel::clearRootNode() {
  *
  * @return true if successfully loaded the asset from a file
  */
-bool LevelModel::preload(const std::string& file) {
+bool LevelController::preload(const std::string& file) {
     std::shared_ptr<JsonReader> reader = JsonReader::allocWithAsset(file);
     return preload(reader->readJson());
 }
@@ -73,7 +73,7 @@ bool LevelModel::preload(const std::string& file) {
  *
  * @return true if successfully loaded the asset from a file
  */
-bool LevelModel:: preload(const std::shared_ptr<cugl::JsonValue>& json) {
+bool LevelController:: preload(const std::shared_ptr<cugl::JsonValue>& json) {
     if (json == nullptr) {
         CUAssertLog(false, "Failed to load level file");
         return false;
@@ -113,7 +113,7 @@ bool LevelModel:: preload(const std::shared_ptr<cugl::JsonValue>& json) {
 * unloaded in parallel, not in sequence.  If an asset (like a game level) has
 * references to other assets, then these should be disconnected earlier.
 */
-void LevelModel::unload() {
+void LevelController::unload() {
     if (_world != nullptr) {
         _world->clearMap();
         _world = nullptr;
@@ -133,7 +133,7 @@ void LevelModel::unload() {
 }
 
 
-bool LevelModel::loadObject(const std::string type, int totalHeight, const std::shared_ptr<JsonValue>& json) {
+bool LevelController::loadObject(const std::string type, int totalHeight, const std::shared_ptr<JsonValue>& json) {
     if (type == TILEMAP_FILED) {
         return loadTilemap(json);
     }
@@ -155,7 +155,7 @@ bool LevelModel::loadObject(const std::string type, int totalHeight, const std::
 /**
 * Loads a single tile object
 */
-bool LevelModel::loadTilemap(const std::shared_ptr<JsonValue>& json) {
+bool LevelController::loadTilemap(const std::shared_ptr<JsonValue>& json) {
     bool success = true;
     
     std::string textureType = json->get("type")->asString();
@@ -176,7 +176,7 @@ bool LevelModel::loadTilemap(const std::shared_ptr<JsonValue>& json) {
 /**
 * Loads an Item object
 */
-bool LevelModel::loadItem(const std::shared_ptr<JsonValue>& json, const std::string type) {
+bool LevelController::loadItem(const std::shared_ptr<JsonValue>& json, const std::string type) {
     bool success = true;
     std::string textureType = json->get("type")->asString();
     
@@ -220,7 +220,7 @@ bool LevelModel::loadItem(const std::shared_ptr<JsonValue>& json, const std::str
 /**
 * Loads character initial position
 */
-bool LevelModel::loadCharacter(const std::shared_ptr<JsonValue>& json) {
+bool LevelController::loadCharacter(const std::shared_ptr<JsonValue>& json) {
     bool success = true;
     
     std::string textureType = json->get("type")->asString();
@@ -236,7 +236,7 @@ bool LevelModel::loadCharacter(const std::shared_ptr<JsonValue>& json) {
 /**
 * Loads a guard object
 */
-bool LevelModel::loadGuard(const std::shared_ptr<JsonValue>& json) {
+bool LevelController::loadGuard(const std::shared_ptr<JsonValue>& json) {
     bool success = true;
     
     // in case old tileset is loaded
@@ -298,7 +298,7 @@ bool LevelModel::loadGuard(const std::shared_ptr<JsonValue>& json) {
     return success;
 }
 
-void LevelModel::setTilemapTexture() {
+void LevelController::setTilemapTexture() {
     _world->setTexture(_assets);
     _item->setTexture(_assets);
     _obs->setTexture(_assets);

@@ -1,12 +1,12 @@
 //
-//  LevelModel.h
+//  LevelController.h
 //  tilemap-ios
 //
 //  Created by Ann Zhou on 3/19/23.
 //
 
-#ifndef LevelModel_h
-#define LevelModel_h
+#ifndef LevelController_h
+#define LevelController_h
 
 #include <stdio.h>
 #include <cugl/cugl.h>
@@ -28,7 +28,7 @@ using namespace cugl;
 * to other assets (sound, images, etc.) this should take place after asset loading, such as
 * during scene graph initialization.
 */
-class LevelModel : public Asset {
+class LevelController : public Asset {
 protected:
     std::shared_ptr<TilemapController> _world;
     std::shared_ptr<ItemSetController> _obs;
@@ -81,8 +81,8 @@ public:
      *
      * @return  an autoreleased level file
      */
-    static std::shared_ptr<LevelModel> alloc() {
-        std::shared_ptr<LevelModel> result = std::make_shared<LevelModel>();
+    static std::shared_ptr<LevelController> alloc() {
+        std::shared_ptr<LevelController> result = std::make_shared<LevelController>();
         return (result->init("") ? result : nullptr);
     }
 
@@ -94,8 +94,8 @@ public:
      *
      * @return  an autoreleased level file
      */
-    static std::shared_ptr<LevelModel> alloc(std::string file) {
-        std::shared_ptr<LevelModel> result = std::make_shared<LevelModel>();
+    static std::shared_ptr<LevelController> alloc(std::string file) {
+        std::shared_ptr<LevelController> result = std::make_shared<LevelController>();
         return (result->init(file) ? result : nullptr);
     }
 
@@ -165,15 +165,15 @@ public:
     /**
      * Creates a new, empty level.
      */
-    LevelModel(void);
+    LevelController(void);
 
     /**
      * Destroys this level, releasing all resources.
      */
-    virtual ~LevelModel(void);
+    virtual ~LevelController(void);
     
     
 };
 
 
-#endif /* LevelModel_h */
+#endif /* LevelController_h */
