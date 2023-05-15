@@ -1235,8 +1235,8 @@
         "pastB_wall_window": {
             "file": "textures/pastB_wall_window.png"
         }
-	},
-	"fonts": {
+    },
+    "fonts": {
         "felt": {
             "file":     "fonts/MarkerFelt.ttf",
             "size":     24
@@ -1249,7 +1249,7 @@
             "file":     "fonts/CourierPrime-Bold.ttf",
             "size":     150
         }
-	},
+    },
     "widgets": {
 
     },
@@ -1543,31 +1543,7 @@
                         "absolute" : true
                     }
                 },
-                "toggle-button"  : {
-                    "type"   : "Button",
-                    "data"   : {
-                        "upnode"   : "up",
-                        "visible"  : true,
-                        "pushsize" : true,
-                        "anchor"   : [0.5,0.5],
-                        "scale"    : 0.15
-                    },
-                    "children" : {
-                        "up"       : {
-                            "type"   : "Image",
-                            "data"   : {
-                                "texture"  : "pause_button"
-                            }
-                        }
-                    },
-                    "layout" : {
-                        "x_anchor" : "center",
-                        "y_anchor" : "middle",
-                        "y_offset" : 120,
-                        "x_offset" : 1000,
-                        "absolute" : true
-                    }
-                },
+
                  "panel":{
                     "type"   : "Image",
                     "format"    : {
