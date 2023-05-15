@@ -252,8 +252,14 @@
         "inventory_resource":{
             "file":     "textures/inventory_resource_icon.png"
         },
+        "inventory_resource_sand":{
+            "file":     "textures/inventory_resource_icon_sand2.png"
+        },
         "inventory_background":{
             "file":     "textures/inventory_background.png"
+        },
+        "inventory_background_XL":{
+            "file":     "textures/inventory_background_XL.png"
         },
         "inventory_artifact_filled_bar":{
             "file":     "textures/inventory_artifact_collected.png"
@@ -1530,7 +1536,7 @@
                         "x_anchor" : "center",
                         "y_anchor" : "middle",
                         "y_offset" : 120,
-                        "x_offset" : 1000,
+                        "x_offset" : 1040,
                         "absolute" : true
                     }
                 },
@@ -1541,15 +1547,15 @@
                         "type" : "Anchored"
                     },
                     "data"   : {
-                        "texture"  : "inventory_background",
+                        "texture"  : "inventory_background_XL",
                         "anchor"   : [0.5,0.5],
-                        "scale"    : 0.2
+                        "scale"    : 0.15
                     },
                     "layout" : {
                         "x_anchor" : "center",
                         "y_anchor" : "middle",
-                        "y_offset" : 120,
-                        "x_offset" : -50,
+                        "y_offset" : 135,
+                        "x_offset" : -30,
                         "absolute" : true
                     },
                     "children": {
@@ -1568,7 +1574,7 @@
                                "x_anchor" : "center",
                                "y_anchor" : "middle",
                                "y_offset" : 50,
-                               "x_offset" : -900,
+                               "x_offset" : -1300,
                                "absolute" : true
                            }
                        },
@@ -1578,7 +1584,7 @@
                                "type" : "Anchored"
                            },
                            "data"   : {
-                               "texture"  : "inventory_resource",
+                               "texture"  : "inventory_resource_sand",
                                "anchor"   : [0.5,0.5],
                                "scale"    : 1
                            },
