@@ -4436,7 +4436,6 @@
         {
          "draworder":"topdown",
          "id":8,
-         "locked":true,
          "name":"obs",
          "objects":[
                 {
@@ -5764,15 +5763,39 @@
                  "width":128,
                  "x":1536,
                  "y":896
+                }, 
+                {
+                 "gid":38,
+                 "height":64,
+                 "id":1308,
+                 "name":"",
+                 "rotation":0,
+                 "type":"box4",
+                 "visible":true,
+                 "width":64,
+                 "x":896,
+                 "y":896
+                }, 
+                {
+                 "gid":38,
+                 "height":64,
+                 "id":1309,
+                 "name":"",
+                 "rotation":0,
+                 "type":"box4",
+                 "visible":true,
+                 "width":64,
+                 "x":1792,
+                 "y":1280
                 }],
          "opacity":1,
          "type":"objectgroup",
-         "visible":false,
+         "visible":true,
          "x":0,
          "y":0
         }],
  "nextlayerid":11,
- "nextobjectid":1308,
+ "nextobjectid":1310,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.10.1",

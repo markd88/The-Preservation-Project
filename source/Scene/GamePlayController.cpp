@@ -500,6 +500,7 @@ void GamePlayController::update(float dt){
             _character->removeChildFrom(_ordered_root);
             _character->addChildTo(_other_ordered_root);
 
+
             AudioEngine::get()->clear("past");
             AudioEngine::get()->play("present", _presentMusic, true, _presentMusic->getVolume(), false);
         }
@@ -569,12 +570,12 @@ void GamePlayController::update(float dt){
 
     _cantSwitch = _cantSwitch || (_character->getNumRes() == 0);
 
-    if(elapsed.count() >= 0.5 && _input->getPinchDelta() != 0 && _cantSwitch){
+    if(elapsed.count() >= 0.5 && _input->getPinchDelta() != 0 && _cantSwitch && level > 3){
         _character->start_cross_mark();
         CULog("start cross");
     }
 
-    if(elapsed.count() >= 0.5 && _input->getPinchDelta() != 0 && !_cantSwitch && !_isPanning){
+    if(elapsed.count() >= 0.5 && _input->getPinchDelta() != 0 && !_cantSwitch && !_isPanning && level > 3){
 
         AudioEngine::get()->play("switch", _switchSound, false, _switchSound->getVolume(), true);
 
@@ -606,7 +607,8 @@ void GamePlayController::update(float dt){
             // completeTerminate();
         }
         
-        else if (!_isSwitching and !_tappingPause){
+        else if (!_isSwitching and !_tappingPause
+                 and level > 3){
             //initialize preview
             _isPreviewing = true;
             if (_activeMap == "pastWorld"){
@@ -765,6 +767,7 @@ void GamePlayController::update(float dt){
         }else{
             input_posi = _other_scene->screenToWorldCoords(input_posi);
         }
+
 
         if(_character->containsFar(input_posi)){
             // create path
