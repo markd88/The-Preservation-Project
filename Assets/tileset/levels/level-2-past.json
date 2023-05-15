@@ -1316,7 +1316,31 @@
          "visible":true,
          "x":0,
          "y":0
-        }, 
+        },
+        {
+         "draworder":"topdown",
+         "id":4,
+         "locked":true,
+         "name":"shadow",
+         "objects":[
+                 {
+                  "gid":196,
+                  "height":666,
+                  "id":196,
+                  "name":"",
+                  "rotation":0,
+                  "type":"avoid",
+                  "visible":true,
+                  "width":779,
+                  "x":288,
+                  "y":1024
+                 }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "x":0,
+         "y":0
+        },
         {
          "draworder":"topdown",
          "id":3,
@@ -1836,8 +1860,8 @@
                  "type":"character-placeholder",
                  "visible":true,
                  "width":128,
-                 "x":706.570281124498,
-                 "y":1083.98900866624
+                 "x":660,
+                 "y":1084
                 }],
          "opacity":1,
          "type":"objectgroup",
