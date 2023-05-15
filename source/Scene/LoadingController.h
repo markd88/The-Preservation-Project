@@ -32,6 +32,9 @@ public:
     /** The "play" button */
     std::shared_ptr<cugl::scene2::Button>    _button;
 
+    std::shared_ptr<cugl::scene2::SceneNode>  _loading_bg;
+
+    std::shared_ptr<cugl::scene2::SceneNode>  _main_bg;
     // MODEL
     /** The progress displayed on the screen */
     float _progress;
