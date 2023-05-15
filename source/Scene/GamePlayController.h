@@ -14,7 +14,7 @@ using namespace std;
 #include <Camera/CameraMove.h>
 #include <GuardSet/GuardSetController.h>
 #include <ItemSet/ItemSetController.h>
-#include "LevelModel.h"
+#include "LevelController.h"
 #include <common.h>
 
 class GamePlayController {
@@ -115,8 +115,8 @@ public:
     
 
 //    std::shared_ptr<cugl::scene2::Label> _label;
-    std::shared_ptr<LevelModel> _pastWorldLevel;
-    std::shared_ptr<LevelModel> _presentWorldLevel;
+    std::shared_ptr<LevelController> _pastWorldLevel;
+    std::shared_ptr<LevelController> _presentWorldLevel;
     
     //preview variables
     bool _tappingPause = false; // when tapping pause, disable preview
@@ -356,7 +356,7 @@ public:
         // art
         int cur_art = _character->getNumArt();
         int total_art = artNum;
-        for(int i=0; i<5; i++){
+        for(int i=0; i<7; i++){
             if(i < cur_art){
                 _art_bar_vec[i]->setTexture(_assets->get<Texture>("inventory_artifact_filled_bar"));
                 _art_bar_vec[i]->setVisible(true);
@@ -383,7 +383,7 @@ public:
             resource_trans_bar ="inventory_resource_trans_bar";
             resource_bar = "inventory_resource_bar";
         }
-        for(int i=0; i<5; i++){
+        for(int i=0; i<7; i++){
             if(i == (cur_res-1) && half_switch){
                 _res_bar_vec[i]->setTexture(_assets->get<Texture>(resource_trans_bar));
                 _res_bar_vec[i]->setVisible(true);

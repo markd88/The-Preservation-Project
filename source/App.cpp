@@ -12,9 +12,8 @@
 // Include the class header, which includes all of the CUGL classes
 #include "App.h"
 #include <Level/LevelConstants.h>
-#include <Level/LevelModel.h>
+#include <Level/LevelController.h>
 #include <common.h>
-#include "SavedGameModel.h"
 
 // This keeps us from having to write cugl:: all the time
 using namespace cugl;
@@ -54,17 +53,11 @@ void App::onStartup() {
     _assets->attach<WidgetValue>(WidgetLoader::alloc()->getHook());
     _assets->attach<scene2::SceneNode>(Scene2Loader::alloc()->getHook());
     
-    _assets->attach<LevelModel>(GenericLoader<LevelModel>::alloc()->getHook());
-    _assets->attach<SavedGameModel>(GenericLoader<SavedGameModel>::alloc()->getHook());
+    _assets->attach<LevelController>(GenericLoader<LevelController>::alloc()->getHook());
 
     // load gameplay assets
     _assets->loadDirectoryAsync("json/assets.json", nullptr);
     
-    // load saved game data
-    // load saved game data
-    _assets->load<SavedGameModel>("savedGameKey", "json/savedGame.json");
-    _savedGame = _assets->get<SavedGameModel>("savedGameKey");
-
     // Create a sprite batch (and background color) to render the scene
     _batch = SpriteBatch::alloc();
     auto cam = OrthographicCamera::alloc(getDisplaySize());
@@ -193,9 +186,9 @@ void App::update(float timestep) {
             case MENU:
                 
                 _menuController->update(timestep);
-//                _menuController->setHighestUnlocked(_savedGame->getHighestUnlocked());
                 break;
             case GAMEPLAY:
+                _menuController->setActive(false);
                 // if next level, deactivate first, reload level i+1, and init
                 if(nextLevel){
                     
