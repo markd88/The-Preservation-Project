@@ -570,12 +570,12 @@ void GamePlayController::update(float dt){
 
     _cantSwitch = _cantSwitch || (_character->getNumRes() == 0);
 
-    if(elapsed.count() >= 0.5 && _input->getPinchDelta() != 0 && _cantSwitch){
+    if(elapsed.count() >= 0.5 && _input->getPinchDelta() != 0 && _cantSwitch && level > 3){
         _character->start_cross_mark();
         CULog("start cross");
     }
 
-    if(elapsed.count() >= 0.5 && _input->getPinchDelta() != 0 && !_cantSwitch){
+    if(elapsed.count() >= 0.5 && _input->getPinchDelta() != 0 && !_cantSwitch && level > 3){
 
         AudioEngine::get()->play("switch", _switchSound, false, _switchSound->getVolume(), true);
 
@@ -611,7 +611,8 @@ void GamePlayController::update(float dt){
         }
 
         else if (input_posi.x - PREVIEW_RADIUS > 0 and input_posi.x < r.width - PREVIEW_RADIUS and
-                 input_posi.y > 0 and input_posi.y < r.height - PREVIEW_RADIUS*2 and !_isSwitching and !_tappingPause){
+                 input_posi.y > 0 and input_posi.y < r.height - PREVIEW_RADIUS*2 and !_isSwitching and !_tappingPause
+                 and level > 3){
             //initialize preview
             _isPreviewing = true;
             if (_activeMap == "pastWorld"){
@@ -729,6 +730,9 @@ void GamePlayController::update(float dt){
 
 #pragma mark Preview Methods
     if(_input->didRelease() or _isSwitching){
+        if ( level <= 3) {
+            return;
+        }
 
         _isPreviewing = false;
        
