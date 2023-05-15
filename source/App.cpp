@@ -188,6 +188,7 @@ void App::update(float timestep) {
                 _menuController->update(timestep);
                 break;
             case GAMEPLAY:
+                _menuController->setActive(false);
                 // if next level, deactivate first, reload level i+1, and init
                 if(nextLevel){
                     
