@@ -3017,6 +3017,7 @@
         {
          "draworder":"topdown",
          "id":3,
+         "locked":true,
          "name":"deco",
          "objects":[
                 {
@@ -4927,36 +4928,12 @@
                  "type":"box1",
                  "visible":true,
                  "width":128,
-                 "x":1408,
-                 "y":1280
-                }, 
-                {
-                 "gid":35,
-                 "height":128,
-                 "id":1455,
-                 "name":"",
-                 "rotation":0,
-                 "type":"box1",
-                 "visible":true,
-                 "width":128,
-                 "x":1280,
-                 "y":1152
-                }, 
-                {
-                 "gid":35,
-                 "height":128,
-                 "id":1458,
-                 "name":"",
-                 "rotation":0,
-                 "type":"box1",
-                 "visible":true,
-                 "width":128,
-                 "x":1280,
-                 "y":1280
+                 "x":1368.84906142908,
+                 "y":1252.76456447241
                 }],
          "opacity":1,
          "type":"objectgroup",
-         "visible":false,
+         "visible":true,
          "x":0,
          "y":0
         }],

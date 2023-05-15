@@ -156,7 +156,7 @@ public:
             int charDirection = calculateMappedAngle(guardPos.x, guardPos.y, _charPos.x, _charPos.y);
             int guardFacingDirection = _guardSet[i]->getDirection();
             bool insideVisionCone = false;
-            if ((guardFacingDirection + 8 -1) %8 == charDirection || (guardFacingDirection + 8 + 1) % 8 == charDirection || guardFacingDirection == charDirection) {
+            if ((guardFacingDirection + 8 -2) %8 == charDirection ||(guardFacingDirection + 8 -1) %8 == charDirection ||  (guardFacingDirection + 8 +2) %8 == charDirection ||(guardFacingDirection + 8 + 1) % 8 == charDirection || guardFacingDirection == charDirection) {
                 insideVisionCone = true;
             }
             bool visual_detection = false;
@@ -534,6 +534,7 @@ public:
                     // finish returning
                 }
                 else {
+                    _guardSet[i]->setChaseSpeed(111);
                     _guardSet[i]->updateReturnTarget(_guardSet[i]->returnVec[0]);
                     _guardSet[i]->returnGuard(returnAction);
                     // erase from return vector

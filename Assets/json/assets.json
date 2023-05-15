@@ -53,6 +53,11 @@
         "artifact_fan_gold": {
             "file": "textures/artifact_fan_gold.png"
         },
+        "artifact_fan_gold_Anim": {
+            "file": "textures/artifact_fan_gold_anim.png"
+        },
+
+
         "artifact_scrollcaseB_gold": {
             "file": "textures/artifact_scrollcaseB_gold.png"
         },
@@ -250,10 +255,7 @@
             "file":     "textures/inventory_artifact_icon.png"
         },
         "inventory_resource":{
-            "file":     "textures/inventory_resource_icon.png"
-        },
-        "inventory_resource_sand":{
-            "file":     "textures/inventory_resource_icon_sand2.png"
+            "file":     "textures/inventory_resource_icon_hourglass.png"
         },
         "inventory_background":{
             "file":     "textures/inventory_background.png"
@@ -1238,8 +1240,8 @@
         "pastB_wall_window": {
             "file": "textures/pastB_wall_window.png"
         }
-	},
-	"fonts": {
+    },
+    "fonts": {
         "felt": {
             "file":     "fonts/MarkerFelt.ttf",
             "size":     24
@@ -1252,7 +1254,7 @@
             "file":     "fonts/CourierPrime-Bold.ttf",
             "size":     150
         }
-	},
+    },
     "widgets": {
 
     },
@@ -1590,9 +1592,9 @@
                                "type" : "Anchored"
                            },
                            "data"   : {
-                               "texture"  : "inventory_resource_sand",
+                               "texture"  : "inventory_resource",
                                "anchor"   : [0.5,0.5],
-                               "scale"    : 1
+                               "scale"    : 1.7
                            },
                            "layout" : {
                                "x_anchor" : "center",

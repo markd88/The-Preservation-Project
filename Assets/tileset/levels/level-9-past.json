@@ -1971,7 +1971,6 @@
         {
          "draworder":"topdown",
          "id":8,
-         "locked":true,
          "name":"shadow",
          "objects":[
                 {
@@ -2369,8 +2368,8 @@
                  "type":"pastB_roof_shadow",
                  "visible":true,
                  "width":50,
-                 "x":1133,
-                 "y":836
+                 "x":1104,
+                 "y":837
                 }, 
                 {
                  "gid":68,
@@ -2525,7 +2524,6 @@
         {
          "draworder":"topdown",
          "id":3,
-         "locked":true,
          "name":"deco",
          "objects":[
                 {
@@ -3311,6 +3309,18 @@
                  "width":43,
                  "x":1024.33,
                  "y":740
+                }, 
+                {
+                 "gid":49,
+                 "height":120,
+                 "id":406,
+                 "name":"",
+                 "rotation":0,
+                 "type":"deco_past_table_front",
+                 "visible":true,
+                 "width":195,
+                 "x":1081,
+                 "y":651
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -3344,8 +3354,8 @@
                  "type":"resource_clock",
                  "visible":true,
                  "width":200,
-                 "x":1059,
-                 "y":758
+                 "x":1030,
+                 "y":759
                 }, 
                 {
                  "gid":89,
@@ -3368,7 +3378,6 @@
         {
          "draworder":"topdown",
          "id":4,
-         "locked":true,
          "name":"item",
          "objects":[
                 {
@@ -3404,8 +3413,8 @@
                  "type":"artifact_bowlcovered_jade",
                  "visible":true,
                  "width":90,
-                 "x":1308,
-                 "y":1027
+                 "x":1315.33333333333,
+                 "y":1028.33333333333
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -4304,8 +4313,8 @@
                  "type":"box4",
                  "visible":true,
                  "width":64,
-                 "x":1127,
-                 "y":718
+                 "x":1098,
+                 "y":712
                 }, 
                 {
                  "gid":37,
@@ -4487,6 +4496,30 @@
                  "width":32,
                  "x":1294,
                  "y":700
+                }, 
+                {
+                 "gid":35,
+                 "height":128,
+                 "id":409,
+                 "name":"",
+                 "rotation":0,
+                 "type":"box1",
+                 "visible":true,
+                 "width":128,
+                 "x":1081,
+                 "y":678
+                }, 
+                {
+                 "gid":35,
+                 "height":128,
+                 "id":410,
+                 "name":"",
+                 "rotation":0,
+                 "type":"box1",
+                 "visible":true,
+                 "width":128,
+                 "x":1148,
+                 "y":677
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -4495,7 +4528,7 @@
          "y":0
         }],
  "nextlayerid":11,
- "nextobjectid":405,
+ "nextobjectid":411,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.10.1",

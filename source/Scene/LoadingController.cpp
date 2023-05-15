@@ -49,10 +49,18 @@ bool LoadingController::init(const std::shared_ptr<cugl::AssetManager>& assets) 
     _brand = assets->get<scene2::SceneNode>("load_name");
     _button = std::dynamic_pointer_cast<scene2::Button>(assets->get<scene2::SceneNode>("load_play"));
     _button->addListener([=](const std::string& name, bool down) {
-        this->_scene->setActive(down);
-        nextScene = MENU;
+        if(!down){
+            this->_scene->setActive(false);
+            nextScene = MENU;
+        }
+        
     });
 
+    
+    _loading_bg = assets->get<scene2::SceneNode>("load_bg");
+    _main_bg = assets->get<scene2::SceneNode>("load_main");
+    _main_bg->setVisible(false);
+    
     Application::get()->setClearColor(Color4(192,192,192,255));
     _scene->addChild(layer);
     return true;
@@ -92,6 +100,8 @@ void LoadingController::update(float timestep) {
             _brand->setVisible(false);
             _button->setVisible(true);
             _button->activate();
+            _loading_bg->setVisible(false);
+            _main_bg->setVisible(true);
         }
         _bar->setProgress(_progress);
     }

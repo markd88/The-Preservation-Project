@@ -4113,6 +4113,18 @@
                  "width":99,
                  "x":1558.45550378122,
                  "y":1056.21556794744
+                }, 
+                {
+                 "gid":48,
+                 "height":135,
+                 "id":525,
+                 "name":"",
+                 "rotation":0,
+                 "type":"deco_past_chair_side_R",
+                 "visible":true,
+                 "width":99,
+                 "x":896,
+                 "y":1024
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -4173,18 +4185,6 @@
                  "width":128,
                  "x":521,
                  "y":625
-                }, 
-                {
-                 "gid":48,
-                 "height":135,
-                 "id":525,
-                 "name":"",
-                 "rotation":0,
-                 "type":"deco_past_chair_side_R",
-                 "visible":true,
-                 "width":99,
-                 "x":896,
-                 "y":1024
                 }],
          "opacity":1,
          "type":"objectgroup",
