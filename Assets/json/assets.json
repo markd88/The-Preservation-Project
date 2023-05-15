@@ -53,6 +53,11 @@
         "artifact_fan_gold": {
             "file": "textures/artifact_fan_gold.png"
         },
+        "artifact_fan_gold_Anim": {
+            "file": "textures/artifact_fan_gold_anim.png"
+        },
+
+
         "artifact_scrollcaseB_gold": {
             "file": "textures/artifact_scrollcaseB_gold.png"
         },
