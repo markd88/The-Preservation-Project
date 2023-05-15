@@ -1179,6 +1179,18 @@
          "name":"deco",
          "objects":[
                 {
+                 "gid":194,
+                 "height":861,
+                 "id":194,
+                 "name":"",
+                 "rotation":0,
+                 "type":"switch1",
+                 "visible":true,
+                 "width":912,
+                 "x":192,
+                 "y":960
+                },
+                {
                  "gid":103,
                  "height":128,
                  "id":115,
@@ -1189,19 +1201,7 @@
                  "width":128,
                  "x":128,
                  "y":128
-                }, 
-                {
-                 "gid":181,
-                 "height":382,
-                 "id":107,
-                 "name":"",
-                 "rotation":0,
-                 "type":"pinch",
-                 "visible":true,
-                 "width":781,
-                 "x":352,
-                 "y":1024
-                }, 
+                },
                 {
                  "gid":103,
                  "height":128,

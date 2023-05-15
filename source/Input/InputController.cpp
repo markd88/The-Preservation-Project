@@ -69,6 +69,7 @@ bool InputController::initTouch() {
     return _model->_activeTouch;
 }
 
+
 bool InputController::initPinch(const Size &size) {
     // pan gesture init
     bool success = true;
@@ -236,3 +237,4 @@ void InputController::touchUpCB(const cugl::TouchEvent& event, bool focus) {
         _model->_touchId = -1;
     }
 }
+

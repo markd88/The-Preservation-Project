@@ -2242,6 +2242,18 @@
          "name":"deco",
          "objects":[
                 {
+                "gid":193,
+                "height":300,
+                "id":193,
+                "name":"",
+                "rotation":0,
+                "type":"draw",
+                "visible":true,
+                "width":963,
+                "x":512,
+                "y":896
+                },
+                {
                  "gid":142,
                  "height":128,
                  "id":399,
@@ -2744,7 +2756,7 @@
                  "type":"character-placeholder",
                  "visible":true,
                  "width":128,
-                 "x":512,
+                 "x":448,
                  "y":768
                 }],
          "opacity":1,

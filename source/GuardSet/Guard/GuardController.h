@@ -219,10 +219,6 @@ public:
         _chaseMove->setTarget(pos);
     }
     
-    void updateChaseSpeed(float speed){
-        _chaseMove->setDuration(speed);
-
-    }
 #pragma mark Update Patrol Methods
     
     void updatePatrolSpeed(float speed){
@@ -458,7 +454,13 @@ public:
     }
     
     void updateChaseSpeed(int s){
-        _chase_speed += s;
+        if (_chase_speed < 161){
+            _chase_speed += s;
+        }
+    }
+    
+    void setChaseSpeed(int s){
+        _chase_speed = s;
     }
 
 

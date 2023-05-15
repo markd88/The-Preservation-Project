@@ -1323,18 +1323,6 @@
          "name":"deco",
          "objects":[
                 {
-                 "gid":182,
-                 "height":384,
-                 "id":81,
-                 "name":"draw",
-                 "rotation":0,
-                 "type":"draw",
-                 "visible":true,
-                 "width":781,
-                 "x":320,
-                 "y":1024
-                }, 
-                {
                  "gid":103,
                  "height":128,
                  "id":81,

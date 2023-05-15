@@ -24,11 +24,11 @@ _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displ
     _minimapNode = cugl::scene2::PolygonNode::alloc();
     _minimapChar = cugl::scene2::PolygonNode::alloc();
     added = false;
-
+    _isPanning = false;
+    panned = false;
     _isPreviewing = false;
-    
-    // Initialize the assetManage
-    
+    _prevPanPos = Vec2::ZERO;
+    // Initialize the assetManager
     _ordered_root = cugl::scene2::OrderedNode::allocWithOrder(cugl::scene2::OrderedNode::Order::DESCEND);
     
     _other_ordered_root = cugl::scene2::OrderedNode::allocWithOrder(cugl::scene2::OrderedNode::Order::DESCEND);
@@ -117,9 +117,9 @@ _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displ
             auto s = _pause_layer->getScene();
             s->removeChild(_pause_layer);
             _tappingPause = false;
+            
         }
     });
-    
     _pause_restart = std::dynamic_pointer_cast<scene2::Button>(assets->get<scene2::SceneNode>("pause_restart"));
     
     _pause_restart->addListener([this](const std::string& name, bool down) {
@@ -137,6 +137,7 @@ _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displ
     
     _pause_exit = std::dynamic_pointer_cast<scene2::Button>(assets->get<scene2::SceneNode>("pause_exit"));
     
+    
     _pause_exit->addListener([this](const std::string& name, bool down) {
         if (!down) {
             // back to menu
@@ -145,7 +146,6 @@ _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displ
     });
     
     // add pause button
-    
     _pause_button = std::dynamic_pointer_cast<scene2::Button>(assets->get<scene2::SceneNode>("button_pause-button"));
     _pause_button->addListener([this](const std::string& name, bool down) {
         _tappingPause = true;
@@ -153,12 +153,11 @@ _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displ
             // TODO:: activate the pause window
             pauseOn();
         }
+        
     });
     
     _pause_button->activate();
-    
     _inventory_layer = assets->get<scene2::SceneNode>("button_panel");
-
     
     // add Win/lose panel
     _complete_layer = _assets->get<scene2::SceneNode>("complete");
@@ -210,6 +209,9 @@ _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displ
 
     _moveTo = cugl::scene2::MoveTo::alloc();
     _moveCam = CameraMoveTo::alloc();
+    _panCam = CameraMoveTo::alloc();
+    
+    _panCam->setDuration(1);
     _moveCam->setDuration(ACTIONDURATION);
     _moveTo->setDuration(ACTIONDURATION);
     
@@ -238,8 +240,6 @@ _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displ
         _inventory_layer->addChild(tn);
         _res_bar_vec.push_back(tn);
     }
-    
-    
     
     loadLevel();
     init();
@@ -432,6 +432,7 @@ void GamePlayController::init(){
     
     
     _UI_scene->addChild(_button_layer);
+    
     //_ordered_root->addChild(_button_layer);
     
     Vec2 cPos = _character->getPosition();
@@ -466,11 +467,10 @@ void GamePlayController::init(){
     
     _tappingPause = false;
     
-    
 }
 
 void GamePlayController::update(float dt){
-
+    
     if(_fail_layer->getScene() != nullptr || _complete_layer->getScene() != nullptr || _pause_layer->getScene() != nullptr){
         _pause_button->deactivate();
         return;
@@ -500,7 +500,6 @@ void GamePlayController::update(float dt){
             _character->removeChildFrom(_ordered_root);
             _character->addChildTo(_other_ordered_root);
 
-            
             AudioEngine::get()->clear("past");
             AudioEngine::get()->play("present", _presentMusic, true, _presentMusic->getVolume(), false);
         }
@@ -575,7 +574,7 @@ void GamePlayController::update(float dt){
         CULog("start cross");
     }
 
-    if(elapsed.count() >= 0.5 && _input->getPinchDelta() != 0 && !_cantSwitch){
+    if(elapsed.count() >= 0.5 && _input->getPinchDelta() != 0 && !_cantSwitch && !_isPanning){
 
         AudioEngine::get()->play("switch", _switchSound, false, _switchSound->getVolume(), true);
 
@@ -586,10 +585,9 @@ void GamePlayController::update(float dt){
         _action_world_switch->activate("first_half", _world_switch_0, _world_switch_node);
         CULog("activate two world animation");
 
-
     }
     
-#pragma mark Character Movement Methods
+#pragma mark Character Movement Methods and Panning
     else if(_input->didPress()){        // if press, determine if press on character
         
         Vec2 input_posi = _input->getPosition();
@@ -599,19 +597,16 @@ void GamePlayController::update(float dt){
         }else{
             input_posi = _other_scene->screenToWorldCoords(input_posi);
         }
-        auto r = _pastWorld->getNode()->getSize();
 
         if(_character->containsFar(input_posi)){
             // create path
             _path->updateLastPos(_character->getPosition());
-
             _path->setIsDrawing(true);
             _path->setIsInitiating(true);
             // completeTerminate();
         }
-
-        else if (input_posi.x - PREVIEW_RADIUS > 0 and input_posi.x < r.width - PREVIEW_RADIUS and
-                 input_posi.y > 0 and input_posi.y < r.height - PREVIEW_RADIUS*2 and !_isSwitching and !_tappingPause){
+        
+        else if (!_isSwitching and !_tappingPause){
             //initialize preview
             _isPreviewing = true;
             if (_activeMap == "pastWorld"){
@@ -624,13 +619,12 @@ void GamePlayController::update(float dt){
                 _texture = _scene2texture->getTexture();
                 _previewNode->setTexture(_texture);
                 auto c = _previewNode->getColor();
-                _previewNode->setColor(Color4(c.r, c.g, c.b, 220));
+                _previewNode->setColor(Color4(c.r, c.g, c.b, 235));
                 _previewNode->setVisible(false);
                 _scene->addChildWithName(_previewNode, "preview");
                 
                 _previewBound->setVisible(false);
                 _scene->addChildWithName(_previewBound, "previewBound");
-                
                 
             }
             else{
@@ -683,11 +677,27 @@ void GamePlayController::update(float dt){
                 Vec2 worldSize = _pastWorld->getSize();
                 bool withinMap = (checkpoint.x >= 0) && (checkpoint.x <= worldSize.x) && (checkpoint.y >= 0) && (checkpoint.y <= worldSize.y);
                 
-                if((_activeMap == "pastWorld" && _obsSetPast->inObstacle(checkpoint)) || (_activeMap == "presentWorld" && _obsSetPresent->inObstacle(checkpoint))){
+                if((_path->getPath().size() == 0 && _activeMap == "pastWorld" && _obsSetPast->inObstacle(checkpoint)) || (_path->getPath().size() == 0 && _activeMap == "presentWorld" && _obsSetPresent->inObstacle(checkpoint))){
+                    // pan
+                    _isPanning = true;
+                    _path->setIsDrawing(false);
+                    if (_activeMap == "pastWorld"){
+                        _camManager->clearAllActions(_cam);
+                        _prevPanPos = _cam->getPosition();
+                    }else{
+                        _camManager->clearAllActions(_other_cam);
+                        _prevPanPos = _other_cam->getPosition();
+                    }
+                    break;
+                    
+                }
+    
+                else if((_activeMap == "pastWorld" && _obsSetPast->inObstacle(checkpoint)) || (_activeMap == "presentWorld" && _obsSetPresent->inObstacle(checkpoint))){
                     // don't want the path drawing be canceled if tap on a wall
                     // _path->setIsDrawing(false);
                     break;
                 }
+                
                 else if(!withinMap){
                     _path->setIsDrawing(false);
                     break;
@@ -703,6 +713,50 @@ void GamePlayController::update(float dt){
         }
     }
     
+    else if (_input->isDown() && _isPanning){
+        Vec2 input_posi1 = _input->getPosition();
+        if (_activeMap == "pastWorld"){
+            input_posi1 = _scene->screenToWorldCoords(input_posi1);
+        }else{
+            input_posi1 = _other_scene->screenToWorldCoords(input_posi1);
+        }
+        
+        Vec2 delta = ((input_posi1 - _character->getPosition()) / input_posi1.distance(_character->getPosition())) * 150;
+        
+        if (input_posi1.distance(_character->getPosition()) > 150 && !panned){
+            panned = true;
+            Vec2 input_posi = _prevPanPos + delta;
+            Size mapSize = _pastWorld->getSize();
+            if (input_posi.x < cam_x_bound){
+                input_posi.x = cam_x_bound;
+            }else if (input_posi.x > mapSize.width - cam_x_bound){
+                input_posi.x = mapSize.width - cam_x_bound;
+            }
+            
+            if (input_posi.y < cam_y_bound){
+                input_posi.y = cam_y_bound;
+            }
+            else if (input_posi.y > mapSize.height-cam_y_bound){
+                input_posi.y = mapSize.height-cam_y_bound;
+            }
+            
+            _panCam->setTarget(input_posi);
+            _panCam->setDuration(1);
+            
+            if (!_camManager->isActive("panningCam")){
+                if (_activeMap == "pastWorld"){
+                    _camManager->clearAllActions(_cam);
+                    _camManager->activate("panningCam", _panCam, _cam);
+                    _camManager->activate("panningCam", _panCam, _UI_cam);
+                }else{
+                    _camManager->clearAllActions(_other_cam);
+                    _camManager->activate("panningCam", _panCam, _other_cam);
+                    _camManager->activate("panningCam", _panCam, _UI_cam);
+                }
+            }
+        }
+    }
+    
     else if (_input->didRelease()){
         Vec2 input_posi = _input->getPosition();
 
@@ -712,7 +766,6 @@ void GamePlayController::update(float dt){
             input_posi = _other_scene->screenToWorldCoords(input_posi);
         }
 
-        
         if(_character->containsFar(input_posi)){
             // create path
             _path->setIsDrawing(true);
@@ -724,17 +777,59 @@ void GamePlayController::update(float dt){
                 _path->clearPath(_other_scene);
             }
         }
+        
+        if (_isPanning){
+            Vec2 camTar = _character->getPosition();
+            Size mapSize = _pastWorld->getSize();
+            
+            if (camTar.x < cam_x_bound){
+                camTar.x = cam_x_bound;
+            }else if (camTar.x > mapSize.width - cam_x_bound){
+                camTar.x = mapSize.width - cam_x_bound;
+            }
+
+            if (camTar.y < cam_y_bound){
+                camTar.y = cam_y_bound;
+            }
+            else if (camTar.y > mapSize.height-cam_y_bound){
+                camTar.y = mapSize.height-cam_y_bound;
+            }
+            
+            _panCam->setTarget(camTar);
+            _panCam->setDuration(.35);
+            
+            if (_activeMap == "pastWorld"){
+                _camManager->clearAllActions(_cam);
+                _camManager->activate("panningCam", _panCam, _cam);
+                _camManager->activate("panningCam", _panCam, _UI_cam);
+            }else{
+                _camManager->clearAllActions(_other_cam);
+                _camManager->activate("panningCam", _panCam, _other_cam);
+                _camManager->activate("panningCam", _panCam, _UI_cam);
+            }
+        
+            panned = false;
+            _isPanning = false;
+        }
+        
     }
 
 
 #pragma mark Preview Methods
     if(_input->didRelease() or _isSwitching){
-
+        
+        Vec2 input_posi = _input->getPosition();
+        if (_activeMap == "pastWorld"){
+            input_posi = _scene->screenToWorldCoords(input_posi);
+        }else{
+            input_posi = _other_scene->screenToWorldCoords(input_posi);
+        }
+        
         _isPreviewing = false;
-       
+        
         _path->setIsDrawing(false);
         // path_trace = _path->getPath();
-
+        
         if(_isSwitching){
             if (_activeMap == "pastWorld"){
                 _path->removeFrom(_scene);
@@ -753,7 +848,7 @@ void GamePlayController::update(float dt){
             }
             _scene->removeChildByName("preview");
             _scene->removeChildByName("previewBound");
-
+            
         }
         else{
             auto _children = _scene2texture->getChildren();
@@ -764,33 +859,20 @@ void GamePlayController::update(float dt){
             }
             _other_scene->removeChildByName("preview");
             _other_scene->removeChildByName("previewBound");
-
+            
         }
+        
     }
     
-    else if (_isPreviewing){
+    else if (_isPreviewing && !_isPanning){
         
         Vec2 input_posi = _input->getPosition();
-    
+        
         if (_activeMap == "pastWorld"){
             input_posi = _scene->screenToWorldCoords(input_posi);
         }
         else {
             input_posi = _other_scene->screenToWorldCoords(input_posi);
-        }
-        
-        auto r = _pastWorld->getNode()->getSize();
-        
-        if (input_posi.x - PREVIEW_RADIUS < 0){
-            input_posi.x = PREVIEW_RADIUS;
-        }else if(input_posi.x > r.width - PREVIEW_RADIUS){
-            input_posi.x = r.width - PREVIEW_RADIUS;
-        }
-        
-        if (input_posi.y < 0){
-            input_posi.y  = 0;
-        }else if (input_posi.y > r.height - PREVIEW_RADIUS*2){
-            input_posi.y = r.height - PREVIEW_RADIUS*2;
         }
         
         _previewNode->setAnchor(Vec2::ANCHOR_CENTER);
@@ -804,7 +886,6 @@ void GamePlayController::update(float dt){
         Path2 bound = pathFact.makeCircle(_previewNode->getPosition(), PREVIEW_RADIUS);
         _previewBound->setPath(bound);
         _previewBound->setPosition(_previewNode->getPosition());
-        
         
     }
     
@@ -834,6 +915,7 @@ void GamePlayController::update(float dt){
         }
         
         _moveCam->setTarget(camTar);
+        _camManager->clearAllActions(_cam);
         if (_activeMap == "pastWorld"){
             _camManager->activate("movingCam", _moveCam, _cam);
             _camManager->activate("movingUICam", _moveCam, _UI_cam);

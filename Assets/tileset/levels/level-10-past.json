@@ -2514,7 +2514,6 @@
         {
          "draworder":"topdown",
          "id":8,
-         "locked":true,
          "name":"shadow",
          "objects":[
                 {
@@ -4153,7 +4152,6 @@
         {
          "draworder":"topdown",
          "id":4,
-         "locked":true,
          "name":"item",
          "objects":[
                 {
@@ -4166,7 +4164,7 @@
                  "visible":true,
                  "width":128,
                  "x":1373.33333333333,
-                 "y":1413.33333333333
+                 "y":1424.33333333333
                 }, 
                 {
                  "gid":30,
@@ -4190,7 +4188,7 @@
                  "visible":true,
                  "width":128,
                  "x":1374.66666666667,
-                 "y":656
+                 "y":655
                 }],
          "opacity":1,
          "type":"objectgroup",
