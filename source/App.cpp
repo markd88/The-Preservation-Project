@@ -196,6 +196,7 @@ void App::update(float timestep) {
 //                _menuController->setHighestUnlocked(_savedGame->getHighestUnlocked());
                 break;
             case GAMEPLAY:
+                _menuController->setActive(false);
                 // if next level, deactivate first, reload level i+1, and init
                 if(nextLevel){
                     
