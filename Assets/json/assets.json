@@ -317,6 +317,9 @@
         "draw": {
             "file":      "textures/draw.png"
         },
+        "avoid": {
+            "file":      "textures/avoid.png"
+        },
         "switch1": {
             "file":      "textures/switch1.png"
         },

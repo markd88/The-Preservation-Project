@@ -1171,24 +1171,36 @@
          "visible":true,
          "x":0,
          "y":0
-        }, 
+        },
+        {
+         "draworder":"topdown",
+         "id":4,
+         "locked":true,
+         "name":"shadow",
+         "objects":[
+                 {
+                  "gid":195,
+                  "height":804,
+                  "id":194,
+                  "name":"",
+                  "rotation":0,
+                  "type":"switch2",
+                  "visible":true,
+                  "width":637,
+                  "x":832,
+                  "y":960
+                 }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "x":0,
+         "y":0
+        },
         {
          "draworder":"topdown",
          "id":3,
          "name":"deco",
          "objects":[
-                {
-                 "gid":195,
-                 "height":804,
-                 "id":194,
-                 "name":"",
-                 "rotation":0,
-                 "type":"switch2",
-                 "visible":true,
-                 "width":637,
-                 "x":832,
-                 "y":960
-                },
                 {
                  "gid":175,
                  "height":128,

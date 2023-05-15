@@ -2237,22 +2237,34 @@
         }, 
         {
          "draworder":"topdown",
+         "id":4,
+         "locked":true,
+         "name":"shadow",
+         "objects":[
+                {
+                 "gid":193,
+                 "height":300,
+                 "id":193,
+                 "name":"",
+                 "rotation":0,
+                 "type":"draw",
+                 "visible":true,
+                 "width":963,
+                 "x":448,
+                 "y":896
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "x":0,
+         "y":0
+        }, 
+        {
+         "draworder":"topdown",
          "id":3,
          "locked":true,
          "name":"deco",
          "objects":[
-                {
-                "gid":193,
-                "height":300,
-                "id":193,
-                "name":"",
-                "rotation":0,
-                "type":"draw",
-                "visible":true,
-                "width":963,
-                "x":512,
-                "y":896
-                },
                 {
                  "gid":142,
                  "height":128,
@@ -2732,7 +2744,7 @@
                  "type":"artifact_statue_jade",
                  "visible":true,
                  "width":128,
-                 "x":896,
+                 "x":832,
                  "y":768
                 }],
          "opacity":1,
@@ -2756,7 +2768,7 @@
                  "type":"character-placeholder",
                  "visible":true,
                  "width":128,
-                 "x":448,
+                 "x":402,
                  "y":768
                 }],
          "opacity":1,
@@ -3250,7 +3262,7 @@
  "nextobjectid":1056,
  "orientation":"orthogonal",
  "renderorder":"right-down",
- "tiledversion":"1.10.1",
+ "tiledversion":"1.10.0",
  "tileheight":128,
  "tilesets":[
         {
