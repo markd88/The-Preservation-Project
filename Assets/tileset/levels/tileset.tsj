@@ -1195,6 +1195,24 @@
          "imageheight":168,
          "imagewidth":168,
          "type":"exit"
+        },
+	{
+         "id":193,
+         "image":"..\/..\/textures\/draw.png",
+         "imageheight":300,
+         "imagewidth":963
+        }, 
+        {
+         "id":194,
+         "image":"..\/..\/textures\/switch1.png",
+         "imageheight":861,
+         "imagewidth":912
+        }, 
+        {
+         "id":195,
+         "image":"..\/..\/textures\/switch2.png",
+         "imageheight":804,
+         "imagewidth":637
         }],
  "tilewidth":256,
  "type":"tileset",
