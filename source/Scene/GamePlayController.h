@@ -122,6 +122,7 @@ public:
     bool _tappingPause = false; // when tapping pause, disable preview
     
     bool _isPreviewing;
+    bool _previewEnabled;
     std::shared_ptr<cugl::scene2::PolygonNode> _previewNode;
     std::shared_ptr<cugl::scene2::PathNode> _previewBound;
     std::shared_ptr<Scene2Texture> _scene2texture;

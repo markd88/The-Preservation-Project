@@ -27,6 +27,8 @@ _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displ
     _isPanning = false;
     panned = false;
     _isPreviewing = false;
+    _previewEnabled = false;
+    
     _prevPanPos = Vec2::ZERO;
     // Initialize the assetManager
     _ordered_root = cugl::scene2::OrderedNode::allocWithOrder(cugl::scene2::OrderedNode::Order::DESCEND);
@@ -503,6 +505,9 @@ void GamePlayController::update(float dt){
 
             AudioEngine::get()->clear("past");
             AudioEngine::get()->play("present", _presentMusic, true, _presentMusic->getVolume(), false);
+            
+            _scene->removeChildByName("minimap");
+            _other_scene->removeChildByName("miniChar");
         }
         else {
             _activeMap = "pastWorld";
@@ -522,6 +527,9 @@ void GamePlayController::update(float dt){
             
             AudioEngine::get()->clear("present");
             AudioEngine::get()->play("past", _pastMusic, true, _pastMusic->getVolume(), false);
+            
+            _other_scene->removeChildByName("minimap");
+            _scene->removeChildByName("miniChar");
         }
 
         // stop previous movement after switch world
@@ -608,7 +616,7 @@ void GamePlayController::update(float dt){
         }
         
         else if (!_isSwitching and !_tappingPause
-                 and level > 3){
+                 and level > 3 and _previewEnabled){
             //initialize preview
             _isPreviewing = true;
             if (_activeMap == "pastWorld"){
@@ -1074,7 +1082,7 @@ void GamePlayController::update(float dt){
         
         std::chrono::duration<double> elapsed_seconds = _previewEnd - _previewStart;
         
-        if (_isPreviewing){
+        if (false){
             _previewEnd = std::chrono::steady_clock::now();
             //std::cout<<"time elapsed: "<<elapsed_seconds.count()<<"\n";
             if (elapsed_seconds.count() > .3){
@@ -1090,8 +1098,92 @@ void GamePlayController::update(float dt){
         }
         
         _UI_scene->render(batch);
+        _previewBound->setAnchor(Vec2::ANCHOR_CENTER);
+        PathFactory pathFact = PathFactory();
+        Path2 bound = pathFact.makeCircle(_minimapNode->getPosition(), cam_y_bound/4);
+        _previewBound->setPath(bound);
+        _previewBound->setPosition(_minimapNode->getPosition());
+        _previewBound->setVisible(true);
         
+        if (_activeMap == "pastWorld"){
+            _renderTarget->begin();
+            _other_cam->setPosition(_cam->getPosition());
+            _other_cam->update();
+            _other_scene->render(batch);
+            _renderTarget->end();
+            _minimapTexture = _renderTarget->getTexture();
+            _minimapNode->setTexture(_minimapTexture);
+            _renderTarget->setClearColor(Color4::CLEAR);
+            
+            Rect camView = _other_cam->getViewport();
+            Vec2 center = Vec2(camView.origin.x + camView.size.width/2, camView.origin.y + camView.size.height/2);
+            
+            PolyFactory polyFact = PolyFactory();
+            Poly2 circle = polyFact.makeCircle(center, cam_y_bound);
+            
+            _minimapNode->setPolygon(circle);
+            _minimapNode->setPosition(_cam->getPosition() + Vec2(400,250));
+            _minimapNode->flipVertical(true);
+            _minimapNode->setScale(.25);
+            auto c = _minimapNode->getColor();
+            _minimapNode->setColor(Color4(c.r, c.g, c.b, 180));
+            
+            Rect player = Rect(_character->getNodePosition(), Size(50, 50));
+            _minimapChar->setPolygon(player);
+            _minimapChar->setColor(Color4::RED);
+            _minimapChar->setPosition(_character->getNodePosition());
+            
+            if (_scene->getChildByName("minimap")){
+                
+            }else{
+                _scene->addChildWithName(_minimapNode, "minimap");
+                _scene->addChild(_previewBound);
+            }
+            if (_other_scene->getChildByName("miniChar")){
+                
+            }else{
+                _other_scene->addChildWithName(_minimapChar, "miniChar");
+            }
+        }else{
+            _renderTarget->begin();
+            _cam->setPosition(_other_cam->getPosition());
+            _cam->update();
+            _scene->render(batch);
+            _renderTarget->end();
+            _minimapTexture = _renderTarget->getTexture();
+            _minimapNode->setTexture(_minimapTexture);
+            _renderTarget->setClearColor(Color4::CLEAR);
+            
+            Rect camView = _cam->getViewport();
+            Vec2 center = Vec2(camView.origin.x + camView.size.width/2, camView.origin.y + camView.size.height/2);
+            
+            PolyFactory polyFact = PolyFactory();
+            Poly2 circle = polyFact.makeCircle(center, cam_y_bound);
+            
+            _minimapNode->setPolygon(circle);
+            _minimapNode->setPosition(_other_cam->getPosition() + Vec2(400,250));
+            _minimapNode->flipVertical(true);
+            _minimapNode->setScale(.25);
+            auto c = _minimapNode->getColor();
+            _minimapNode->setColor(Color4(c.r, c.g, c.b, 180));
+            
+            Rect player = Rect(_character->getNodePosition(), Size(50, 50));
+            _minimapChar->setPolygon(player);
+            _minimapChar->setColor(Color4::RED);
+            _minimapChar->setPosition(_character->getNodePosition());
+            
+            if (_other_scene->getChildByName("minimap")){
+                
+            }else{
+                _other_scene->addChild(_previewBound);
+                _other_scene->addChildWithName(_minimapNode, "minimap");
+            }
+            if (_scene->getChildByName("miniChar")){
+                
+            }else{
+                _scene->addChildWithName(_minimapChar, "miniChar");
+            }
+        }
         
-
     }
     

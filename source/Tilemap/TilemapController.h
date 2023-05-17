@@ -285,7 +285,7 @@ public:
         
         int width = _model->dimensions.x * _model->tileSize.width;
         int height = _model->dimensions.y * _model->tileSize.height;
-        int edgeLength = width / 30;
+        int edgeLength = width / 50;
         
         int numPerRow = 0;
         
