@@ -203,10 +203,10 @@
         }, 
         {
          "id":27,
-         "image":"..\/..\/textures\/artifact_urn_green_variantpng.png",
+         "image":"..\/..\/textures\/artifact_urn_green_variant.png",
          "imageheight":128,
          "imagewidth":128,
-         "type":"artifact_urn_green_variantpng"
+         "type":"artifact_urn_green_variant"
         }, 
         {
          "id":28,
