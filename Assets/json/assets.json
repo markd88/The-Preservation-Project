@@ -37,6 +37,9 @@
         }
     },
     "textures": {
+        "tutorial_sample" : {
+            "file": "textures/tutorial_sample.png"
+        },
         "spritesheet_cross_anim" : {
             "file": "textures/spritesheet_cross_anim.png"
         },
@@ -1567,7 +1570,6 @@
                         "absolute" : true
                     },
                     "children": {
-                        
                         "artifact-icon":{
                            "type"   : "Image",
                            "format"    : {
