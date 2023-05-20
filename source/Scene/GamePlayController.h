@@ -289,6 +289,7 @@ public:
     }
 
     void failTerminate(){
+        _tutorial_name = "";
         AudioEngine::get()->play("lost", _loseSound, false, _loseSound->getVolume(), true);
         if (_activeMap == "pastWorld"){
             _scene->addChild(_fail_layer);
@@ -304,6 +305,7 @@ public:
     }
     
     void completeTerminate(){
+        _tutorial_name = "";
         AudioEngine::get()->play("win", _winSound, false, _winSound->getVolume(), true);
         if (_activeMap == "pastWorld"){
             _scene->addChild(_complete_layer);
