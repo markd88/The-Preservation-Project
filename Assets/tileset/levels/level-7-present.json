@@ -2345,7 +2345,6 @@
         {
          "draworder":"topdown",
          "id":11,
-         "locked":true,
          "name":"deco",
          "objects":[
                 {
@@ -2912,8 +2911,8 @@
                  "type":"tile_present_wall1",
                  "visible":true,
                  "width":128,
-                 "x":769.333333333333,
-                 "y":659.333333333333
+                 "x":768,
+                 "y":658
                 }, 
                 {
                  "gid":131,
@@ -2924,8 +2923,8 @@
                  "type":"tile_present_wall_half",
                  "visible":true,
                  "width":128,
-                 "x":897.333333333333,
-                 "y":661.333333333333
+                 "x":896.333333333333,
+                 "y":658.333333333333
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -2994,6 +2993,7 @@
         {
          "draworder":"topdown",
          "id":14,
+         "locked":true,
          "name":"obs",
          "objects":[
                 {
