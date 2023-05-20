@@ -102,7 +102,7 @@ void App::onStartup() {
         _highestUnlocked = readSave(); // read again the newly created save file with value 0
     }
     // DELETE when game release!!!
-    writeSave(30);
+    writeSave(1);
     _highestUnlocked = readSave();
 }
 
