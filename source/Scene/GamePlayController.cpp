@@ -585,7 +585,7 @@ void GamePlayController::update(float dt){
 
             _character->removeChildFrom(_ordered_root);
             _character->addChildTo(_other_ordered_root);
-            _tutorial_name = "4_5";
+            if(level==4) _tutorial_name = "4_5";
 
             AudioEngine::get()->clear("past");
             AudioEngine::get()->play("present", _presentMusic, true, _presentMusic->getVolume(), false);
