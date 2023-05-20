@@ -267,7 +267,7 @@
             "file": "textures/spritesheet_switch_anim_sand_small.png"
         },
         "question_mark_anim" : {
-            "file": "textures/questionmark.png"
+            "file": "textures/spritesheet_question_mark.png"
         },
         "artifact-1": {
             "file":      "textures/artifact-1.png"

@@ -74,8 +74,8 @@ public:
         std::shared_ptr<Texture> question = assets->get<Texture>("question_mark_anim");
         _question_node = scene2::SpriteNode::allocWithSheet(question, 1,8,8);
         _question_node->setVisible(false);
-        _question_node->setScale(1.0f);
-        Vec2 vec = Vec2(100,150);
+        _question_node->setScale(.5f);
+        Vec2 vec = Vec2(120,200);
         _question_node->setPosition(vec);
         _question_node->setRelativeColor(false);
 
