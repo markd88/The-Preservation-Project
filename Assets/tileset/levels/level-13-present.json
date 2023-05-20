@@ -3091,7 +3091,6 @@
         {
          "draworder":"topdown",
          "id":11,
-         "locked":true,
          "name":"deco",
          "objects":[
                 {
@@ -3208,7 +3207,7 @@
                  "id":773,
                  "name":"",
                  "rotation":0,
-                 "type":"tile_present_side_wall1",
+                 "type":"tile_present_side_wall",
                  "visible":true,
                  "width":30,
                  "x":1792,
@@ -3751,7 +3750,7 @@
                  "id":826,
                  "name":"",
                  "rotation":0,
-                 "type":"tile_present_side_wall1",
+                 "type":"tile_present_side_wall",
                  "visible":true,
                  "width":30,
                  "x":1280,
@@ -4546,7 +4545,7 @@
                  "visible":true,
                  "width":128,
                  "x":256,
-                 "y":1344
+                 "y":1376
                 }, 
                 {
                  "gid":35,
@@ -4569,8 +4568,8 @@
                  "type":"box1",
                  "visible":true,
                  "width":128,
-                 "x":320,
-                 "y":1280
+                 "x":256,
+                 "y":1319
                 }, 
                 {
                  "gid":38,

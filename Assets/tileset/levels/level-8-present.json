@@ -2332,7 +2332,6 @@
         {
          "draworder":"topdown",
          "id":16,
-         "locked":true,
          "name":"shadow",
          "objects":[
                 {
@@ -2543,18 +2542,6 @@
                 {
                  "gid":115,
                  "height":128,
-                 "id":944,
-                 "name":"",
-                 "rotation":0,
-                 "type":"tile_present_grass_shadow",
-                 "visible":true,
-                 "width":128,
-                 "x":1280,
-                 "y":896
-                }, 
-                {
-                 "gid":115,
-                 "height":128,
                  "id":945,
                  "name":"",
                  "rotation":0,
@@ -2719,8 +2706,7 @@
                  "width":128,
                  "x":640,
                  "y":768
-                },
-            
+                }, 
                 {
                  "gid":113,
                  "height":128,
@@ -2732,7 +2718,8 @@
                  "width":128,
                  "x":1152,
                  "y":512
-                }, 
+                },
+            
                 {
                  "gid":113,
                  "height":128,
@@ -2867,7 +2854,7 @@
                 }],
          "opacity":1,
          "type":"objectgroup",
-         "visible":false,
+         "visible":true,
          "x":0,
          "y":0
         }, 
@@ -3108,18 +3095,6 @@
                 {
                  "gid":138,
                  "height":128,
-                 "id":716,
-                 "name":"",
-                 "rotation":0,
-                 "type":"tile_present_wall3",
-                 "visible":true,
-                 "width":128,
-                 "x":1280,
-                 "y":768
-                }, 
-                {
-                 "gid":138,
-                 "height":128,
                  "id":717,
                  "name":"",
                  "rotation":0,
@@ -3138,8 +3113,8 @@
                  "type":"present_wall_edge3",
                  "visible":true,
                  "width":30,
-                 "x":1222,
-                 "y":768.666666666667
+                 "x":1248,
+                 "y":770
                 }, 
                 {
                  "gid":163,
@@ -3150,8 +3125,8 @@
                  "type":"present_wall_edge3",
                  "visible":true,
                  "width":30,
-                 "x":1222,
-                 "y":896
+                 "x":1248,
+                 "y":895
                 }, 
                 {
                  "gid":136,
@@ -3260,8 +3235,7 @@
                  "width":30,
                  "x":229,
                  "y":640
-                },
-            
+                }, 
                 {
                  "gid":170,
                  "height":129,
@@ -3273,7 +3247,8 @@
                  "width":30,
                  "x":229,
                  "y":768
-                }, 
+                },
+            
                 {
                  "gid":170,
                  "height":129,
@@ -3453,8 +3428,7 @@
                  "width":128,
                  "x":1536,
                  "y":1280
-                },
-            
+                }, 
                 {
                  "gid":177,
                  "height":128,
@@ -3466,7 +3440,8 @@
                  "width":128,
                  "x":1408,
                  "y":1280
-                }, 
+                },
+            
                 {
                  "gid":177,
                  "height":128,
@@ -3646,8 +3621,7 @@
                  "width":128,
                  "x":1744,
                  "y":512
-                },
-            
+                }, 
                 {
                  "gid":170,
                  "height":129,
@@ -3659,7 +3633,8 @@
                  "width":30,
                  "x":1792,
                  "y":1024
-                }, 
+                },
+            
                 {
                  "gid":170,
                  "height":129,
@@ -3729,7 +3704,6 @@
         {
          "draworder":"topdown",
          "id":14,
-         "locked":true,
          "name":"guard",
          "objects":[
                 {
@@ -3754,29 +3728,6 @@
                  "width":128,
                  "x":856,
                  "y":834.666666666667
-                }, 
-                {
-                 "gid":53,
-                 "height":128,
-                 "id":835,
-                 "name":"",
-                 "properties":[
-                        {
-                         "name":"direction",
-                         "type":"int",
-                         "value":2
-                        }, 
-                        {
-                         "name":"isStatic",
-                         "type":"bool",
-                         "value":true
-                        }],
-                 "rotation":0,
-                 "type":"enemy_static",
-                 "visible":true,
-                 "width":128,
-                 "x":1269.33333333333,
-                 "y":909.333333333333
                 }, 
                 {
                  "gid":53,
@@ -4466,18 +4417,6 @@
                 {
                  "gid":36,
                  "height":64,
-                 "id":1031,
-                 "name":"",
-                 "rotation":0,
-                 "type":"box2",
-                 "visible":true,
-                 "width":128,
-                 "x":1280,
-                 "y":768
-                }, 
-                {
-                 "gid":36,
-                 "height":64,
                  "id":1032,
                  "name":"",
                  "rotation":0,
@@ -4582,8 +4521,7 @@
                  "width":32,
                  "x":384,
                  "y":960
-                },
-            
+                }, 
                 {
                  "gid":212,
                  "height":128,
@@ -4595,7 +4533,8 @@
                  "width":32,
                  "x":384,
                  "y":896
-                }, 
+                },
+            
                 {
                  "gid":212,
                  "height":128,
@@ -4605,8 +4544,8 @@
                  "type":"box7",
                  "visible":true,
                  "width":32,
-                 "x":1216,
-                 "y":864
+                 "x":1246,
+                 "y":861
                 }, 
                 {
                  "gid":212,
@@ -4617,7 +4556,7 @@
                  "type":"box7",
                  "visible":true,
                  "width":32,
-                 "x":1216,
+                 "x":1248,
                  "y":960
                 }, 
                 {

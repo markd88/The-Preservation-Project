@@ -5,7 +5,6 @@
         {
          "draworder":"topdown",
          "id":2,
-         "locked":true,
          "name":"tilemap",
          "objects":[
                 {
@@ -2501,7 +2500,6 @@
         {
          "draworder":"topdown",
          "id":3,
-         "locked":true,
          "name":"deco",
          "objects":[
                 {
@@ -2905,18 +2903,6 @@
                 {
                  "gid":142,
                  "height":128,
-                 "id":211,
-                 "name":"",
-                 "rotation":0,
-                 "type":"past_roof_R",
-                 "visible":true,
-                 "width":60,
-                 "x":1664,
-                 "y":640
-                }, 
-                {
-                 "gid":142,
-                 "height":128,
                  "id":212,
                  "name":"",
                  "rotation":0,
@@ -3045,8 +3031,7 @@
                  "width":128,
                  "x":512,
                  "y":962
-                },
-            
+                }, 
                 {
                  "gid":142,
                  "height":128,
@@ -3058,7 +3043,8 @@
                  "width":60,
                  "x":641,
                  "y":678
-                }, 
+                },
+            
                 {
                  "gid":148,
                  "height":128,
@@ -3226,8 +3212,7 @@
                  "width":128,
                  "x":896,
                  "y":1408
-                },
-            
+                }, 
                 {
                  "gid":43,
                  "height":195,
@@ -3239,7 +3224,8 @@
                  "width":99,
                  "x":1307,
                  "y":1095
-                }, 
+                },
+            
                 {
                  "gid":42,
                  "height":106,
@@ -3299,6 +3285,18 @@
                  "width":195,
                  "x":1081,
                  "y":651
+                }, 
+                {
+                 "gid":174,
+                 "height":180,
+                 "id":557,
+                 "name":"",
+                 "rotation":0,
+                 "type":"tile_past_door_side",
+                 "visible":true,
+                 "width":29,
+                 "x":1669,
+                 "y":678
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -3429,7 +3427,6 @@
         {
          "draworder":"topdown",
          "id":6,
-         "locked":true,
          "name":"guard",
          "objects":[
                 {
@@ -3452,8 +3449,8 @@
                  "type":"enemy_static",
                  "visible":true,
                  "width":128,
-                 "x":1516,
-                 "y":832
+                 "x":1533,
+                 "y":1023
                 }, 
                 {
                  "gid":53,
@@ -3524,6 +3521,18 @@
                  "width":168,
                  "x":238.667,
                  "y":1305.33
+                }, 
+                {
+                 "gid":181,
+                 "height":168,
+                 "id":558,
+                 "name":"",
+                 "rotation":0,
+                 "type":"exit_side",
+                 "visible":true,
+                 "width":72,
+                 "x":1645,
+                 "y":661
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -4568,7 +4577,7 @@
          "y":0
         }],
  "nextlayerid":13,
- "nextobjectid":557,
+ "nextobjectid":559,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.10.0",

@@ -4303,7 +4303,6 @@
         {
          "draworder":"topdown",
          "id":7,
-         "locked":true,
          "name":"exit",
          "objects":[
                 {
@@ -5344,7 +5343,7 @@
                 }],
          "opacity":1,
          "type":"objectgroup",
-         "visible":false,
+         "visible":true,
          "x":0,
          "y":0
         }],

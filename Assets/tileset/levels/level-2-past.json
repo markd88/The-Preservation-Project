@@ -1,11 +1,10 @@
 { "compressionlevel":-1,
- "height":9,
+ "height":10,
  "infinite":false,
  "layers":[
         {
          "draworder":"topdown",
          "id":2,
-         "locked":true,
          "name":"tilemap",
          "objects":[
                 {
@@ -1311,6 +1310,151 @@
                  "width":128,
                  "x":1408,
                  "y":1152
+                },
+            
+                {
+                 "gid":155,
+                 "height":128,
+                 "id":211,
+                 "name":"",
+                 "rotation":0,
+                 "type":"pastB_floor_stone1",
+                 "visible":true,
+                 "width":128,
+                 "x":128,
+                 "y":1280
+                }, 
+                {
+                 "gid":66,
+                 "height":128,
+                 "id":212,
+                 "name":"",
+                 "rotation":0,
+                 "type":"pastB_floor_stone2",
+                 "visible":true,
+                 "width":128,
+                 "x":256,
+                 "y":1280
+                }, 
+                {
+                 "gid":67,
+                 "height":128,
+                 "id":213,
+                 "name":"",
+                 "rotation":0,
+                 "type":"pastB_floor_stone3",
+                 "visible":true,
+                 "width":128,
+                 "x":384,
+                 "y":1280
+                }, 
+                {
+                 "gid":155,
+                 "height":128,
+                 "id":214,
+                 "name":"",
+                 "rotation":0,
+                 "type":"pastB_floor_stone1",
+                 "visible":true,
+                 "width":128,
+                 "x":512,
+                 "y":1280
+                }, 
+                {
+                 "gid":66,
+                 "height":128,
+                 "id":215,
+                 "name":"",
+                 "rotation":0,
+                 "type":"pastB_floor_stone2",
+                 "visible":true,
+                 "width":128,
+                 "x":640,
+                 "y":1280
+                }, 
+                {
+                 "gid":67,
+                 "height":128,
+                 "id":216,
+                 "name":"",
+                 "rotation":0,
+                 "type":"pastB_floor_stone3",
+                 "visible":true,
+                 "width":128,
+                 "x":768,
+                 "y":1280
+                }, 
+                {
+                 "gid":155,
+                 "height":128,
+                 "id":217,
+                 "name":"",
+                 "rotation":0,
+                 "type":"pastB_floor_stone1",
+                 "visible":true,
+                 "width":128,
+                 "x":896,
+                 "y":1280
+                }, 
+                {
+                 "gid":66,
+                 "height":128,
+                 "id":218,
+                 "name":"",
+                 "rotation":0,
+                 "type":"pastB_floor_stone2",
+                 "visible":true,
+                 "width":128,
+                 "x":1024,
+                 "y":1280
+                }, 
+                {
+                 "gid":67,
+                 "height":128,
+                 "id":219,
+                 "name":"",
+                 "rotation":0,
+                 "type":"pastB_floor_stone3",
+                 "visible":true,
+                 "width":128,
+                 "x":1152,
+                 "y":1280
+                }, 
+                {
+                 "gid":155,
+                 "height":128,
+                 "id":220,
+                 "name":"",
+                 "rotation":0,
+                 "type":"pastB_floor_stone1",
+                 "visible":true,
+                 "width":128,
+                 "x":1280,
+                 "y":1280
+                }, 
+                {
+                 "gid":155,
+                 "height":128,
+                 "id":221,
+                 "name":"",
+                 "rotation":0,
+                 "type":"pastB_floor_stone1",
+                 "visible":true,
+                 "width":128,
+                 "x":0,
+                 "y":1280
+                }, 
+                {
+                 "gid":155,
+                 "height":128,
+                 "id":222,
+                 "name":"",
+                 "rotation":0,
+                 "type":"pastB_floor_stone1",
+                 "visible":true,
+                 "width":128,
+                 "x":1408,
+                 "y":1280
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -2290,19 +2434,7 @@
                  "type":"box3",
                  "visible":true,
                  "width":64,
-                 "x":1125,
-                 "y":956
-                }, 
-                {
-                 "gid":38,
-                 "height":64,
-                 "id":177,
-                 "name":"",
-                 "rotation":0,
-                 "type":"box4",
-                 "visible":true,
-                 "width":64,
-                 "x":1127,
+                 "x":1128,
                  "y":1022
                 }, 
                 {
@@ -2314,8 +2446,8 @@
                  "type":"box2",
                  "visible":true,
                  "width":128,
-                 "x":259.147172462241,
-                 "y":480.820512820513
+                 "x":256,
+                 "y":512
                 }, 
                 {
                  "gid":36,
@@ -2326,17 +2458,17 @@
                  "type":"box2",
                  "visible":true,
                  "width":128,
-                 "x":325.884088514225,
-                 "y":480.820512820513
+                 "x":320,
+                 "y":512
                 }],
          "opacity":1,
          "type":"objectgroup",
-         "visible":false,
+         "visible":true,
          "x":0,
          "y":0
         }],
  "nextlayerid":9,
- "nextobjectid":199,
+ "nextobjectid":223,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.10.0",

@@ -745,7 +745,7 @@ void GamePlayController::update(float dt){
         // if input still within the character
         if(_path->isInitiating){
             // if input leaves out of the character's radius, draw the initial segments
-            if (!_character->containsFar(input_posi)){
+            if (!_character->containsNear(input_posi)){
                 
                 _path->setIsInitiating(false);
                 _path->updateLastPos(_character->getPosition()); //change to a fixed location on the character

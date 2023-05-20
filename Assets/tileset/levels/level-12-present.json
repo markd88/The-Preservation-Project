@@ -3820,7 +3820,7 @@
                  "id":560,
                  "name":"",
                  "rotation":0,
-                 "type":"tile_present_side_wall1",
+                 "type":"tile_present_side_wall",
                  "visible":true,
                  "width":30,
                  "x":2048,
@@ -5966,6 +5966,18 @@
                  "width":32,
                  "x":1280,
                  "y":800
+                }, 
+                {
+                 "gid":37,
+                 "height":128,
+                 "id":841,
+                 "name":"",
+                 "rotation":0,
+                 "type":"box3",
+                 "visible":true,
+                 "width":64,
+                 "x":1024,
+                 "y":640
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -5974,7 +5986,7 @@
          "y":0
         }],
  "nextlayerid":9,
- "nextobjectid":841,
+ "nextobjectid":842,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.10.0",
