@@ -3067,7 +3067,6 @@
         {
          "draworder":"topdown",
          "id":11,
-         "locked":true,
          "name":"shadow",
          "objects":[
                 {
@@ -3181,18 +3180,6 @@
                 {
                  "gid":115,
                  "height":128,
-                 "id":1001,
-                 "name":"",
-                 "rotation":0,
-                 "type":"tile_present_grass_shadow",
-                 "visible":true,
-                 "width":28,
-                 "x":228,
-                 "y":1656
-                }, 
-                {
-                 "gid":115,
-                 "height":128,
                  "id":1011,
                  "name":"",
                  "rotation":0,
@@ -3213,18 +3200,6 @@
                  "width":128,
                  "x":1280,
                  "y":497.333333333333
-                }, 
-                {
-                 "gid":115,
-                 "height":128,
-                 "id":1014,
-                 "name":"",
-                 "rotation":0,
-                 "type":"tile_present_grass_shadow",
-                 "visible":true,
-                 "width":28,
-                 "x":1538,
-                 "y":1015
                 }, 
                 {
                  "gid":128,
@@ -3273,8 +3248,7 @@
                  "width":128,
                  "x":640,
                  "y":1280
-                },
-            
+                }, 
                 {
                  "gid":129,
                  "height":128,
@@ -3298,6 +3272,67 @@
                  "width":128,
                  "x":1664,
                  "y":768
+                },
+            
+                {
+                 "gid":216,
+                 "height":256,
+                 "id":1136,
+                 "name":"",
+                 "rotation":0,
+                 "type":"tile_present_obstacle_stone_shadow",
+                 "visible":true,
+                 "width":256,
+                 "x":522.146612991402,
+                 "y":560.837334128523
+                }, 
+                {
+                 "gid":216,
+                 "height":256,
+                 "id":1137,
+                 "name":"",
+                 "rotation":0,
+                 "type":"tile_present_obstacle_stone_shadow",
+                 "visible":true,
+                 "width":256,
+                 "x":1220.3862631082,
+                 "y":1444.32423835793
+                }, 
+                {
+                 "gid":216,
+                 "height":256,
+                 "id":1138,
+                 "name":"",
+                 "rotation":0,
+                 "type":"tile_present_obstacle_stone_shadow",
+                 "visible":true,
+                 "width":256,
+                 "x":1159.82466080215,
+                 "y":1291.13900899558
+                }, 
+                {
+                 "gid":217,
+                 "height":128,
+                 "id":1139,
+                 "name":"",
+                 "rotation":0,
+                 "type":"tile_present_grass_shadow_thin",
+                 "visible":true,
+                 "width":28,
+                 "x":228,
+                 "y":1661.66666666667
+                }, 
+                {
+                 "gid":217,
+                 "height":128,
+                 "id":1140,
+                 "name":"",
+                 "rotation":0,
+                 "type":"tile_present_grass_shadow_thin",
+                 "visible":true,
+                 "width":28,
+                 "x":1537.66666666667,
+                 "y":1023.33333333333
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -5189,15 +5224,15 @@
                 }],
          "opacity":1,
          "type":"objectgroup",
-         "visible":false,
+         "visible":true,
          "x":0,
          "y":0
         }],
  "nextlayerid":14,
- "nextobjectid":1136,
+ "nextobjectid":1141,
  "orientation":"orthogonal",
  "renderorder":"right-down",
- "tiledversion":"1.10.1",
+ "tiledversion":"1.10.0",
  "tileheight":128,
  "tilesets":[
         {
