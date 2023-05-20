@@ -3343,7 +3343,6 @@
         {
          "draworder":"topdown",
          "id":10,
-         "locked":true,
          "name":"deco",
          "objects":[
                 {
@@ -4044,6 +4043,42 @@
                  "width":128,
                  "x":1741.33333333333,
                  "y":511.333333333333
+                }, 
+                {
+                 "gid":177,
+                 "height":128,
+                 "id":1141,
+                 "name":"",
+                 "rotation":0,
+                 "type":"presentB_fence",
+                 "visible":true,
+                 "width":128,
+                 "x":1664,
+                 "y":640
+                }, 
+                {
+                 "gid":177,
+                 "height":128,
+                 "id":1144,
+                 "name":"",
+                 "rotation":0,
+                 "type":"presentB_fence",
+                 "visible":true,
+                 "width":128,
+                 "x":1792,
+                 "y":640
+                }, 
+                {
+                 "gid":177,
+                 "height":128,
+                 "id":1146,
+                 "name":"",
+                 "rotation":0,
+                 "type":"presentB_fence",
+                 "visible":true,
+                 "width":128,
+                 "x":1536,
+                 "y":640
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -4339,8 +4374,8 @@
                  "type":"box6",
                  "visible":true,
                  "width":256,
-                 "x":1152,
-                 "y":1152
+                 "x":1162,
+                 "y":1241
                 }, 
                 {
                  "gid":40,
@@ -4592,8 +4627,8 @@
                  "type":"box2",
                  "visible":true,
                  "width":128,
-                 "x":1562,
-                 "y":540
+                 "x":1557,
+                 "y":577
                 }, 
                 {
                  "gid":36,
@@ -4604,8 +4639,8 @@
                  "type":"box2",
                  "visible":true,
                  "width":128,
-                 "x":1681,
-                 "y":542
+                 "x":1686,
+                 "y":573
                 }, 
                 {
                  "gid":40,
@@ -5221,6 +5256,42 @@
                  "width":128,
                  "x":512,
                  "y":1152
+                }, 
+                {
+                 "gid":40,
+                 "height":128,
+                 "id":1147,
+                 "name":"",
+                 "rotation":0,
+                 "type":"box6",
+                 "visible":true,
+                 "width":256,
+                 "x":1568,
+                 "y":672
+                }, 
+                {
+                 "gid":35,
+                 "height":128,
+                 "id":1148,
+                 "name":"",
+                 "rotation":0,
+                 "type":"box1",
+                 "visible":true,
+                 "width":128,
+                 "x":1792,
+                 "y":672
+                }, 
+                {
+                 "gid":36,
+                 "height":64,
+                 "id":1150,
+                 "name":"",
+                 "rotation":0,
+                 "type":"box2",
+                 "visible":true,
+                 "width":128,
+                 "x":1792,
+                 "y":544
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -5229,7 +5300,7 @@
          "y":0
         }],
  "nextlayerid":14,
- "nextobjectid":1141,
+ "nextobjectid":1151,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.10.0",

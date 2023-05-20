@@ -3141,7 +3141,6 @@
         {
          "draworder":"topdown",
          "id":11,
-         "locked":true,
          "name":"deco",
          "objects":[
                 {
@@ -4476,8 +4475,8 @@
                  "type":"box1",
                  "visible":true,
                  "width":128,
-                 "x":512,
-                 "y":1280
+                 "x":510,
+                 "y":1347
                 }, 
                 {
                  "gid":35,
@@ -4489,7 +4488,7 @@
                  "visible":true,
                  "width":128,
                  "x":384,
-                 "y":1280
+                 "y":1345
                 }, 
                 {
                  "gid":35,
@@ -4729,8 +4728,8 @@
                  "type":"box1",
                  "visible":true,
                  "width":128,
-                 "x":1544,
-                 "y":1096
+                 "x":1541,
+                 "y":1122
                 },
             
                 {
@@ -4742,8 +4741,8 @@
                  "type":"box1",
                  "visible":true,
                  "width":128,
-                 "x":1414,
-                 "y":1090
+                 "x":1415,
+                 "y":1123
                 }, 
                 {
                  "gid":35,
@@ -4754,8 +4753,8 @@
                  "type":"box1",
                  "visible":true,
                  "width":128,
-                 "x":1284,
-                 "y":1090
+                 "x":1290,
+                 "y":1123
                 }, 
                 {
                  "gid":35,
@@ -4766,8 +4765,8 @@
                  "type":"box1",
                  "visible":true,
                  "width":128,
-                 "x":1226,
-                 "y":1092
+                 "x":1220,
+                 "y":1122
                 }, 
                 {
                  "gid":35,
@@ -4850,8 +4849,8 @@
                  "type":"box1",
                  "visible":true,
                  "width":128,
-                 "x":895,
-                 "y":684
+                 "x":892,
+                 "y":703
                 }, 
                 {
                  "gid":35,
@@ -4862,8 +4861,8 @@
                  "type":"box1",
                  "visible":true,
                  "width":128,
-                 "x":1021,
-                 "y":690
+                 "x":1020,
+                 "y":702
                 }, 
                 {
                  "gid":35,
@@ -4886,8 +4885,8 @@
                  "type":"box1",
                  "visible":true,
                  "width":128,
-                 "x":1198,
-                 "y":684
+                 "x":1203,
+                 "y":694
                 }],
          "opacity":1,
          "type":"objectgroup",
