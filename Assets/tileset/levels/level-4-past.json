@@ -1186,10 +1186,9 @@
                  "name":"",
                  "rotation":0,
                  "type":"switch1",
-                 "type":"switch1",
                  "visible":true,
                  "width":1400,
-                 "x":192,
+                 "x":224,
                  "y":960
                 }],
          "opacity":1,
@@ -1862,7 +1861,7 @@
                  "type":"artifact_statue_jade",
                  "visible":true,
                  "width":128,
-                 "x":768,
+                 "x":816,
                  "y":384
                 }, 
                 {
