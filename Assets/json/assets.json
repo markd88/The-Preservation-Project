@@ -127,6 +127,9 @@
         "artifact_sword_gold": {
             "file": "textures/artifact_sword_gold.png"
         },
+        "artifact_sword_gold_Anim": {
+            "file": "textures/artifact_sword_gold_anim.png"
+        },
         "artifact_fan_paper_WALL": {
             "file": "textures/artifact_fan_paper_WALL.png"
         },
