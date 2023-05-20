@@ -1332,8 +1332,8 @@
                  "type":"avoid",
                  "visible":true,
                  "width":779,
-                 "x":288,
-                 "y":1024
+                 "x":256,
+                 "y":1120
                 }],
          "opacity":1,
          "type":"objectgroup",

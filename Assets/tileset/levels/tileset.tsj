@@ -16,8 +16,8 @@
  "margin":0,
  "name":"tileset",
  "spacing":0,
- "tilecount":178,
- "tiledversion":"1.10.1",
+ "tilecount":180,
+ "tiledversion":"1.10.0",
  "tileheight":789,
  "tiles":[
         {
@@ -1085,7 +1085,7 @@
          "imagewidth":128,
          "type":"tile_present_wall_half"
         }, 
-	{
+        {
          "id":197,
          "image":"..\/..\/textures\/tile_present_wall_side.png",
          "imageheight":128,
@@ -1120,7 +1120,7 @@
          "imagewidth":128,
          "type":"tile_present_wall_top3"
         }, 
-	{
+        {
          "id":198,
          "image":"..\/..\/textures\/tile_present_wall.png",
          "imageheight":128,
@@ -1278,13 +1278,14 @@
          "id":193,
          "image":"..\/..\/textures\/draw.png",
          "imageheight":300,
-         "imagewidth":963
+         "imagewidth":963,
+         "type":"draw"
         }, 
         {
          "id":194,
          "image":"..\/..\/textures\/switch1.png",
-         "imageheight":789,
-         "imagewidth":1368
+         "imageheight":772,
+         "imagewidth":1040
         }, 
         {
          "id":195,
@@ -1295,8 +1296,9 @@
         {
          "id":196,
          "image":"..\/..\/textures\/avoid.png",
-         "imageheight":620,
-         "imagewidth":782
+         "imageheight":658,
+         "imagewidth":823,
+         "type":"avoid"
         }],
  "tilewidth":1368,
  "type":"tileset",

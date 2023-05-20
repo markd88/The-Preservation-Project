@@ -2236,6 +2236,7 @@
          "y":0
         }, 
         {
+         "class":"draw",
          "draworder":"topdown",
          "id":4,
          "locked":true,
