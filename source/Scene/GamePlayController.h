@@ -16,6 +16,7 @@ using namespace std;
 #include <ItemSet/ItemSetController.h>
 #include "LevelController.h"
 #include <common.h>
+#include <map> 
 
 class GamePlayController {
 #pragma mark Internal References
@@ -38,6 +39,10 @@ private:
 #pragma mark External References
 public:
     
+    // for tutorials
+    std::shared_ptr<cugl::scene2::Button> _tutorial_close;
+    std::map<std::string, std::shared_ptr<cugl::scene2::SceneNode>> _tutorial_pages;
+    std::string _tutorial_name = "";
     /** The asset manager for this game mode. */
     std::shared_ptr<cugl::AssetManager> _assets;
     std::shared_ptr<cugl::scene2::Button> _button;
@@ -221,6 +226,7 @@ public:
         _pause_resume->deactivate();
         _pause_restart->deactivate();
         _pause_exit->deactivate();
+        _tutorial_close->deactivate();
     }
 
 #pragma mark Generation Helpers
@@ -396,6 +402,17 @@ public:
                 _res_bar_vec[i]->setVisible(false);
             }
         }
+    }
+    
+    void stopCharacter(){
+        auto _children = _scene2texture->getChildren();
+        for (int i = 0; i < _children.size(); i++){
+            auto tempChild = _children[i];
+            _scene2texture->removeChild(_children[i]);
+            _scene->addChild(tempChild);
+        }
+        _other_scene->removeChildByName("preview");
+        _other_scene->removeChildByName("previewBound");
     }
 
 };

@@ -120,6 +120,7 @@ public:
     void setTextureKey(std::string textureKey) {
         this->_textureKey = textureKey;
     }
+
 };
 
 #endif /* ItemModel_h */

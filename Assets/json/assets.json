@@ -37,6 +37,39 @@
         }
     },
     "textures": {
+        "tutorial_1_1": {
+            "file": "textures/Level-1 1.png"
+        },
+        "tutorial_1_2": {
+            "file": "textures/Level-1 2.png"
+        },
+        "tutorial_2_1": {
+            "file": "textures/level-2 1.png"
+        },
+        "tutorial_2_2": {
+            "file": "textures/level-2 2.png"
+        },
+        "tutorial_4_1": {
+            "file": "textures/level-4 1.png"
+        },
+        "tutorial_4_2": {
+            "file": "textures/level-4 2.png"
+        },
+        "tutorial_4_3": {
+            "file": "textures/level-4 3.png"
+        },
+        "tutorial_4_4": {
+            "file": "textures/level-4 4.png"
+        },
+        "tutorial_4_5": {
+            "file": "textures/level-4 5.png"
+        },
+        "tutorial_close": {
+            "file": "textures/X.png"
+        },
+        "tutorial_sample" : {
+            "file": "textures/tutorial_sample.png"
+        },
         "spritesheet_cross_anim" : {
             "file": "textures/spritesheet_cross_anim.png"
         },
@@ -1560,7 +1593,6 @@
                         "absolute" : true
                     },
                     "children": {
-                        
                         "artifact-icon":{
                            "type"   : "Image",
                            "format"    : {

@@ -30,6 +30,9 @@ public:
     
     bool _firstPage = true; // false if on second page
 
+    std::shared_ptr<cugl::scene2::Button> _next_button = std::make_shared<cugl::scene2::Button>();
+    std::shared_ptr<cugl::scene2::Button> _prev_button = std::make_shared<cugl::scene2::Button>();
+    
     MenuController() {
         _level_buttons = vector<shared_ptr<cugl::scene2::Button>>(15);
     }
@@ -81,38 +84,38 @@ public:
         std::shared_ptr<cugl::scene2::PolygonNode> next_image = std::make_shared<cugl::scene2::PolygonNode>();
         next_image->initWithTexture(_assets->get<Texture>("menu_next"));
         next_image->setScale(1.2);
-        auto next_button = std::make_shared<cugl::scene2::Button>();
-        next_button->init(next_image);
+        _next_button = std::make_shared<cugl::scene2::Button>();
+        _next_button->init(next_image);
         
-        menu_layer->addChild(next_button);
-        next_button->setPosition(Vec2(space.x*7, space.y*2));
-        next_button->setVisible(true);
-        next_button->addListener([=](const std::string& name, bool down) {
+        menu_layer->addChild(_next_button);
+        _next_button->setPosition(Vec2(space.x*7, space.y*2));
+        _next_button->setVisible(true);
+        _next_button->addListener([=](const std::string& name, bool down) {
             if(!down){
                 _firstPage = false;
                 updateMenu();
             }
         });
-        next_button->activate();
+        _next_button->activate();
         
         
         // set up next and prev button
         std::shared_ptr<cugl::scene2::PolygonNode> prev_image = std::make_shared<cugl::scene2::PolygonNode>();
         prev_image->initWithTexture(_assets->get<Texture>("menu_prev"));
         prev_image->setScale(1.2);
-        auto prev_button = std::make_shared<cugl::scene2::Button>();
-        prev_button->init(prev_image);
+        _prev_button = std::make_shared<cugl::scene2::Button>();
+        _prev_button->init(prev_image);
         
-        menu_layer->addChild(prev_button);
-        prev_button->setPosition(Vec2(space.x*1, space.y*2));
-        prev_button->setVisible(true);
-        prev_button->addListener([=](const std::string& name, bool down) {
+        menu_layer->addChild(_prev_button);
+        _prev_button->setPosition(Vec2(space.x*1, space.y*2));
+        _prev_button->setVisible(true);
+        _prev_button->addListener([=](const std::string& name, bool down) {
             if(!down){
                 _firstPage = true;
                 updateMenu();
             }
         });
-        prev_button->activate();
+        _prev_button->activate();
         
         Vec2 level_pos = Vec2 (space.x*2, space.y*3);
         auto level_font = _assets->get<cugl::Font>("courier_regular");
@@ -169,8 +172,13 @@ public:
     }
     
     void updateMenu(){
-        int page = 0;
-        if(!_firstPage) page = 1;
+        int page = -1;
+        if(!_firstPage) {
+            page = 1;
+        }
+        else{
+            page = 0;
+        }
         
         for (int i=0; i<15; i++){
             int lev = i+page*15 + 1;
@@ -209,7 +217,18 @@ public:
 
     
     void update(float timestep){
-        
+        if(!_firstPage) {
+            _prev_button->setVisible(true);
+            _prev_button->activate();
+            _next_button->deactivate();
+            _next_button->setVisible(false);
+        }
+        else{
+            _prev_button->setVisible(false);
+            _prev_button->deactivate();
+            _next_button->activate();
+            _next_button->setVisible(true);
+        }
     }
 
     void render(std::shared_ptr<SpriteBatch> &batch){
@@ -226,6 +245,8 @@ public:
             for(auto &button : _level_buttons){
                 button->deactivate();
             }
+            _prev_button->deactivate();
+            _next_button->deactivate();
         }
     }
     
