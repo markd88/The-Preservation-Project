@@ -8416,12 +8416,12 @@
  "nextobjectid":984,
  "orientation":"orthogonal",
  "renderorder":"right-down",
- "tiledversion":"1.10.1",
+ "tiledversion":"1.10.0",
  "tileheight":128,
  "tilesets":[
         {
          "firstgid":1,
-         "source":"..\/The-Preservation-Project\/Assets\/tileset\/levels\/tileset.tsj"
+         "source":"tileset.tsj"
         }],
  "tilewidth":128,
  "type":"map",
