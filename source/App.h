@@ -9,29 +9,49 @@
 //  Authors: Walker White and Gonzalo Gonzalez
 //  Version: 2/8/23
 //
+using namespace std;
 
 #ifndef __PC_APP_H__
 #define __PC_APP_H__
 #include <cugl/cugl.h>
-#include <random>
 
 // This is NOT in the same directory
-#include <Game/GameController.h>
-
+#include <Scene/GamePlayController.h>
+#include <Scene/LoadingController.h>
+#include <Scene/MenuController.h>
+#include <common.h>
 /**
  * Class for a viewing procedurally generated tile-based content
  *
  * This application is keyboard-controlled, and as a result, only
  * works on the desktop platforms.
  */
-class TileApp : public cugl::Application {
+class App : public cugl::Application {
 protected:
     /** The main controller for our game */
-    std::unique_ptr<GameController> _gameController;
+    // std::unique_ptr<GameController> _gameController;
     /** A 3152 style SpriteBatch to render the scene */
     std::shared_ptr<cugl::SpriteBatch>  _batch;
-    /** The random number generator for content generation */
-    std::shared_ptr<std::mt19937> _randoms;
+    /** The global asset manager */
+    std::shared_ptr<cugl::AssetManager> _assets;
+    
+    /** The variable to determine which scene is being active */
+    string active_scene;
+    
+    std::shared_ptr<GamePlayController> _gameplayController;
+    
+    /** The loading controller*/
+    std::shared_ptr<LoadingController> _loadingController;
+    
+    
+    std::shared_ptr<MenuController> _menuController;
+    
+    /** Whether or not we have finished loading all assets */
+    bool _loaded;
+        
+    std::string _saveDir;
+    
+    int _highestUnlocked = -1;
     
 public:
     /**
@@ -43,7 +63,7 @@ public:
      * of initialization from the constructor allows main.cpp to perform
      * advanced configuration of the application before it starts.
      */
-    TileApp() : Application() {}
+    App() : Application() {}
     
     /**
      * Disposes of this application, releasing all resources.
@@ -52,7 +72,7 @@ public:
      * It simply calls the dispose() method in Application.  There is nothing
      * special to do here.
      */
-    ~TileApp() { }
+    ~App() { }
     
     /**
      * The method called after OpenGL is initialized, but before running the application.
@@ -80,6 +100,30 @@ public:
     virtual void onShutdown() override;
     
     /**
+     * The method called when the application is suspended and put in the background.
+     *
+     * When this method is called, you should store any state that you do not
+     * want to be lost.  There is no guarantee that an application will return
+     * from the background; it may be terminated instead.
+     *
+     * If you are using audio, it is critical that you pause it on suspension.
+     * Otherwise, the audio thread may persist while the application is in
+     * the background.
+     */
+    virtual void onSuspend() override;
+    
+    /**
+     * The method called when the application resumes and put in the foreground.
+     *
+     * If you saved any state before going into the background, now is the time
+     * to restore it. This guarantees that the application looks the same as
+     * when it was suspended.
+     *
+     * If you are using audio, you should use this method to resume any audio
+     * paused before app suspension.
+     */
+    virtual void onResume()  override;
+    /**
      * The method called to update the application data.
      *
      * This is your core loop and should be replaced with your custom implementation.
@@ -103,6 +147,34 @@ public:
      */
     virtual void draw() override;
     
+    
+    // methods for save progress
+    void createSave(){
+        writeSave(1);
+    }
+
+    int readSave(){
+        // return -1 if file not exists
+        bool exists = cugl::filetool::file_exists(_saveDir);
+        if(!exists) return -1;
+        auto read = JsonReader::alloc(_saveDir);
+        auto temp = read->readAll();
+        
+        std::string highestStr = temp.substr(0, temp.size()-1);
+        int highest = stoi(highestStr);
+        read->close();
+        return highest;
+    }
+
+    void writeSave(int highest){
+        // write into saveDir
+        auto write = JsonWriter::alloc(_saveDir);
+        std::shared_ptr<cugl::JsonValue> saveValue = cugl::JsonValue::alloc(cugl::JsonValue::Type::NumberType);
+        saveValue->init(highest*1.0);
+        write->writeJson(saveValue);
+        write->close();
+    }
+
 };
 
 #endif /* __PV_APP_H__ */

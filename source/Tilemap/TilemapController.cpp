@@ -1,15 +1,5 @@
-//
-//  MVCTilemapController.cpp
-//  TileMap Lab
-//
-//  This module provides the MVC version of the TilemapController class.
-//
-//  Author: Gonzalo Gonzalez
-//  Version: 1/5/23.
-//
-#include "MVCTilemapController.h"
-
-using namespace MVC;
+#include "TilemapController.h"
+//using namespace MVC;
 
 #pragma mark Main Functions
 /** Creates the default model, view and tilemap vector. */
@@ -40,6 +30,10 @@ TilemapController::TilemapController(Vec2 position, Vec2 dimensions,
 
     initializeTilemap();
 }
+
+void TilemapController::init(Vec2 position, Vec2 dimensions, Color4 color, Size tileSize) {
+    
+};
 
 #pragma mark -
 #pragma mark Model Methods
@@ -80,69 +74,47 @@ void TilemapController::updateColor(Color4 color) {
  * @param col   The column to place the tile starting from left to right
  * @param row   The row to place the tile starting from bottom to top
  * @param color The color of the tile.
+ * @param is_obs If the tile is obstacle
  */
-void TilemapController::addTile(int col, int row, Color4 color) {
+void TilemapController::addTile(int col, int row, Color4 color, bool is_obs) {
     // TODO: Implement me
     if(col < 0 || row < 0 || col >= _model->dimensions.x || row >= _model->dimensions.y){
         return ;
     }
-    Tile temp = std::make_unique<TileController>(Vec2(col * _model->tileSize.width, row * _model->tileSize.height), _model->tileSize, color);
+    Tile temp = std::make_unique<TileController>(Vec2(col * _model->tileSize.width, row * _model->tileSize.height), _model->tileSize, color, is_obs);
     
     _tilemap[row][col] = std::move(temp);
     
     _tilemap[row][col]->addChildTo(_view->getNode());
 }
 
-/**
- * Inverts the color of the tilemap and it's tiles.
- *
- * Examples:
- *      Inverting white (255, 255, 255, 0) gives black (0, 0, 0, 0)
- *      Inverting red (255, 0, 0, 0) gives cyan (0, 255, 255, 0)
- *      Inverting light purple (150, 100, 200, 0) gives a dull green
- *          (105, 155, 55, 0)
- */
-void TilemapController::invertColor() {
-    // TODO: Implement me
-    for(int i=0; i<_tilemap.size(); i++){
-        for(int j=0; j<_tilemap[0].size(); j++){
-            if(_tilemap[i][j] != nullptr){
-                _tilemap[i][j]->invertColor();
+void TilemapController::addTile2(int col, int row, int height, int totalHeight, bool is_obs,
+             const std::shared_ptr<cugl::AssetManager>& assets, std::string textureKey) {
+
+    Vec2 pos;
+//    pos = Vec2(col * _model->tileSize.width, row * _model->tileSize.height);
+    
+    int x = col* height; // x_index * width
+    int y = totalHeight - (row+1)* height; //totalHeight - y_index * height - height
+    pos = Vec2 (x,y);
+    
+    Tile temp = std::make_unique<TileController>(pos, _model->tileSize, is_obs, assets, textureKey);
+    _tilemap[row][col] = std::move(temp);
+
+    _tilemap[row][col]->addChildTo(_view->getNode());
+};
+
+void TilemapController::setTexture(const std::shared_ptr<cugl::AssetManager>& assets){
+    for(auto& tile_vec : _tilemap){
+        for(auto& tile : tile_vec){
+            if(tile != nullptr){
+                std::string textureKey = tile->getTextureKey();
+                if (textureKey != "") {
+                    tile->setTexture(assets, textureKey);
+                }
             }
         }
     }
-    
-    Color4 old_color = _model->color;
-    Color4 new_color = old_color.complement();
-    updateColor(new_color);
-    
-}
-
-/**
- * Modifies the current number of columns and rows by
- *
- * The values are modified by `colIncrement` and `rowIncrement`,
- *  respectively. The values can be negative.
- *
- * @param colIncrement The number of columns to increment
- * @param rowIncrement The number of rows to increment
- */
-void TilemapController::modifyDimensions(int colIncrement, int rowIncrement) {
-    // TODO: Implement me
-    Vec2 dim(_model->dimensions.x + colIncrement, _model->dimensions.y + rowIncrement);
-    updateDimensions(dim);
-}
-
-/**
- *  Modifies the current width and height by `xFactor` and `yFactor`.
- *
- *  @param xFactor The factor to multiply the current width by
- *  @param yFactor The factor to multiply the current height by
- */
-void TilemapController::modifyTileSize(float xFactor, float yFactor) {
-    // TODO: Implement me
-    Size s (_model->tileSize.width * xFactor, _model->tileSize.height * yFactor);
-    updateTileSize(s);
 }
 
 /**
@@ -187,12 +159,13 @@ void TilemapController::updateTileSize(Size tileSize) {
     // TODO: Implement me
     if(tileSize.width < 0 || tileSize.height < 0) return ;
     
-    Vec2 center = bottomLeftToCenterPosition(_model->position, _model->tileSize*_model->dimensions);
-    
+//    Vec2 center = bottomLeftToCenterPosition(_model->position, _model->tileSize*_model->dimensions);
     _model->setTileSize(tileSize);
     _view->setSize(_model->dimensions * tileSize);
-    
-    Vec2 pos = centerToBottomLeftPosition(center, _model->tileSize*_model->dimensions);
+
+//    Vec2 pos = centerToBottomLeftPosition(center, _model->tileSize*_model->dimensions);
+//    Vec2 pos = Vec2 (_model->position.x, _model->position.y -_model->tileSize.height);
+    Vec2 pos = _model->position;
     
     _model->setPosition(pos);
     _view->setPosition(pos);
@@ -245,6 +218,7 @@ void TilemapController::removeChildFrom(const std::shared_ptr<cugl::Scene2>& sce
  *  move these pointers without copying them, use `std::move`.
  */
 void TilemapController::initializeTilemap() {
+    // TODO: change hard coded dimensions
     for(int i = 0; i < _model->dimensions.y; i++) {
         std::vector<Tile> tileVec(_model->dimensions.x);
         // The compiler infers that tileVec contains unique pointers so std::move must be used to avoid copys

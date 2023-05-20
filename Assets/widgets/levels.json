@@ -1,0 +1,57 @@
+{
+    "contents": {
+        "type": "Button",
+        "data": {
+            "upnode": "ls-button",
+            "visible"  : true,
+            "pushsize" : true,
+            "size": [86, 86],
+            "scale": 1.4
+        },
+        "children": {
+            "ls-button": {
+                "type": "Node",
+                "data": {
+                    "size": [86, 86]
+                },
+                "format": {
+                    "type": "Anchored"
+                },
+                "layout": {
+                    "x_anchor": "center",
+                    "y_anchor": "middle"
+                },
+                "children": {
+                    "nine-patch": {
+                        "type": "NinePatch",
+                        "data": {
+                            "texture": "menu_selectbutton",
+                            "interior": [ 38, 33, 37, 45]
+                        },
+                        "layout": {
+                            "x_anchor": "fill",
+                            "y_anchor": "fill"
+                        }
+                    },
+                    "label": {
+                        "type": "Label",
+                        "data": {
+                            "font": "eaglelake",
+                            "text": "1",
+                            "foreground": [ 0, 0, 0, 225 ],
+                            "halign": "center",
+                            "valign": "middle"
+                        },
+                        "layout": {
+                            "x_anchor": "fill",
+                            "y_anchor": "fill"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "variables": {
+        "text": [ "children", "ls-button", "children", "label", "data", "text" ]
+    }
+}

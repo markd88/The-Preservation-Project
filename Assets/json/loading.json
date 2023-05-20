@@ -1,0 +1,174 @@
+{
+	"textures": {
+		"logo": {
+			"file":      "textures/game_logo_logo.png"
+		},
+        "bg" : {
+            "file":      "textures/loading.png"
+        },
+        "play": {
+            "file":      "textures/Play_button.png"
+        },
+        "progress": {
+            "file":      "textures/progress.png",
+            "atlas":     {
+                "background" : [0,    0, 320, 45],
+                "foreground" : [24,  45, 296, 90],
+                "leftcap"    : [0,   45,  24, 90],
+                "rightcap"   : [296, 45, 320, 90]
+            }
+        },
+        "main":{
+            "file":      "textures/main_new.png"
+        },
+        "studio":{
+            "file":      "textures/name_pending_logo.png"
+        }
+	},
+    "scene2s" : {
+        "load" : {
+            "type"      : "Solid",
+            "format"    : {
+                "type" : "Anchored"
+            },
+            "data" : {
+                "color": [206,144,23,255]
+            },
+            "children"  : {
+                "bg" : {
+                    "type"   : "Image",
+                    "format"    : {
+                        "type" : "Anchored"
+                    },
+                    "data"   : {
+                        "texture"  : "bg",
+                        "anchor"   : [0.5,0.5],
+                        "scale"    : 0.55
+                    },
+                    "layout" : {
+                        "x_anchor" : "center",
+                        "y_anchor" : "middle",
+                        "x_offset" : 30,
+                        "y_offset" : -100,
+                        "absolute" : true
+                    }
+                },
+                "main" : {
+                    "type"   : "Image",
+                    "format"    : {
+                        "type" : "Anchored"
+                    },
+                    "data"   : {
+                        "texture"  : "main",
+                        "anchor"   : [0.5,0.5],
+                        "scale"    : 0.6
+                    },
+                    "layout" : {
+                        "x_anchor" : "center",
+                        "y_anchor" : "middle",
+                        "x_offset" : 0,
+                        "y_offset" : -20,
+                        "absolute" : true
+                    },
+                    "children" : {
+                        "logo"  : {
+                            "type"   : "Image",
+                            "format"    : {
+                                "type" : "Anchored"
+                            },
+                            "data"   : {
+                                "texture"  : "logo",
+                                "anchor"   : [0.5,0.5],
+                                "scale"    : 0.6
+                            },
+                            "layout" : {
+                                "x_anchor" : "center",
+                                "y_anchor" : "middle",
+                                "x_offset" : -230,
+                                "y_offset" : 280,
+                                "absolute" : true
+                            }
+                        },
+                        "studio" : {
+                            "type"   : "Image",
+                            "format"    : {
+                                "type" : "Anchored"
+                            },
+                            "data"   : {
+                                "texture"  : "studio",
+                                "anchor"   : [0.5,0.5],
+                                "scale"    : 0.55
+                            },
+                            "layout" : {
+                                "x_anchor" : "center",
+                                "y_anchor" : "middle",
+                                "x_offset" : 660,
+                                "y_offset" : 360,
+                                "absolute" : true
+                            }
+                        }
+                    }
+                },
+                "name"  : {
+                    "type"   : "Image",
+                    "format"    : {
+                        "type" : "Anchored"
+                    },
+                    "data"   : {
+                        "texture"  : "name",
+                        "anchor"   : [0.5,0.5],
+                        "scale"    : 0.75
+                    },
+                    "layout" : {
+                        "x_anchor" : "center",
+                        "y_anchor" : "middle",
+                        "y_offset" : -55,
+                        "absolute" : true
+                    }
+                },
+                "play"  : {
+                    "type"   : "Button",
+                    "data"   : {
+                        "upnode"   : "up",
+                        "visible"  : false,
+                        "pushsize" : true,
+                        "anchor"   : [0.5,0.5],
+                        "scale"    : 0.4
+                    },
+                    "children" : {
+                        "up" : {
+                            "type"   : "Image",
+                            "data"   : {
+                                "texture"  : "play"
+                            }
+                        }
+                    },
+                    "layout" : {
+                        "x_anchor" : "center",
+                        "y_anchor" : "middle",
+                        "x_offset" : 0,
+                        "y_offset" : -150,
+                        "absolute" : true
+                    }
+                },
+                "bar"  : {
+                    "type"   : "Progress",
+                    "data"   : {
+                        "anchor"     : [0.5,0.5],
+                        "background" : "progress_background",
+                        "foreground" : "progress_foreground",
+                        "left_cap"   : "progress_leftcap",
+                        "right_cap"  : "progress_rightcap",
+                        "color": [57,42,31,255]
+                    },
+                    "layout" : {
+                        "x_anchor" : "center",
+                        "y_anchor" : "middle",
+                        "y_offset" : -175,
+                        "absolute" : true
+                    }
+                }
+            }
+        }
+    }
+}

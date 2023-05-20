@@ -1,23 +1,6 @@
-//
-//  MVCTilemapModel.h
-//  TileMap Lab
-//
-//  This module provides the MVC version of the TilemapModel class.
-//
-//  Author: Gonzalo Gonzalez
-//  Version: 1/5/23.
-//
-#ifndef __MVC_TILEMAP_MODEL_H__
-#define __MVC_TILEMAP_MODEL_H__
-
 #include <cugl/cugl.h>
 using namespace cugl;
 
-namespace MVC {
-
-/**
- * A class representing the entire tilemap.
- */
 class TilemapModel {
 
 #pragma mark State
@@ -30,6 +13,8 @@ private:
     Color4 _color;
     /** Width and height of a single tile */
     Size _tileSize;
+    /** Whether or not this map is currently active*/
+    bool _isActive;
     
 public:
     /// Instead of writing getters for private states that need setters, you
@@ -68,10 +53,10 @@ public:
      * @param color         The background color of the tilemap
      * @param tileSize      The width and height of a tile
      */
-    TilemapModel(Vec2 position, Vec2 dimensions, Color4 color, Size tileSize): 
-    position(_position), 
-    dimensions(_dimensions), 
-    color(_color), 
+    TilemapModel(Vec2 position, Vec2 dimensions, Color4 color, Size tileSize):
+    position(_position),
+    dimensions(_dimensions),
+    color(_color),
     tileSize(_tileSize) {
         // TODO: Implement me
         setPosition(position);
@@ -122,7 +107,12 @@ public:
         _tileSize = tileSize;
     }
     
+    bool isActive(){
+        return _isActive;
+    }
+    
+    void setActive(bool active){
+        _isActive = active;
+    }
+    
 };
-}
-
-#endif /* __MVC_TILEMAP_MODEL_H__ */

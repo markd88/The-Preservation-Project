@@ -1,0 +1,78 @@
+{
+  "textures": {
+    "menu_background": {
+      "file": "textures/level_background.png"
+    },
+    "menu_big_background": {
+      "file": "textures/menu_big_background.png"
+    },
+    "menu_selectbutton": {
+      "file": "textures/level_button.png"
+    },
+    "menu_complete": {
+      "file": "textures/level_complete.png"
+    },
+    "menu_lock": {
+      "file": "textures/level_locked.png"
+    },
+    "menu_next":{
+        "file": "textures/level_next_button.png"
+    },
+    "menu_prev":{
+        "file": "textures/level_prev_button.png"
+    }
+  },
+  "fonts": {
+    "eaglelake": {
+      "file": "fonts/EagleLake-Regular.ttf",
+      "size": 24
+    },
+    "courier":{
+        "file":     "fonts/CourierPrime-Bold.ttf",
+        "size":     75
+    },
+    "courier_regular":{
+        "file":     "fonts/CourierPrime-Regular.ttf",
+        "size":     75
+    }
+  },
+  "scene2s": {
+      "menu-backdrop": {
+        "type": "Image",
+        "format": {
+          "type": "Anchored"
+        },
+        "data": {
+          "texture": "menu_big_background",
+          "anchor": [0.5, 0.5],
+          "scale": 5
+        },
+        "layout": {
+          "x_anchor": "fill",
+          "y_anchor": "fill"
+        },
+        "children": {
+            
+          }
+        },
+    "menu": {
+      "type": "Image",
+      "format": {
+        "type": "Anchored"
+      },
+      "data": {
+        "texture": "menu_background",
+        "anchor": [0.5, 0.5],
+        "scale": 1
+      },
+      "layout": {
+        "x_anchor": "fill",
+        "y_anchor": "fill"
+      },
+      "children": {
+          
+        }
+      }
+    }
+  }
+}

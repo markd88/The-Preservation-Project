@@ -1,13 +1,7 @@
 //
 //  InputModel.h
-//  TileMap Lab
 //
-//  This module represents the current input state. Note that this application
-//  does not use the mouse at all. This code is here to simply show you
-//  how you might want to organize your state.
-//
-//  Author: Gonzalo Gonzalez
-//  Version: 1/5/23.
+//  This module represents the current input state.
 //
 #ifndef __INPUT_MODEL_H__
 #define __INPUT_MODEL_H__
@@ -22,26 +16,71 @@ class InputModel {
 
 #pragma mark State
 public:
-    /** Whether the mouse was first clicked during a callback */
-    bool didClickMouse;
-    /** Whether the mouse was first clicked during this frame */
-    bool isMouseClicked;
-    /** Whether the mouse was held down during a callback */
-    bool didHoldMouse;
-    /** Whether the mouse was held down during this frame */
-    bool isMouseHeld;
-    /** The last position that the mouse was recorded in any mouse callback */
-    Vec2 lastMousePos;
+    /** Whether the input device was successfully initialized */
+    bool _activeTouch;
+    /** The current touch/mouse position */
+    cugl::Vec2 _currPos;
+    /** The previous touch/mouse position */
+    cugl::Vec2 _prevPos;
+    /** Whether there is an active button/touch press */
+    bool _currDown;
+    /** Whether there was an active button/touch press last frame*/
+    bool _prevDown;
+    
+    // Touch:
+//    Uint32 _touchKey;
+    cugl::Vec2 _touchPos;
+    bool _touchDown;
+    cugl::TouchID _touchId;
+    
+#pragma mark Pinch Gesture
+    // TOUCH SUPPORT
+    bool _activePinch;
+    /** The current touch location for the current gesture */
+    cugl::Vec2 _currTouch;
+    /** The last touch location for the current gesture */
+    cugl::Vec2 _prevTouch;
+    float _currAngle;
+    float _prevAngle;
+    float _currSpread;
+    float _prevSpread;
+    // INPUT RESULTS
+    /** The panning distance from the player input */
+    cugl::Vec2 _pandelta;
+    float _angleDelta;
+    float _pinchDelta;
+    
+    cugl::Vec2 _anchor;
+    
+    /** Whether or not are in an active mouse pan */
+    bool _mousepan;
+    bool _prevPan;
+    
+    cugl::Size _screensize;
 
 #pragma mark Main Functions
 public:
     /** Creates the model state */
     InputModel():
-        didClickMouse(false),
-        isMouseClicked(false),
-        didHoldMouse(false),
-        isMouseHeld(false),
-        lastMousePos(Vec2(0,0)) {}
+        _activeTouch(false),
+        _currDown(false),
+        _prevDown(false),
+        // touch
+        // _touchKey(0),
+        _touchId(-1),
+        // pan
+        _activePinch(false),
+        _mousepan(false), // ??
+        _currAngle(0),
+        _prevAngle(0),
+        _currSpread(0),
+        _prevSpread(0),
+        _prevPan(false),
+        _angleDelta(0),
+        _pinchDelta(0) {}
 };
 
+
+
 #endif /* InputModel_h */
+

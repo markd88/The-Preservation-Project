@@ -1,22 +1,14 @@
-//
-//  MVCTilemapController.h
-//  TileMap Lab
-//
-//  This module provides the MVC version of the TilemapController class.
-//
-//  Author: Gonzalo Gonzalez
-//  Version: 1/5/23.
-//
-#ifndef __MVC_TILEMAP_CONTROLLER_H__
-#define __MVC_TILEMAP_CONTROLLER_H__
-
+#ifndef __TILEMAP_CONTROLLER_H__
+#define __TILEMAP_CONTROLLER_H__
 // These are all in the same directory
-#include "MVCTilemapModel.h"
-#include "MVCTilemapView.h"
+#include "TilemapModel.h"
+#include "TilemapView.h"
 // This is NOT in the same directory
-#include <MVC/Tile/MVCTileController.h>
+#include <Tile/TileController.h>
+#include <ItemSet/ItemSetController.h>
+#include <memory>
 
-namespace MVC {
+//namespace MVC {
 /**
  * A class communicating between the model and the view. It controls
  * the entire tile map.
@@ -36,6 +28,8 @@ private:
     typedef std::unique_ptr<TileController> Tile;
     typedef std::vector<std::vector<Tile>> Tilemap;
     Tilemap _tilemap;
+    int _vertices; //number of vertices for adjaceny matrix
+    std::unordered_map<int, Vec2> _nodes; //nodes for the matrix
     
 #pragma mark Main Methods
 public:
@@ -51,6 +45,8 @@ public:
      * @param tileSize      The width and height of a tile
      */
     TilemapController(Vec2 position, Vec2 dimensions, Color4 color, Size tileSize);
+    
+    void init(Vec2 position, Vec2 dimensions, Color4 color, Size tileSize);
     
 #pragma mark Model Methods
 public:
@@ -83,7 +79,7 @@ public:
      *
      * Note this function will do nothing if any of the sizes provided
      * are negative.
-     *  
+     *
      * @param tileSize  The width and height of a tile
      */
     void updateTileSize(Size tileSize);
@@ -117,10 +113,16 @@ public:
      *
      * @param col   The column to place the tile starting from left to right
      * @param row   The row to place the tile starting from bottom to top
-     * @param color The color of the tile.
+     * @param color   The color of the tile.
+     * @param is_obs if the tile is obstacle
      */
-    void addTile(int col, int row, Color4 color);
-    
+    void addTile(int col, int row, Color4 color, bool is_obs);
+
+    void addTile2(int col, int row, int height, int totHeight, bool is_obs,
+                 const std::shared_ptr<cugl::AssetManager>& assets, std::string textureKey);
+
+    void setTexture(const std::shared_ptr<cugl::AssetManager>& assets);
+    std::string getTextureKey();
     /**
      * Inverts the color of the tilemap and it's tiles.
      *
@@ -201,8 +203,190 @@ public:
      * move these pointers without copying them, use `std::move`.
      */
     void initializeTilemap();
+    
+    Size getSize(){
+        Size size = _model->dimensions * _model->tileSize;
+        return size;
+    }
+    
+    const std::shared_ptr<scene2::PolygonNode>& getNode() const {
+        // TODO: Implement me
+        return _view->getNode();
+    }
+    
+    
 
+#pragma mark Helpers
+    /**
+     * Check if the point is located in some obstacle tile
+     * @Param Point    position of the point
+     */
+    bool inObstacle(Vec2 point){
+        for(auto& tile_vec : _tilemap){
+            for(auto& tile : tile_vec){
+            
+                if(tile != nullptr && tile->is_obs() && tile->contains(point)){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    
+    bool lineInObstacle(Vec2 a, Vec2 b){
+        for(auto& tile_vec : _tilemap){
+            for(auto& tile : tile_vec){
+                if(tile != nullptr && tile->is_obs() && tile->containsLine(a,b)){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    
+    void makePreview(Vec2 point){
+        removePreview();
+        for(auto& tile_vec : _tilemap){
+            for(auto& tile : tile_vec){
+                if(tile != nullptr && tile->contains(point)){
+                    tile->setVisibility(false);
+                }
+            }
+        }
+    }
+    
+    void removePreview(){
+        for(auto& tile_vec : _tilemap){
+            for(auto& tile : tile_vec){
+                if(tile != nullptr){
+                    tile->setVisibility(true);
+                }
+            }
+        }
+    }
+    
+    void setVisibility(bool active){
+        _view->setVisibility(active);
+        _model->setActive(active);
+    }
+    
+    bool isActive(){
+        return _model->isActive();
+    }
+    
+    void setActive(bool active){
+        _model->setActive(active);
+    }
+    
+    std::vector<std::pair<int,int>> getEdges(const std::shared_ptr<cugl::Scene2>& scene, std::shared_ptr<ItemSetController> obsSet){
+        std::unordered_map<int, Vec2> nodes;
+        std::vector<std::pair<int,int>> edges;
+        int count = 0;
+        
+        int width = _model->dimensions.x * _model->tileSize.width;
+        int height = _model->dimensions.y * _model->tileSize.height;
+        int edgeLength = width / 30;
+        
+        int numPerRow = 0;
+        
+        Vec2 startPos = Vec2(0, height);
+        
+        for (int j = startPos.y; j > 0; j -= edgeLength){
+            for (int i = startPos.x; i < startPos.x + width; i += edgeLength){
+                nodes[count] = Vec2(i,j);
+                count += 1;
+                if (j == startPos.y){
+                    numPerRow += 1;
+                }
+            }
+        }
+        
+        SplinePather splinePather = SplinePather();
+        SimpleExtruder extruder = SimpleExtruder();
+        
+        for (int i = 0; i < count - 1; i++){
+            if ( (i+1) % (numPerRow) != 0){
+                Vec2 a = nodes[i];
+                Vec2 b = nodes[i + 1];
+                bool hitObs = obsSet->lineInObstacle(a, b);
+                
+                if (hitObs == false){
+                    edges.push_back(std::make_pair(i, i+1));
+                }
+                /*
+                Spline2 spline = Spline2(a, b);
+                splinePather.set(&spline);
+                splinePather.calculate();
+                
+                extruder.set(splinePather.getPath());
+                extruder.calculate(1);
+                Poly2 line = extruder.getPolygon();
+                
+                std::shared_ptr<scene2::PolygonNode> polyNode= scene2::PolygonNode::alloc();
+                polyNode->setPolygon(line);
+                if (hitObs){
+                    polyNode->setColor(Color4::RED);
+                }
+                polyNode->setPosition(a.getMidpoint(b));
+                scene->addChild(polyNode);
+                */
+                 
+            }
+            
+        }
+        
+        for (int i = 0; i < count - numPerRow; i++){
+            splinePather.clear();
+            extruder.clear();
+            
+            Vec2 a = nodes[i];
+            Vec2 b = nodes[i + numPerRow];
+            bool hitObs = obsSet->lineInObstacle(a, b);
+            
+            if (hitObs == false){
+                edges.push_back(std::make_pair(i, i + numPerRow));
+            }
+            /*
+            Spline2 spline = Spline2(a, b);
+            splinePather.set(&spline);
+            splinePather.calculate();
+            
+            extruder.set(splinePather.getPath());
+            extruder.calculate(1);
+            Poly2 line = extruder.getPolygon();
+            
+            std::shared_ptr<scene2::PolygonNode> polyNode= scene2::PolygonNode::alloc();
+            polyNode->setPolygon(line);
+            if (hitObs){
+                polyNode->setColor(Color4::RED);
+            }
+            polyNode->setPosition(a.getMidpoint(b));
+            scene->addChild(polyNode);
+            */
+            
+        }
+        
+        _vertices = count;
+        _nodes = nodes;
+        return edges;
+        
+    }
+    
+    int getVertices(){
+        return _vertices;
+    }
+    
+    std::unordered_map<int, Vec2> getNodes(){
+        return _nodes;
+    }
+    
+    
+    // set priority in ordered_root
+    void setPriority(float p){
+        _view->setPriority(p);
+    }
 };
-}
 
-#endif /* __MVC_TILEMAP_CONTROLLER_H__ */
+//}
+
+#endif

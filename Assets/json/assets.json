@@ -1,0 +1,1638 @@
+{
+    "sounds" : {
+        "artifact" : {
+            "type": "sample",
+            "file": "sounds/artifact.ogg",
+            "volume": 0.5
+        },
+        "lose" : {
+            "type": "sample",
+            "file": "sounds/lose.ogg",
+            "volume": 0.5
+        },
+        "switch" : {
+            "type": "sample",
+            "file": "sounds/switch.ogg",
+            "volume": 0.5
+        },
+        "resource" : {
+            "type": "sample",
+            "file": "sounds/resource.ogg",
+            "volume": 0.5
+        },
+        "win" : {
+            "type": "sample",
+            "file": "sounds/win.ogg",
+            "volume": 0.5
+        },
+        "past" : {
+            "type": "sample",
+            "file": "sounds/past.ogg",
+            "volume": 0.5
+        },
+        "present" : {
+            "type": "sample",
+            "file": "sounds/present.ogg",
+            "volume": 0.5
+        }
+    },
+    "textures": {
+        "tutorial_1_1": {
+            "file": "textures/Level-1 1.png"
+        },
+        "tutorial_1_2": {
+            "file": "textures/Level-1 2.png"
+        },
+        "tutorial_2_1": {
+            "file": "textures/level-2 1.png"
+        },
+        "tutorial_2_2": {
+            "file": "textures/level-2 2.png"
+        },
+        "tutorial_4_1": {
+            "file": "textures/level-4 1.png"
+        },
+        "tutorial_4_2": {
+            "file": "textures/level-4 2.png"
+        },
+        "tutorial_4_3": {
+            "file": "textures/level-4 3.png"
+        },
+        "tutorial_4_4": {
+            "file": "textures/level-4 4.png"
+        },
+        "tutorial_4_5": {
+            "file": "textures/level-4 5.png"
+        },
+        "tutorial_close": {
+            "file": "textures/X.png"
+        },
+        "tutorial_sample" : {
+            "file": "textures/tutorial_sample.png"
+        },
+        "spritesheet_cross_anim" : {
+            "file": "textures/spritesheet_cross_anim.png"
+        },
+        "exclamation_mark" : {
+            "file" : "textures/exclamation_mark.png"
+        },
+        "artifact_fan_black_WALL": {
+            "file": "textures/artifact_fan_black_WALL.png"
+        },
+        "artifact_fan_black_WALL_Anim": {
+            "file": "textures/artifact_fan_black_WALL_anim.png"
+        },
+
+        "artifact_fan_gold": {
+            "file": "textures/artifact_fan_gold.png"
+        },
+        "artifact_fan_gold_Anim": {
+            "file": "textures/artifact_fan_gold_anim.png"
+        },
+
+
+        "artifact_scrollcaseB_gold": {
+            "file": "textures/artifact_scrollcaseB_gold.png"
+        },
+        "artifact_fan_cherry_WALL": {
+            "file": "textures/artifact_fan_cherry_WALL.png"
+        },
+        "artifact_fan_cherry_WALL_Anim": {
+            "file": "textures/artifact_fan_cherry_WALL_anim.png"
+        },
+        "resource_left": {
+            "file": "textures/resource_left.png"
+        },
+        "resource_left_Anim": {
+            "file": "textures/resource_left_anim.png"
+        },
+        "artifact_fan_gold_WALL": {
+            "file": "textures/artifact_fan_gold_WALL.png"
+        },
+        "artifact_fan_gold_WALL_Anim": {
+            "file": "textures/artifact_fan_gold_WALL_anim.png"
+        },
+        "artifact_fan_yellow_WALL": {
+            "file": "textures/artifact_fan_yellow_WALL.png"
+        },
+        "artifact_fan_yellow_WALL_Anim": {
+            "file": "textures/artifact_fan_yellow_WALL_anim.png"
+        },
+        "artifact_fan_red_WALL": {
+            "file": "textures/artifact_fan_red_WALL.png"
+        },
+        "artifact_fan_red_WALL_Anim": {
+            "file": "textures/artifact_fan_red_WALL_anim.png"
+        },
+        "artifact_sword_gold": {
+            "file": "textures/artifact_sword_gold.png"
+        },
+        "artifact_sword_gold_Anim": {
+            "file": "textures/artifact_sword_gold_anim.png"
+        },
+        "artifact_fan_paper_WALL": {
+            "file": "textures/artifact_fan_paper_WALL.png"
+        },
+        "artifact_fan_paper_WALL_Anim": {
+            "file": "textures/artifact_fan_paper_WALL_anim.png"
+        },
+        "artifact_box_gold": {
+            "file": "textures/artifact_box_gold.png"
+        },
+        "artifact_box_gold_Anim": {
+            "file": "textures/artifact_box_gold_anim.png"
+        },
+        "artifact_fan_blue_WALL": {
+            "file": "textures/artifact_fan_blue_WALL.png"
+        },
+        "artifact_fan_blue_WALL_Anim": {
+            "file": "textures/artifact_fan_blue_WALL_anim.png"
+        },
+        "resource_right": {
+            "file": "textures/resource_right.png"
+        },
+        "resource_right_Anim": {
+            "file": "textures/resource_right_anim.png"
+        },
+        "character-placeholder": {
+            "file": "textures/character-placeholder.png"
+        },
+        "tile_past_door_side": {
+            "file": "textures/tile_past_door_side.png"
+        },
+        "exit_side": {
+            "file": "textures/exit_side.png"
+        },
+        "pastB_wall_door": {
+            "file": "textures/pastB_wall_door.png"
+        },
+        "presentB_fence_bottom_corner": {
+            "file": "textures/presentB_fence_bottom_corner.png"
+        },
+        "presentB_fence": {
+            "file": "textures/presentB_fence.png"
+        },
+        "presentB_fence_top_corner": {
+            "file": "textures/presentB_fence_top_corner.png"
+        },
+        "presentB_fence_top_corner_flip": {
+            "file": "textures/presentB_fence_top_corner_flip.png"
+        },
+        "presentB_fence_bottom_corner_flip": {
+            "file": "textures/presentB_fence_bottom_corner_flip.png"
+        },
+        "presentB_fence_side": {
+            "file": "textures/presentB_fence_side.png"
+        },
+        "vase_Anim" : {
+            "file" : "textures/vase_gold_anim.png"
+        },
+        "vase" : {
+            "file" : "textures/vase_gold.png"
+        },
+
+        "clock_Anim" : {
+            "file" : "textures/clock-Anim.png"
+        },
+        "clock" : {
+            "file" : "textures/clock.png"
+        },
+        "brush":{
+            "file" : "textures/brush_8x8.png"
+        },
+        "pause_button": {
+            "file":      "textures/pause_button.png"
+        },
+        "pause_background": {
+            "file":      "textures/pause_menu_background.png"
+        },
+        "pause_restart": {
+            "file":      "textures/pause_menu_restart_button.png"
+        },
+        "pause_resume": {
+            "file":      "textures/pause_menu_resume_button.png"
+        },
+        "pause_exit": {
+            "file":      "textures/pause_menu_exit_button.png"
+        },
+        "reset": {
+            "file":      "textures/reset-button.png"
+        },
+        "back_arrow": {
+            "file":      "textures/menu-back.png"
+        },
+        "character": {
+            "file":     "textures/character.png"
+        },
+        "guard_past": {
+            "file":     "textures/spritesheet_guard_past.png"
+        },
+        "guard_present": {
+            "file": "textures/spritesheet_guard_present.png"
+        },
+        "shadow": {
+            "file":    "textures/Shadow.png"
+        },
+        "enemy_past_moving_horizontal": {
+            "file":     "textures/enemy_past_moving_horizontal.png"
+        },
+        "enemy_past_moving_vertical": {
+            "file":     "textures/enemy_past_moving_vertical.png"
+        },
+        "enemy_past_static": {
+            "file":     "textures/enemy_past_static.png"
+        },
+        "enemy_present_moving_horizontal": {
+            "file":     "textures/enemy_present_moving_horizontal.png"
+        },
+        "enemy_present_moving_vertical": {
+            "file":     "textures/enemy_present_moving_vertical.png"
+        },
+        "enemy_present_static": {
+            "file":     "textures/enemy_present_static.png"
+        },
+        "artifact-1-big": {
+            "file":      "textures/artifact-1-big.png"
+        },
+        "artifact-2-big": {
+            "file":      "textures/artifact-2-big.png"
+        },
+        "artifact-3-big": {
+            "file":      "textures/artifact-3-big.png"
+        },
+        "artifact-4-big": {
+            "file":      "textures/artifact-4-big.png"
+        },
+        "two_world_switch": {
+            "file": "textures/spritesheet_switch_anim_sand_small.png"
+        },
+        "question_mark_anim" : {
+            "file": "textures/spritesheet_question_mark.png"
+        },
+        "artifact-1": {
+            "file":      "textures/artifact-1.png"
+        },
+        "artifact-2": {
+            "file":      "textures/artifact-2.png"
+        },
+        "artifact-3": {
+            "file":      "textures/artifact-3.png"
+        },
+        "artifact-4": {
+            "file":      "textures/artifact-4.png"
+        },
+        "artifact-5": {
+            "file":      "textures/artifact-5.png"
+        },
+        "resource-big": {
+            "file":     "textures/resource-big.png"
+        },
+        "inventory_artifact":{
+            "file":     "textures/inventory_artifact_icon.png"
+        },
+        "inventory_resource":{
+            "file":     "textures/inventory_resource_icon_hourglass.png"
+        },
+        "inventory_background":{
+            "file":     "textures/inventory_background.png"
+        },
+        "inventory_background_XL":{
+            "file":     "textures/inventory_background_XL.png"
+        },
+        "inventory_artifact_filled_bar":{
+            "file":     "textures/inventory_artifact_collected.png"
+        },
+        "inventory_artifact_transparent_bar":{
+            "file":     "textures/inventory_artifact_not_collected.png"
+        },
+        "inventory_resource_bar":{
+            "file":     "textures/inventory_switch.png"
+        },
+        "inventory_resource_trans_bar":{
+            "file":     "textures/inventory_resource_used.png"
+        },
+        "inventory_resource_cant_bar":{
+            "file":     "textures/inventory_resource_collected_cant.png"
+        },
+        "inventory_resource_trans_cant_bar":{
+            "file":     "textures/inventory_resource_used_cant.png"
+        },
+        "resource": {
+            "file":     "textures/resource.png"
+        },
+        "panel": {
+            "file":      "textures/panel.png"
+        },
+        "complete": {
+            "file":      "textures/mission-complete.png"
+        },
+        "fail": {
+            "file":      "textures/mission-fail.png"
+        },
+        "again": {
+            "file":      "textures/mission_failed_restart_button.png"
+        },
+        "back": {
+            "file":      "textures/mission_failed_complete_exit_button.png"
+        },
+        "next": {
+            "file":      "textures/mission_complete_next_button.png"
+        },
+        "background": {
+            "file":      "textures/back.png"
+        },
+        "switch": {
+            "file":      "textures/switch.png"
+        },
+        "switch-not": {
+            "file":      "textures/switch-not.png"
+        },
+        "blue": {
+            "file":      "textures/blue.png"
+        },
+        "draw": {
+            "file":      "textures/draw.png"
+        },
+        "avoid": {
+            "file":      "textures/avoid.png"
+        },
+        "switch1": {
+            "file":      "textures/switch1.png"
+        },
+        "switch2": {
+            "file":      "textures/switch2.png"
+        },
+        "collision_detection3": {
+            "file":      "textures/collision_detection3.png"
+        },
+        "tile_present_grass_shadow_slopepos": {
+            "file":      "textures/tile_present_grass_shadow_slopepos.png"
+        },
+        "Shadow": {
+            "file":      "textures/Shadow.png"
+        },
+        "past_cast_light 1": {
+            "file":      "textures/past_cast_light 1.png"
+        },
+        "past_roof_L": {
+            "file":      "textures/past_roof_L.png"
+        },
+        "past_roof_R": {
+            "file":      "textures/past_roof_R.png"
+        },
+        "tile_past_floor_stone1": {
+            "file":      "textures/tile_past_floor_stone1.png"
+        },
+        "tile_past_floor_stone2": {
+            "file":      "textures/tile_past_floor_stone2.png"
+        },
+        "tile_past_floor_stone3": {
+            "file":      "textures/tile_past_floor_stone3.png"
+        },
+        "tile_past_floor_column_left": {
+            "file":      "textures/tile_past_floor_column_left.png"
+        },
+        "tile_past_floor_column_right": {
+            "file":      "textures/tile_past_floor_column_right.png"
+        },
+        "tile_past_floor_windowleft": {
+            "file":      "textures/tile_past_floor_windowleft.png"
+        },
+        "tile_past_floor_windowright": {
+            "file":      "textures/tile_past_floor_windowright.png"
+        },
+        "tile_past_floor1": {
+            "file":      "textures/tile_past_floor1.png"
+        },
+        "tile_past_floor2": {
+            "file":      "textures/tile_past_floor2.png"
+        },
+        "tile_past_floor3": {
+            "file":      "textures/tile_past_floor3.png"
+        },
+        "tile_past_roof": {
+            "file":      "textures/tile_past_roof.png"
+        },
+        "tile_past_wall_windowcenter": {
+            "file":      "textures/tile_past_wall_windowcenter.png"
+        },
+        "tile_past_wall_windowleft": {
+            "file":      "textures/tile_past_wall_windowleft.png"
+        },
+        "tile_past_wall_windowright": {
+            "file":      "textures/tile_past_wall_windowright.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS":     "clamp",
+            "wrapT":     "clamp"
+        },
+        "tile_past_wall_window": {
+            "file":      "textures/tile_past_wall_window.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS":     "clamp",
+            "wrapT":     "clamp"
+        },
+        "tile_past_wall1": {
+            "file":      "textures/tile_past_wall1.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS":     "clamp",
+            "wrapT":     "clamp"
+        },
+        "tile_past_wall2": {
+            "file":      "textures/tile_past_wall2.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS":     "clamp",
+            "wrapT":     "clamp"
+        },
+        "tile_past_wall3": {
+            "file":      "textures/tile_past_wall3.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS":     "clamp",
+            "wrapT":     "clamp"
+        },
+        "tile_present_grass_s_half_rock": {
+            "file":      "textures/tile_present_grass_s_half_rock.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS":     "clamp",
+            "wrapT":     "clamp"
+        },
+        "tile_present_grass_s_rock": {
+            "file":      "textures/tile_present_grass_s_rock.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS":     "clamp",
+            "wrapT":     "clamp"
+        },
+        
+        "tile_past_wall_column_left_window": {
+            "file":      "textures/tile_past_wall_column_left_window.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS":     "clamp",
+            "wrapT":     "clamp"
+        },
+        "tile_past_wall_column_right_window": {
+            "file":      "textures/tile_past_wall_column_right_window.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS":     "clamp",
+            "wrapT":     "clamp"
+        },
+        "past_roof": {
+            "file":      "textures/past_roof.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS":     "clamp",
+            "wrapT":     "clamp"
+        },
+        "tile_present_grass_s_slopepos_rock": {
+            "file":      "textures/tile_present_grass_s_slopepos_rock.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS":     "clamp",
+            "wrapT":     "clamp"
+        },
+        "tile_present_grass_shadow_slopepos": {
+            "file":      "textures/tile_present_grass_shadow_slopepos.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS":     "clamp",
+            "wrapT":     "clamp"
+        },
+        "tile_present_grass_shadow_slopeneg": {
+            "file":      "textures/tile_present_grass_shadow_slopeneg.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS":     "clamp",
+            "wrapT":     "clamp"
+        },
+        "tile_present_grass_shadow": {
+            "file":      "textures/tile_present_grass_shadow.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS":     "clamp",
+            "wrapT":     "clamp"
+        },
+        "tile_present_grass1": {
+            "file":      "textures/tile_present_grass1.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS":     "clamp",
+            "wrapT":     "clamp"
+        },
+        "tile_present_grass2": {
+            "file":      "textures/tile_present_grass2.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS":     "clamp",
+            "wrapT":     "clamp"
+        },
+        "tile_present_grass3": {
+            "file":      "textures/tile_present_grass3.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS":     "clamp",
+            "wrapT":     "clamp"
+        },
+        "tile_present_wall_top2": {
+            "file":      "textures/tile_present_wall_top2.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS":     "clamp",
+            "wrapT":     "clamp"
+        },
+        "tile_present_wall_top3": {
+            "file":      "textures/tile_present_wall_top3.png"
+        },
+        "tile_present_walls": {
+            "file":      "textures/tile_present_wall.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS":     "clamp",
+            "wrapT":     "clamp"
+        },
+        "tile_present_wall1": {
+            "file":      "textures/tile_present_wall1.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS":     "clamp",
+            "wrapT":     "clamp"
+        },
+        "tile_present_wall2": {
+            "file":      "textures/tile_present_wall2.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS":     "clamp",
+            "wrapT":     "clamp"
+        },
+        "tile_present_wall3": {
+            "file":      "textures/tile_present_wall3.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS":     "clamp",
+            "wrapT":     "clamp"
+        },
+        "tile_present_wall4": {
+            "file":      "textures/tile_present_wall4.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS":     "clamp",
+            "wrapT":     "clamp"
+        },
+        "tile_present_obstacle_sun_block": {
+            "file":      "textures/tile_present_obstacle_sun_block.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS":     "clamp",
+            "wrapT":     "clamp"
+        },
+        "tile_present_obstacle_shaded_block": {
+            "file":      "textures/tile_present_obstacle_shaded_block.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS":     "clamp",
+            "wrapT":     "clamp"
+        },
+        "tile_present_stones1": {
+            "file":      "textures/tile_present_stones1.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS":     "clamp",
+            "wrapT":     "clamp"
+        },
+        "tile_present_stones2": {
+            "file":      "textures/tile_present_stones2.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS":     "clamp",
+            "wrapT":     "clamp"
+        },
+        "tile_present_stones3": {
+            "file":      "textures/tile_present_stones3.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS":     "clamp",
+            "wrapT":     "clamp"
+        },
+        "deco_past_vase_FORTABLE": {
+            "file":      "textures/deco_past_vase_FORTABLE.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS":     "clamp",
+            "wrapT":     "clamp"
+        },
+        "deco_past_table_side": {
+            "file":      "textures/deco_past_table_side.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS":     "clamp",
+            "wrapT":     "clamp"
+        },
+        "deco_past_table_front": {
+            "file":      "textures/deco_past_table_front.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS":     "clamp",
+            "wrapT":     "clamp"
+        },
+        "deco_past_chair_side_R": {
+            "file":      "textures/deco_past_chair_side_R.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS":     "clamp",
+            "wrapT":     "clamp"
+        },
+        "deco_past_chair_side_L": {
+            "file":      "textures/deco_past_chair_side_L.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS":     "clamp",
+            "wrapT":     "clamp"
+        },
+        "deco_past_chair_front": {
+            "file":      "textures/deco_past_chair_front.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS":     "clamp",
+            "wrapT":     "clamp"
+        },
+        "deco_past_chair_back": {
+            "file":      "textures/deco_past_chair_back.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS":     "clamp",
+            "wrapT":     "clamp"
+        },
+        "deco_past_cabinet_side_R": {
+            "file":      "textures/deco_past_cabinet_side_R.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS":     "clamp",
+            "wrapT":     "clamp"
+        },
+        "deco_past_cabinet_side_L": {
+            "file":      "textures/deco_past_cabinet_side_L.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS":     "clamp",
+            "wrapT":     "clamp"
+        },
+        "deco_past_cabinet_front": {
+            "file":      "textures/deco_past_cabinet_front.png",
+            "minfilter": "linear",
+            "magfilter": "linear",
+            "wrapS":     "clamp",
+            "wrapT":     "clamp"
+        },
+        "pastB_floor_stone_border_top1": {
+            "file": "textures/pastB_floor_stone_border_top1.png"
+        },
+        "box6": {
+            "file": "textures/box6.png"
+        },
+        "tile_present_obstacle_sun_block": {
+            "file": "textures/tile_present_obstacle_sun_block.png"
+        },
+        "tile_present_grass3": {
+            "file": "textures/tile_present_grass3.png"
+        },
+        "tile_present_grass2": {
+            "file": "textures/tile_present_grass2.png"
+        },
+        "pastB_side_brick_wall1": {
+            "file": "textures/pastB_side_brick_wall1.png"
+        },
+        "artifact_sword_blue": {
+            "file": "textures/artifact_sword_blue.png"
+        },
+        "artifact_sword_blue_Anim": {
+            "file": "textures/artifact_sword_blue_anim.png"
+        },
+        "tile_present_wall4": {
+            "file": "textures/tile_present_wall4.png"
+        },
+        "pastB_floor_stone_border_top2": {
+            "file": "textures/pastB_floor_stone_border_top2.png"
+        },
+        "box5": {
+            "file": "textures/box5.png"
+        },
+        "past_roof": {
+            "file": "textures/past_roof.png"
+        },
+        "artifact_scrollcaseA_wood": {
+            "file": "textures/artifact_scrollcaseA_wood.png"
+        },
+        "artifact_scrollcaseA_wood_Anim": {
+            "file": "textures/artifact_scrollcaseA_wood_anim.png"
+        },
+        "artifact_bowlcovered_dustedglass": {
+            "file": "textures/artifact_bowlcovered_dustedglass.png"
+        },
+        "artifact_bowlcovered_dustedglass_Anim": {
+            "file": "textures/artifact_bowlcovered_dustedglass_anim.png"
+        },
+        "pastB_side_brick_wall3": {
+            "file": "textures/pastB_side_brick_wall3.png"
+        },
+        "tile_present_grass1": {
+            "file": "textures/tile_present_grass1.png"
+        },
+        "pastB_side_brick_wall2": {
+            "file": "textures/pastB_side_brick_wall2.png"
+        },
+        "tile_present_grass_shadow_slopepos": {
+            "file": "textures/tile_present_grass_shadow_slopepos.png"
+        },
+        "box4": {
+            "file": "textures/box4.png"
+        },
+        "pastB_floor_stone_border_top3": {
+            "file": "textures/pastB_floor_stone_border_top3.png"
+        },
+        "tile_present_wall3": {
+            "file": "textures/tile_present_wall3.png"
+        },
+        "artifact_fan_1": {
+            "file": "textures/artifact_fan_1.png"
+        },
+        "tile_present_stones1": {
+            "file": "textures/tile_present_stones1.png"
+        },
+        "tile_present_grass_s_rock": {
+            "file": "textures/tile_present_grass_s_rock.png"
+        },
+        "pastB_wall_col_right": {
+            "file": "textures/pastB_wall_col_right.png"
+        },
+        "tile_present_grass_shadow_slopeneg": {
+            "file": "textures/tile_present_grass_shadow_slopeneg.png"
+        },
+        "tile_present_grass_s_slopepos_rock": {
+            "file": "textures/tile_present_grass_s_slopepos_rock.png"
+        },
+        "artifact_spear_blue": {
+            "file": "textures/artifact_spear_blue.png"
+        },
+        "artifact_spear_blue_Anim": {
+            "file": "textures/artifact_spear_blue_anim.png"
+        },
+        "pastB_stairs_border": {
+            "file": "textures/pastB_stairs_border.png"
+        },
+        "tile_present_bush2_shadow": {
+            "file": "textures/tile_present_bush2_shadow.png"
+        },
+        "box1": {
+            "file": "textures/box1.png"
+        },
+        "box7": {
+            "file": "textures/box7.png"
+        },
+        "past_shadow_clock": {
+            "file": "textures/past_shadow_clock.png"
+        },
+        "shadow_thin_32": {
+            "file": "textures/shadow_thin_32.png"
+        },
+        "shadow_thin_64": {
+            "file": "textures/shadow_thin_64.png"
+        },
+        "tile_present_grass_shadow_thin": {
+            "file": "textures/tile_present_grass_shadow_thin.png"
+        },
+        "tile_present_obstacle_stone_shadow": {
+            "file": "textures/tile_present_obstacle_stone_shadow.png"
+        },
+        "tile_present_side_wall 1": {
+            "file": "textures/tile_present_side_wall 1.png"
+        },
+        "tile_present_side_wall": {
+            "file": "textures/tile_present_side_wall.png"
+        },
+        "tile_present_wall_half": {
+            "file": "textures/tile_present_wall_half.png"
+        },
+        "tile_present_wall_side": {
+            "file": "textures/tile_present_wall_side.png"
+        },
+        "tile_present_wall_slopepos": {
+            "file": "textures/tile_present_wall_slopepos.png"
+        },
+        "tile_present_wall": {
+            "file": "textures/tile_present_wall.png"
+        },
+        "tile_present_obstacle_stone": {
+            "file": "textures/tile_present_obstacle_stone.png"
+        },
+        "shadow_thin_128": {
+            "file": "textures/shadow_thin_128.png"
+        },
+        "tile_present_wall2": {
+            "file": "textures/tile_present_wall2.png"
+        },
+        "tile_past_floor_windowleft": {
+            "file": "textures/tile_past_floor_windowleft.png"
+        },
+        "past_column": {
+            "file": "textures/past_column.png"
+        },
+        "artifact_box_jade": {
+            "file": "textures/artifact_box_jade.png"
+        },
+        "artifact_box_jade_Anim": {
+            "file": "textures/artifact_box_jade_anim.png"
+        },
+        "enemy_static": {
+            "file": "textures/enemy_static.png"
+        },
+        "past_roof_L": {
+            "file": "textures/past_roof_L.png"
+        },
+        "tile_present_grass_shadow": {
+            "file": "textures/tile_present_grass_shadow.png"
+        },
+        "artifact_fan_2": {
+            "file": "textures/artifact_fan_2.png"
+        },
+        "artifact_fan_2_Anim": {
+            "file": "textures/artifact_fan_2_anim.png"
+        },
+        "tile_present_stones2": {
+            "file": "textures/tile_present_stones2.png"
+        },
+        "artifact_vase_green": {
+            "file": "textures/artifact_vase_green.png"
+        },
+        "artifact_vase_green_Anim": {
+            "file": "textures/artifact_vase_green_anim.png"
+        },
+        "box3": {
+            "file": "textures/box3.png"
+        },
+        "artifact_scrollcaseB_gold": {
+            "file": "textures/artifact_scrollcaseB_gold.png"
+        },
+        "artifact_scrollcaseB_gold_Anim": {
+            "file": "textures/artifact_scrollcaseB_gold_anim.png"
+        },
+        "artifact_fan_black": {
+            "file": "textures/artifact_fan_black.png"
+        },
+        "artifact_fan_black_Anim": {
+            "file": "textures/artifact_fan_black_anim.png"
+        },
+        "artifact_fan_yellow": {
+            "file": "textures/artifact_fan_yellow.png"
+        },
+        "artifact_fan_yellow_Anim": {
+            "file": "textures/artifact_fan_yellow_anim.png"
+        },
+        "tile_past_wall_edge_R": {
+            "file": "textures/tile_past_wall_edge_R.png"
+        },
+        "pastB_wall_col_left": {
+            "file": "textures/pastB_wall_col_left.png"
+        },
+        "tile_present_obstacle_block_shadow": {
+            "file": "textures/tile_present_obstacle_block_shadow.png"
+        },
+        "tile_past_floor_column_right": {
+            "file": "textures/tile_past_floor_column_right.png"
+        },
+        "box2": {
+            "file": "textures/box2.png"
+        },
+        "tile_present_stones3": {
+            "file": "textures/tile_present_stones3.png"
+        },
+        "tile_present_wall1": {
+            "file": "textures/tile_present_wall1.png"
+        },
+        "pastB_floor_stone_border2": {
+            "file": "textures/pastB_floor_stone_border2.png"
+        },
+        "deco_past_chair_back": {
+            "file": "textures/deco_past_chair_back.png"
+        },
+        "tile_past_wall1": {
+            "file": "textures/tile_past_wall1.png"
+        },
+        "tile_past_floor_stone1": {
+            "file": "textures/tile_past_floor_stone1.png"
+        },
+        "artifact_statue_white": {
+            "file": "textures/artifact_statue_white.png"
+        },
+        "artifact_statue_white_Anim": {
+            "file": "textures/artifact_statue_white_anim.png"
+        },
+        "pastB_floor_stone_border3": {
+            "file": "textures/pastB_floor_stone_border3.png"
+        },
+        "deco_past_table_front": {
+            "file": "textures/deco_past_table_front.png"
+        },
+        "pastB_floor_stone_border1": {
+            "file": "textures/pastB_floor_stone_border1.png"
+        },
+        "pastB_wall_window_left": {
+            "file": "textures/pastB_wall_window_left.png"
+        },
+        "deco_past_chair_side_L": {
+            "file": "textures/deco_past_chair_side_L.png"
+        },
+        "artifact_urn_green_noaccent": {
+            "file": "textures/artifact_urn_green_noaccent.png"
+        },
+        "artifact_urn_green_noaccent_Anim": {
+            "file": "textures/artifact_urn_green_noaccent_anim.png"
+        },
+        "tile_past_wall2": {
+            "file": "textures/tile_past_wall2.png"
+        },
+        "enemy_moving": {
+            "file": "textures/enemy_moving.png"
+        },
+        "tile_past_floor_stone3": {
+            "file": "textures/tile_past_floor_stone3.png"
+        },
+        "artifact_urn_green_variantpng": {
+            "file": "textures/artifact_urn_green_variant.png"
+        },
+        "artifact_urn_green_variantpng_Anim": {
+            "file": "textures/artifact_urn_green_variant_anim.png"
+        },
+        "tile_past_floor_stone2": {
+            "file": "textures/tile_past_floor_stone2.png"
+        },
+        "tile_past_wall3": {
+            "file": "textures/tile_past_wall3.png"
+        },
+        "artifact_box_wood": {
+            "file": "textures/artifact_box_wood.png"
+        },
+        "artifact_box_wood_Anim": {
+            "file": "textures/artifact_box_wood_anim.png"
+        },
+
+
+        "artifact_urnB_green": {
+            "file": "textures/artifact_urnB_green.png"
+        },
+        "artifact_urnB_green_Anim": {
+            "file": "textures/artifact_urnB_green_anim.png"
+        },
+        "tile_present_obstacle_wall2_shadow": {
+            "file": "textures/tile_present_obstacle_wall2_shadow.png"
+        },
+        "tile_past_floor_column_left": {
+            "file": "textures/tile_past_floor_column_left.png"
+        },
+        "pastB_wall2": {
+            "file": "textures/pastB_wall2.png"
+        },
+        "present_wall_edge1": {
+            "file": "textures/present_wall_edge1.png"
+        },
+        "tile_past_floor2": {
+            "file": "textures/tile_past_floor2.png"
+        },
+        "pastB_stairs": {
+            "file": "textures/pastB_stairs.png"
+        },
+        "tile_present_obstacle_stone": {
+            "file": "textures/tile_present_obstacle_stone.png"
+        },
+        "artifact_sword_red": {
+            "file": "textures/artifact_sword_red.png"
+        },
+        "artifact_sword_red_Anim": {
+            "file": "textures/artifact_sword_red_anim.png"
+        },
+        "tile_past_floor3": {
+            "file": "textures/tile_past_floor3.png"
+        },
+        "pastB_wall3": {
+            "file": "textures/pastB_wall3.png"
+        },
+        "pastB_col_roof_shadow_left": {
+            "file": "textures/pastB_col_roof_shadow_left.png"
+        },
+        "tile_past_wall_column_left_window": {
+            "file": "textures/tile_past_wall_column_left_window.png"
+        },
+        "tile_present_grass_s_half_rock": {
+            "file": "textures/tile_present_grass_s_half_rock.png"
+        },
+        "pastB_wall1": {
+            "file": "textures/pastB_wall1.png"
+        },
+        "deco_past_cabinet_side_R": {
+            "file": "textures/deco_past_cabinet_side_R.png"
+        },
+        "artifact_spear_red": {
+            "file": "textures/artifact_spear_red.png"
+        },
+        "artifact_spear_red_Anim": {
+            "file": "textures/artifact_spear_red_anim.png"
+        },
+        "present_wall_edge2": {
+            "file": "textures/present_wall_edge2.png"
+        },
+        "tile_past_floor1": {
+            "file": "textures/tile_past_floor1.png"
+        },
+        "tile_past_wall_window": {
+            "file": "textures/tile_past_wall_window.png"
+        },
+        "artifact_scrollcaseA_painted": {
+            "file": "textures/artifact_scrollcaseA_painted.png"
+        },
+        "artifact_scrollcaseA_painted_Anim": {
+            "file": "textures/artifact_scrollcaseA_painted_anim.png"
+        },
+        "present_wall_edge3": {
+            "file": "textures/present_wall_edge3.png"
+        },
+        "pastB_wall_window_right": {
+            "file": "textures/pastB_wall_window_right.png"
+        },
+        "deco_past_vase_FORTABLE": {
+            "file": "textures/deco_past_vase_FORTABLE.png"
+        },
+        "deco_past_vase_FORTABLE_Anim": {
+            "file": "textures/deco_past_vase_FORTABLE_anim.png"
+        },
+
+        "tile_present_bush2": {
+            "file": "textures/tile_present_bush2.png"
+        },
+        "artifact_bowlcovered_jade": {
+            "file": "textures/artifact_bowlcovered_jade.png"
+        },
+        "artifact_bowlcovered_jade_Anim": {
+            "file": "textures/artifact_bowlcovered_jade_anim.png"
+        },
+        "artifact_urnB_blue": {
+            "file": "textures/artifact_urnB_blue.png"
+        },
+
+        "artifact_urnB_blue_Anim": {
+            "file": "textures/artifact_urnB_blue_anim.png"
+        },
+        "deco_past_chair_side_R": {
+            "file": "textures/deco_past_chair_side_R.png"
+        },
+        "deco_past_cabinet_front": {
+            "file": "textures/deco_past_cabinet_front.png"
+        },
+        "past_roof_flipped": {
+            "file": "textures/past_roof_flipped.png"
+        },
+        "tile_present_bush1": {
+            "file": "textures/tile_present_bush1.png"
+        },
+        "resource_clock": {
+            "file": "textures/resource_clock.png"
+        },
+        "artifact_bowlcovered_jadeALT": {
+            "file": "textures/artifact_bowlcovered_jadeALT.png"
+        },
+        "artifact_bowlcovered_jadeALT_Anim": {
+            "file": "textures/artifact_bowlcovered_jadeALT_anim.png"
+        },
+
+
+
+        "pastB_floor_stone3": {
+            "file": "textures/pastB_floor_stone3.png"
+        },
+        "artifact_bowlcovered_porcelin": {
+            "file": "textures/artifact_bowlcovered_porcelin.png"
+        },
+
+        "artifact_bowlcovered_porcelin_Anim": {
+            "file": "textures/artifact_bowlcovered_porcelin_anim.png"
+        },
+
+        "tile_present_wall_top1": {
+            "file": "textures/tile_present_wall_top1.png"
+        },
+        "tile_present_obstacle_wall1": {
+            "file": "textures/tile_present_obstacle_wall1.png"
+        },
+        "pastB_floor_stone2": {
+            "file": "textures/pastB_floor_stone2.png"
+        },
+        "artifact_fan_blue": {
+            "file": "textures/artifact_fan_blue.png"
+        },
+        "artifact_fan_blue_Anim": {
+            "file": "textures/artifact_fan_blue_anim.png"
+        },
+        "tile_present_wall_top2": {
+            "file": "textures/tile_present_wall_top2.png"
+        },
+        "tile_present_obstacle_wall1_shadow": {
+            "file": "textures/tile_present_obstacle_wall1_shadow.png"
+        },
+        "deco_past_cabinet_side_L": {
+            "file": "textures/deco_past_cabinet_side_L.png"
+        },
+        "tile_present_obstacle_shaded_block": {
+            "file": "textures/tile_present_obstacle_shaded_block.png"
+        },
+        "tile_present_obstacle_wall2": {
+            "file": "textures/tile_present_obstacle_wall2.png"
+        },
+        "tile_present_wall_top3": {
+            "file": "textures/tile_present_wall_top3.png"
+        },
+        "pastB_floor_stone1": {
+            "file": "textures/pastB_floor_stone1.png"
+        },
+        "exit": {
+            "file": "textures/exit.png"
+        },
+        "pastB_col_corner": {
+            "file": "textures/pastB_col_corner.png"
+        },
+        "artifact_sword_green": {
+            "file": "textures/artifact_sword_green.png"
+        },
+        "artifact_sword_green_Anim": {
+            "file": "textures/artifact_sword_green_anim.png"
+        },
+        "tile_present_bush1_shadow": {
+            "file": "textures/tile_present_bush1_shadow.png"
+        },
+        "artifact_vase_gold": {
+            "file": "textures/artifact_vase_gold.png"
+        },
+        "artifact_vase_gold_Anim": {
+            "file": "textures/artifact_vase_gold_anim.png"
+        },
+        "artifact_bowlcovered_porcelinPLAIN": {
+            "file": "textures/artifact_bowlcovered_porcelinPLAIN.png"
+        },
+        "artifact_bowlcovered_porcelinPLAIN_Anim": {
+            "file": "textures/artifact_bowlcovered_porcelinPLAIN_anim.png"
+        },
+        "artifact_fan_red": {
+            "file": "textures/artifact_fan_red.png"
+        },
+        "artifact_fan_red_Anim": {
+            "file": "textures/artifact_fan_red_anim.png"
+        },
+        "pastB_side_brick_wall_grass1": {
+            "file": "textures/pastB_side_brick_wall_grass1.png"
+        },
+        "artifact_statue_jade": {
+            "file": "textures/artifact_statue_jade.png"
+        },
+        "artifact_statue_jade_Anim": {
+            "file": "textures/artifact_statue_jade_anim.png"
+        },
+
+        "pastB_side_brick_wall_grass3": {
+            "file": "textures/pastB_side_brick_wall_grass3.png"
+        },
+        "pastB_side_brick_wall_grass2": {
+            "file": "textures/pastB_side_brick_wall_grass2.png"
+        },
+        "artifact_urnB_clay": {
+            "file": "textures/artifact_urnB_clay.png"
+        },
+        "artifact_urnB_clay_Anim": {
+            "file": "textures/artifact_urnB_clay_anim.png"
+        },
+        "pastB_stairs_border_top": {
+            "file": "textures/pastB_stairs_border_top.png"
+        },
+        "deco_past_chair_front": {
+            "file": "textures/deco_past_chair_front.png"
+        },
+        "tile_past_floor_windowright": {
+            "file": "textures/tile_past_floor_windowright.png"
+        },
+        "artifact_fan_cherry": {
+            "file": "textures/artifact_fan_cherry.png"
+        },
+        "artifact_fan_cherry_Anim": {
+            "file": "textures/artifact_fan_cherry_anim.png"
+        },
+        "tile_past_wall_column_right_window": {
+            "file": "textures/tile_past_wall_column_right_window.png"
+        },
+        "past_roof_R": {
+            "file": "textures/past_roof_R.png"
+        },
+        "deco_past_table_side": {
+            "file": "textures/deco_past_table_side.png"
+        },
+        "artifact_scrollcaseB_silver": {
+            "file": "textures/artifact_scrollcaseB_silver.png"
+        },
+        "artifact_scrollcaseB_silver_Anim": {
+            "file": "textures/artifact_scrollcaseB_silver_anim.png"
+        },
+        "pastB_roof_shadow": {
+            "file": "textures/pastB_roof_shadow.png"
+        },
+        "pastB_col_roof_shadow_right": {
+            "file": "textures/pastB_col_roof_shadow_right.png"
+        },
+        "artifact_urn_green": {
+            "file": "textures/artifact_urn_green.png"
+        },
+        "artifact_urn_green_Anim": {
+            "file": "textures/artifact_urn_green_anim.png"
+        },
+        "artifact_box_painted": {
+            "file": "textures/artifact_box_painted.png"
+        },
+        "artifact_box_painted_Anim": {
+            "file": "textures/artifact_box_painted_anim.png"
+        },
+        "tile_past_wall_edge_L": {
+            "file": "textures/tile_past_wall_edge_L.png"
+        },
+        "pastB_wall_window": {
+            "file": "textures/pastB_wall_window.png"
+        }
+    },
+    "fonts": {
+        "felt": {
+            "file":     "fonts/MarkerFelt.ttf",
+            "size":     24
+        },
+        "sans": {
+            "file":     "fonts/Roboto-Bold.ttf",
+            "size":     24
+        },
+        "courier":{
+            "file":     "fonts/CourierPrime-Bold.ttf",
+            "size":     150
+        }
+    },
+    "widgets": {
+
+    },
+    "scene2s": {
+        
+        "pause"  : {
+            "type"   : "Image",
+            "format"    : {
+                "type" : "Anchored"
+            },
+            "data"   : {
+                "texture"  : "pause_background",
+                "anchor"   : [0.5,0.5],
+                "scale"    : 0.4
+            },
+            "layout" : {
+                "x_anchor" : "center",
+                "y_anchor" : "middle",
+                "y_offset" : 0,
+                "x_offset" : 0,
+                "absolute" : true
+            },
+            "children"  : {
+                "title"  : {
+                    "type"   : "Label",
+                    "format" : {
+                        "type" : "Anchored"
+                    },
+                    "data"   : {
+                        "font"       : "courier",
+                        "text"       : "Mission X ",
+                        "foreground" : [206, 144, 23, 255],
+                        "anchor"     : [0.5, 0.5],
+                        "halign"     : "center",
+                        "valign"     : "middle",
+                        "scale"    : 1.2
+                    },
+                    "layout" : {
+                        "x_anchor" : "center",
+                        "y_anchor" : "middle",
+                        "y_offset" : 400,
+                        "x_offset" : 0,
+                        "absolute" : true
+                    }
+                },
+                "exit"  : {
+                    "type"   : "Button",
+                    "data"   : {
+                        "upnode"   : "up",
+                        "visible"  : true,
+                        "pushsize" : true,
+                        "anchor"   : [0.5,0.5],
+                        "scale"    : 1.5
+                    },
+                    "children" : {
+                        "up"       : {
+                            "type"   : "Image",
+                            "data"   : {
+                                "texture"  : "pause_exit"
+                            }
+                        }
+                    },
+                    "layout" : {
+                        "x_anchor" : "center",
+                        "y_anchor" : "middle",
+                        "y_offset" : -500,
+                        "x_offset" : 800,
+                        "absolute" : true
+                    }
+                },
+                "resume"  : {
+                    "type"   : "Button",
+                    "data"   : {
+                        "upnode"   : "up",
+                        "visible"  : true,
+                        "pushsize" : true,
+                        "anchor"   : [0.5,0.5],
+                        "scale"    : 1
+                    },
+                    "children" : {
+                        "up"       : {
+                            "type"   : "Image",
+                            "data"   : {
+                                "texture"  : "pause_resume"
+                            }
+                        }
+                    },
+                    "layout" : {
+                        "x_anchor" : "center",
+                        "y_anchor" : "middle",
+                        "y_offset" : 200,
+                        "x_offset" : 0,
+                        "absolute" : true
+                    }
+                },
+                "restart"  : {
+                    "type"   : "Button",
+                    "data"   : {
+                        "upnode"   : "up",
+                        "visible"  : true,
+                        "pushsize" : true,
+                        "anchor"   : [0.5,0.5],
+                        "scale"    : 1
+                    },
+                    "children" : {
+                        "up"       : {
+                            "type"   : "Image",
+                            "data"   : {
+                                "texture"  : "pause_restart"
+                            }
+                        }
+                    },
+                    "layout" : {
+                        "x_anchor" : "center",
+                        "y_anchor" : "middle",
+                        "y_offset" : -50,
+                        "x_offset" : 0,
+                        "absolute" : true
+                    }
+                }
+            }
+        },
+        "complete"  : {
+            "type"   : "Image",
+            "format"    : {
+                "type" : "Anchored"
+            },
+            "data"   : {
+                "texture"  : "complete",
+                "anchor"   : [0.5,0.5],
+                "scale"    : 1
+            },
+            "layout" : {
+                "x_anchor" : "center",
+                "y_anchor" : "middle",
+                "y_offset" : 0,
+                "x_offset" : 0,
+                "absolute" : true
+            },
+            "children"  : {
+                "back"  : {
+                    "type"   : "Button",
+                    "data"   : {
+                        "upnode"   : "up",
+                        "visible"  : true,
+                        "pushsize" : true,
+                        "anchor"   : [0.5,0.5],
+                        "scale"    : 0.25
+                    },
+                    "children" : {
+                        "up"       : {
+                            "type"   : "Image",
+                            "data"   : {
+                                "texture"  : "back"
+                            }
+                        }
+                    },
+                    "layout" : {
+                        "x_anchor" : "center",
+                        "y_anchor" : "middle",
+                        "y_offset" : -150,
+                        "x_offset" : -150,
+                        "absolute" : true
+                    }
+                },
+                "next"  : {
+                    "type"   : "Button",
+                    "data"   : {
+                        "upnode"   : "up",
+                        "visible"  : true,
+                        "pushsize" : true,
+                        "anchor"   : [0.5,0.5],
+                        "scale"    : 0.25
+                    },
+                    "children" : {
+                        "up"       : {
+                            "type"   : "Image",
+                            "data"   : {
+                                "texture"  : "next"
+                            }
+                        }
+                    },
+                    "layout" : {
+                        "x_anchor" : "center",
+                        "y_anchor" : "middle",
+                        "y_offset" : -150,
+                        "x_offset" : 150,
+                        "absolute" : true
+                    }
+                }
+            }
+        },
+        "fail"  : {
+            "type"   : "Image",
+            "format"    : {
+                "type" : "Anchored"
+            },
+            "data"   : {
+                "texture"  : "fail",
+                "anchor"   : [0.5,0.5],
+                "scale"    : 1
+            },
+            "layout" : {
+                "x_anchor" : "center",
+                "y_anchor" : "middle",
+                "y_offset" : 0,
+                "x_offset" : 0,
+                "absolute" : true
+            },
+            "children"  : {
+                "back"  : {
+                    "type"   : "Button",
+                    "data"   : {
+                        "upnode"   : "up",
+                        "visible"  : true,
+                        "pushsize" : true,
+                        "anchor"   : [0.5,0.5],
+                        "scale"    : 0.25
+                    },
+                    "children" : {
+                        "up"       : {
+                            "type"   : "Image",
+                            "data"   : {
+                                "texture"  : "back"
+                            }
+                        }
+                    },
+                    "layout" : {
+                        "x_anchor" : "center",
+                        "y_anchor" : "middle",
+                        "y_offset" : -150,
+                        "x_offset" : -150,
+                        "absolute" : true
+                    }
+                },
+                "again"  : {
+                    "type"   : "Button",
+                    "data"   : {
+                        "upnode"   : "up",
+                        "visible"  : true,
+                        "pushsize" : true,
+                        "anchor"   : [0.5,0.5],
+                        "scale"    : 0.25
+                    },
+                    "children" : {
+                        "up"       : {
+                            "type"   : "Image",
+                            "data"   : {
+                                "texture"  : "again"
+                            }
+                        }
+                    },
+                    "layout" : {
+                        "x_anchor" : "center",
+                        "y_anchor" : "middle",
+                        "y_offset" : -150,
+                        "x_offset" : 150,
+                        "absolute" : true
+                    }
+                }
+            }
+        },
+        "button" : {
+            "type"      : "Node",
+            "format" : {
+                "type" : "Anchored"
+            },
+            "children"  : {
+                "pause-button"  : {
+                    "type"   : "Button",
+                    "data"   : {
+                        "upnode"   : "up",
+                        "visible"  : true,
+                        "pushsize" : true,
+                        "anchor"   : [0.5,0.5],
+                        "scale"    : 0.15
+                    },
+                    "children" : {
+                        "up"       : {
+                            "type"   : "Image",
+                            "data"   : {
+                                "texture"  : "pause_button"
+                            }
+                        }
+                    },
+                    "layout" : {
+                        "x_anchor" : "center",
+                        "y_anchor" : "middle",
+                        "y_offset" : 120,
+                        "x_offset" : 1040,
+                        "absolute" : true
+                    }
+                },
+
+                 "panel":{
+                    "type"   : "Image",
+                    "format"    : {
+                        "type" : "Anchored"
+                    },
+                    "data"   : {
+                        "texture"  : "inventory_background_XL",
+                        "anchor"   : [0.5,0.5],
+                        "scale"    : 0.15
+                    },
+                    "layout" : {
+                        "x_anchor" : "center",
+                        "y_anchor" : "middle",
+                        "y_offset" : 135,
+                        "x_offset" : -30,
+                        "absolute" : true
+                    },
+                    "children": {
+                        "artifact-icon":{
+                           "type"   : "Image",
+                           "format"    : {
+                               "type" : "Anchored"
+                           },
+                           "data"   : {
+                               "texture"  : "inventory_artifact",
+                               "anchor"   : [0.5,0.5],
+                               "scale"    : 1
+                           },
+                           "layout" : {
+                               "x_anchor" : "center",
+                               "y_anchor" : "middle",
+                               "y_offset" : 50,
+                               "x_offset" : -1300,
+                               "absolute" : true
+                           }
+                       },
+                        "resource-icon":{
+                           "type"   : "Image",
+                           "format"    : {
+                               "type" : "Anchored"
+                           },
+                           "data"   : {
+                               "texture"  : "inventory_resource",
+                               "anchor"   : [0.5,0.5],
+                               "scale"    : 1.7
+                           },
+                           "layout" : {
+                               "x_anchor" : "center",
+                               "y_anchor" : "middle",
+                               "y_offset" : 50,
+                               "x_offset" : 200,
+                               "absolute" : true
+                           }
+                       }
+                    }
+                }
+                 
+            }
+        }
+    }
+}
