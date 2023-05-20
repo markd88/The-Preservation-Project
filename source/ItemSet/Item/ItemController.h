@@ -163,6 +163,11 @@ public:
         _view->removeAnim();
         can_be_collected = false;
     }
+    
+    
+    void updateTransparency(){
+        this->_view->updateTransparency();
+    }
 
 
     

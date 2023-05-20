@@ -237,6 +237,11 @@ public:
         }
         
     }
+    
+    void updateTransparency(){
+        auto c = _static_node->getColor();
+        _static_node->setColor(Color4(c.r, c.g, c.b, 255));
+    }
 };
 
 #endif /* ItemView_h */

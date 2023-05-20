@@ -1,4 +1,12 @@
 { "columns":0,
+ "editorsettings":
+    {
+     "export":
+        {
+         "format":"json",
+         "target":"tileset.json"
+        }
+    },
  "grid":
     {
      "height":1,
@@ -8,9 +16,9 @@
  "margin":0,
  "name":"tileset",
  "spacing":0,
- "tilecount":166,
+ "tilecount":178,
  "tiledversion":"1.10.1",
- "tileheight":512,
+ "tileheight":789,
  "tiles":[
         {
          "id":0,
@@ -92,8 +100,8 @@
         {
          "id":11,
          "image":"..\/..\/textures\/artifact_fan_blue.png",
-         "imageheight":128,
-         "imagewidth":128,
+         "imageheight":168,
+         "imagewidth":168,
          "type":"artifact_fan_blue"
         }, 
         {
@@ -203,10 +211,10 @@
         }, 
         {
          "id":27,
-         "image":"..\/..\/textures\/artifact_urn_green_variantpng.png",
+         "image":"..\/..\/textures\/artifact_urn_green_variant.png",
          "imageheight":128,
          "imagewidth":128,
-         "type":"artifact_urn_green_variantpng"
+         "type":"artifact_urn_green_variant"
         }, 
         {
          "id":28,
@@ -391,6 +399,13 @@
          "type":"box6"
         }, 
         {
+         "id":211,
+         "image":"..\/..\/textures\/box7.png",
+         "imageheight":128,
+         "imagewidth":32,
+         "type":"box7"
+        }, 
+        {
          "id":41,
          "image":"..\/..\/textures\/deco_past_cabinet_front.png",
          "imageheight":106,
@@ -497,6 +512,13 @@
          "type":"character-placeholder"
         }, 
         {
+         "id":67,
+         "image":"..\/..\/textures\/pastB_roof_shadow.png",
+         "imageheight":128,
+         "imagewidth":128,
+         "type":"pastB_roof_shadow"
+        }, 
+        {
          "id":56,
          "image":"..\/..\/textures\/pastB_col_roof_shadow_left.png",
          "imageheight":128,
@@ -509,6 +531,34 @@
          "imageheight":128,
          "imagewidth":128,
          "type":"pastB_col_roof_shadow_right"
+        }, 
+        {
+         "id":210,
+         "image":"..\/..\/textures\/past_shadow_clock.png",
+         "imageheight":32,
+         "imagewidth":50,
+         "type":"past_shadow_clock"
+        }, 
+        {
+         "id":212,
+         "image":"..\/..\/textures\/shadow_thin_128.png",
+         "imageheight":12,
+         "imagewidth":128,
+         "type":"shadow_thin_128"
+        }, 
+        {
+         "id":213,
+         "image":"..\/..\/textures\/shadow_thin_32.png",
+         "imageheight":12,
+         "imagewidth":32,
+         "type":"shadow_thin_32"
+        }, 
+        {
+         "id":214,
+         "image":"..\/..\/textures\/shadow_thin_64.png",
+         "imageheight":12,
+         "imagewidth":64,
+         "type":"shadow_thin_64"
         }, 
         {
          "id":61,
@@ -572,13 +622,6 @@
          "imageheight":128,
          "imagewidth":128,
          "type":"pastB_floor_stone3"
-        }, 
-        {
-         "id":67,
-         "image":"..\/..\/textures\/pastB_roof_shadow.png",
-         "imageheight":128,
-         "imagewidth":128,
-         "type":"pastB_roof_shadow"
         }, 
         {
          "id":68,
@@ -952,11 +995,25 @@
          "type":"tile_present_obstacle_block_shadow"
         }, 
         {
+         "id":216,
+         "image":"..\/..\/textures\/tile_present_grass_shadow_thin.png",
+         "imageheight":128,
+         "imagewidth":28,
+         "type":"tile_present_grass_shadow_thin"
+        }, 
+        {
          "id":119,
          "image":"..\/..\/textures\/tile_present_obstacle_shaded_block.png",
          "imageheight":256,
          "imagewidth":256,
          "type":"tile_present_obstacle_shaded_block"
+        }, 
+        {
+         "id":215,
+         "image":"..\/..\/textures\/tile_present_obstacle_stone_shadow.png",
+         "imageheight":256,
+         "imagewidth":256,
+         "type":"tile_present_obstacle_stone_shadow"
         }, 
         {
          "id":120,
@@ -1028,6 +1085,13 @@
          "imagewidth":128,
          "type":"tile_present_wall_half"
         }, 
+	{
+         "id":197,
+         "image":"..\/..\/textures\/tile_present_wall_side.png",
+         "imageheight":128,
+         "imagewidth":44,
+         "type":"tile_present_wall_side"
+        }, 
         {
          "id":131,
          "image":"..\/..\/textures\/tile_present_wall_slopepos.png",
@@ -1055,6 +1119,13 @@
          "imageheight":128,
          "imagewidth":128,
          "type":"tile_present_wall_top3"
+        }, 
+	{
+         "id":198,
+         "image":"..\/..\/textures\/tile_present_wall.png",
+         "imageheight":128,
+         "imagewidth":128,
+         "type":"tile_present_wall"
         }, 
         {
          "id":135,
@@ -1134,6 +1205,13 @@
          "type":"tile_present_side_wall"
         }, 
         {
+         "id":208,
+         "image":"..\/..\/textures\/tile_present_side_wall 1.png",
+         "imageheight":128,
+         "imagewidth":30,
+         "type":"tile_present_side_wall1"
+        }, 
+        {
          "id":174,
          "image":"..\/..\/textures\/presentB_fence_bottom_corner.png",
          "imageheight":128,
@@ -1195,32 +1273,32 @@
          "imageheight":168,
          "imagewidth":168,
          "type":"exit"
-        },
+        }, 
         {
          "id":193,
          "image":"..\/..\/textures\/draw.png",
          "imageheight":300,
          "imagewidth":963
-        },
+        }, 
         {
          "id":194,
          "image":"..\/..\/textures\/switch1.png",
-         "imageheight":736,
-         "imagewidth":1400
+         "imageheight":789,
+         "imagewidth":1368
         }, 
         {
          "id":195,
          "image":"..\/..\/textures\/switch2.png",
-         "imageheight":804,
-         "imagewidth":637
-        },
+         "imageheight":652,
+         "imagewidth":695
+        }, 
         {
          "id":196,
          "image":"..\/..\/textures\/avoid.png",
-         "imageheight":666,
-         "imagewidth":779
+         "imageheight":620,
+         "imagewidth":782
         }],
- "tilewidth":256,
+ "tilewidth":1368,
  "type":"tileset",
  "version":"1.10"
 }

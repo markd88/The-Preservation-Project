@@ -241,6 +241,55 @@ _scene(cugl::Scene2::alloc(displaySize)), _other_scene(cugl::Scene2::alloc(displ
         _res_bar_vec.push_back(tn);
     }
     
+    // init images for tutorials
+
+    
+    std::vector<std::string> tutorial_names{"1_1", "1_2", "2_1", "2_2", "4_1", "4_2", "4_3", "4_4", "4_5"};
+    for (auto name : tutorial_names){
+        std::shared_ptr<cugl::scene2::PolygonNode> tutorial_image = std::make_shared<cugl::scene2::PolygonNode>();
+        tutorial_image->initWithTexture(_assets->get<Texture>("tutorial_" + name));
+        tutorial_image->setScale(0.75);
+        tutorial_image->setAnchor(Vec2(0.5, 0.5));
+        tutorial_image->setPosition(Vec2(900,80));
+        tutorial_image->setVisible(false);
+        _tutorial_pages[name] = tutorial_image;
+    }
+    
+    _tutorial_close = std::make_shared<cugl::scene2::Button>();
+    std::shared_ptr<cugl::scene2::PolygonNode> close_image = std::make_shared<cugl::scene2::PolygonNode>();
+    close_image->initWithTexture(_assets->get<Texture>("tutorial_close"));
+    close_image->setScale(1);
+    _tutorial_close->init(close_image);
+    _tutorial_close->setAnchor(Vec2(0.5, 0.5));
+    _tutorial_close->setPosition(Vec2(1470,300));
+    
+    _tutorial_close->setVisible(false);
+    _tutorial_close->addListener([=](const std::string& name, bool down) {
+        if(!down){
+            if(_tutorial_name == "2_1"){
+                _tutorial_name = "2_2";
+            }
+            else if(_tutorial_name == "4_1"){
+                _tutorial_name = "4_2";
+            }
+            else if(_tutorial_name == "4_2"){
+                _tutorial_name = "4_3";
+            }
+            else if(_tutorial_name == "4_3"){
+                _tutorial_name = "4_4";
+            }
+            else{
+                _tutorial_name = ""; // when "", game close tutorial and deactivate x
+            }
+        }
+    });
+    
+    // add tutorials in UI scene, only once
+    for(auto page : _tutorial_pages){
+        _button_layer->addChild(page.second);
+    }
+    _button_layer->addChild(_tutorial_close);
+    
     loadLevel();
     init();
     
@@ -269,6 +318,7 @@ void GamePlayController::loadLevel(){
     _wallSetPast = _pastWorldLevel->getWall();
     // shadow
     _shadowSetPast = _pastWorldLevel->getShadow();
+    _shadowSetPast->updateTransparency();
     // artifact
     _artifactSet = _pastWorldLevel->getItem();
     _artifactSet->setAction(_actions);
@@ -291,7 +341,7 @@ void GamePlayController::loadLevel(){
     _obsSetPresent = _presentWorldLevel->getObs();
     _wallSetPresent = _presentWorldLevel->getWall();
     _shadowSetPresent = _presentWorldLevel->getShadow();
-    
+    _shadowSetPast->updateTransparency();
     auto pastEdges = _pastWorld->getEdges(_scene, _obsSetPast);
     generatePastMat(_pastWorld->getVertices());
     for (int i = 0; i < pastEdges.size(); i++){
@@ -336,6 +386,17 @@ void GamePlayController::loadLevel(){
 
 // init assets and all scenegraph when restart
 void GamePlayController::init(){
+    // tutorial 1.1
+    if(level == 1){
+        _tutorial_name = "1_1";
+    }
+    else if(level == 2){
+        _tutorial_name = "2_1";
+    }
+    else if(level == 4){
+        _tutorial_name = "4_1";
+    }
+    
     
     // dispose all active actions
     _actions->dispose();
@@ -433,6 +494,7 @@ void GamePlayController::init(){
     
     _UI_scene->addChild(_button_layer);
     
+    
     //_ordered_root->addChild(_button_layer);
     
     Vec2 cPos = _character->getPosition();
@@ -471,9 +533,33 @@ void GamePlayController::init(){
 
 void GamePlayController::update(float dt){
     
-    if(_fail_layer->getScene() != nullptr || _complete_layer->getScene() != nullptr || _pause_layer->getScene() != nullptr){
+
+    // when tutorials are not up
+    if(_tutorial_name == ""){
+        _tutorial_close->setVisible(false);
+        _tutorial_close->deactivate();
+        for(auto page:_tutorial_pages){
+            page.second->setVisible(false);
+        }
+    }
+    // when some tutorial is up
+    else{
+        _tutorial_close->setVisible(true);
+        _tutorial_close->activate();
+        for(auto page:_tutorial_pages){
+            if(page.first == _tutorial_name){
+                page.second->setVisible(true);
+            }
+            else{
+                page.second->setVisible(false);
+            }
+        }
+    }
+    
+    // only pause the game when pause window on
+    if(_fail_layer->getScene() != nullptr || _complete_layer->getScene() != nullptr || _pause_layer->getScene() != nullptr || _tutorial_name != ""){
         _pause_button->deactivate();
-        return;
+        if(_tutorial_name=="")return;
     }else{
         _pause_button->activate();
     }
@@ -499,7 +585,7 @@ void GamePlayController::update(float dt){
 
             _character->removeChildFrom(_ordered_root);
             _character->addChildTo(_other_ordered_root);
-
+            _tutorial_name = "4_5";
 
             AudioEngine::get()->clear("past");
             AudioEngine::get()->play("present", _presentMusic, true, _presentMusic->getVolume(), false);
@@ -519,6 +605,7 @@ void GamePlayController::update(float dt){
 
             // when move to the second world, minus 1 in model
             _character->useRes();
+            
             
             AudioEngine::get()->clear("present");
             AudioEngine::get()->play("past", _pastMusic, true, _pastMusic->getVolume(), false);
@@ -854,15 +941,7 @@ void GamePlayController::update(float dt){
             
         }
         else{
-            auto _children = _scene2texture->getChildren();
-            for (int i = 0; i < _children.size(); i++){
-                auto tempChild = _children[i];
-                _scene2texture->removeChild(_children[i]);
-                _scene->addChild(tempChild);
-            }
-            _other_scene->removeChildByName("preview");
-            _other_scene->removeChildByName("previewBound");
-            
+            stopCharacter();        
         }
         
     }
@@ -953,6 +1032,13 @@ void GamePlayController::update(float dt){
                 if (_artifactSet->_itemSet[i]->isArtifact()){
                     AudioEngine::get()->play("artifact", _collectArtifactSound, false, _collectArtifactSound->getVolume(), true);
                     _character->addArt();
+                    // tutorial
+                    if(level == 1){
+                        _tutorial_name = "1_2";
+                        // make character stop moving
+                        stopCharacter();
+                        
+                    }
                 }
                 // make the artifact disappear and remove from set
                 _artifactSet->remove_this(i, _ordered_root);
@@ -1007,9 +1093,11 @@ void GamePlayController::update(float dt){
     if(_activeMap == "pastWorld"){
         for(int i=0; i<_exitSet->_itemSet.size(); i++){
             // detect collision
-            if( _character->containsFar(_exitSet->_itemSet[i]->getNodePosition()) && _character->getNumArt() == artNum){
-                completeTerminate();
-                break;
+            if( _character->containsFar(_exitSet->_itemSet[i]->getNodePosition())){
+                if(_character->getNumArt() == artNum){
+                    completeTerminate();
+                    break;
+                }
             }
             
         }

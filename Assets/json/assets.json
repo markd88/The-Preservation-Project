@@ -37,6 +37,36 @@
         }
     },
     "textures": {
+        "tutorial_1_1": {
+            "file": "textures/Level-1 1.png"
+        },
+        "tutorial_1_2": {
+            "file": "textures/Level-1 2.png"
+        },
+        "tutorial_2_1": {
+            "file": "textures/level-2 1.png"
+        },
+        "tutorial_2_2": {
+            "file": "textures/level-2 2.png"
+        },
+        "tutorial_4_1": {
+            "file": "textures/level-4 1.png"
+        },
+        "tutorial_4_2": {
+            "file": "textures/level-4 2.png"
+        },
+        "tutorial_4_3": {
+            "file": "textures/level-4 3.png"
+        },
+        "tutorial_4_4": {
+            "file": "textures/level-4 4.png"
+        },
+        "tutorial_4_5": {
+            "file": "textures/level-4 5.png"
+        },
+        "tutorial_close": {
+            "file": "textures/X.png"
+        },
         "tutorial_sample" : {
             "file": "textures/tutorial_sample.png"
         },
@@ -516,35 +546,7 @@
         "tile_present_wall_top3": {
             "file":      "textures/tile_present_wall_top3.png"
         },
-        "tile_present_wall_half": {
-            "file":      "textures/tile_present_wall_half.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS":     "clamp",
-            "wrapT":     "clamp"
-        },
-        "tile_present_wall_side": {
-            "file":      "textures/tile_present_wall_side.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS":     "clamp",
-            "wrapT":     "clamp"
-        },
-        "tile_present_wall_slopepos": {
-            "file":      "textures/tile_present_wall_slopepos.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS":     "clamp",
-            "wrapT":     "clamp"
-        },
         "tile_present_walls": {
-            "file":      "textures/tile_present_wall.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS":     "clamp",
-            "wrapT":     "clamp"
-        },
-        "tile_present_wall": {
             "file":      "textures/tile_present_wall.png",
             "minfilter": "linear",
             "magfilter": "linear",
@@ -586,22 +588,8 @@
             "wrapS":     "clamp",
             "wrapT":     "clamp"
         },
-        "tile_present_obstacle_stone": {
-            "file":      "textures/tile_present_obstacle_stone.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS":     "clamp",
-            "wrapT":     "clamp"
-        },
         "tile_present_obstacle_shaded_block": {
             "file":      "textures/tile_present_obstacle_shaded_block.png",
-            "minfilter": "linear",
-            "magfilter": "linear",
-            "wrapS":     "clamp",
-            "wrapT":     "clamp"
-        },
-        "tile_present_side_wall": {
-            "file":      "textures/tile_present_side_wall.png",
             "minfilter": "linear",
             "magfilter": "linear",
             "wrapS":     "clamp",
@@ -799,6 +787,48 @@
         },
         "box1": {
             "file": "textures/box1.png"
+        },
+        "box7": {
+            "file": "textures/box7.png"
+        },
+        "past_shadow_clock": {
+            "file": "textures/past_shadow_clock.png"
+        },
+        "shadow_thin_32": {
+            "file": "textures/shadow_thin_32.png"
+        },
+        "shadow_thin_64": {
+            "file": "textures/shadow_thin_64.png"
+        },
+        "tile_present_grass_shadow_thin": {
+            "file": "textures/tile_present_grass_shadow_thin.png"
+        },
+        "tile_present_obstacle_stone_shadow": {
+            "file": "textures/tile_present_obstacle_stone_shadow.png"
+        },
+        "tile_present_side_wall 1": {
+            "file": "textures/tile_present_side_wall 1.png"
+        },
+        "tile_present_side_wall": {
+            "file": "textures/tile_present_side_wall.png"
+        },
+        "tile_present_wall_half": {
+            "file": "textures/tile_present_wall_half.png"
+        },
+        "tile_present_wall_side": {
+            "file": "textures/tile_present_wall_side.png"
+        },
+        "tile_present_wall_slopepos": {
+            "file": "textures/tile_present_wall_slopepos.png"
+        },
+        "tile_present_wall": {
+            "file": "textures/tile_present_wall.png"
+        },
+        "tile_present_obstacle_stone": {
+            "file": "textures/tile_present_obstacle_stone.png"
+        },
+        "shadow_thin_128": {
+            "file": "textures/shadow_thin_128.png"
         },
         "tile_present_wall2": {
             "file": "textures/tile_present_wall2.png"
@@ -1000,9 +1030,6 @@
         "pastB_wall1": {
             "file": "textures/pastB_wall1.png"
         },
-        "tile_present_side_wall": {
-            "file": "textures/tile_present_side_wall.png"
-        },
         "deco_past_cabinet_side_R": {
             "file": "textures/deco_past_cabinet_side_R.png"
         },
@@ -1033,9 +1060,6 @@
         "pastB_wall_window_right": {
             "file": "textures/pastB_wall_window_right.png"
         },
-        "tile_present_wall_slopepos": {
-            "file": "textures/tile_present_wall_slopepos.png"
-        },
         "deco_past_vase_FORTABLE": {
             "file": "textures/deco_past_vase_FORTABLE.png"
         },
@@ -1058,10 +1082,6 @@
 
         "artifact_urnB_blue_Anim": {
             "file": "textures/artifact_urnB_blue_anim.png"
-        },
-
-        "tile_present_wall_half": {
-            "file": "textures/tile_present_wall_half.png"
         },
         "deco_past_chair_side_R": {
             "file": "textures/deco_past_chair_side_R.png"
